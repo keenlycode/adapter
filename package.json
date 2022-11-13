@@ -1,5 +1,32 @@
 {
   "dependencies": {
     "@emotion/css": "^11.10.5"
-  }
+  },
+  "name": "adapter",
+  "description": "A Tiny Web Component with Styles",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nitipit/adapter.git"
+  },
+  "keywords": [
+    "javascript",
+    "web-component",
+    "html",
+    "ui"
+  ],
+  "author": "Nitipit Nontasuwan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nitipit/adapter/issues"
+  },
+  "homepage": "https://github.com/nitipit/adapter#readme"
 }

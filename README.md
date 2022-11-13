@@ -1,1 +1,1 @@
-# Adapter : Tiny Web Component with Styles
+# Adapter : A Tiny Web Component with Styles
