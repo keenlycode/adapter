@@ -1,7 +1,9 @@
 <div style="margin-top: 2rem; width: 100%;"></div>
 
-**Adapter** use simple and small <code>15KB</code> **Javascript** codes which bring **CSS**
+**Adapter** use simple and small **Javascript** codes which bring **CSS**
 into **Web Component**.
+
+**Adapter** is just `15KB` bundle with `@emotion/css`
 
 
 ```js

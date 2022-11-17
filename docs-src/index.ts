@@ -62,16 +62,8 @@ code {
 }
 `;
 
-class Quote extends Adapter {};
-define('el-quote', Quote);
-Quote.tagStyle(`
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    font-size: 1.5em;
-`)
+class Nav extends Adapter {};
+
 
 class Paragraph extends Adapter {};
 define('el-paragraph', Paragraph);
