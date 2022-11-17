@@ -1,9 +1,6 @@
 import { css, cx, injectGlobal} from "@emotion/css";
 
 
-export {injectGlobal as addStyle};
-
-
 export const define = (tagName: string, Class: any = Adapter) => {
     // Order of this function belows are very crucial.
     // Class state must be defined before `customElements.define`
