@@ -1,4 +1,4 @@
-import asyncio, shutil, os
+import asyncio, shutil
 from pathlib import Path
 
 
