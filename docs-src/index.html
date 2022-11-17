@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% set _v = 1 %}
+{% set description = 'A Tiny Web Component with Styles' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adapter: {{description}}</title>
+    <meta name="description" content="{{description}}">
+    <link rel="stylesheet" href="base.css?v={{_v}}">
+    <link rel="stylesheet" href="index.css?v={{_v}}">
+    <script defer src="index.js?v={{_v}}"></script>
+</head>
+<body>
+<id-highlight>
+    <div class="container">
+        <h1>Adapter</h1>
+        <h2>A Tiny Web Component with Styles</h2>
+    </div>
+</id-highlight>
+<el-paragraph>
+    <div class="container">
+        {{markdown('index.html.adapter.md')}}
+    </div>
+</el-paragraph>
+<id-footer></id-footer>
+</body>
+</html>
