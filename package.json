@@ -2,9 +2,9 @@
   "dependencies": {
     "@emotion/css": "^11.10.5"
   },
-  "name": "adapter",
+  "name": "@nitipit/adapter",
   "description": "A Tiny Web Component with Styles",
-  "version": "1.0.0",
+  "version": "1.0.0-dev",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.0",
     "highlight.js": "^11.6.0",
@@ -31,6 +31,10 @@
     "url": "https://github.com/nitipit/adapter/issues"
   },
   "homepage": "https://github.com/nitipit/adapter#readme",
+  "files": [
+    "src/**/*",
+    "dist/**/*"
+  ],
   "targets": {
     "main": false,
     "module": {
@@ -45,5 +49,8 @@
       "outputFormat": "global",
       "optimize": true
     }
+  },
+  "directories": {
+    "doc": "docs"
   }
 }
