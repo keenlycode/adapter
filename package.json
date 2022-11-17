@@ -36,7 +36,11 @@
     "dist/**/*"
   ],
   "targets": {
-    "main": false,
+    "docs": {
+      "distDir": "docs",
+      "outputFormat": "global",
+      "optimize": true
+    },
     "module": {
       "source": "src/adapter.ts",
       "distDir": "dist/module/",
