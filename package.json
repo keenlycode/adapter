@@ -37,8 +37,7 @@
       "source": "src/adapter.ts",
       "distDir": "dist/module/",
       "outputFormat": "esmodule",
-      "isLibrary": true,
-      "optimize": true
+      "isLibrary": true
     },
     "js": {
       "source": "src/adapter.ts",
