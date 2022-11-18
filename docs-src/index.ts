@@ -6,6 +6,7 @@ import 'highlight.js/styles/base16/solarized-light.css';
 import 'normalize.css';
 
 import { fontFluid } from 'gadjet/src/style/font-fluid';
+import { bgColor } from 'gadjet/src/style/bg-color';
 
 import { addStyle, define, Adapter } from "../src/adapter";
 import { color } from './color';
@@ -46,7 +47,7 @@ pre {
 }
 
 code {
-    background-color: #5e5c64;
+    ${bgColor('#5e5c64')}
     color: white;
     padding: 0.1rem 0.25rem 0.2rem 0.25rem;
     border-radius: 5px;
@@ -63,7 +64,19 @@ code {
 `;
 
 class Nav extends Adapter {};
-
+define('el-nav', Nav);
+Nav.tagStyle(`
+    display: flex;
+    width: 100%;
+    ${bgColor('blue')}
+    cursor: pointer;
+    span {
+        padding: 0.5rem 1rem;
+        &:hover {
+            ${bgColor('white')}
+        }
+    }
+`)
 
 class Paragraph extends Adapter {};
 define('el-paragraph', Paragraph);
