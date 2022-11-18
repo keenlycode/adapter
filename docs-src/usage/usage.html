@@ -1,0 +1,11 @@
+{% extends '_base.html' %}
+
+{% set to_root = '../../' %}
+
+{% block body %}
+<el-paragraph>
+    <div class="container">
+    {{ markdown('usage.html.usage.md') }}
+    </div>
+</el-paragraph>
+{% endblock body %}
