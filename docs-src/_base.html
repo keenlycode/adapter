@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% set _v = 1 %}
+
+{% set description = 'A Tiny Web Component with Styles' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Adapter: {{description}}{% endblock %}</title>
+    <meta name="description" content="{{description}}">
+    <link rel="stylesheet" href="{{to_root}}font.css?v={{_v}}">
+    <link rel="stylesheet" href="{{to_root}}base.css?v={{_v}}">
+    <script src="{{to_root}}base.js?v={{_v}}"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+</body>
+</html>
