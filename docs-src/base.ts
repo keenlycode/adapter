@@ -116,6 +116,7 @@ Paragraph.tagStyle(`
         display: flex;
         justify-content: left;
     }
+
     h1, h2, h3 {
         & + * {
             margin-top: 0;
@@ -123,6 +124,16 @@ Paragraph.tagStyle(`
         & + p {
             margin-top: 0;
         }
+    }
+
+    h2 + hr {
+        margin-top: -1rem;
+        margin-bottom: 0;
+        height: 2px;
+        width: 100%;
+        border: 0;
+        box-sizing: border-box;
+        background-color: red;
     }
 
     p {
@@ -134,10 +145,18 @@ Paragraph.tagStyle(`
         margin-top: 0;
     }
 
-    p:has(code:only-child) {
+    p:has(code.tag) {
         margin-bottom: 0;
         > code {
             border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            min-width: 2rem;
+            display: inline-flex;
+            justify-content: center;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            ${bgColor(color.p2)}
+            font-weight: bold;
         }
         & + pre {
             margin-top: 0;

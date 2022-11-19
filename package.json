@@ -36,6 +36,7 @@
     "src/**/*",
     "dist/**/*"
   ],
+  "browser": "dist/module/adapter.js",
   "targets": {
     "docs": {
       "distDir": "docs",
