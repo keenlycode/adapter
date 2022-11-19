@@ -29,6 +29,7 @@ export class Adapter extends HTMLElement {
     };
 
     static initStyle(style?: any): void {
+        if (!this.Style) {return};
         injectGlobal`
         ${this.tagName} {
             ${this.Style.css(style)}

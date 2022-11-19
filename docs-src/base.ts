@@ -2,6 +2,7 @@ import hljs from 'highlight.js';
 import javascript from 'highlight.js/lib/languages/javascript.js';
 import css from 'highlight.js/lib/languages/css.js';
 import shell from 'highlight.js/lib/languages/shell.js';
+import typescript from 'highlight.js/lib/languages/typescript.js';
 import 'highlight.js/styles/base16/solarized-light.css';
 
 import 'normalize.css';
@@ -19,6 +20,7 @@ import { color } from './color';
 hljs.registerLanguage('js', javascript);
 hljs.registerLanguage('css', css);
 hljs.registerLanguage('shell', shell);
+hljs.registerLanguage('ts', typescript);
 hljs.highlightAll();
 
 
@@ -133,7 +135,7 @@ Paragraph.tagStyle(`
         width: 100%;
         border: 0;
         box-sizing: border-box;
-        background-color: red;
+        ${bgColor(color.p2)}
     }
 
     p {
@@ -147,7 +149,7 @@ Paragraph.tagStyle(`
 
     p:has(code.tag) {
         margin-bottom: 0;
-        > code {
+        > code.tag {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
             min-width: 2rem;
@@ -169,6 +171,17 @@ Paragraph.tagStyle(`
     ol {
         padding-left: 1.7rem;
         margin-top: 0rem;
+    }
+
+    blockquote {
+        margin: 0;
+        padding: 0;
+        padding-left: 1rem;
+        border-left: 5px solid ${color.p2};
+    }
+
+    pre + p {
+        margin-top: 0;
     }
 `);
 
