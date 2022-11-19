@@ -1,9 +1,12 @@
 import hljs from 'highlight.js';
 import javascript from 'highlight.js/lib/languages/javascript.js';
 import css from 'highlight.js/lib/languages/css.js';
+import shell from 'highlight.js/lib/languages/shell.js';
 import 'highlight.js/styles/base16/solarized-light.css';
 
 import 'normalize.css';
+
+import { html, render } from 'uhtml';
 
 import { injectGlobal as addStyle } from '@emotion/css';
 import { fontFluid } from 'gadjet/src/style/font-fluid';
@@ -15,6 +18,7 @@ import { color } from './color';
 
 hljs.registerLanguage('js', javascript);
 hljs.registerLanguage('css', css);
+hljs.registerLanguage('shell', shell);
 hljs.highlightAll();
 
 
@@ -52,6 +56,7 @@ code {
     color: white;
     padding: 0.1rem 0.25rem 0.2rem 0.25rem;
     border-radius: 5px;
+    font-size: 0.8rem;
 }
 
 .container {
@@ -63,6 +68,90 @@ code {
     justify-content: center;
 }
 `;
+
+
+class Nav extends Adapter {
+    constructor() {
+        super();
+    }
+
+    connectedCallback() {
+        this.render();
+    }
+
+    render() {
+        return render(this, html`
+        <div class="container">
+            <a href=${`${this.dataset.toRoot}index.html`}>Intro</a>
+            <a href=${`${this.dataset.toRoot}usage/usage.html`}>Usage</a>
+            <a href=${`${this.dataset.toRoot}api/api.html`}>API</a>
+        </div>
+        `)
+    }
+};
+define('el-nav', Nav);
+Nav.tagStyle(`
+    display: flex;
+    width: 100%;
+    ${bgColor(color.p)}
+    cursor: pointer;
+    a {
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        font-weight: bold;
+        ${bgColor(color.p)}
+        &:hover {
+            ${bgColor('white')}
+        }
+    }
+`);
+
+
+class Paragraph extends Adapter {};
+define('el-paragraph', Paragraph);
+Paragraph.tagStyle(`
+    .container {
+        max-width: 45rem;
+        width: 90%;
+        display: flex;
+        justify-content: left;
+    }
+    h1, h2, h3 {
+        & + * {
+            margin-top: 0;
+        }
+        & + p {
+            margin-top: 0;
+        }
+    }
+
+    p {
+        margin-top: 1rem;
+        width: 100%;
+        max-width: 45rem;
+    }
+    p + p {
+        margin-top: 0;
+    }
+
+    p:has(code:only-child) {
+        margin-bottom: 0;
+        > code {
+            border-bottom-left-radius: 0;
+        }
+        & + pre {
+            margin-top: 0;
+            code {
+                border-top-left-radius: 0;
+            }
+        }
+    }
+
+    ol {
+        padding-left: 1.7rem;
+        margin-top: 0rem;
+    }
+`);
 
 
 class ID_Highlight extends Adapter {};
@@ -83,54 +172,7 @@ ID_Highlight.tagStyle(`
             width: 100%;
         }
     }
-`)
-
-class Nav extends Adapter {};
-define('el-nav', Nav);
-Nav.tagStyle(`
-    display: flex;
-    width: 100%;
-    ${bgColor(color.p)}
-    cursor: pointer;
-    a {
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        font-weight: bold;
-        ${bgColor(color.p)}
-        &:hover {
-            ${bgColor('white')}
-        }
-    }
 `);
-
-class Paragraph extends Adapter {};
-define('el-paragraph', Paragraph);
-Paragraph.tagStyle(`
-    .container {
-        max-width: 45rem;
-        width: 90%;
-        display: flex;
-        justify-content: left;
-    }
-    h1, h2 {
-        & + p {
-            margin-top: 0;
-        }
-    }
-
-    p {
-        margin-top: 1rem;
-        width: 100%;
-        max-width: 45rem;
-    }
-    p + p {
-        margin-top: 0;
-    }
-    ol {
-        padding-left: 1.7rem;
-        margin-top: 0rem;
-    }
-`)
 
 
 class ID_Footer extends Adapter {};
@@ -139,4 +181,4 @@ ID_Footer.tagStyle(`
     display: flex;
     min-height: 30vh;
     width: 100%;
-`)
+`);

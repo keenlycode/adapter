@@ -1,4 +1,31 @@
-Adapter is a Web Component CSS library. It relies on <web-component/>
-and **CSS-in-JS** to acheive it's goals to be adaptive, extensible and modular as much as possible.
+## Installation
+```shell
+$ npm install @nitipit/gadjet
+```
 
-gadjet establish it's core concept on StyledElement class which provides dynamic style methods to apply CSS-in-JS with <web-component/> as described in class structure below.
+## Usage
+### Option 1 : Javascript bundle (@nitipit/adapter + @emotion/css)
+
+Just copy `node_modules/@nitipit/adapter/dist/js/adapter.js` into your
+website asset which can be accessed by browser.
+
+```html
+<script type="module">
+import { define, Adapter } from './asset/adapter.js';
+class Paragraph extends Adapter {};
+define('el-paragraph', Paragraph);
+</script>
+
+<body>
+    <el-paragraph></el-paragraph>
+</body>
+```
+
+### Option 2 : Javascript module with build tools.
+
+`js`
+```js
+import { define, Adapter } from './asset/adapter.js';
+class Paragraph extends Adapter {};
+define('el-paragraph', Paragraph);
+```

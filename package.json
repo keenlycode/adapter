@@ -7,10 +7,11 @@
   "version": "1.0.0-dev",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.0",
-    "highlight.js": "^11.6.0",
-    "parcel": "^2.8.0",
     "gadjet": "^0.1.11",
-    "normalize.css": "^8.0.1"
+    "highlight.js": "^11.6.0",
+    "normalize.css": "^8.0.1",
+    "parcel": "^2.8.0",
+    "uhtml": "^3.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
