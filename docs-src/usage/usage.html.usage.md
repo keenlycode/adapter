@@ -72,7 +72,7 @@ const define = (tagName: string, Class: any = Adapter) => {
 <code class="tag">js</code>
 ```js
 class Adapter extends HTMLElement {
-   static tagStyle(style: string|object): void;
+   static tagStyle(style: any): void;
    static classStyle(className: string, style: string|object): void;
    addStyle(style: string|object): void;
 }

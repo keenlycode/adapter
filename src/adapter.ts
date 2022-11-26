@@ -1,8 +1,5 @@
-import { css, cx, injectGlobal} from "@emotion/css";
-
-
-export { injectGlobal as addStyle };
-
+import { css, cx } from "@emotion/css";
+import { addStyle } from "./add-style";
 
 export const define = (tagName: string, Class: any = Adapter) => {
     // Order of this function belows are very crucial.
@@ -30,40 +27,39 @@ export class Adapter extends HTMLElement {
 
     static initStyle(style?: any): void {
         if (!this.Style) {return};
-        injectGlobal`
+        addStyle`
         ${this.tagName} {
             ${this.Style.css(style)}
         }`;
     };
 
-    static tagStyle(style?: any): void {
+    static tagStyle(style?: string|Object): void {
         if (typeof style == "string") {
-            injectGlobal`
+            addStyle`
             ${this.tagName} {
                 ${style}
             }`;
             return;
         }
 
-        injectGlobal`
+        addStyle`
         ${this.tagName} {
             ${this.Style.style(style)}
         }`;
     }
 
-    static classStyle(class_: string, style?: any): void {
+    static classStyle(class_: string, style?: string|Object): void {
         if (typeof style == "string") {
-            injectGlobal`
+            addStyle`
             ${this.tagName}.${class_} {
                 ${style}
             }`;
-            return;
-        }
-
-        injectGlobal`
-        ${this.tagName}.${class_} {
-            ${this.Style.style(style)}
-        }`;
+        } else if (typeof style == "object") {
+            addStyle`
+            ${this.tagName}.${class_} {
+                ${this.Style.style(style)}
+            }`;
+        };
     }
 
     styleClass: string; // store style class name;
@@ -78,7 +74,7 @@ export class Adapter extends HTMLElement {
         let className;
         if (typeof style == 'string') {
             className = css`${style}`;
-        } else if (style instanceof Object) {
+        } else if (typeof style == "object") {
             className = css`${this._class.Style.style(style)}`;
         };
         className = cx(...this.classList, className);

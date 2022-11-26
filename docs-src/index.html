@@ -2,6 +2,10 @@
 
 {% set to_root = './' %}
 
+{% block head %}
+<script src="{{to_root}}index.js?v={{_v}}"></script>
+{% endblock %}
+
 {% block body %}
 <id-highlight>
     <div class="container">
