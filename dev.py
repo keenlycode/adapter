@@ -15,7 +15,7 @@ async def engrave():
 async def docs():
     src = _dir.joinpath('docs-src').resolve()
     src = f'{src}/**/*.(scss|js|ts)'
-    proc = f"npx parcel watch '{src}' --target docs "
+    proc = f"npx parcel watch '{src}' --target docs"
     print(proc)
     proc = await asyncio.create_subprocess_shell(proc)
     await proc.communicate()
@@ -23,12 +23,13 @@ async def docs():
 
 async def lib():
     src = _dir.joinpath('node_modules/highlight.js/styles/github.css')
-    dest_dir = _dir.joinpath('docs/_asset/highlight.js/styles/')
+    dest = _dir.joinpath('docs/_asset/highlight.js/styles/')
     try:
-        dest_dir.mkdir(parents=True)
+        dest.mkdir(parents=True)
     except FileExistsError:
         pass
-    shutil.copy(src, dest_dir)
+    print(f'Copy: {src} -> {dest}')
+    shutil.copy(src, dest)
 
 
 async def http():

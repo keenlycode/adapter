@@ -1,9 +1,10 @@
 {
   "dependencies": {
-    "@emotion/css": "^11.10.5"
+    "@emotion/css": "^11.10.5",
+    "esbuild": "^0.15.15"
   },
   "name": "@nitipit/adapter",
-  "description": "A Tiny Web Component with Styles",
+  "description": "A Styling Web Component with Styles",
   "version": "1.0.0-dev",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.0",
@@ -49,9 +50,9 @@
       "outputFormat": "esmodule",
       "isLibrary": true
     },
-    "js": {
-      "source": "src/adapter.ts",
-      "distDir": "dist/js",
+    "bundle": {
+      "source": "src/adapter.bundle.ts",
+      "distDir": "dist/bundle",
       "outputFormat": "global",
       "optimize": true
     }

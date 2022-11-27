@@ -13,7 +13,7 @@ import { injectGlobal as addStyle } from '@emotion/css';
 import { fontFluid } from 'gadjet/src/style/font-fluid';
 import { bgColor } from 'gadjet/src/style/bg-color';
 
-import { define, Adapter } from "../src/adapter";
+// import { define, Adapter } from "../src/adapter";
 import { color } from './color';
 
 
@@ -96,11 +96,11 @@ Nav.tagStyle(`
     display: flex;
     width: 100%;
     ${bgColor(color.p)}
-    cursor: pointer;
     a {
         padding: 0.5rem 1rem;
         text-decoration: none;
         font-weight: bold;
+        cursor: pointer;
         ${bgColor(color.p)}
         &:hover {
             ${bgColor('white')}
@@ -183,4 +183,32 @@ Paragraph.tagStyle(`
     pre + p {
         margin-top: 0;
     }
+`);
+
+class ID_Highlight extends Adapter {};
+define('id-highlight', ID_Highlight);
+ID_Highlight.tagStyle(`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: ${color.p3};
+    color: white;
+    .container {
+        width: 90%;
+        max-width: 600px;
+        margin: 2rem;
+        text-align: center;
+        border: 7px double white;
+        > h1 {
+            width: 100%;
+        }
+    }
+`);
+
+class ID_Footer extends Adapter {};
+define('id-footer', ID_Footer);
+ID_Footer.tagStyle(`
+    display: flex;
+    min-height: 30vh;
+    width: 100%;
 `);
