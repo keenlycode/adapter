@@ -88,14 +88,3 @@ export class Adapter extends HTMLElement {
         this.dispatchEvent(event);
     }
 }
-
-export const adapter = {
-    "define": define,
-    "StyleClass": StyleClass,
-    "Adapter": Adapter,
-    "addStyle": addStyle
-}
-
-const url: any = new URL(document.currentScript.src)
-const importAs = url.searchParams.get('as') || 'adapter';
-window[importAs] = adapter;

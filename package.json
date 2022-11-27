@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "@emotion/css": "^11.10.5",
-    "esbuild": "^0.15.15"
+    "@emotion/css": "^11.10.5"
   },
   "name": "@nitipit/adapter",
   "description": "A Styling Web Component with Styles",
@@ -51,13 +50,10 @@
       "isLibrary": true
     },
     "bundle": {
-      "source": "src/adapter.ts",
+      "source": "src/adapter.bundle.ts",
       "distDir": "dist/bundle",
       "outputFormat": "global",
       "optimize": true
     }
-  },
-  "directories": {
-    "doc": "docs"
   }
 }

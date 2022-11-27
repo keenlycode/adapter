@@ -31,7 +31,7 @@ async def bundle():
 async def docs():
     src = _dir.joinpath('docs-src').resolve()
     src = f'{src}/**/*.(scss|js|ts)'
-    proc = f"npx parcel build '{src}' --target docs "
+    proc = f"npx parcel build '{src}' --target docs"
     print(proc)
     proc = await asyncio.create_subprocess_shell(proc)
     await proc.communicate()
