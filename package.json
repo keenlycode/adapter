@@ -51,7 +51,7 @@
       "isLibrary": true
     },
     "bundle": {
-      "source": "src/adapter.bundle.ts",
+      "source": "src/adapter.ts",
       "distDir": "dist/bundle",
       "outputFormat": "global",
       "optimize": true

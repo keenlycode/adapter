@@ -9,13 +9,16 @@ import 'normalize.css';
 
 import { html, render } from 'uhtml';
 
-import { injectGlobal as addStyle } from '@emotion/css';
 import { fontFluid } from 'gadjet/src/style/font-fluid';
 import { bgColor } from 'gadjet/src/style/bg-color';
 
-// import { define, Adapter } from "../src/adapter";
 import { color } from './color';
 
+// import * as adapter from "../src/adapter";
+
+const define = adapter.define;
+const Adapter = adapter.Adapter;
+const addStyle = adapter.addStyle;
 
 hljs.registerLanguage('js', javascript);
 hljs.registerLanguage('css', css);

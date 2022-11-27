@@ -1,6 +1,8 @@
 import { css, cx } from "@emotion/css";
 import { addStyle } from "./add-style";
 
+export { addStyle };
+
 export const define = (tagName: string, Class: any = Adapter) => {
     // Order of this function belows are very crucial.
     // Class state must be defined before `customElements.define`
@@ -86,3 +88,14 @@ export class Adapter extends HTMLElement {
         this.dispatchEvent(event);
     }
 }
+
+export const adapter = {
+    "define": define,
+    "StyleClass": StyleClass,
+    "Adapter": Adapter,
+    "addStyle": addStyle
+}
+
+const url: any = new URL(document.currentScript.src)
+const importAs = url.searchParams.get('as') || 'adapter';
+window[importAs] = adapter;
