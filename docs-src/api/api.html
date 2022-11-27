@@ -1,0 +1,13 @@
+{% extends '_base.html' %}
+
+{% set to_root = '../' %}
+
+{% block body %}
+<el-nav data-to-root="{{to_root}}"></el-nav>
+<el-paragraph>
+    <div class="container">
+        {{ markdown('api.html.api.md') }}
+    </div>
+</el-paragraph>
+<id-footer></id-footer>
+{% endblock %}

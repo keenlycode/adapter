@@ -146,6 +146,7 @@ Paragraph.tagStyle(`
         width: 100%;
         max-width: 45rem;
     }
+
     p + p {
         margin-top: 0;
     }
@@ -169,6 +170,10 @@ Paragraph.tagStyle(`
                 border-top-left-radius: 0;
             }
         }
+    }
+
+    p + pre {
+        margin-top: 0;
     }
 
     ol {

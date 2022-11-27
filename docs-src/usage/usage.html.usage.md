@@ -7,34 +7,42 @@ $ npm install @nitipit/adapter
 
 ## Usage
 ---
-### Option 1 : Javascript bundle (@nitipit/adapter + @emotion/css)
+### Option 1 : Javascript bundle
 
-Just copy `node_modules/@nitipit/adapter/dist/js/adapter.js` into your
+This is the easiest way to use **Adapter**. Just copy `adapter.bundle.js` into your
 website asset which can be accessed by browser.
 
-<code class="tag">html</code>
-```html
-<script type="module">
-import { define, Adapter } from './asset/adapter.js';
-class Paragraph extends Adapter {};
+<code class="tag">html: \<head\></code>
+```html<head>
+<!-- #1 -->
+<script src="adapter.bundle.js?as=adapter"></script>
+
+
+<!-- #2 -->
+<script>
+class Paragraph extends adapter.Adapter {};
+
 define('el-paragraph', Paragraph);
+
 Paragraph.tagStyle(`
     background-color: white;
 `)
+
 Paragraph.classStyle('grey', `
     background-color: grey;
 `)
 </script>
+```
 
-<body>
-    <el-paragraph><!-- Background is white" --></el-paragraph>
-    <el-paragraph class="grey"><!-- Background is grey" --></el-paragraph>
-</body>
+<code class="tag">html: \<body\></code>
+```html
+<el-paragraph><!-- Background is white" --></el-paragraph>
+<el-paragraph class="grey"><!-- Background is grey" --></el-paragraph>
 ```
 
 ### Option 2 : Javascript module with build tools.
-Now support [parcel](https://parceljs.org/).  
-(Haven't tested on other build tools)
+[parcel](https://parceljs.org/) is recommend. Other tools should work fine
+(**esbuild**, **vite** or **webpack**).
 
 <code class="tag">js : index.js</code>
 ```js
@@ -49,31 +57,4 @@ Install parcel & build
 ```shell
 $ npm install --save-dev parcel
 $ npx parcel build 'index.js' --dist-dir 'html'
-```
-
-## API
----
-
-### Define
-
-<code class="tag">js</code>
-```js
-const define = (tagName: string, Class: any = Adapter) => {
-    // Order of this function belows are very crucial.
-    // Class state must be defined before `customElements.define`
-    Class.tagName = tagName; // Set tagName.
-    Class.define(tagName); // define this class to html tag.
-    Class.initStyle(); // Init CSS for this tag.
-}
-```
-
-### Adapter Class & Methods
-
-<code class="tag">js</code>
-```js
-class Adapter extends HTMLElement {
-   static tagStyle(style: any): void;
-   static classStyle(className: string, style: string|object): void;
-   addStyle(style: string|object): void;
-}
 ```
