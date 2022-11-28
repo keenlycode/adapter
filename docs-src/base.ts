@@ -5,8 +5,6 @@ import shell from 'highlight.js/lib/languages/shell.js';
 import typescript from 'highlight.js/lib/languages/typescript.js';
 import 'highlight.js/styles/base16/solarized-light.css';
 
-import 'normalize.css';
-
 import { html, render } from 'uhtml';
 
 import { fontFluid } from 'gadjet/src/style/font-fluid';
@@ -14,7 +12,6 @@ import { bgColor } from 'gadjet/src/style/bg-color';
 
 import { color } from './color';
 
-// import * as adapter from "../src/adapter";
 
 const define = adapter.define;
 const Adapter = adapter.Adapter;

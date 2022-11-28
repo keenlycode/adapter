@@ -18,6 +18,7 @@ async def bundle():
     proc = await asyncio.create_subprocess_shell(proc)
     await proc.communicate()
 
+    # Copy bundle javascript to docs
     src = _dir.joinpath('dist/bundle/')
     dest = _dir.joinpath('docs/_asset/adapter/')
     try:
@@ -29,7 +30,7 @@ async def bundle():
 
 
 async def docs():
-    src = _dir.joinpath('docs-src').resolve()
+    src = _dir.joinpath('docs-src')
     src = f'{src}/**/*.(scss|js|ts)'
     proc = f"npx parcel build '{src}' --target docs"
     print(proc)

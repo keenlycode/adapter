@@ -22,6 +22,7 @@ async def docs():
 
 
 async def lib():
+    # Highlight.js
     src = _dir.joinpath('node_modules/highlight.js/styles/github.css')
     dest = _dir.joinpath('docs/_asset/highlight.js/styles/')
     try:
@@ -30,6 +31,16 @@ async def lib():
         pass
     print(f'Copy: {src} -> {dest}')
     shutil.copy(src, dest)
+
+    # Icomoon
+    src = _dir.joinpath('docs-src/_asset/icomoon/')
+    dest = _dir.joinpath('docs/_asset/icomoon')
+    try:
+        dest.mkdir(parents=True)
+    except FileExistsError:
+        pass
+    print(f'Copy: {src} -> {dest}')
+    shutil.copytree(src, dest, dirs_exist_ok=True)
 
 
 async def http():

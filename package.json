@@ -6,6 +6,7 @@
   "description": "A Styling Web Component with Styles",
   "version": "1.0.0-dev",
   "devDependencies": {
+    "@nitipit/icon": "^0.0.6",
     "@parcel/transformer-sass": "^2.8.0",
     "gadjet": "^0.1.11",
     "highlight.js": "^11.6.0",
@@ -36,11 +37,12 @@
     "src/**/*",
     "dist/**/*"
   ],
-  "browser": "dist/module/adapter.js",
+  "browser": "dist/bundle/adapter.js",
   "targets": {
-    "docs": {
-      "distDir": "docs",
-      "outputFormat": "global",
+    "browser": false,
+    "bundle": {
+      "source": "src/adapter.bundle.ts",
+      "distDir": "dist/bundle/",
       "optimize": true
     },
     "module": {
@@ -49,9 +51,8 @@
       "outputFormat": "esmodule",
       "isLibrary": true
     },
-    "bundle": {
-      "source": "src/adapter.bundle.ts",
-      "distDir": "dist/bundle",
+    "docs": {
+      "distDir": "docs",
       "outputFormat": "global",
       "optimize": true
     }
