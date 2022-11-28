@@ -5,17 +5,16 @@ import shell from 'highlight.js/lib/languages/shell.js';
 import typescript from 'highlight.js/lib/languages/typescript.js';
 import 'highlight.js/styles/base16/solarized-light.css';
 
-import { html, render } from 'uhtml';
-
 import { fontFluid } from 'gadjet/src/style/font-fluid';
 import { bgColor } from 'gadjet/src/style/bg-color';
 
-import { color } from './color';
+import { addStyle, define, Adapter } from '@nitipit/adapter/src/adapter';
 
-
-const define = adapter.define;
-const Adapter = adapter.Adapter;
-const addStyle = adapter.addStyle;
+import './_component/nav';
+import './_component/paragraph';
+import './_component/id-header';
+import './_component/id-footer';
+import './_component/icon';
 
 hljs.registerLanguage('js', javascript);
 hljs.registerLanguage('css', css);
@@ -70,150 +69,3 @@ code {
     justify-content: center;
 }
 `;
-
-
-class Nav extends Adapter {
-    constructor() {
-        super();
-    }
-
-    connectedCallback() {
-        this.render();
-    }
-
-    render() {
-        return render(this, html`
-        <div class="container">
-            <a href=${`${this.dataset.toRoot}index.html`}>Intro</a>
-            <a href=${`${this.dataset.toRoot}usage/usage.html`}>Usage</a>
-            <a href=${`${this.dataset.toRoot}api/api.html`}>API</a>
-        </div>
-        `)
-    }
-};
-define('el-nav', Nav);
-Nav.tagStyle(`
-    display: flex;
-    width: 100%;
-    ${bgColor(color.p)}
-    a {
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        font-weight: bold;
-        cursor: pointer;
-        ${bgColor(color.p)}
-        &:hover {
-            ${bgColor('white')}
-        }
-    }
-`);
-
-
-class Paragraph extends Adapter {};
-define('el-paragraph', Paragraph);
-Paragraph.tagStyle(`
-    .container {
-        max-width: 45rem;
-        width: 90%;
-        display: flex;
-        justify-content: left;
-    }
-
-    h1, h2, h3 {
-        & + * {
-            margin-top: 0;
-        }
-        & + p {
-            margin-top: 0;
-        }
-    }
-
-    h2 + hr {
-        margin-top: -1rem;
-        margin-bottom: 0;
-        height: 2px;
-        width: 100%;
-        border: 0;
-        box-sizing: border-box;
-        ${bgColor(color.p2)}
-    }
-
-    p {
-        margin-top: 1rem;
-        width: 100%;
-        max-width: 45rem;
-    }
-
-    p + p {
-        margin-top: 0;
-    }
-
-    p:has(code.tag) {
-        margin-bottom: 0;
-        > code.tag {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            min-width: 2rem;
-            display: inline-flex;
-            justify-content: center;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
-            ${bgColor(color.p2)}
-            font-weight: bold;
-        }
-        & + pre {
-            margin-top: 0;
-            code {
-                border-top-left-radius: 0;
-            }
-        }
-    }
-
-    p + pre {
-        margin-top: 0;
-    }
-
-    ol {
-        padding-left: 1.7rem;
-        margin-top: 0rem;
-    }
-
-    blockquote {
-        margin: 0;
-        padding: 0;
-        padding-left: 1rem;
-        border-left: 5px solid ${color.p2};
-    }
-
-    pre + p {
-        margin-top: 0;
-    }
-`);
-
-class ID_Highlight extends Adapter {};
-define('id-highlight', ID_Highlight);
-ID_Highlight.tagStyle(`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    background-color: ${color.p3};
-    color: white;
-    .container {
-        width: 90%;
-        max-width: 600px;
-        margin: 2rem;
-        text-align: center;
-        border: 7px double white;
-        > h1 {
-            width: 100%;
-        }
-    }
-`);
-
-class ID_Footer extends Adapter {};
-define('id-footer', ID_Footer);
-ID_Footer.tagStyle(`
-    display: flex;
-    min-height: 30vh;
-    width: 100%;
-`);

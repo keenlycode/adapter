@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "@emotion/css": "^11.10.5"
+    "@emotion/css": "^11.10.5",
+    "@nitipit/adapter": "^1.0.0-dev"
   },
   "name": "@nitipit/adapter",
   "description": "A Styling Web Component with Styles",
@@ -8,12 +9,12 @@
   "devDependencies": {
     "@nitipit/icon": "^0.0.6",
     "@parcel/transformer-sass": "^2.8.0",
+    "esbuild": "^0.15.16",
     "gadjet": "^0.1.11",
     "highlight.js": "^11.6.0",
     "normalize.css": "^8.0.1",
     "parcel": "^2.8.0",
-    "uhtml": "^3.1.0",
-    "esbuild": "^0.15.16"
+    "uhtml": "^3.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -38,7 +39,7 @@
     "src/**/*",
     "dist/**/*"
   ],
-  "browser": "dist/bundle/adapter.js",
+  "module": "dist/module/adapter.js",
   "targets": {
     "browser": false,
     "bundle": {
