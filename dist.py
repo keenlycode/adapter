@@ -1,5 +1,6 @@
 import asyncio, shutil
 from pathlib import Path
+from dev import docs_lib
 
 
 _dir = Path(__file__).parent
@@ -45,5 +46,5 @@ async def main():
         docs(),
     )
 
-
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())

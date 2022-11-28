@@ -21,7 +21,7 @@ async def docs():
     await proc.communicate()
 
 
-async def lib():
+async def docs_lib():
     # Highlight.js
     src = _dir.joinpath('node_modules/highlight.js/styles/github.css')
     dest = _dir.joinpath('docs/_asset/highlight.js/styles/')
@@ -31,6 +31,12 @@ async def lib():
         pass
     print(f'Copy: {src} -> {dest}')
     shutil.copy(src, dest)
+
+    # Normalize.css
+    proc = f'npx esbuild node_modules/normalize.css/normalize.css --outdir=docs/_asset/normalize.css/ --minify'
+    print(proc)
+    proc = await asyncio.create_subprocess_shell(proc)
+    await proc.communicate()
 
     # Icomoon
     src = _dir.joinpath('docs-src/_asset/icomoon/')
@@ -53,10 +59,11 @@ async def http():
 async def main():
     await asyncio.gather(
         engrave(),
-        lib(),
+        docs_lib(),
         docs(),
         http(),
     )
 
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
