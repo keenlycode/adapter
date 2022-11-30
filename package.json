@@ -41,7 +41,6 @@
   ],
   "module": "dist/module/adapter.js",
   "targets": {
-    "browser": false,
     "bundle": {
       "source": "src/adapter.bundle.ts",
       "distDir": "dist/bundle/",
@@ -56,6 +55,11 @@
     "docs": {
       "distDir": "docs",
       "outputFormat": "global",
+      "optimize": true
+    },
+    "docs-bundle": {
+      "source": "src/adapter.bundle.ts",
+      "distDir": "docs/asset/adapter/",
       "optimize": true
     }
   }

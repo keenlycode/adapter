@@ -1,6 +1,6 @@
 import asyncio, shutil
 from pathlib import Path
-from dev import docs, docs_lib
+from dev import docs, docs_lib, engrave
 
 
 _dir = Path(__file__).parent
@@ -19,24 +19,14 @@ async def bundle():
     proc = await asyncio.create_subprocess_shell(proc)
     await proc.communicate()
 
-    # Copy bundle javascript to docs
-    src = _dir.joinpath('dist/bundle/')
-    dest = _dir.joinpath('docs/_asset/adapter/')
-    try:
-        dest.mkdir(parents=True)
-    except FileExistsError:
-        pass
-    print(f'Copy: {src} -> {dest}')
-    shutil.copytree(src, dest, dirs_exist_ok=True)
-
 
 async def main():
-    await asyncio.gather(
-        module(),
-        bundle(),
-        docs(),
-        docs_lib(),
-    )
+    await module()
+    await bundle()
+    await docs_lib()
+    await engrave(build=True)
+    await docs(build=True)
+
 
 if __name__ == "__main__":
     asyncio.run(main())

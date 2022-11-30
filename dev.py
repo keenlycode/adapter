@@ -5,17 +5,8 @@ from pathlib import Path
 _dir = Path(__file__).parent
 
 
-async def engrave():
-    proc = 'engrave dev docs-src docs'
-    print(proc)
-    proc = await asyncio.create_subprocess_shell(proc)
-    await proc.communicate()
-
-
-async def docs():
-    src = _dir.joinpath('docs-src').resolve()
-    src = f'{src}/**/*.(scss|js|ts|jpg|png)'
-    proc = f"npx parcel watch '{src}' --target docs"
+async def bundle():
+    proc = f'npx parcel watch --no-cache --no-hmr --target docs-bundle'
     print(proc)
     proc = await asyncio.create_subprocess_shell(proc)
     await proc.communicate()
@@ -49,6 +40,28 @@ async def docs_lib():
     shutil.copytree(src, dest, dirs_exist_ok=True)
 
 
+async def engrave(build=False):
+    mode = 'dev'
+    if build:
+        mode = 'build'
+    proc = f'engrave {mode} docs-src docs'
+    print(proc)
+    proc = await asyncio.create_subprocess_shell(proc)
+    await proc.communicate()
+
+
+async def docs(build=False):
+    src = _dir.joinpath('docs-src').resolve()
+    src = f'{src}/**/*.(scss|js|ts|jpg|png)'
+    mode = 'watch'
+    if build:
+        mode = 'build'
+    proc = f"npx parcel {mode} --no-cache '{src}' --target docs"
+    print(proc)
+    proc = await asyncio.create_subprocess_shell(proc)
+    await proc.communicate()
+
+
 async def http():
     proc = 'python -m http.server --directory docs'
     print(proc)
@@ -57,9 +70,10 @@ async def http():
 
 
 async def main():
+    await docs_lib()
     await asyncio.gather(
+        bundle(),
         engrave(),
-        docs_lib(),
         docs(),
         http(),
     )
