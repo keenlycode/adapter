@@ -1,8 +1,5 @@
-import { html, render } from 'uhtml';
 import { define, Adapter } from '@nitipit/adapter/src/adapter';
-
 import { bgColor } from 'gadjet/src/style/bg-color';
-
 import { color } from '../color';
 
 

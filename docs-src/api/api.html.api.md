@@ -25,6 +25,7 @@ to define custom imported name. For example, to import **Adapter** as `adpt`
 
 ## Global CSS
 ---
+`adapter.addStyle`  
 
 <code class="tag">adapter.addStyle(style: string)</code>
 > Add global scoped **CSS** by tag `<style>`
@@ -34,9 +35,9 @@ Example:
 ```js
 
 ```
-
-
 ### Define
+
+`adapter.define`
 
 <code class="tag">js</code>
 ```js

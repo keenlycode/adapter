@@ -9,7 +9,8 @@ $ npm install @nitipit/adapter
 ---
 ### Option 1 : Javascript bundle
 
-This is the easiest way to use **Adapter**. Just copy `adapter.bundle.js` into your
+This is the easiest way to use **Adapter**.
+Just copy `adapter.bundle.js` into your
 website asset which can be accessed by browser.
 
 <code class="tag">html: \<head\></code>
@@ -17,20 +18,18 @@ website asset which can be accessed by browser.
 <!-- #1 -->
 <script src="adapter.bundle.js?as=adapter"></script>
 
-
 <!-- #2 -->
 <script>
 class Paragraph extends adapter.Adapter {};
-
 define('el-paragraph', Paragraph);
 
 Paragraph.tagStyle(`
     background-color: white;
-`)
+`);
 
 Paragraph.classStyle('grey', `
     background-color: grey;
-`)
+`);
 </script>
 ```
 
@@ -41,7 +40,8 @@ Paragraph.classStyle('grey', `
 ```
 
 ### Option 2 : Javascript module with build tools.
-[parcel](https://parceljs.org/) is recommend. Other tools should work fine
+[parcel](https://parceljs.org/) is recommend. Other tools aren't tested
+but should work fine.
 (**esbuild**, **vite** or **webpack**).
 
 <code class="tag">js : index.js</code>

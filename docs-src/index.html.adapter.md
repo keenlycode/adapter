@@ -15,7 +15,7 @@ to the next level with following advantages:
 > You can see [Gadjet](https://nitipit.github.io/gadjet/index.html) project
 > which based on **Adapter**.
 
-Let's see how **Adapter** implement **CSS** into **\<web-component/\>**
+Let's see how to style **CSS** with **Adapter**
 
 <code class="tag">js</code>
 ```js
@@ -25,8 +25,10 @@ Paragraph.tagStyle(`background-color: white;`);
 Paragraph.classStyle('grey', `background-color: grey;`);
 
 const paragraph2 = document.querySelector("parapraph-2");
-paragraph2.addStyle(`color: white;`);
-paragraph2.addStyle(`transform: rotate(90deg);`);
+paragraph2.addStyle(`
+   color: white;
+   font-size: 1.5rem;
+`);
 ```
 
 <code class="tag">html</code>
@@ -34,7 +36,3 @@ paragraph2.addStyle(`transform: rotate(90deg);`);
 <el-paragraph>First Paragraph</el-paragraph>
 <el-paragraph id="paragraph-2" class="grey">Second Paragraph</el-paragraph>
 ```
-
-
-
-<el-icon name="power" style="font-size: 5rem;"></el-icon>
