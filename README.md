@@ -2,9 +2,7 @@
 
 Please read documentation at : https://nitipit.github.io/adapter/
 
-<div style="width: 100%; max-width: 500px;">
-    <img src="https://nitipit.github.io/adapter/relax.jpg">
-</div>
+<img src="https://nitipit.github.io/adapter/relax.jpg" width=500>
 
 ## How to build from source
 
