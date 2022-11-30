@@ -3,7 +3,9 @@
 {% set to_root = '../../' %}
 
 {% block body %}
-<el-nav data-to-root="{{to_root}}"></el-nav>
+
+{% include '_include/nav.html' %}
+
 <el-paragraph>
     <div class="container">
     {{ markdown('usage.html.usage.md') }}

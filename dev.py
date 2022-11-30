@@ -14,7 +14,7 @@ async def engrave():
 
 async def docs():
     src = _dir.joinpath('docs-src').resolve()
-    src = f'{src}/**/*.(scss|js|ts)'
+    src = f'{src}/**/*.(scss|js|ts|jpg|png)'
     proc = f"npx parcel watch '{src}' --target docs"
     print(proc)
     proc = await asyncio.create_subprocess_shell(proc)

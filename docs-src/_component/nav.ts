@@ -6,25 +6,7 @@ import { bgColor } from 'gadjet/src/style/bg-color';
 import { color } from '../color';
 
 
-export class Nav extends Adapter {
-    constructor() {
-        super();
-    }
-
-    connectedCallback() {
-        this.render();
-    }
-
-    render() {
-        return render(this, html`
-        <div class="container">
-            <a href=${`${this.dataset.toRoot}index.html`}>Intro</a>
-            <a href=${`${this.dataset.toRoot}usage/usage.html`}>Usage</a>
-            <a href=${`${this.dataset.toRoot}api/api.html`}>API</a>
-        </div>
-        `)
-    }
-};
+export class Nav extends Adapter {};
 
 define('el-nav', Nav);
 Nav.tagStyle(`
