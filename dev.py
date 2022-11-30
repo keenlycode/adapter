@@ -24,7 +24,7 @@ async def docs():
 async def docs_lib():
     # Highlight.js
     src = _dir.joinpath('node_modules/highlight.js/styles/github.css')
-    dest = _dir.joinpath('docs/_asset/highlight.js/styles/')
+    dest = _dir.joinpath('docs/asset/highlight.js/styles/')
     try:
         dest.mkdir(parents=True)
     except FileExistsError:
@@ -33,14 +33,14 @@ async def docs_lib():
     shutil.copy(src, dest)
 
     # Normalize.css
-    proc = f'npx esbuild node_modules/normalize.css/normalize.css --outdir=docs/_asset/normalize.css/ --minify'
+    proc = f'npx esbuild node_modules/normalize.css/normalize.css --outdir=docs/asset/normalize.css/ --minify'
     print(proc)
     proc = await asyncio.create_subprocess_shell(proc)
     await proc.communicate()
 
     # Icomoon
-    src = _dir.joinpath('docs-src/_asset/icomoon/')
-    dest = _dir.joinpath('docs/_asset/icomoon')
+    src = _dir.joinpath('docs-src/asset/icomoon/')
+    dest = _dir.joinpath('docs/asset/icomoon')
     try:
         dest.mkdir(parents=True)
     except FileExistsError:

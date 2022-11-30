@@ -8,7 +8,7 @@ import 'highlight.js/styles/base16/solarized-light.css';
 import { fontFluid } from 'gadjet/src/style/font-fluid';
 import { bgColor } from 'gadjet/src/style/bg-color';
 
-import { addStyle, define, Adapter } from '@nitipit/adapter/src/adapter';
+import { addStyle } from '@nitipit/adapter/src/adapter';
 
 import './_component/nav';
 import './_component/paragraph';

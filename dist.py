@@ -7,7 +7,7 @@ _dir = Path(__file__).parent
 
 
 async def module():
-    proc = f'npx parcel build --no-cache --target es6'
+    proc = f'npx parcel build --no-cache --target module'
     print(proc)
     proc = await asyncio.create_subprocess_shell(proc)
     await proc.communicate()
