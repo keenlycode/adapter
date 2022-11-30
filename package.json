@@ -1,11 +1,10 @@
 {
   "dependencies": {
-    "@emotion/css": "^11.10.5",
-    "@nitipit/adapter": "^1.0.0-dev"
+    "@emotion/css": "^11.10.5"
   },
   "name": "@nitipit/adapter",
   "description": "A Web Component with Styles",
-  "version": "1.0.0-dev",
+  "version": "1.0.0",
   "devDependencies": {
     "@nitipit/icon": "^0.0.6",
     "@parcel/transformer-sass": "^2.8.0",
