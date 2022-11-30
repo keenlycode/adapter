@@ -4,7 +4,7 @@
     "@nitipit/adapter": "^1.0.0-dev"
   },
   "name": "@nitipit/adapter",
-  "description": "A Styling Web Component with Styles",
+  "description": "A Web Component with Styles",
   "version": "1.0.0-dev",
   "devDependencies": {
     "@nitipit/icon": "^0.0.6",
