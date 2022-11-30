@@ -1,0 +1,39 @@
+{% extends '_base.html' %}
+
+{% set to_root = './' %}
+
+{% block body %}
+<id-header>
+    <div class="container">
+        <h1>Adapter</h1>
+        <h2 style="margin-top: 0;">A Stylish Web Component</h2>
+    </div>
+</id-header>
+
+{% include '_include/nav.html' %}
+
+<el-paragraph>
+<div class="container" style="margin-top: 2rem;">
+    <strong style="font-size: 1.5rem; text-align: center; margin: auto;">
+        "CSS management is easy<br>with &lt;web-component/&gt;"
+    </strong>
+</div>
+<div class="container" style="display: flex; justify-content: center;">
+    <div style="width: 100%; text-align: center;">
+        <img src="relax.jpg" style="max-width: 600px; margin: auto;">
+    </div>
+    <div style="font-size: 0.7rem;">
+        <a href="https://www.freepik.com/free-vector/flat-happy-teen-girl-headphones-sitting-home-bean-bag-chair-using-smartphone-online-education-woman-relaxing-listening-music-audio-podcast-radio-audiobook-mobile-phone_16503842.htm#query=relax&position=2&from_view=search&track=sph"
+                target="_blank">
+            Image by redgreystock
+        </a>
+        on Freepik
+    </div>
+</div>
+<div class="container">
+    {{markdown('index.html.adapter.md')}}
+</div>
+</el-paragraph>
+
+<id-footer></id-footer>
+{% endblock %}

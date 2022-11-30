@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% set _v = 2 %}
+
+{% set description = 'A Stylish Web Component' %}
+<html lang="en">
+<head>
+    {% include '_include/google-tag-manager.html' %}
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Adapter : {{description}}{% endblock %}</title>
+    <meta name="description" content="{{description}}">
+    <link rel="stylesheet" href="{{to_root}}_asset/normalize.css/normalize.css?v={{_v}}">
+    <link rel="stylesheet" href="{{to_root}}font.css?v={{_v}}">
+    <link rel="stylesheet" href="{{to_root}}base.css?v={{_v}}">
+    <script defer src="{{to_root}}_asset/adapter/adapter.bundle.js?v={{_v}}&as=adapter"></script>
+    <script defer src="{{to_root}}base.js?v={{_v}}"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+</body>
+</html>
