@@ -1,6 +1,6 @@
 import asyncio, shutil
 from pathlib import Path
-from dev import docs_lib
+from dev import docs, docs_lib
 
 
 _dir = Path(__file__).parent
@@ -30,20 +30,12 @@ async def bundle():
     shutil.copytree(src, dest, dirs_exist_ok=True)
 
 
-async def docs():
-    src = _dir.joinpath('docs-src')
-    src = f'{src}/**/*.(scss|js|ts)'
-    proc = f"npx parcel build '{src}' --target docs"
-    print(proc)
-    proc = await asyncio.create_subprocess_shell(proc)
-    await proc.communicate()
-
-
 async def main():
     await asyncio.gather(
         module(),
         bundle(),
         docs(),
+        docs_lib(),
     )
 
 if __name__ == "__main__":
