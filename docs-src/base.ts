@@ -7,6 +7,8 @@ import 'highlight.js/styles/base16/solarized-light.css';
 
 import { fontFluid } from 'gadjet/src/style/font-fluid';
 import { bgColor } from 'gadjet/src/style/bg-color';
+import { bgColorInt } from 'gadjet/src/style/bg-color-int';
+import { Button } from 'gadjet/src/ui/button/button';
 
 import { addStyle } from '@nitipit/adapter/src/adapter';
 
@@ -15,12 +17,16 @@ import './_component/paragraph';
 import './_component/id-header';
 import './_component/id-footer';
 import './_component/icon';
+import { color } from './color';
 
 hljs.registerLanguage('js', javascript);
 hljs.registerLanguage('css', css);
 hljs.registerLanguage('shell', shell);
 hljs.registerLanguage('ts', typescript);
 hljs.highlightAll();
+
+
+Button;
 
 
 addStyle`
@@ -60,6 +66,10 @@ code {
     font-size: 0.8rem;
 }
 
+a {
+    text-decoration: none;
+}
+
 .container {
     margin: auto;
     max-width: 1000px;
@@ -67,5 +77,11 @@ code {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.bg-int-light {
+    ${bgColorInt({
+        color: color.light
+    })}
 }
 `;

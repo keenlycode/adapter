@@ -83,4 +83,8 @@ Paragraph.tagStyle(`
     pre + p {
         margin-top: 0;
     }
+
+    a {
+        text-decoration: underline;
+    }
 `);
