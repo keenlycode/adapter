@@ -33,9 +33,20 @@ export class Adapter extends HTMLElement {
     static define(tagName: string): void {
         // To extends this function, sub-elements must be defined before call
         // this function as `super.define(tagName);`
+        try {
+            customElements.define(tagName, this);
+        } catch (error) {
+            if (error instanceof DOMException) {
+                console.error(
+                    `DOMException: '${this.name}' ` +
+                    `has already been defined to tag '${this.tagName}'\n` +
+                    `${error.stack}`
+                );
+                return;
+            }
+        }
         this.tagName = tagName;
         this.initStyle();
-        customElements.define(tagName, this);
     };
 
     static initStyle(style?: any): void {
