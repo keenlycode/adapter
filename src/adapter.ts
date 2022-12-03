@@ -1,14 +1,12 @@
-import { css, cx } from "@emotion/css";
-import { addStyle } from "./add-style";
+import { 
+    injectGlobal as addStyle,
+    css,
+    cx } from "@emotion/css";
 
 export { addStyle };
 
 export const define = (tagName: string, Class: any = Adapter) => {
-    // Order of this function belows are very crucial.
-    // Class state must be defined before `customElements.define`
-    Class.tagName = tagName;
     Class.define(tagName);
-    Class.initStyle();
 }
 
 export class StyleClass {
@@ -19,11 +17,24 @@ export class StyleClass {
 
 export class Adapter extends HTMLElement {
     static Style = StyleClass;
-    static tagName: string;
+    static _tagName: string;
+
+    static get tagName() {
+        if (!this._tagName) {
+            throw `${this.name} hasn't been defined a tag name`;
+        }
+        return this._tagName;
+    }
+
+    static set tagName(tagName) {
+        this._tagName = tagName;
+    }
     
     static define(tagName: string): void {
         // To extends this function, sub-elements must be defined before call
-        // this function as `super.onDefine(tagName);`
+        // this function as `super.define(tagName);`
+        this.tagName = tagName;
+        this.initStyle();
         customElements.define(tagName, this);
     };
 
@@ -64,7 +75,6 @@ export class Adapter extends HTMLElement {
         };
     }
 
-    styleClass: string; // store style class name;
     _class: any | Adapter; // store class to access static props.
     
     constructor() {

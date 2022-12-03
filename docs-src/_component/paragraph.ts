@@ -5,7 +5,7 @@ import { bgColor } from 'gadjet/src/style/bg-color';
 import { color } from '../color';
 
 class Paragraph extends Adapter {};
-define('el-paragraph', Paragraph);
+Paragraph.define('el-paragraph');
 Paragraph.tagStyle(`
     .container {
         max-width: 45rem;

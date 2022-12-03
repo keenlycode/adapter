@@ -4,8 +4,7 @@ import { color } from '../color';
 
 
 export class Nav extends Adapter {};
-
-define('el-nav', Nav);
+Nav.define('el-nav')
 Nav.tagStyle(`
     display: flex;
     width: 100%;
