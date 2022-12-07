@@ -57,7 +57,7 @@ export class Adapter extends HTMLElement {
         }`;
     };
 
-    static tagStyle(style?: string|Object): void {
+    static tagStyle(style?: string | Object): void {
         if (typeof style == "string") {
             addStyle`
             ${this.tagName} {
@@ -72,7 +72,7 @@ export class Adapter extends HTMLElement {
         }`;
     }
 
-    static classStyle(class_: string, style?: string|Object): void {
+    static classStyle(class_: string, style?: string | Object): void {
         if (typeof style == "string") {
             addStyle`
             ${this.tagName}.${class_} {

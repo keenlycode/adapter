@@ -1,13 +1,10 @@
-import asyncio, shutil
+import asyncio
 from pathlib import Path
 from dev import docs, docs_lib, engrave
 
 
-_dir = Path(__file__).parent
-
-
 async def module():
-    proc = f'npx parcel build --no-cache --target module'
+    proc = f"npx parcel build --no-cache 'src/adapter.ts' --target module"
     print(proc)
     proc = await asyncio.create_subprocess_shell(proc)
     await proc.communicate()
