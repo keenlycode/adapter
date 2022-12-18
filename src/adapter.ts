@@ -1,7 +1,4 @@
-import { 
-    injectGlobal as addStyle,
-    css,
-    cx } from "@emotion/css";
+import { injectGlobal as addStyle } from "@emotion/css";
 
 export { addStyle };
 
@@ -101,27 +98,28 @@ export class Adapter extends HTMLElement {
         };
     }
 
+    static readonly max_id = Math.pow(16, 4) - 1;
+    static instance = {};
+    static _generate_id() {
+        return `adt-${Math.floor(Math.random() * this.max_id).toString(16)}`;
+    }
+
     _class: any | Adapter; // store class to access static props.
-    _id: string;
+    _id: string; // instance id.
     
     constructor() {
         super();
         this._class = this.constructor;
+        let id = this._class._generate_id();
+        while (id in this._class.instance) {
+            id = this._class._generate_id();
+        }
+        this._class.instance[id] = true;
+        this._id = id;
     }
 
     addStyle(style: string | Object): void {
-        // let className;
-        // if (typeof style == 'string') {
-        //     className = css`${style}`;
-        // } else if (typeof style == "object") {
-        //     className = css`${this._class.Style.style(style)}`;
-        // };
-        // className = cx(...this.classList, className);
-        // this.className = className;
-        if (!this._id) {
-            this._id = `adt-${Math.floor(Math.random() * IDmax).toString(16)}`;
-            this.classList.add(this._id);
-        }
+        this.classList.add(this._id);
         let selector = this.classList.value.replace(/ /g, '.');
         if (typeof style == "string") {
             addStyle`
