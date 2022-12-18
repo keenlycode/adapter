@@ -5,14 +5,16 @@ import {
 
 export { addStyle };
 
+const IDmax = Math.pow(16,4) - 1;
+
 export const define = (tagName: string, Class: any = Adapter) => {
     Class.define(tagName);
 }
 
 export class StyleClass {
     static readonly default: object;
-    static css(style: any = {}): string { return '' };
-    static style(style: any = {}): string { return '' };
+    static css(style: Object = {}): string { return '' };
+    static style(style: Object = {}): string { return '' };
 }
 
 export class Adapter extends HTMLElement {
@@ -49,7 +51,20 @@ export class Adapter extends HTMLElement {
         this.initStyle();
     };
 
-    static initStyle(style?: any): void {
+    static initStyle(style?: string | Object): void {
+        addStyle`
+        ${this.tagName} {
+            all: unset;
+        }`;
+
+        if (typeof style == "string") {
+            addStyle`
+            ${this.tagName} {
+                ${style}
+            }`;
+            return;
+        }
+
         if (!this.Style) {return};
         addStyle`
         ${this.tagName} {
@@ -57,7 +72,7 @@ export class Adapter extends HTMLElement {
         }`;
     };
 
-    static tagStyle(style?: string | Object): void {
+    static tagStyle(style: string | Object): void {
         if (typeof style == "string") {
             addStyle`
             ${this.tagName} {
@@ -72,7 +87,7 @@ export class Adapter extends HTMLElement {
         }`;
     }
 
-    static classStyle(class_: string, style?: string | Object): void {
+    static classStyle(class_: string, style: string | Object): void {
         if (typeof style == "string") {
             addStyle`
             ${this.tagName}.${class_} {
@@ -87,21 +102,33 @@ export class Adapter extends HTMLElement {
     }
 
     _class: any | Adapter; // store class to access static props.
+    _id: string;
     
     constructor() {
         super();
         this._class = this.constructor;
     }
 
-    addStyle(style?: any): void {
-        let className;
-        if (typeof style == 'string') {
-            className = css`${style}`;
-        } else if (typeof style == "object") {
-            className = css`${this._class.Style.style(style)}`;
+    addStyle(style: string | Object): void {
+        // let className;
+        // if (typeof style == 'string') {
+        //     className = css`${style}`;
+        // } else if (typeof style == "object") {
+        //     className = css`${this._class.Style.style(style)}`;
+        // };
+        // className = cx(...this.classList, className);
+        // this.className = className;
+        if (!this._id) {
+            this._id = `adt-${Math.floor(Math.random() * IDmax).toString(16)}`;
+            this.classList.add(this._id);
+        }
+        let selector = this.classList.value.replace(/ /g, '.');
+        if (typeof style == "string") {
+            addStyle`
+            ${this.tagName}.${selector} {
+                ${style}
+            }`;
         };
-        className = cx(...this.classList, className);
-        this.className = className;
     }
 
     notify(name: string, options: object) {
