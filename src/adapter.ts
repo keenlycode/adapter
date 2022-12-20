@@ -124,6 +124,11 @@ export class Adapter extends HTMLElement {
             ${this.tagName}.${selector} {
                 ${style}
             }`;
+        } else if (typeof style == "object") {
+            addStyle`
+            ${this.tagName}.${selector} {
+                ${this._class.Style.style(style)}
+            }`;
         };
     }
 
