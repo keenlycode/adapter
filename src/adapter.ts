@@ -2,8 +2,6 @@ import { injectGlobal as addStyle } from "@emotion/css";
 
 export { addStyle };
 
-const IDmax = Math.pow(16,4) - 1;
-
 export const define = (tagName: string, Class: any = Adapter) => {
     Class.define(tagName);
 }
@@ -129,7 +127,7 @@ export class Adapter extends HTMLElement {
         };
     }
 
-    notify(name: string, options: object) {
+    notify(name: string, options?: object) {
         const event = new CustomEvent(name, options);
         this.dispatchEvent(event);
     }
