@@ -4,7 +4,7 @@
   },
   "name": "@nitipit/adapter",
   "description": "A Web Component with Styles",
-  "version": "1.0.0",
+  "version": "1.0.1-dev",
   "devDependencies": {
     "@nitipit/icon": "^0.0.6",
     "@parcel/transformer-sass": "^2.8.0",
@@ -46,7 +46,6 @@
       "optimize": true
     },
     "module": {
-      "source": "src/adapter.ts",
       "distDir": "dist/module/",
       "outputFormat": "esmodule",
       "isLibrary": true

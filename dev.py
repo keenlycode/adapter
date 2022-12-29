@@ -41,10 +41,11 @@ async def docs_lib():
 
 
 async def engrave(build=False):
+    server = '0.0.0.0:8000'
     mode = 'dev'
     if build:
         mode = 'build'
-    proc = f'engrave {mode} docs-src docs'
+    proc = f'engrave {mode} docs-src docs --server={server}'
     print(proc)
     proc = await asyncio.create_subprocess_shell(proc)
     await proc.communicate()
@@ -62,20 +63,12 @@ async def docs(build=False):
     await proc.communicate()
 
 
-async def http():
-    proc = 'python -m http.server --directory docs'
-    print(proc)
-    proc = await asyncio.create_subprocess_shell(proc)
-    await proc.communicate()
-
-
 async def main():
     await docs_lib()
     await asyncio.gather(
         bundle(),
         engrave(),
         docs(),
-        http(),
     )
 
 

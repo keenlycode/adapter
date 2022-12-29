@@ -3,7 +3,7 @@ import { color } from '../color';
 
 
 class ID_Header extends Adapter {};
-define('id-header', ID_Header);
+ID_Header.define('id-header');
 ID_Header.tagStyle(`
     display: flex;
     flex-wrap: wrap;
