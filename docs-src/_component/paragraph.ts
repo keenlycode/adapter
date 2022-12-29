@@ -1,4 +1,4 @@
-import { define, Adapter } from '@nitipit/adapter/src/adapter';
+import { Adapter } from '@nitipit/adapter/src/adapter';
 
 import { bgColor } from 'gadjet/src/style/bg-color';
 
@@ -78,6 +78,10 @@ Paragraph.tagStyle(`
         padding: 0;
         padding-left: 1rem;
         border-left: 5px solid ${color.p2};
+        ${bgColor(color.light)}
+        width: 100%;
+        border-radius: 5px;
+        border-top-left-radius: 0;
     }
 
     pre + p {

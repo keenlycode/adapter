@@ -25,12 +25,12 @@ to define custom imported name. For example, to import **Adapter** as `adpt`
 
 ## Global CSS
 ---
-`adapter.addStyle`  
-
 <code class="tag">adapter.addStyle(style: string)</code>
-> Add global scoped **CSS** by tag `<style>`
+<blockquote>
+    Add global scoped <strong>CSS</strong> by tag <code>&lt;style&gt;</code>
+</blockquote>
 
-Example:
+Example:  
 <code class="tag">js</code>
 ```js
 
