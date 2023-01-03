@@ -46,24 +46,17 @@ export class Adapter extends HTMLElement {
         this.initStyle();
     };
 
-    static initStyle(style?: string | Object): void {
+    static initStyle(): void {
         addStyle`
         ${this.tagName} {
             all: unset;
         }`;
 
-        if (typeof style == "string") {
-            addStyle`
-            ${this.tagName} {
-                ${style}
-            }`;
-            return;
-        }
-
         if (!this.Style) {return};
+
         addStyle`
         ${this.tagName} {
-            ${this.Style.css(style)}
+            ${this.Style.css()}
         }`;
     };
 

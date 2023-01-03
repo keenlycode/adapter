@@ -25,10 +25,6 @@ hljs.registerLanguage('shell', shell);
 hljs.registerLanguage('ts', typescript);
 hljs.highlightAll();
 
-
-Button;
-
-
 addStyle`
 html {
     font-family: fira-sans;
