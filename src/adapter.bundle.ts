@@ -7,6 +7,6 @@ export const adapter = {
     "addStyle": addStyle
 }
 
-const url: any = new URL(document.currentScript!.src)
+const url: any = new URL(document.currentScript!.src);
 const importAs = url.searchParams.get('as') || 'adapter';
 window[importAs] = adapter;
