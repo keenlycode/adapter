@@ -11,7 +11,7 @@ to the next level with following advantages:
 3. **CSS** becomes Adaptive, Programmable and can be encapsulted inside
    **\<web-component/\>**
 
-> **Adapter** is just `15KB` javascript minified.  
+> **Adapter** is just `17KB` javascript minified.  
 > You can see [Gadjet](https://nitipit.github.io/gadjet/index.html) project
 > which based on **Adapter**.
 
@@ -19,8 +19,10 @@ Let's see how to style **CSS** with **Adapter**
 
 <code class="tag">js</code>
 ```js
+import { Adapter } from '@nitipit/adapter';
+
 class Paragraph extends Adapter {};
-define('el-paragraph', Paragraph);
+Paragraph.define('el-paragraph');
 Paragraph.tagStyle(`background-color: white;`);
 Paragraph.classStyle('grey', `background-color: grey;`);
 

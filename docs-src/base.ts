@@ -9,8 +9,9 @@ import { fontFluid } from 'gadjet/src/style/font-fluid';
 import { bgColor } from 'gadjet/src/style/bg-color';
 import { bgColorInt } from 'gadjet/src/style/bg-color-int';
 import { Button } from 'gadjet/src/ui/button/button';
+Button;
 
-import { addStyle } from '@nitipit/adapter/src/adapter';
+import { addStyle } from '@nitipit/adapter';
 
 import './_component/nav';
 import './_component/paragraph';
@@ -24,10 +25,6 @@ hljs.registerLanguage('css', css);
 hljs.registerLanguage('shell', shell);
 hljs.registerLanguage('ts', typescript);
 hljs.highlightAll();
-
-
-Button;
-
 
 addStyle`
 html {

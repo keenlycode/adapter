@@ -6,51 +6,35 @@
 
 <code class="tag">js</code>
 ```js
-import { addStyle, define, StyleClass, Adapter } from 'adapter';
+import { addStyle, define, StyleClass, Adapter } from '@nitipit/adapter';
 ```
 
 ### Option 2: Bundle Javascript
 
-<code class="tag">html</code>
-```html
-<script src="adapter.bundle.js?as=adapter"></script>
-```
-To avoid library namespace conflict. `?as=adapter` query parameter can be changed
-to define custom imported name. For example, to import **Adapter** as `adpt`
-
-<code class="tag">html</code>
-```html
-<script src="adapter.bundle.js?as=adpt"></script>
+<code class="tag">js</code>
+```js
+import { addStyle, define, StyleClass, Adapter } from '@nitipit/adapter/dist/module/adapter.bundle.js';
 ```
 
 ## Global CSS
 ---
-`adapter.addStyle`  
-
 <code class="tag">adapter.addStyle(style: string)</code>
-> Add global scoped **CSS** by tag `<style>`
+<blockquote>
+    Add global scoped <strong>CSS</strong> by tag <code>&lt;style&gt;</code>
+</blockquote>
 
-Example:
+Example:  
 <code class="tag">js</code>
 ```js
-
-```
-### Define
-
-`adapter.define`
-
-<code class="tag">js</code>
-```js
-const define = (tagName: string, Class: any = Adapter) => {
-    // Order of this function belows are very crucial.
-    // Class state must be defined before `customElements.define`
-    Class.tagName = tagName; // Set tagName.
-    Class.define(tagName); // define this class to html tag.
-    Class.initStyle(); // Init CSS for this tag.
-}
+addStyle(`
+    body {
+        background-color: blue;
+    }
+`)
 ```
 
 ## Adapter Class & Methods
+---
 
 <code class="tag">js</code>
 ```js
