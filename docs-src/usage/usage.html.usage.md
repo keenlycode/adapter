@@ -10,18 +10,14 @@ $ npm install @nitipit/adapter
 ### Option 1 : Javascript bundle
 
 This is the easiest way to use **Adapter**.
-Just copy `adapter.bundle.js` into your
-website asset which can be accessed by browser.
+Just import `adapter.bundle.js` in javascript.
 
-<code class="tag">html: \<head\></code>
-```html<head>
-<!-- #1 -->
-<script src="adapter.bundle.js?as=adapter"></script>
+<code class="tag">js: \<script defer\></code>
+```js
+import { Adapter } from '@nitipit/adapter/dist/module/adapter.bundle.js';
 
-<!-- #2 -->
-<script>
-class Paragraph extends adapter.Adapter {};
-define('el-paragraph', Paragraph);
+class Paragraph extends Adapter {};
+Paragraph.define('el-paragraph');
 
 Paragraph.tagStyle(`
     background-color: white;
@@ -30,7 +26,6 @@ Paragraph.tagStyle(`
 Paragraph.classStyle('grey', `
     background-color: grey;
 `);
-</script>
 ```
 
 <code class="tag">html: \<body\></code>
@@ -46,9 +41,10 @@ but should work fine.
 
 <code class="tag">js : index.js</code>
 ```js
-import { define, Adapter } from '@nitipit/adapter';
+import { Adapter } from '@nitipit/adapter';
+
 class Paragraph extends Adapter {};
-define('el-paragraph', Paragraph);
+Paragraph.define('el-paragraph');
 ```
 
 Install parcel & build

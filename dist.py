@@ -1,5 +1,4 @@
 import asyncio
-from pathlib import Path
 from dev import docs, docs_lib, engrave
 
 
