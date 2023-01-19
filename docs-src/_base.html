@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% set _v = 2 %}
+{% set _v = 3 %}
 
 {% set description = 'A Web Component with Styles' %}
 <html lang="en">
@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="{{to_root}}asset/normalize.css/normalize.css?v={{_v}}">
     <link rel="stylesheet" href="{{to_root}}font.css?v={{_v}}">
     <link rel="stylesheet" href="{{to_root}}base.css?v={{_v}}">
-    <!-- <script defer src="{{to_root}}asset/adapter/adapter.bundle.js?v={{_v}}&as=adapter"></script> -->
     <script defer src="{{to_root}}base.js?v={{_v}}"></script>
     {% block head %}{% endblock %}
 </head>
