@@ -1,18 +1,21 @@
 {
   "dependencies": {
-    "@emotion/css": "^11.10.5"
+    "@emotion/css": "^11.11.2"
   },
-  "name": "@nitipit/adapter",
+  "name": "adaptis",
   "description": "A Web Component with Styles",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "devDependencies": {
+    "@nitipit/adapter": "file:./",
     "@nitipit/icon": "^0.0.6",
+    "@parcel/packager-ts": "^2.10.2",
     "@parcel/transformer-sass": "^2.8.0",
-    "esbuild": "^0.15.16",
+    "@parcel/transformer-typescript-types": "^2.10.2",
     "gadjet": "^0.1.11",
     "highlight.js": "^11.6.0",
     "normalize.css": "^8.0.1",
-    "parcel": "^2.8.0",
+    "parcel": "^2.10.2",
+    "typescript": "^5.2.2",
     "uhtml": "^3.1.0"
   },
   "scripts": {
@@ -38,22 +41,8 @@
     "src/**/*",
     "dist/**/*"
   ],
-  "module": "dist/module/adapter.js",
-  "targets": {
-    "bundle": {
-      "source": "src/adapter.bundle.js",
-      "distDir": "dist/module/",
-      "optimize": true,
-      "outputFormat": "commonjs"
-    },
-    "module": {
-      "distDir": "dist/module/",
-      "outputFormat": "esmodule"
-    },
-    "docs": {
-      "distDir": "docs",
-      "outputFormat": "global",
-      "optimize": true
-    }
-  }
+  "source": "src/adapter.ts",
+  "main": "dist/adapter.cjs.js",
+  "module": "dist/adapter.js",
+  "types": "dist/adapter.d.ts"
 }

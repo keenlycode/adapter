@@ -1,9 +1,9 @@
 import asyncio
-from dev import docs, docs_lib, engrave
+from dev import parcel_docs, docs_lib, engrave
 
 
 async def module():
-    proc = f"npx parcel build --no-cache 'src/adapter.ts' --target module"
+    proc = f"npx parcel build --no-cache --target module"
     print(proc)
     proc = await asyncio.create_subprocess_shell(proc)
     await proc.communicate()
@@ -18,10 +18,7 @@ async def bundle():
 
 async def main():
     await module()
-    await bundle()
-    await docs_lib()
-    await engrave(build=True)
-    await docs(build=True)
+    # await bundle()
 
 
 if __name__ == "__main__":
