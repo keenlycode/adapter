@@ -1,29 +1,13 @@
 {
-  "dependencies": {
-    "@emotion/css": "^11.11.2"
-  },
-  "name": "adaptis",
+  "name": "@devcapsule/adapter",
   "description": "A Web Component with Styles",
   "version": "1.0.0",
-  "devDependencies": {
-    "@nitipit/adapter": "file:./",
-    "@nitipit/icon": "^0.0.6",
-    "@parcel/packager-ts": "^2.10.2",
-    "@parcel/transformer-sass": "^2.8.0",
-    "@parcel/transformer-typescript-types": "^2.10.2",
-    "gadjet": "^0.1.11",
-    "highlight.js": "^11.6.0",
-    "normalize.css": "^8.0.1",
-    "parcel": "^2.10.2",
-    "typescript": "^5.2.2",
-    "uhtml": "^3.1.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nitipit/adapter.git"
+    "url": "git+https://github.com/keenly-coding/adapter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/keenly-coding/adapter/issues"
   },
   "keywords": [
     "javascript",
@@ -32,15 +16,24 @@
     "ui"
   ],
   "author": "Nitipit Nontasuwan",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nitipit/adapter/issues"
-  },
-  "homepage": "https://github.com/nitipit/adapter#readme",
+  "homepage": "https://github.com/keenly-coding/adapter#readme",
+  "license": "MIT",
   "files": [
     "src/**/*",
     "dist/**/*"
   ],
+  "dependencies": {
+    "@emotion/css": "^11.11.2"
+  },
+  "devDependencies": {
+    "@devcapsule/deficon": "^1.0.0",
+    "gadjet": "^1.0.4",
+    "highlight.js": "^11.9.0",
+    "jsdom": "^22.1.0",
+    "lit-html": "^3.0.2",
+    "normalize.css": "^8.0.1",
+    "parcel": "^2.10.2"
+  },
   "source": "src/adapter.ts",
   "main": "dist/adapter.cjs.js",
   "module": "dist/adapter.js",
