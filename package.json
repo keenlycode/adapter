@@ -30,9 +30,9 @@
     "gadjet": "^1.0.4",
     "highlight.js": "^11.9.0",
     "jsdom": "^22.1.0",
-    "lit-html": "^3.0.2",
     "normalize.css": "^8.0.1",
-    "parcel": "^2.10.2"
+    "parcel": "^2.10.2",
+    "uhtml": "^3.2.2"
   },
   "source": "src/adapter.ts",
   "main": "dist/adapter.cjs.js",
