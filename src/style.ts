@@ -15,3 +15,8 @@ export function css(
     result += strs.next().value;
     return result.trim();
 }
+
+export function renderStyle(
+    selector: string, css: string) {
+
+};
