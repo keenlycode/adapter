@@ -1,6 +1,5 @@
-import { injectGlobal as addStyle } from "@emotion/css";
-
-export { addStyle };
+// import { injectGlobal as addStyle } from "@emotion/css";
+import {css, renderStyle, addStyle} from './style';
 
 export const define = (tagName: string, Class: any = Adapter) => {
     Class.define(tagName);

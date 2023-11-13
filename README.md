@@ -1,8 +1,4 @@
-# Adapter : A Tiny Web Component with Styles
-
-Please read documentation at : https://nitipit.github.io/adapter/
-
-<img src="https://nitipit.github.io/adapter/relax.jpg" width=500>
+# Adapter : Stylable Web Component Framework for Web Applications
 
 ## How to build from source
 
@@ -13,24 +9,16 @@ Please read documentation at : https://nitipit.github.io/adapter/
 
 ### Clone repository from github
 ```bash
-$ git clone https://github.com/nitipit/adapter.git
+$ git clone https://github.com/keenlycode/adapter.git
 $ cd adapter
 ```
 
 ### Setup development resources
 ```bash
 $ npm install
-$ python -m venv venv
-$ source venv/bin/activate
-$ pip install -r require.pip
 ```
 
-### Run development server
+### Build library
 ```bash
-$ python dev.py
-```
-
-### Build bundle and modules
-```bash
-$ python dist.py
+$ npm run build
 ```

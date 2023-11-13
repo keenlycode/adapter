@@ -1,26 +1,13 @@
 {
-  "dependencies": {
-    "@emotion/css": "^11.10.5"
-  },
-  "name": "@nitipit/adapter",
-  "description": "A Web Component with Styles",
-  "version": "1.0.1",
-  "devDependencies": {
-    "@nitipit/icon": "^0.0.6",
-    "@parcel/transformer-sass": "^2.8.0",
-    "esbuild": "^0.15.16",
-    "gadjet": "^0.1.11",
-    "highlight.js": "^11.6.0",
-    "normalize.css": "^8.0.1",
-    "parcel": "^2.8.0",
-    "uhtml": "^3.1.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "name": "@devcapsule/adapter",
+  "description": "Adaptive Web Component",
+  "version": "2.0.0-dev",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nitipit/adapter.git"
+    "url": "git+https://github.com/keenly-coding/adapter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/keenly-coding/adapter/issues"
   },
   "keywords": [
     "javascript",
@@ -29,31 +16,47 @@
     "ui"
   ],
   "author": "Nitipit Nontasuwan",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nitipit/adapter/issues"
-  },
-  "homepage": "https://github.com/nitipit/adapter#readme",
+  "homepage": "https://github.com/keenly-coding/adapter#readme",
+  "license": "MIT",
   "files": [
     "src/**/*",
     "dist/**/*"
   ],
-  "module": "dist/module/adapter.js",
+  "scripts": {
+    "test": "jest src/",
+    "build": "parcel build",
+    "docs": "parcel watch --no-cache 'docs-src/**/*.(ts|js)' --target=docs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@devcapsule/adapter": "file:./",
+    "@devcapsule/deficon": "^1.0.0",
+    "@jest/globals": "^29.7.0",
+    "@parcel/config-default": "^2.10.2",
+    "@parcel/core": "^2.10.2",
+    "@parcel/packager-ts": "^2.10.2",
+    "@parcel/transformer-typescript-types": "^2.10.2",
+    "highlight.js": "^11.9.0",
+    "jest": "^29.7.0",
+    "normalize.css": "^8.0.1",
+    "parcel": "^2.10.2",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "type": "module",
+  "source": "src/adapter.ts",
+  "main": "dist/adapter.cjs.js",
+  "module": "dist/adapter.js",
+  "types": "dist/adapter.d.ts",
   "targets": {
     "bundle": {
-      "source": "src/adapter.bundle.js",
-      "distDir": "dist/module/",
-      "optimize": true,
-      "outputFormat": "commonjs"
-    },
-    "module": {
-      "distDir": "dist/module/",
-      "outputFormat": "esmodule"
+      "context": "browser",
+      "outputFormat": "global",
+      "distDir": "dist/bundle"
     },
     "docs": {
-      "distDir": "docs",
-      "outputFormat": "global",
-      "optimize": true
+      "context": "browser",
+      "distDir": "docs"
     }
   }
 }
