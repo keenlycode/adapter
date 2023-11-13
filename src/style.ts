@@ -1,22 +1,16 @@
 export function css(
     tstrings: TemplateStringsArray,
-    ...args: Array<any>
+    ...values: Array<any>
 ): string {
-    const strs = function* () {
-        for (const str of tstrings) {
-            yield str;
-        }
-    }();
-    let result: string = '';
-    for (const arg of args) {
-        result += strs.next().value;
-        result += String(arg);
-    }
-    result += strs.next().value;
-    return result.trim();
+    return String.raw({raw: tstrings}, ...values);
 }
 
-export function renderStyle(
-    selector: string, css: string) {
-
-};
+export function addStyle(
+    tstrings: TemplateStringsArray,
+    ...values: Array<any>
+): HTMLStyleElement {
+    const styleNode = document.createElement('style');
+    styleNode.textContent = css(tstrings, ...values);
+    document.querySelector('head')?.append(styleNode);
+    return styleNode;
+}
