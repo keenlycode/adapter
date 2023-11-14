@@ -1,4 +1,4 @@
-import { addStyle } from './style';
+import { addStyle } from './style.js';
 
 const define = (tagName: string, Class: any = Adapter) => {
     Class.define(tagName);

@@ -2,7 +2,7 @@ import {
     describe, expect, test
 } from '@jest/globals';
 
-import {css} from './style';
+import {css} from './style.js';
 
 test('css tag should return correct trimmed css string '
         + 'compare to template literal', () => {
