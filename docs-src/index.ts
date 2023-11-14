@@ -1,5 +1,7 @@
 import { Adapter } from '../src/adapter';
 
+new EventSource('/esbuild').addEventListener('change', () => location.reload());
+
 class Card extends Adapter {
     constructor() {
         super();

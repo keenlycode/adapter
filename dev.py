@@ -1,5 +1,4 @@
 import asyncio
-import signal
 
 
 async def build():
@@ -8,19 +7,15 @@ async def build():
     )
     await proc.communicate()
 
-async def parcel_docs():
-    proc = await asyncio.create_subprocess_shell(
-        "npm run docs"
-    )
+async def npm_docs():
+    proc = await asyncio.create_subprocess_shell("npm run docs")
     
     await proc.communicate()
 
 async def engrave_docs():
     proc = await asyncio.create_subprocess_shell(
-        "engrave dev docs-src docs --server --asset",
-        stderr=asyncio.subprocess.PIPE
+        "engrave dev docs-src docs --asset",
     )
-
     await proc.communicate()
 
 async def dev(mode='build'):
@@ -29,7 +24,7 @@ async def dev(mode='build'):
 async def main():
     try:
         await asyncio.gather(
-            parcel_docs(),
+            npm_docs(),
             engrave_docs(),
         )
     except asyncio.exceptions.CancelledError:

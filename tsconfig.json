@@ -8,7 +8,7 @@
         "esModuleInterop": true, // Enable compatibility with CommonJS modules
         "declaration": true,
         "emitDeclarationOnly": true,
-        "outFile": "dist/esmodule/export.js",
+        "outFile": "dist/adapter.js",
     },
     "include": ["src/export.ts"]
 }

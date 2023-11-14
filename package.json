@@ -26,7 +26,7 @@
     "test": "jest src/",
     "types": "tsc -p tsconfig.json",
     "build": "node esbuild/build.mjs",
-    "docs": "esbuild docs-src/**/*.ts --outdir=docs --bundle --minify --sourcemap --watch"
+    "docs": "node esbuild/docs.mjs"
   },
   "devDependencies": {
     "@devcapsule/adapter": "file:./",
