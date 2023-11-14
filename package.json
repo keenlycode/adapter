@@ -24,7 +24,8 @@
   ],
   "scripts": {
     "test": "jest src/",
-    "build": "esbuild src/export.ts --outfile=dist/browser/adapter.js --bundle --format=esm --sourcemap --minify",
+    "types": "tsc -p tsconfig.json",
+    "build": "node esbuild/build.mjs",
     "docs": "esbuild docs-src/**/*.ts --outdir=docs --bundle --minify --sourcemap --watch"
   },
   "devDependencies": {
@@ -36,5 +37,8 @@
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   },
-  "module": "dist/adapter.js"
+  "type": "module",
+  "main": "dist/bundle/export.js",
+  "module": "dist/esmodule/export.js",
+  "types": "dist/esmodule/export.d.ts"
 }
