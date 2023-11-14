@@ -14,11 +14,22 @@
    </li>
 </ul>
 
-## Sample Usage for Frontend
+## Sample Usage for Frontend (with uhtml)
 ```js
-import { Adapter } from `@devcapsule/adapter`
+import { Adapter } from `@devcapsule/adapter`;
+import { render, html } from 'uhtml';
 
-class Card extends Adapter {};
+class Card extends Adapter {
+   constructor() {
+      super();
+      this.renderHTML();
+   }
+   renderHTML(name="Card") {
+      render(this, html`
+         <h1>My name is ${name}</h1>
+      `)
+   }
+};
 
 // Don't worry about tag's name conflicted, choose your own.
 Card.define('el-card');
@@ -36,6 +47,7 @@ Card.classStyle('text-blue', `color: blue;`);
 // Dynamically create stylable element.
 const card = document.createElement('el-card');
 card.addStyle(`color: black`);
+card.renderHTML('black');
 ```
 
 ## Project Board
