@@ -5,13 +5,12 @@
 
 ## Software Development 💻
 
-### Environment required
+### Prerequisites
 - NodeJS : https://nodejs.org/en/
 - Git : https://git-scm.com/
 - Python >= 3.10 : https://www.python.org/
 
-### Setup
-
+### 🛠️ Setup
 1. Clone repository from github
 ```shell
 $ git clone https://github.com/keenlycode/adapter.git
@@ -23,7 +22,14 @@ $ cd adapter
 $ npm install
 ```
 
-### Build Library
+3. Setup **Python** environment & libs
+```shell
+$ python -m venv venv
+$ source venv/bin/activate
+$ pip install -r require.pip
+```
+
+### 🗃️ Build Library
 ```shell
 $ npm run build
 $ npm run types
@@ -33,17 +39,17 @@ or run with python `cli.py`
 $ python cli.py build
 ```
 
-### Build Docs
+### 📕 Build Docs
 ```shell
 $ npm run docs
 ```
 
-### Run Test
+### 🔍 Run Test
 ```shell
 $ npm run test
 ```
 
-### Run development process with command (python)
+### 🐍 Run development process with Python
 Command below will run `npm run docs` and `jest` in watch mode.
 ```shell
 $ python cli.py dev
