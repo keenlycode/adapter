@@ -11,7 +11,7 @@ class StyleClass {
 }
 
 class Adapter extends HTMLElement {
-    static Style = StyleClass;
+    static Style: StyleClass = StyleClass;
     static _tagName: string;
 
     static get tagName() {

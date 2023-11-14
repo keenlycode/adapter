@@ -14,6 +14,30 @@
    </li>
 </ul>
 
+## Sample Usage for Frontend
+```js
+import { Adapter } from `@devcapsule/adapter`
+
+class Card extends Adapter {};
+
+// Don't worry about tag's name conflicted, choose your own.
+Card.define('el-card');
+
+/* Style is isolated with defined tag name.
+ * It won't go anywhere outside the component.
+ * All <el-card> style will be updated.
+ */
+Card.tagStyle(`color: red;`);
+
+// Style class can also be used.
+// This will style <el-card class="text-blue">
+Card.classStyle('text-blue', `color: blue;`);
+
+// Dynamically create stylable element.
+const card = document.createElement('el-card');
+card.addStyle(`color: black`);
+```
+
 ## Project Board
 https://github.com/orgs/keenlycode/projects/2
 
