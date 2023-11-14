@@ -7,6 +7,11 @@ async def build():
     proc = await asyncio.create_subprocess_shell(cmd)
     await proc.communicate()
 
+async def types():
+    cmd = "npm run types"
+    proc = await asyncio.create_subprocess_shell(cmd)
+    await proc.communicate()
+
 async def npm_docs():
     cmd = 'npm run docs'
     print(cmd)
@@ -18,7 +23,6 @@ async def engrave_docs():
     print(cmd)
     proc = await asyncio.create_subprocess_shell(cmd)
     await proc.communicate()
-
 
 async def docs():
     try:
@@ -36,11 +40,10 @@ async def jest():
     await proc.communicate()
     
 
-# asyncio.run(main())
-
 class CLI():
     async def build(self):
         await build()
+        await types()
 
     async def docs(self):
         await docs()

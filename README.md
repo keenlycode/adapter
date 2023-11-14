@@ -1,9 +1,9 @@
-<h1 style="text-align: center">Adapter</h1>
+<h1 style="text-align: center">✨ Adapter 🎉</h1>
 
 > <h2 style="margin-top: 0; padding: 1rem;">Adaptive + Stylable Web Component Framework</h2>
 
 
-## Software Development
+## Software Development 💻
 
 ### Environment required
 - NodeJS : https://nodejs.org/en/
@@ -28,6 +28,10 @@ $ npm install
 $ npm run build
 $ npm run types
 ```
+or run with python `cli.py`
+```shell
+$ python cli.py build
+```
 
 ### Build Docs
 ```shell
@@ -40,6 +44,7 @@ $ npm run test
 ```
 
 ### Run development process with command (python)
+Command below will run `npm run docs` and `jest` in watch mode.
 ```shell
 $ python cli.py dev
 ```
