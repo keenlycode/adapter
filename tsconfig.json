@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es6", // Set the target ECMAScript version to ES6 (ES2015)
+        "target": "ES6", // Set the target ECMAScript version to ES6 (ES2015)
         "module": "ES6", // Set the module format to ES2015 modules
         "moduleResolution": "node", // Set the module resolution strategy to Node.js-style
         "strict": true, // Enable strict mode for type checking
