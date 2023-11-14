@@ -29,7 +29,7 @@ async def docs():
     except asyncio.exceptions.CancelledError:
         pass
 
-async def dev():
+async def jest():
     cmd = "npx jest src/ --watch"
     print(cmd)
     proc = await asyncio.create_subprocess_shell(cmd)
@@ -46,7 +46,10 @@ class CLI():
         await docs()
 
     async def dev(self):
-        await dev()
+        await asyncio.gather(
+            jest(),
+            docs(),
+        )
 
 if __name__ == '__main__':
     fire.Fire(CLI)
