@@ -1,6 +1,6 @@
 {
   "name": "@devcapsule/adapter",
-  "description": "Adaptive Web Component",
+  "description": "Adaptive Web Component Framework",
   "version": "2.0.0-dev",
   "repository": {
     "type": "git",
@@ -24,39 +24,17 @@
   ],
   "scripts": {
     "test": "jest src/",
-    "build": "parcel build",
-    "docs": "parcel watch --no-cache 'docs-src/**/*.(ts|js)' --target=docs"
+    "build": "esbuild src/export.ts --outfile=dist/browser/adapter.js --bundle --format=esm --sourcemap --minify",
+    "docs": "esbuild docs-src/**/*.ts --outdir=docs --bundle --minify --sourcemap --watch"
   },
-  "dependencies": {},
   "devDependencies": {
     "@devcapsule/adapter": "file:./",
     "@devcapsule/deficon": "^1.0.0",
     "@jest/globals": "^29.7.0",
-    "@parcel/config-default": "^2.10.2",
-    "@parcel/core": "^2.10.2",
-    "@parcel/packager-ts": "^2.10.2",
-    "@parcel/transformer-typescript-types": "^2.10.2",
-    "highlight.js": "^11.9.0",
+    "esbuild": "^0.19.5",
     "jest": "^29.7.0",
-    "normalize.css": "^8.0.1",
-    "parcel": "^2.10.2",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   },
-  "type": "module",
-  "source": "src/adapter.ts",
-  "main": "dist/adapter.cjs.js",
-  "module": "dist/adapter.js",
-  "types": "dist/adapter.d.ts",
-  "targets": {
-    "bundle": {
-      "context": "browser",
-      "outputFormat": "global",
-      "distDir": "dist/bundle"
-    },
-    "docs": {
-      "context": "browser",
-      "distDir": "docs"
-    }
-  }
+  "module": "dist/adapter.js"
 }

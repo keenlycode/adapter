@@ -1,17 +1,16 @@
-// import { injectGlobal as addStyle } from "@emotion/css";
-import {css, renderStyle, addStyle} from './style';
+import { addStyle } from './style';
 
-export const define = (tagName: string, Class: any = Adapter) => {
+const define = (tagName: string, Class: any = Adapter) => {
     Class.define(tagName);
 }
 
-export class StyleClass {
+class StyleClass {
     static readonly default: object;
     static css(style: Object = {}): string { return '' };
     static style(style: Object = {}): string { return '' };
 }
 
-export class Adapter extends HTMLElement {
+class Adapter extends HTMLElement {
     static Style = StyleClass;
     static _tagName: string;
 
@@ -129,3 +128,5 @@ export class Adapter extends HTMLElement {
         this.dispatchEvent(event);
     }
 }
+
+export { define, StyleClass, Adapter };

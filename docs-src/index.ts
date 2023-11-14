@@ -1,4 +1,4 @@
-import { Adapter } from '@devcapsule/adapter/src/adapter';
+import { Adapter } from '../src/adapter';
 
 class Card extends Adapter {
     constructor() {

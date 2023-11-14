@@ -1,4 +1,4 @@
-# Adapter : Stylable Web Component Framework for Web Applications
+# Adapter : Adaptive Web Component Framework
 
 ## How to build from source
 
