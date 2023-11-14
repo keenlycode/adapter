@@ -1,7 +1,21 @@
 <h1 style="text-align: center">✨ Adapter 🎉</h1>
 
-> <h2 style="margin-top: 0; padding: 1rem;">Adaptive + Stylable Web Component Framework</h2>
+> <h2 style="margin-top: 0; padding: 1rem;">
+> Adaptive + Stylable Web Component Framework
+> </h2>
 
+<ul style="font-size: 1.25rem;">
+   <li>Built with ❤️</li>
+   <li>Just <strong>850 B</strong> (minified + gzip)</li>
+   <li>Just <strong>10 kB</strong>
+       combined with your favourite html rendering libraries:
+       <a href="https://lit.dev/docs/libraries/standalone-templates/">lit-html</a> or
+       <a href="https://github.com/WebReflection/uhtml">uhtml</a>
+   </li>
+</ul>
+
+## Project Board
+https://github.com/orgs/keenlycode/projects/2
 
 ## Software Development 💻
 
