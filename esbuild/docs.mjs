@@ -18,7 +18,7 @@ async function docs() {
         bundle: true,
         format: "esm",
         sourcemap: true,
-        minify: true,
+        keepNames: true,
     })
     await result.watch();
     const { host, port } = await result.serve({

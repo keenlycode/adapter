@@ -12,6 +12,7 @@ interface Style {
 class Adapter extends HTMLElement {
     static tagName: string;
     static styles: Array<Style> = [];
+    static _is_styled: boolean = false;
     
     static define(tagName: string): void {
         // To extends this function, sub-elements must be defined before call
@@ -35,7 +36,10 @@ class Adapter extends HTMLElement {
     static defineStyle(): void {
         addStyle`${this.tagName} { all: unset; }`;
 
-        for (const style of this.styles) {
+        const styles = Object.getPrototypeOf(this).styles;
+        styles.push(...this.styles);
+
+        for (const style of styles) {
             let selector = this.tagName;
             if (style['class_'] !== '') {
                 selector = `${this.tagName}.${style['class_']}`
@@ -44,12 +48,12 @@ class Adapter extends HTMLElement {
         }
     };
 
-    static style(css: string): void {
+    static tagStyle(css: string): void {
         if (this.tagName) {
             addStyle`${this.tagName} { ${css} }`;
             return;
         }
-        this.styles.push({class_: '', css: css});
+        this.styles = this.styles.concat({class_: '', css: css});
     }
 
     static classStyle(class_: string, css: string) {

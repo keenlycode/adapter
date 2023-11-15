@@ -19,7 +19,8 @@ async function bundle() {
         format: "esm",
         sourcemap: true,
         minify: true,
-        metafile: true
+        metafile: true,
+        keepNames: true,
     })
     console.log(await esbuild.analyzeMetafile(result.metafile))
 }
