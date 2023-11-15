@@ -1,6 +1,6 @@
 {
   "name": "@devcapsule/adapter",
-  "description": "Adaptive Web Component Framework",
+  "description": "Adaptive Style Web Component Framework",
   "version": "2.0.0-dev",
   "repository": {
     "type": "git",
@@ -13,7 +13,8 @@
     "javascript",
     "web-component",
     "html",
-    "ui"
+    "ui",
+    "css"
   ],
   "author": "Nitipit Nontasuwan",
   "homepage": "https://github.com/keenly-coding/adapter#readme",
