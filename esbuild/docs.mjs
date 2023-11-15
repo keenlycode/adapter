@@ -14,11 +14,14 @@ async function docs() {
 
     const result = await esbuild.context({
         entryPoints: entryFiles,
+        entryNames: '[dir]/[name]',
         outdir: outDir,
+        outbase: 'docs-src',
         bundle: true,
         format: "esm",
         sourcemap: true,
         keepNames: true,
+        minify: true,
     })
     await result.watch();
     const { host, port } = await result.serve({
