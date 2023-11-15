@@ -81,7 +81,10 @@ $ pip install -r require.pip
 
 ### 🗃️ Build Library
 ```shell
+# Build
 $ npm run build
+
+# Create types definitions
 $ npm run types
 ```
 or run with python `cli.py`
