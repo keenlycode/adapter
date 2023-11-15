@@ -107,3 +107,6 @@ Command below will run `npm run docs` and `jest` in watch mode.
 ```shell
 $ python cli.py dev
 ```
+
+You can now look into `adapter/docs-src/` to play with code examples
+and see live result at `http://localhost:8000`
