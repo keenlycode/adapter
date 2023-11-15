@@ -4,26 +4,14 @@ const define = (tagName: string, Class: any = Adapter) => {
     Class.define(tagName);
 }
 
-class StyleClass {
-    static readonly default: object;
-    static css(style: Object = {}): string { return '' };
-    static style(style: Object = {}): string { return '' };
+interface Style {
+    class_: string;
+    css: string;
 }
 
 class Adapter extends HTMLElement {
-    static Style: StyleClass = StyleClass;
-    static _tagName: string;
-
-    static get tagName() {
-        if (!this._tagName) {
-            throw `${this.name} hasn't been defined a tag name`;
-        }
-        return this._tagName;
-    }
-
-    static set tagName(tagName) {
-        this._tagName = tagName;
-    }
+    static tagName: string;
+    static styles: Array<Style> = [];
     
     static define(tagName: string): void {
         // To extends this function, sub-elements must be defined before call
@@ -41,50 +29,35 @@ class Adapter extends HTMLElement {
             }
         }
         this.tagName = tagName;
-        this.initStyle();
+        this.defineStyle();
     };
 
-    static initStyle(): void {
-        addStyle`
-        ${this.tagName} {
-            all: unset;
-        }`;
+    static defineStyle(): void {
+        addStyle`${this.tagName} { all: unset; }`;
 
-        if (!this.Style) {return};
-
-        addStyle`
-        ${this.tagName} {
-            ${this.Style.css()}
-        }`;
+        for (const style of this.styles) {
+            let selector = this.tagName;
+            if (style['class_'] !== '') {
+                selector = `${this.tagName}.${style['class_']}`
+            }
+            addStyle`${selector} { ${style.css} }`;
+        }
     };
 
-    static tagStyle(style: string | Object): void {
-        if (typeof style == "string") {
-            addStyle`
-            ${this.tagName} {
-                ${style}
-            }`;
+    static style(css: string): void {
+        if (this.tagName) {
+            addStyle`${this.tagName} { ${css} }`;
             return;
         }
-
-        addStyle`
-        ${this.tagName} {
-            ${this.Style.style(style)}
-        }`;
+        this.styles.push({class_: '', css: css});
     }
 
-    static classStyle(class_: string, style: string | Object): void {
-        if (typeof style == "string") {
-            addStyle`
-            ${this.tagName}.${class_} {
-                ${style}
-            }`;
-        } else if (typeof style == "object") {
-            addStyle`
-            ${this.tagName}.${class_} {
-                ${this.Style.style(style)}
-            }`;
-        };
+    static classStyle(class_: string, css: string) {
+        if (this.tagName) {
+            addStyle`${this.tagName}.${class_} { ${css} }`;
+            return;
+        }
+        this.styles.push({class_: class_, css: css});
     }
 
     static readonly max_id = Math.pow(16, 4) - 1;
@@ -107,20 +80,10 @@ class Adapter extends HTMLElement {
         this._id = id;
     }
 
-    addStyle(style: string | Object): void {
+    addStyle(style: string): void {
         this.classList.add(this._id);
         let selector = this.classList.value.replace(/ /g, '.');
-        if (typeof style == "string") {
-            addStyle`
-            ${this.tagName}.${selector} {
-                ${style}
-            }`;
-        } else if (typeof style == "object") {
-            addStyle`
-            ${this.tagName}.${selector} {
-                ${this._class.Style.style(style)}
-            }`;
-        };
+        addStyle`${this.tagName}.${selector} { ${style} }`;
     }
 
     notify(name: string, options?: object) {
@@ -129,4 +92,4 @@ class Adapter extends HTMLElement {
     }
 }
 
-export { define, StyleClass, Adapter };
+export { define, Adapter };

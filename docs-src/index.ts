@@ -1,13 +1,3 @@
-import { Adapter } from '../src/adapter';
-
-new EventSource('/esbuild').addEventListener('change', () => location.reload());
-
-class Card extends Adapter {
-    constructor() {
-        super();
-    }
-}
+import { Card } from './card';
 
 Card.define('el-card');
-Card.tagStyle(`color: red`);
-Card.classStyle('blue', `color: blue`);

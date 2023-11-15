@@ -1,2 +1,2 @@
-export { addStyle } from './style'
-export { Adapter, StyleClass, define } from './adapter'
+export { addStyle, css } from './style'
+export { Adapter, define } from './adapter'
