@@ -49,9 +49,10 @@ class Adapter extends HTMLElement {
     };
 
     static tagStyle(css: string): void {
+        // In case that component has been defined
+        // Put css immediatly into html.
         if (this.tagName) {
             addStyle`${this.tagName} { ${css} }`;
-            return;
         }
         this.styles = this.styles.concat({class_: '', css: css});
     }
