@@ -33,11 +33,14 @@ class Adapter extends HTMLElement {
     static defineStyle(): void {
         addStyle`${this.tagName} { all: unset; }`;
 
-        const styles = Object.getPrototypeOf(this).styles;
-        styles.push(...this.styles);
-
+        const styles = [
+            ...Object.getPrototypeOf(this).styles,
+            ...this.styles
+        ];
+        
         for (const style of styles) {
             let selector = this.tagName;
+            console.log(this.tagName);
             if (style['class_'] !== '') {
                 selector = `${this.tagName}.${style['class_']}`
             }
