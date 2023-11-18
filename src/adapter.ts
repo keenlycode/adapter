@@ -31,20 +31,20 @@ class Adapter extends HTMLElement {
     };
 
     static defineStyle(): void {
-        addStyle`${this.tagName} { all: unset; }`;
+        addStyle(`${this.tagName} { all: unset; }`);
 
         const styles = [
             ...Object.getPrototypeOf(this).styles,
             ...this.styles
         ];
-        
+
         for (const style of styles) {
             let selector = this.tagName;
             console.log(this.tagName);
             if (style['class_'] !== '') {
                 selector = `${this.tagName}.${style['class_']}`
             }
-            addStyle`${selector} { ${style.css} }`;
+            addStyle(`${selector} { ${style.css} }`);
         }
     };
 
@@ -52,14 +52,14 @@ class Adapter extends HTMLElement {
         // In case that component has been defined
         // Put css immediatly into html.
         if (this.tagName) {
-            addStyle`${this.tagName} { ${css} }`;
+            addStyle(`${this.tagName} { ${css} }`);
         }
         this.styles = this.styles.concat({class_: '', css: css});
     }
 
     static classStyle(class_: string, css: string) {
         if (this.tagName) {
-            addStyle`${this.tagName}.${class_} { ${css} }`;
+            addStyle(`${this.tagName}.${class_} { ${css} }`);
             return;
         }
         this.styles.push({class_: class_, css: css});
@@ -88,7 +88,7 @@ class Adapter extends HTMLElement {
     addStyle(style: string): void {
         this.classList.add(this._id);
         let selector = this.classList.value.replace(/ /g, '.');
-        addStyle`${this.tagName}.${selector} { ${style} }`;
+        addStyle(`${this.tagName}.${selector} { ${style} }`);
     }
 
     notify(name: string, options?: object) {

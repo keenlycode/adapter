@@ -27,7 +27,7 @@ async function docs() {
     const { host, port } = await result.serve({
         servedir: "docs"
     })
-    console.log(`${host}:${port}`);
+    console.log(`docs server => http://${host}:${port}`);
 }
 
 await docs();
