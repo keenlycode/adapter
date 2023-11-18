@@ -90,11 +90,6 @@ class Adapter extends HTMLElement {
         let selector = this.classList.value.replace(/ /g, '.');
         addStyle(`${this.tagName}.${selector} { ${style} }`);
     }
-
-    notify(name: string, options?: object) {
-        const event = new CustomEvent(name, options);
-        this.dispatchEvent(event);
-    }
 }
 
 export { Adapter };
