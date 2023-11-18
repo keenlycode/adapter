@@ -21,9 +21,13 @@ class Card extends Adapter {
 
 Card.tagStyle(css`
     display: flex;
+    box-sizing: border-box;
     color: black;
     height: 40vh;
     border: 1px solid;
+    box-shadow: 5px 5px 20px;
+    margin: 2rem;
+    padding: 1rem;
 `);
 
 class Card1 extends Card {

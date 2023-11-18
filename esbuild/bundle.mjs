@@ -9,20 +9,19 @@ async function bundle() {
     const entryFiles = [];
     entryFiles.push(path.join(__dirname, '../src/export.ts'));
     console.log(entryFiles);
-    const outFile = path.join(__dirname, '../dist/adapter.js');
+    const outFile = path.join(__dirname, '../dist/bundle/adapter.js');
     console.log(outFile);
 
-    const result = await esbuild.build({
+    const result = esbuild.build({
         entryPoints: entryFiles,
         outfile: outFile,
+        outbase: 'docs-src',
         bundle: true,
         format: "esm",
         sourcemap: true,
-        minify: true,
-        metafile: true,
         keepNames: true,
+        minify: true,
     })
-    console.log(await esbuild.analyzeMetafile(result.metafile))
 }
 
-await bundle();
+bundle();

@@ -7,8 +7,10 @@
         "noImplicitAny": true, // Enable strict type checking for any types
         "esModuleInterop": true, // Enable compatibility with CommonJS modules
         "declaration": true,
-        "emitDeclarationOnly": true,
-        "outFile": "dist/adapter.js",
+        "declarationMap": true,
+        // "emitDeclarationOnly": true,
+        // "outFile": "dist/export.ts",
+        "outDir": "dist/esm/"
     },
     "include": ["src/export.ts"]
 }

@@ -1,8 +1,5 @@
-import { addStyle } from './style';
+import { addStyle } from './style.js';
 
-const define = (tagName: string, Class: any = Adapter) => {
-    Class.define(tagName);
-}
 
 interface Style {
     class_: string;
@@ -97,4 +94,4 @@ class Adapter extends HTMLElement {
     }
 }
 
-export { define, Adapter };
+export { Adapter };

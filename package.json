@@ -1,7 +1,7 @@
 {
   "name": "@devcapsule/adapter",
   "description": "Adaptive Style Web Component Framework",
-  "version": "2.0.0-dev",
+  "version": "2.0.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/keenly-coding/adapter.git"
@@ -25,8 +25,8 @@
   ],
   "scripts": {
     "test": "jest src/",
-    "types": "tsc -p tsconfig.json",
-    "build": "node esbuild/build.mjs",
+    "dist_esm": "tsc -p tsconfig.esm.json",
+    "dist_bundle": "node esbuild/bundle.mjs",
     "docs": "node esbuild/docs.mjs"
   },
   "devDependencies": {
@@ -42,6 +42,5 @@
     "uhtml": "^4.1.19"
   },
   "type": "module",
-  "module": "dist/adapter.js",
-  "types": "dist/adapter.d.ts"
+  "module": "dist/export.js"
 }
