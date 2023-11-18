@@ -2,13 +2,8 @@ import asyncio
 import fire
 
 
-async def dist_esm():
-    cmd = "npm run dist_esm"
-    proc = await asyncio.create_subprocess_shell(cmd)
-    await proc.communicate()
-
-async def dist_bundle():
-    cmd = "npm run dist_bundle"
+async def dist():
+    cmd = "npm run dist"
     proc = await asyncio.create_subprocess_shell(cmd)
     await proc.communicate()
 
@@ -42,8 +37,7 @@ async def jest():
 
 class CLI():
     async def dist(self):
-        await dist_esm()
-        await dist_bundle()
+        await dist()
 
     async def docs(self):
         await docs()
