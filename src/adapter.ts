@@ -69,7 +69,17 @@ class Adapter extends HTMLElement {
     static readonly max_id = Math.pow(16, 4) - 1;
     static ids = {};
     static _generate_id() {
-        return `adt-${Math.floor(Math.random() * this.max_id).toString(16)}`;
+        let id: string = '';
+        let gen_times = 0;
+        while (this.ids[id] === true) {
+            if (gen_times > 10) {
+                throw new Error(`There are too many ${this} instances`)
+            }
+            id = `adt-${Math.floor(Math.random() * this.max_id).toString(16)}`;
+            gen_times++;
+        }
+        this.ids[id] = true;
+        return id;
     }
 
     _class: any | Adapter; // store class to access static props.
@@ -78,18 +88,7 @@ class Adapter extends HTMLElement {
     constructor() {
         super();
         this._class = this.constructor;
-        let id = this._class._generate_id();
-        let gen_times = 0;
-        while (this._class.ids[id] === true) {
-            if (gen_times >= 10) {
-                console.error(`There are too many ${this._class} instances`)
-                return;
-            }
-            id = this._class._generate_id();
-            gen_times++;
-        }
-        this._class.ids[id] = true;
-        this._id = id;
+        this._id = this._class._generate_id();
     }
 
     addStyle(style: string): void {
