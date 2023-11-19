@@ -40,7 +40,6 @@ class Adapter extends HTMLElement {
 
         for (const style of styles) {
             let selector = this.tagName;
-            console.log(this.tagName);
             if (style['class_'] !== '') {
                 selector = `${this.tagName}.${style['class_']}`
             }
@@ -68,17 +67,21 @@ class Adapter extends HTMLElement {
 
     static readonly max_id = Math.pow(16, 4) - 1;
     static ids = {};
+    static idsCount = 0;
     static _generate_id() {
+        if (this.idsCount > 10000) {
+            throw new Error(
+                `${this} instance exceed 10,000. Too many instances`
+            );
+        }
         let id: string = '';
         let gen_times = 0;
         while (this.ids[id] === true) {
-            if (gen_times > 10) {
-                throw new Error(`There are too many ${this} instances`)
-            }
             id = `adt-${Math.floor(Math.random() * this.max_id).toString(16)}`;
             gen_times++;
         }
         this.ids[id] = true;
+        this.idsCount++;
         return id;
     }
 
