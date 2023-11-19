@@ -71,13 +71,13 @@ class Adapter extends HTMLElement {
     static _generate_id() {
         if (this.idsCount > 10000) {
             throw new Error(
-                `${this} instance exceed 10,000. Too many instances`
+                `${this} instance exceed 10,000. Too many instances.`
             );
         }
         let id: string = '';
         let gen_times = 0;
         while (this.ids[id] === true) {
-            id = `adt-${Math.floor(Math.random() * this.max_id).toString(16)}`;
+            id = `${this.name}-${Math.floor(Math.random() * this.max_id).toString(16)}`;
             gen_times++;
         }
         this.ids[id] = true;
