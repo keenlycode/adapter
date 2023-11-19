@@ -67,7 +67,7 @@ class Adapter extends HTMLElement {
     }
 
     static readonly max_id = Math.pow(16, 4) - 1;
-    static instance = {};
+    static ids = {};
     static _generate_id() {
         return `adt-${Math.floor(Math.random() * this.max_id).toString(16)}`;
     }
@@ -79,10 +79,16 @@ class Adapter extends HTMLElement {
         super();
         this._class = this.constructor;
         let id = this._class._generate_id();
-        while (id in this._class.instance) {
+        let gen_times = 0;
+        while (this._class.ids[id] === true) {
+            if (gen_times >= 10) {
+                console.error(`There are too many ${this._class} instances`)
+                return;
+            }
             id = this._class._generate_id();
+            gen_times++;
         }
-        this._class.instance[id] = true;
+        this._class.ids[id] = true;
         this._id = id;
     }
 
