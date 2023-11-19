@@ -49,8 +49,8 @@ class Adapter extends HTMLElement {
     };
 
     static tagStyle(css: string): void {
-        // In case that component has been defined
-        // Put css immediatly into html.
+        // In case that component has been defined,
+        // put css directly into html.
         if (this.tagName) {
             addStyle(`${this.tagName} { ${css} }`);
         }
@@ -58,11 +58,12 @@ class Adapter extends HTMLElement {
     }
 
     static classStyle(class_: string, css: string) {
+        // In case that component has been defined,
+        // put css directly into html.
         if (this.tagName) {
             addStyle(`${this.tagName}.${class_} { ${css} }`);
-            return;
         }
-        this.styles.push({class_: class_, css: css});
+        this.styles = this.styles.concat({class_: class_, css: css});
     }
 
     static readonly max_id = Math.pow(16, 4) - 1;
