@@ -1,5 +1,5 @@
-import { Adapter, css } from '@devcapsule/adapter/src/export';
-import './index.style';
+// import { Adapter, css } from 'http://localhost:8000/lib/adapter/bundle/adapter.js';
+import { Adapter, css } from '@devcapsule/adapter';
 
 new EventSource('/esbuild').addEventListener(
     'change',
@@ -50,7 +50,7 @@ class ParticleScene extends Adapter {
     connectedCallback() {
         const particleScene = document.querySelector('#particle-scene');
         for (let i=0; i<100; i++) {
-            const particle = document.createElement('el-particle');
+            const particle = document.createElement(`el-particle`);
             particleScene!.append(particle);
         }
     }
@@ -88,9 +88,9 @@ Particle.tagStyle(css`
     width: 3%;
     height: auto;
     aspect-ratio: 1;
-    background-color: blue;
+    background-color: orange;
     border-radius: 100%;
-    border: 0.1em solid;
+    border: 0.2em solid red;
 `)
 
 Highlight.define('el-highlight');
@@ -98,3 +98,4 @@ Particle.define('el-particle');
 ParticleScene.define('id-particle-scene');
 
 window.Particle = Particle;
+window.css = css;

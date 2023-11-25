@@ -1,9 +1,5 @@
-export function css(
-    tstrings: TemplateStringsArray,
-    ...values: Array<any>
-): string {
-    return String.raw({raw: tstrings}, ...values);
-}
+export const css = String.raw;
+export const html = String.raw;
 
 export function addStyle(style: string): HTMLStyleElement {
     const styleNode = document.createElement('style');

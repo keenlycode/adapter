@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% set _v = 2 %}
+{% set to_root = './' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adapter : Adaptive Style Web Component Framework</title>
+    <link rel="stylesheet" href="{{to_root}}base.css?v={{_v}}">
+    <script defer type="module" src="{{to_root}}base.js?v={{_v}}"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+</body>
+</html>

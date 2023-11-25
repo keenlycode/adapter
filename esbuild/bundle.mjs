@@ -5,19 +5,20 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-async function bundle() {
+export async function bundle(
+        outfile=path.join(__dirname, '../dist/bundle/adapter.js')
+) {
     console.log(`Create bundle: adapter.js`);
     console.log(`esbuild...`)
     const entryFiles = [];
     entryFiles.push(path.join(__dirname, '../src/export.ts'));
     console.log(`- entryFiles ${entryFiles}`);
-    const outFile = path.join(__dirname, '../dist/bundle/adapter.js');
+    const outFile = outfile
     console.log(`- outfile: ${outFile}`);
 
     esbuild.build({
         entryPoints: entryFiles,
         outfile: outFile,
-        outbase: 'docs-src',
         bundle: true,
         format: "esm",
         sourcemap: true,

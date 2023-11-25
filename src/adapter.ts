@@ -6,6 +6,7 @@ interface Style {
     css: string;
 }
 
+
 class Adapter extends HTMLElement {
     static tagName: string;
     static styles: Array<Style> = [];
@@ -66,7 +67,7 @@ class Adapter extends HTMLElement {
     }
 
     static readonly max_id = Math.pow(16, 4) - 1;
-    static ids = {};
+    static ids: {[index: string]: any} = {};
     static idsCount = 0;
     static _generate_id() {
         if (this.idsCount > 10000) {

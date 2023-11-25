@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adapter : Adaptive Style Web Component Framework</title>
-    <script defer type="module" src="index.js?v={{_v}}"></script>
-</head>
-<body>
-    <el-highlight>
-        <h1 class="width-100">Adapter</h1>
-        <h2 class="width-100">Adaptive Style Web Component Framework</h2>
-    </el-highlight>
-    <id-particle-scene id="particle-scene"></id-particle-scene>
-    <el-feature>
-        {{markdown('index.html.fun.md')}}
-    </el-feature>
-</body>
-</html>
+{% extends '_base.html' %}
+{% block head %}
+{{super()}}
+<script defer type="module" src="index.js?v={{_v}}"></script>
+{% endblock head %}
+
+{% block body %}
+<el-highlight>
+    <h1 class="width-100">Adapter</h1>
+    <h2 class="width-100">Adaptive Style Web Component Framework</h2>
+</el-highlight>
+<id-particle-scene id="particle-scene"></id-particle-scene>
+<el-features class="container">
+{{markdown('index.html.features.md')}}
+</el-features>
+{% endblock body %}
