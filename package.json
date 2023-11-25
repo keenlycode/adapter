@@ -25,6 +25,7 @@
   ],
   "scripts": {
     "test": "jest src/",
+    "test-watch": "jest --watch src/",
     "dist": "tsc --build --verbose tsconfig.esm.json && node esbuild/bundle.mjs",
     "docs-js": "node esbuild/docs.mjs",
     "docs-html": "engrave dev docs-src docs --asset"

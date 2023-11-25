@@ -82,31 +82,23 @@ $ pip install -r require.pip
 ### 🗃️ Build Library
 ```shell
 # Build
-$ npm run build
-
-# Create types definitions
-$ npm run types
-```
-or run with python `cli.py`
-```shell
-$ python cli.py build
+$ npm run dist
 ```
 
 ### 📕 Build Docs
+Need 2 termials
+
 ```shell
-$ npm run docs
+$ source venv/bin/activate
+$ npm run docs-html
 ```
+
+```shell
+$ npm run docs-js
+```
+
 
 ### 🔍 Run Test
 ```shell
 $ npm run test
 ```
-
-### 🐍 Run development process with Python
-Command below will run `npm run docs` and `jest` in watch mode.
-```shell
-$ python cli.py dev
-```
-
-You can now look into `adapter/docs-src/` to play with code examples
-and see live result at `http://localhost:8000`
