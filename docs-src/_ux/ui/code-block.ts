@@ -1,6 +1,6 @@
 import { Adapter, css } from '@devcapsule/adapter/src/export';
-import { bgColor } from '../_style/bg-color';
-import { palette } from '../_style/color'; 
+import { bgColor } from '../../_esm/style/bg-color';
+import { palette } from '../color'; 
 
 class CodeBlock extends Adapter {};
 
@@ -23,6 +23,7 @@ CodeBlock.tagStyle(css`
         margin-top: 0;
         font-size: 0.85em;
         & code {
+            all: unset;
             border-bottom-left-radius: 0.4em;
             border-bottom-right-radius: 0.4em;
             border-top-right-radius: 0.4em;

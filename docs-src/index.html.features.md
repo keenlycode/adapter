@@ -6,13 +6,13 @@ to focus on features which doesn't exist, to bring **CSS** into **OOP**
 with **Web Component**
 
 ## Easy to start & learn
-You can start using Adapter without **Node.js** or any **JS Build Tools**.
-Just plan Javascript, right away in your browser. You can even try it now
-by open browser console `ctrl+shift I`
+You can start using **Adapter** without **Node.js** or any
+**JS Build Tools**. Just use plain Javascript, right away in your browser.
+You can even try it now by open browser console `Ctrl+Shift+I`.
 
 <el-code-block>
     <div el="bar-top-left">
-        <span>Javascript</span>
+        <b>Javascript</b>
     </div>
 
 ```js

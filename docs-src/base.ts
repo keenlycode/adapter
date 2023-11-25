@@ -1,5 +1,8 @@
 import { addStyle, css } from "@devcapsule/adapter/src/export";
-import { CodeBlock } from './_ui/code-block'
+import { fontFluid } from './_esm/style/font-fluid';
+
+import { CodeBlock } from './_ux/ui/code-block';
+import './_ux/style';
 
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -9,32 +12,6 @@ hljs.registerLanguage('javascript', javascript);
 hljs.highlightAll();
 
 CodeBlock.define('el-code-block');
-
-export interface FontFluidParam {
-    vwMin?: number,
-    vwMax?: number,
-    fontSizeMin?: number,
-    fontSizeMax?: number
-}
-
-export const fontFluid = ({
-    vwMin = 300, vwMax = 1200,
-    fontSizeMin = 16, fontSizeMax = 18
-}: FontFluidParam = {}): string => {
-    let viewportRatio = `(100vw - ${vwMin}px) / (${vwMax} - ${vwMin})`;
-    let fontScaleRatio = `(${fontSizeMax} - ${fontSizeMin}) * ${viewportRatio}`;
-    return css`
-    font-size: ${fontSizeMin}px;
-    @media screen and (min-width: ${vwMin}px) {
-        font-size: calc(
-            ${fontSizeMin}px + ${fontScaleRatio}
-        );
-    }
-    @media screen and (min-width: ${vwMax}px) {
-        font-size: ${fontSizeMax}px;
-    }
-    `.trim();
-};
 
 addStyle(css`
 body {
