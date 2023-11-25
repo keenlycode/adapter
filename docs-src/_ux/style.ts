@@ -23,7 +23,7 @@ code {
     font-size: 0.8em;
 }
 
-p {
+p, h1, h2, h3, h4, ul, li {
     max-width: 45rem;
     margin: auto;
 }
@@ -45,14 +45,19 @@ p {
         margin: auto;
         margin-top: 3rem;
         margin-bottom: 2rem;
-        max-width: 45rem;
+        font-size: 1.5rem;
     }
     & h3 {
         text-decoration: underline;
-        max-width: 45rem;
         margin: auto;
         margin-top: 2rem;
         margin-bottom: 1rem;
+        font-size: 1.25rem;
+    }
+    & h4 {
+        font-size: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
     }
 }
 `);

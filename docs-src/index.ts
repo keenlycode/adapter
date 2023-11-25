@@ -11,14 +11,29 @@ class Particle extends Adapter {
         this.parentElement!.addEventListener('mousemove', (event) => {
             this.onMouseMove(event);
         })
+        this.parentElement!.addEventListener('touchmove', (event) => {
+            this.onTouchMove(event);
+        })
     }
 
     onMouseMove(event) {
         const mousePoint = [event.clientX, event.clientY];
+        this.onClientMove(mousePoint);
+    }
+
+    onTouchMove(event) {
+        const touchPoint = [
+            event.touches[0].clientX,
+            event.touches[0].clientY
+        ];
+        this.onClientMove(touchPoint);
+    }
+
+    onClientMove(clientPoint) {
         const centerPoint = this.getCenterPoint();
         let distance = Math.sqrt(
-            Math.pow(mousePoint[0] - centerPoint[0], 2) +
-            Math.pow(mousePoint[1] - centerPoint[1], 2)
+            Math.pow(clientPoint[0] - centerPoint[0], 2) +
+            Math.pow(clientPoint[1] - centerPoint[1], 2)
         )
         if (distance > 400) { return };
         if (distance > 100) {
@@ -45,10 +60,9 @@ class ParticleScene extends Adapter {
     }
 
     connectedCallback() {
-        const particleScene = document.querySelector('#particle-scene');
         for (let i=0; i<100; i++) {
             const particle = document.createElement(`el-particle`);
-            particleScene!.append(particle);
+            this.append(particle);
         }
     }
 };
@@ -74,6 +88,7 @@ ParticleScene.tagStyle(css`
     justify-content: center;
     align-items: center;
     margin: auto;
+    margin-top: 2rem;
     max-width: 400px;
     min-width: 300px;
 `)

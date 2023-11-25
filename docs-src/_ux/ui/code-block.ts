@@ -8,16 +8,17 @@ CodeBlock.tagStyle(css`
     display: block;
     margin: auto;
     margin-top: 1.5rem;
-    max-width: 50rem;
+    max-width: 45rem;
+    line-height: 1.5;
     [el="bar-top-left"] {
         display: inline-flex;
         ${bgColor(palette.yellow)}
         border-top-left-radius: 0.4em;
         border-top-right-radius: 0.4em;
-        line-height: 1.8;
+        line-height: 2;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
-        font-size: 0.9em;
+        font-size: 0.85em;
     }
     & pre {
         margin-top: 0;
