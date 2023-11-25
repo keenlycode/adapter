@@ -1,0 +1,32 @@
+{% extends '_base.html' %}
+
+{% set to_root = '../' %}
+
+{% block head %}
+{{super()}}
+<script defer type="module">
+import { Adapter, css }
+    from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter@2.0.0/+esm";
+
+    
+class AdaptiveDiv extends Adapter {};
+AdaptiveDiv.define('el-adaptive-div');
+AdaptiveDiv.tagStyle(`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: blue;
+    font-weight: bold;
+    font-size: 2rem;
+    min-height: 50vh;
+    text-align: center;
+`);
+</script>
+{% endblock %}
+
+{% block body %}
+<el-adaptive-div>
+    Hello...<br>Adaptive Style Component
+</el-adaptive-div>
+{% endblock %}

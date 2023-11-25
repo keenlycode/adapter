@@ -1,9 +1,6 @@
 // import { Adapter, css } from 'http://localhost:8000/lib/adapter/bundle/adapter.js';
 import { Adapter, css } from '@devcapsule/adapter';
 
-new EventSource('/esbuild').addEventListener(
-    'change',
-    () => location.reload());
 
 class Particle extends Adapter {
     constructor() {
@@ -95,7 +92,7 @@ Particle.tagStyle(css`
 
 Highlight.define('el-highlight');
 Particle.define('el-particle');
-ParticleScene.define('id-particle-scene');
+ParticleScene.define('el-particle-scene');
 
 window.Particle = Particle;
 window.css = css;

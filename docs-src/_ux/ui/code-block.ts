@@ -1,5 +1,5 @@
 import { Adapter, css } from '@devcapsule/adapter/src/export';
-import { bgColor } from '../../_esm/style/bg-color';
+import { bgColor } from 'gadjet/src/gadjet';
 import { palette } from '../color'; 
 
 class CodeBlock extends Adapter {};
