@@ -22,29 +22,3 @@ hljs.registerLanguage('shell', shell);
 hljs.highlightAll();
 
 CodeBlock.define('el-code-block');
-
-addStyle(css`
-
-.width-100 {
-    width: 100%;
-}
-
-.container {
-    display: block;
-    max-width: 1000px;
-    min-width: 300px;
-    width: 90%;
-    margin: auto;
-
-    & h2 {
-        line-height: 2;
-        text-align: center;
-    }
-}
-
-p {
-    max-width: 45rem;
-    margin: auto;
-}
-
-`);
