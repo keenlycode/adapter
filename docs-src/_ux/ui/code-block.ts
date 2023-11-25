@@ -18,11 +18,10 @@ CodeBlock.tagStyle(css`
         line-height: 2;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
-        font-size: 0.85em;
     }
     & pre {
         margin-top: 0;
-        font-size: 0.85em;
+        font-size: 0.9em;
         & code {
             all: unset;
             border-bottom-left-radius: 0.4em;
