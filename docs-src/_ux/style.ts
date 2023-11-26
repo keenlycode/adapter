@@ -2,24 +2,42 @@ import { addStyle, css } from "@devcapsule/adapter/src/export";
 import { bgColor, fontFluid } from "gadjet/src/gadjet";
 import { palette } from "./color";
 
+
+const __src = new URL(import.meta.url);
+const __host = __src.origin;
+const __fira_sans_url = new URL('asset/font/FiraSans-Regular.ttf', __host);
+const __fira_code_url = new URL('asset/font/FiraCode-Variable.ttf', __host);
+
 addStyle(css`
+
+@font-face {
+    font-family: sans;
+    src: url(${__fira_sans_url});
+}
+
+@font-face {
+    font-family: monospace;
+    src: url(${__fira_code_url});
+}
 
 html {
     line-height: 1.75;
+    font-family: sans;
+    ${fontFluid({
+        fontSizeMin: 14,
+        fontSizeMax: 20
+    })}
 }
 
 body {
     padding-bottom: 10rem;
-    ${fontFluid({
-        fontSizeMin: 13,
-        fontSizeMax: 18
-    })}
 }
 
 code {
     padding: 0.1rem 0.5rem;
     ${bgColor(palette.light)}
     border-radius: 0.25em;
+    font-family: monospace;
     font-size: 0.8em;
 }
 

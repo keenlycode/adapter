@@ -71,12 +71,22 @@ class Particle extends Adapter {
 class ParticleScene extends Adapter {
     constructor() {
         super();
+        this.addEventListener('mouseout', () => {
+            this.resetScene();
+        })
     }
 
     connectedCallback() {
         for (let i=0; i<100; i++) {
             const particle = document.createElement(`el-particle`);
             this.append(particle);
+        }
+    }
+
+    resetScene() {
+        const particles = this.querySelectorAll('el-particle');
+        for (const particle of particles) {
+            particle.style.scale = 1;
         }
     }
 };

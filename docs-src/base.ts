@@ -1,6 +1,3 @@
-import { addStyle, css } from "@devcapsule/adapter/src/export";
-import { fontFluid } from 'gadjet/src/gadjet';
-
 import { CodeBlock } from './_ux/ui/code-block';
 import './_ux/style';
 
@@ -14,6 +11,7 @@ import 'highlight.js/styles/monokai.css';
 new EventSource('/esbuild').addEventListener(
     'change',
     () => location.reload());
+
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
