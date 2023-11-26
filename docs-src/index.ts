@@ -1,5 +1,19 @@
 // import { Adapter, css } from 'http://localhost:8000/lib/adapter/bundle/adapter.js';
-import { Adapter, css } from '@devcapsule/adapter';
+import { Adapter, css, addStyle } from '@devcapsule/adapter';
+import { Button } from 'gadjet/src/gadjet';
+import { palette } from './_ux/color';
+
+
+Button.define('button');
+
+addStyle(css`
+button[el="github"] {
+    margin: auto;
+    ${Button.tagStyle({
+        color: palette.dark
+    })}
+}
+`)
 
 
 class Particle extends Adapter {

@@ -60,4 +60,10 @@ p, h1, h2, h3, h4, ul, li {
         margin-bottom: 0.5rem;
     }
 }
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 `);
