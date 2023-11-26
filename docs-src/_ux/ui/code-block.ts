@@ -21,7 +21,7 @@ CodeBlock.tagStyle(css`
     }
     & pre {
         margin-top: 0;
-        font-size: 0.9em;
+        font-size: 0.8rem;
         & code {
             all: unset;
             border-bottom-left-radius: 0.4em;
