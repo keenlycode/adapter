@@ -1,8 +1,10 @@
-// import { Adapter, css } from 'http://localhost:8000/lib/adapter/bundle/adapter.js';
-import { Adapter, css, addStyle } from '@devcapsule/adapter';
+// import { Adapter } from 'http://localhost:8000/lib/adapter/bundle/adapter.js';
+import { Adapter, addStyle } from '@devcapsule/adapter';
 import { Button } from 'gadjet/src/gadjet';
 import { palette } from './_ux/color';
 
+
+const css = String.raw;
 
 Button.define('button');
 
@@ -139,5 +141,6 @@ Highlight.define('el-highlight');
 Particle.define('el-particle');
 ParticleScene.define('el-particle-scene');
 
+window.Adapter = Adapter;
 window.Particle = Particle;
 window.css = css;

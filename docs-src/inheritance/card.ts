@@ -1,8 +1,11 @@
-import { Adapter, css } from '../../src/export';
+import { Adapter } from '../../src/export';
 import { html, render } from 'uhtml';
 
 new EventSource('/esbuild')
     .addEventListener('change', () => location.reload());
+
+const css = String.raw;
+
 
 class Card extends Adapter {
     constructor() {

@@ -1,4 +1,4 @@
-import { addStyle, css } from "@devcapsule/adapter/src/export";
+import { addStyle } from "@devcapsule/adapter/src/export";
 import { bgColor, fontFluid } from "gadjet/src/gadjet";
 import { palette } from "./color";
 
@@ -7,6 +7,8 @@ const __src = new URL(import.meta.url);
 const __host = __src.origin;
 const __fira_sans_url = new URL('asset/font/FiraSans-Regular.ttf', __host);
 const __fira_code_url = new URL('asset/font/FiraCode-Variable.ttf', __host);
+
+const css = String.raw;
 
 addStyle(css`
 
@@ -25,7 +27,9 @@ html {
     font-family: sans;
     ${fontFluid({
         fontSizeMin: 14,
-        fontSizeMax: 20
+        fontSizeMax: 20,
+        vwMin: 300,
+        vwMax: 1200
     })}
 }
 

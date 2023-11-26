@@ -1,2 +1,2 @@
-export { addStyle, css } from './style.js'
+export { addStyle } from './style.js'
 export { Adapter } from './adapter.js'

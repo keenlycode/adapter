@@ -1,8 +1,10 @@
-import { Adapter, css } from '@devcapsule/adapter/src/export';
+import { Adapter } from '@devcapsule/adapter/src/export';
 import { bgColor } from 'gadjet/src/gadjet';
 import { palette } from '../color'; 
 
 class CodeBlock extends Adapter {};
+
+const css = String.raw;
 
 CodeBlock.tagStyle(css`
     display: block;

@@ -64,9 +64,17 @@ class Particle1 extends Particle {
 ## 🎉 Extensible
 
 You can extends your components with great libraries:
-- HTML: lit-html, uhtml
-- CSS Parser: csstree, stylis
-- Event: nanoevents
+- HTML:
+  [uhtml](https://github.com/WebReflection/uhtml),
+  [lit-html](https://lit.dev/docs/libraries/standalone-templates/)
+- CSS Parser:
+  [csstree](https://github.com/csstree/csstree),
+  [stylis](https://stylis.js.org/)
+- Event: [mitt](https://www.npmjs.com/package/mitt),
+  [nanoevents](https://github.com/ai/nanoevents])
+- Animation:
+  [anime.js](https://animejs.com/),
+  [animate.css](https://animate.style/)
 
 ## 🎉 Setup
 
