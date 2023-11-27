@@ -1,27 +1,12 @@
 import { addStyle } from "@devcapsule/adapter/src/export";
-import { bgColor, fontFluid } from "gadjet/src/gadjet";
+import { bgColor, fontFluid, Button } from "gadjet/src/gadjet";
 import { palette } from "./color";
-
-
-const __src = new URL(import.meta.url);
-const __host = __src.origin;
-const __fira_sans_url = new URL('asset/font/FiraSans-Regular.ttf', __host);
-const __fira_code_url = new URL('asset/font/FiraCode-Variable.ttf', __host);
 
 const css = String.raw;
 
+Button.define('button');
+
 addStyle(css`
-
-@font-face {
-    font-family: sans;
-    src: url(${__fira_sans_url});
-}
-
-@font-face {
-    font-family: monospace;
-    src: url(${__fira_code_url});
-}
-
 html {
     line-height: 1.75;
     font-family: sans;
@@ -46,12 +31,17 @@ code {
 }
 
 p, h1, h2, h3, h4, ul, li {
-    max-width: 45rem;
+    max-width: 40rem;
     margin: auto;
 }
 
 .width-100 {
     width: 100%;
+}
+
+.text-width {
+    width: 100%;
+    max-width: 40rem;
 }
 
 .container {

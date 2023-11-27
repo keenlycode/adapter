@@ -7,6 +7,7 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import xml from 'highlight.js/lib/languages/xml';
 import shell from 'highlight.js/lib/languages/shell';
 import 'highlight.js/styles/monokai.css';
+import { addStyle } from '../src/style';
 
 new EventSource('/esbuild').addEventListener(
     'change',
@@ -18,5 +19,23 @@ hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('html', xml);
 hljs.registerLanguage('shell', shell);
 hljs.highlightAll();
+
+const __src = new URL(import.meta.url);
+const __host = __src.origin;
+const __fira_sans_url = new URL('../asset/font/FiraSans-Regular.ttf', __host);
+const __fira_code_url = new URL('../asset/font/FiraCode-Variable.ttf', __host);
+const css = String.raw;
+
+addStyle(css`
+@font-face {
+    font-family: sans;
+    src: url(${__fira_sans_url});
+}
+
+@font-face {
+    font-family: monospace;
+    src: url(${__fira_code_url});
+}
+`)
 
 CodeBlock.define('el-code-block');

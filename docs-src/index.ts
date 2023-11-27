@@ -6,9 +6,8 @@ import { palette } from './_ux/color';
 
 const css = String.raw;
 
-Button.define('button');
 
-addStyle(css`
+addStyle(`
 button[el="github"] {
     margin: auto;
     ${Button.tagStyle({
