@@ -20,6 +20,7 @@ CodeBlock.tagStyle(css`
         line-height: 2;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
+        font-size: 0.8rem;
     }
     & pre {
         margin-top: 0;

@@ -38,7 +38,7 @@ which bring all good features to **CSS** : Module, Inheritance, Encapsulation,
 Object and much more...
 
 <el-code-block>
-    <div el="bar-top-left">javascript</div>
+    <div el="bar-top-left"><b>javascript</b></div>
 
 ```js
 /* Particle1 also inherit style defined from Particle */

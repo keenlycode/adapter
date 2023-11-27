@@ -77,5 +77,4 @@ p, h1, h2, h3, h4, ul, li {
     display: flex;
     flex-wrap: wrap;
 }
-
 `);
