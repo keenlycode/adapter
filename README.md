@@ -97,10 +97,7 @@ $ python run.py docs
 ```shell
 $ npm run test
 ```
-
-### Development Mode
-To run project in development mode,
+Or in watch mode
 ```shell
-$ source venv/bin/activate
-$ python run.py dev
+$ npm run test-watch
 ```
