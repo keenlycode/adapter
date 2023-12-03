@@ -32,6 +32,8 @@ async function docs() {
         sourcemap: true,
         keepNames: true,
         minify: true,
+        color: true,
+        logLevel: "info",
     })
     await result.watch();
     const { host, port } = await result.serve({

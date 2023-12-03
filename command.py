@@ -8,7 +8,7 @@ async def dist():
     await proc.communicate()
 
 async def npm_docs():
-    cmd = 'npm run docs'
+    cmd = 'npm run docs-js'
     print(cmd)
     proc = await asyncio.create_subprocess_shell(cmd)
     await proc.communicate()
@@ -29,13 +29,17 @@ async def docs():
         pass
 
 async def jest():
-    cmd = "npx jest src/ --watch"
+    cmd = "FORCE_COLOR=TRUE npx jest --watch src/"
     print(cmd)
-    proc = await asyncio.create_subprocess_shell(cmd)
+    proc = await asyncio.create_subprocess_shell(
+        cmd,
+        stdin=asyncio.subprocess.PIPE,
+        stdout=asyncio.subprocess.PIPE,
+    )
     await proc.communicate()
     
 
-class CLI():
+class Command():
     async def dist(self):
         await dist()
 
@@ -49,4 +53,7 @@ class CLI():
         )
 
 if __name__ == '__main__':
-    fire.Fire(CLI)
+    try:
+        fire.Fire(Command)
+    except KeyboardInterrupt:
+        pass

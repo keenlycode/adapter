@@ -6,7 +6,6 @@ import { palette } from './_ux/color';
 
 const css = String.raw;
 
-
 addStyle(`
 button[el="github"] {
     margin: auto;
