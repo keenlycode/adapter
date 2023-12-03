@@ -3,6 +3,6 @@ export function addStyle(
         document: Document = window.document): HTMLStyleElement {
     const styleNode = document.createElement('style');
     styleNode.textContent = style;
-    document.querySelector('head')?.append(styleNode);
+    (document.querySelector('head') as HTMLElement).append(styleNode);
     return styleNode;
 }

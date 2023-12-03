@@ -5,8 +5,16 @@ import { JSDOM } from 'jsdom';
 import { addStyle } from './style.js';
 
 test('addStyle()', () => {
-    const DOM = new JSDOM(`
+    const dom = new JSDOM(`
         <!DOCTYPE html><html><head></head><body></body></html>
-    `)
-    console.log(DOM);
+    `);
+    const document = dom.window.document;
+    const css = `
+    body {
+        background: black;
+    }
+    `;
+    const styleNode = addStyle(css, document);
+    expect(styleNode.textContent === css).toEqual(true);
+    expect(document.querySelector('head > style') == styleNode).toEqual(true);
 });
