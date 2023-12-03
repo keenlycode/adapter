@@ -23,11 +23,14 @@ describe('class Adapter {}', () => {
     })
 
     test('Adapter.defineStyle()', () => {
+        const css = 'background-color: red;'
         MyAdapter.styles = MyAdapter.styles.concat({
             class_: '',
-            css: 'background-color: red'
+            css: css
         });
         MyAdapter.defineStyle();
-        console.log(document.querySelectorAll('style'));
+        const styleNodes = document.querySelectorAll('style[component="MyAdapter"]');
+        const lastStyleNode = styleNodes[styleNodes.length - 1];
+        expect(lastStyleNode.textContent).toContain(css);
     })
 })
