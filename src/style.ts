@@ -1,8 +1,9 @@
 export function addStyle(
-        style: string,
-        document: Document = window.document): HTMLStyleElement {
+        css: string,
+        parentNode: HTMLElement,
+        document: Document): HTMLStyleElement {
     const styleNode = document.createElement('style');
-    styleNode.textContent = style;
-    (document.querySelector('head') as HTMLElement).append(styleNode);
+    styleNode.textContent = css;
+    parentNode.append(styleNode);
     return styleNode;
 }

@@ -1,6 +1,7 @@
 import {
     describe, expect, test
 } from '@jest/globals';
+
 import { JSDOM } from 'jsdom';
 import { addStyle } from './style.js';
 
@@ -14,8 +15,8 @@ test('addStyle()', () => {
         background: black;
     }
     `;
-    const styleNode = addStyle(css, document);
+    const styleNode = addStyle(css, document.head, document);
     expect(styleNode.textContent === css).toEqual(true);
-    expect(document.querySelector('head > style') == styleNode)
+    expect(document.head.querySelector('style') == styleNode)
         .toEqual(true);
 });

@@ -1,9 +1,13 @@
-import { addStyle } from './style.js';
+import { addStyle as _addStyle } from './style.js';
 
 
 interface Style {
     class_: string;
     css: string;
+}
+
+const addStyle = (css: string) => {
+    _addStyle(css, window.document.querySelector('head')!)
 }
 
 
@@ -98,7 +102,7 @@ class Adapter extends HTMLElement {
     addStyle(style: string): void {
         this.classList.add(this._id);
         let selector = this.classList.value.replace(/ /g, '.');
-        addStyle(`${this.tagName}.${selector} { ${style} }`);
+        _addStyle(`${this.tagName}.${selector} { ${style} }`, this);
     }
 }
 
