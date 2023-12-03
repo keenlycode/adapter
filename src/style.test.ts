@@ -1,15 +1,12 @@
 import {
     describe, expect, test
 } from '@jest/globals';
+import { JSDOM } from 'jsdom';
+import { addStyle } from './style.js';
 
-import { css } from './style.js';
-
-test('css tag should return correct trimmed css string '
-        + 'compare to template literal', () => {
-    const borderStyle = 'solid';
-    const borderColor = '#fff';
-    const text = `border: 1px ${borderStyle} ${borderColor};`;
-    const style = css`border: 1px ${borderStyle} ${borderColor};`;
-    
-    expect(text).toEqual(style);
+test('addStyle()', () => {
+    const DOM = new JSDOM(`
+        <!DOCTYPE html><html><head></head><body></body></html>
+    `)
+    console.log(DOM);
 });
