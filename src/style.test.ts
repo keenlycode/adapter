@@ -16,5 +16,6 @@ test('addStyle()', () => {
     `;
     const styleNode = addStyle(css, document);
     expect(styleNode.textContent === css).toEqual(true);
-    expect(document.querySelector('head > style') == styleNode).toEqual(true);
+    expect(document.querySelector('head > style') == styleNode)
+        .toEqual(true);
 });

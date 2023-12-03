@@ -24,18 +24,21 @@
     "dist/**/*"
   ],
   "scripts": {
-    "test": "jest src/",
-    "test-watch": "jest --watch src/",
-    "dist": "tsc --build --verbose tsconfig.esm.json && node esbuild/bundle.mjs",
+    "test": "jest --coverage --verbose src/",
+    "test-watch": "jest --watch --coverage --verbose src/",
+    "dist": "tsc --build --verbose tsconfig.json && node esbuild/bundle.mjs",
     "docs-js": "node esbuild/docs.mjs",
-    "docs-html": "engrave dev docs-src docs --asset"
+    "docs-html": "source venv/bin/activate && engrave dev docs-src docs --asset",
+    "docs": "concurrently -kr 'npm run docs-js' 'npm run docs-html'"
   },
   "devDependencies": {
     "@devcapsule/adapter": "file:./",
     "@devcapsule/deficon": "^1.0.0",
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.8",
+    "@types/jsdom": "^21.1.6",
     "color": "^4.2.3",
+    "concurrently": "^8.2.2",
     "esbuild": "^0.19.5",
     "gadjet": "^1.0.4",
     "glob": "^10.3.10",

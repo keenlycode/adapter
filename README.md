@@ -86,19 +86,21 @@ $ npm run dist
 ```
 
 ### 📕 Build Docs
-Need 2 termials
+You need to run with Python Environment
 
 ```shell
 $ source venv/bin/activate
-$ npm run docs-html
+$ python run.py docs
 ```
-
-```shell
-$ npm run docs-js
-```
-
 
 ### 🔍 Run Test
 ```shell
 $ npm run test
+```
+
+### Development Mode
+To run project in development mode,
+```shell
+$ source venv/bin/activate
+$ python run.py dev
 ```
