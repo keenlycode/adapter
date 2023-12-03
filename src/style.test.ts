@@ -1,5 +1,6 @@
 import {
-    describe, expect, test
+    expect,
+    test
 } from '@jest/globals';
 
 import { JSDOM } from 'jsdom';
