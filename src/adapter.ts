@@ -7,7 +7,7 @@ interface Style {
 }
 
 const addStyle = (css: string) => {
-    _addStyle(css, window.document.querySelector('head')!)
+    _addStyle(css, window.document.head!, window.document)
 }
 
 
@@ -102,7 +102,7 @@ class Adapter extends HTMLElement {
     addStyle(style: string): void {
         this.classList.add(this._id);
         let selector = this.classList.value.replace(/ /g, '.');
-        _addStyle(`${this.tagName}.${selector} { ${style} }`, this);
+        _addStyle(`${this.tagName}.${selector} { ${style} }`, this, window.document);
     }
 }
 
