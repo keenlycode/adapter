@@ -1,4 +1,4 @@
-import { addStyle as _addStyle } from './style.js';
+import { _addStyle } from './style.js';
 
 
 interface Style {
@@ -6,15 +6,17 @@ interface Style {
     css: string;
 }
 
-const addStyle = (css: string) => {
-    _addStyle(css, window.document.head!, window.document)
-}
-
 
 class Adapter extends HTMLElement {
     static tagName: string;
     static styles: Array<Style> = [];
     static _is_styled: boolean = false;
+
+    static addStyle(css: string) {
+        const styleNode = document.createElement('style');
+        styleNode.classList.add(this.name);
+        _addStyle(styleNode, css, document.head);
+    }
     
     static define(tagName: string): void {
         // To extends this function, sub-elements must be defined before call
@@ -36,7 +38,7 @@ class Adapter extends HTMLElement {
     };
 
     static defineStyle(): void {
-        addStyle(`${this.tagName} { all: unset; }`);
+        this.addStyle(`${this.tagName} { all: unset; }`);
 
         const styles = [
             ...Object.getPrototypeOf(this).styles,
@@ -48,7 +50,7 @@ class Adapter extends HTMLElement {
             if (style['class_'] !== '') {
                 selector = `${this.tagName}.${style['class_']}`
             }
-            addStyle(`${selector} { ${style.css} }`);
+            this.addStyle(`${selector} { ${style.css} }`);
         }
     };
 
@@ -56,7 +58,7 @@ class Adapter extends HTMLElement {
         // In case that component has been defined,
         // put css directly into html.
         if (this.tagName) {
-            addStyle(`${this.tagName} { ${css} }`);
+            this.addStyle(`${this.tagName} { ${css} }`);
         }
         this.styles = this.styles.concat({class_: '', css: css});
     }
@@ -65,7 +67,7 @@ class Adapter extends HTMLElement {
         // In case that component has been defined,
         // put css directly into html.
         if (this.tagName) {
-            addStyle(`${this.tagName}.${class_} { ${css} }`);
+            this.addStyle(`${this.tagName}.${class_} { ${css} }`);
         }
         this.styles = this.styles.concat({class_: class_, css: css});
     }
@@ -102,7 +104,8 @@ class Adapter extends HTMLElement {
     addStyle(style: string): void {
         this.classList.add(this._id);
         let selector = this.classList.value.replace(/ /g, '.');
-        _addStyle(`${this.tagName}.${selector} { ${style} }`, this, window.document);
+        const styleNode = document.createElement('style');
+        _addStyle(styleNode, `${this.tagName}.${selector} { ${style} }`, this);
     }
 }
 
