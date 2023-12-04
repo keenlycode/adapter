@@ -6,12 +6,7 @@
 
 <ul style="font-size: 1.25rem;">
    <li>Built with ❤️</li>
-   <li>Just <strong>850 B</strong> (minified + gzip)</li>
-   <li>Just <strong>10 kB</strong> (minified + gzip)
-       combined with your favourite html rendering libraries:
-       <a href="https://lit.dev/docs/libraries/standalone-templates/">lit-html</a> or
-       <a href="https://github.com/WebReflection/uhtml">uhtml</a>
-   </li>
+   <li>Just <strong>1 kB</strong> (minified + gzip)</li>
 </ul>
 
 ## Sample Usage for Frontend (with uhtml)
