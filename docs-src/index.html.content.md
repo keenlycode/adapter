@@ -170,20 +170,21 @@ Adapter.classStyle(className, css: string);
     </div>
 
 ```js
+import { AdapterMixin } from '@devcapsule/adapter';
 /* Extends `Adapter` */
-class Adaptive extends Adapter {};
+class Card extends AdapterMixin(HTMLElement) {};
 
-/* Define your component to custome element name `el-adaptive` */
-Adaptive.define('el-adaptive');
+/* Define your component to custome element name `el-card` */
+Card.define('el-card');
 
-/* Style element <el-adaptive> */
-Adaptive.tagStyle(`
+/* Style element <el-card> */
+Card.tagStyle(`
     display: flex;
     justify-content: center;
 `);
 
-/* Style element <el-adaptive class="blue"> */
-Adaptive.classStyle('blue', `
+/* Style element <el-card class="blue"> */
+Card.classStyle('blue', `
     color: blue;
 `)
 
@@ -196,12 +197,12 @@ Adaptive.classStyle('blue', `
     </div>
 
 ```html
-<el-adaptive>
-    Hello... Adaptive Style Web Component
-</el-adaptive>
+<el-card>
+    Hello... Card Style Web Component
+</el-card>
 
-<el-adaptive class="blue">
+<el-card class="blue">
     This text is blue.
-</el-adaptive>
+</el-card>
 ```
 </el-code-block>
