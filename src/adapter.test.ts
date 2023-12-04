@@ -58,4 +58,15 @@ describe('class Adapter {}', () => {
         const styleNodes = document.querySelectorAll('style');
         expect(styleNodes[styleNodes.length - 1].textContent).toContain(css);
     });
+
+    test('Adapter.classStyle()', () => {
+        const css = 'background-color: red;';
+        MyAdapter.classStyle('red', css);
+        expect(MyAdapter.styles[MyAdapter.styles.length - 1]).toEqual({
+            class_: 'red', css: css
+        })
+        const styleNodes = document.querySelectorAll('style');
+        expect(styleNodes[styleNodes.length - 1].textContent)
+            .toContain(`el-adapter.red { ${css} }`);
+    })
 })

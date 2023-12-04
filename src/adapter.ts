@@ -1,6 +1,5 @@
 import { _addStyle } from './style.js';
 
-
 interface Style {
     class_: string;
     css: string;
