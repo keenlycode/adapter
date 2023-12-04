@@ -1,6 +1,6 @@
 # Change Log
 
-## [To Release]
+## [v2.1.0]
 
 ### Addded
 - `AdapterMixin()` can be use to extends other classes which based on `HTMLElement`.
