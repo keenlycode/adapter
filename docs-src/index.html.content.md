@@ -64,6 +64,8 @@ class Particle1 extends Particle {
 ## 🎉 Extensible
 
 You can extends your components with great libraries:
+- Web Components Libraries:
+  [lit.dev](https://lit.dev/)  
 - HTML:
   [uhtml](https://github.com/WebReflection/uhtml),
   [lit-html](https://lit.dev/docs/libraries/standalone-templates/)
@@ -76,6 +78,23 @@ You can extends your components with great libraries:
   [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API),
   [anime.js](https://animejs.com/),
   [animate.css](https://animate.style/)
+
+Example how to use **Adapter** with **lit.dev**
+
+<el-code-block style="margin-top: 0.5rem;">
+    <div el="bar-top-left"><b>js/ts</b></div>
+
+```ts
+import { AdapterMixin } from '@devcapsule/adapter';
+import { LitElement } from 'lit';
+
+class Card extends AdapterMixin(LitElement) {};
+
+Card.define('el-card');
+Card.tagStyle('background-color: grey;');
+Card.classStyle('blue', 'background-color: blue;');
+```
+</el-code-block>
 
 ## 🎉 Setup
 
