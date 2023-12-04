@@ -91,13 +91,13 @@ class ParticleScene extends Adapter {
     }
 };
 
-class Highlight extends Adapter {
+class Heading extends Adapter {
     constructor() {
         super();
     }
 };
 
-Highlight.tagStyle(css`
+Heading.tagStyle(css`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -135,7 +135,7 @@ Particle.tagStyle(css`
     border: 0.2em solid red;
 `)
 
-Highlight.define('el-highlight');
+Heading.define('el-heading');
 Particle.define('el-particle');
 ParticleScene.define('el-particle-scene');
 

@@ -6,6 +6,15 @@ interface Style {
 }
 
 
+class DOMError extends Error {
+    constructor(message: string) {
+        super();
+        this.message = message;
+        this.name = 'DOMError';
+    }
+}
+
+
 class Adapter extends HTMLElement {
     static tagName: string;
     static styles: Array<Style> = [
@@ -26,12 +35,10 @@ class Adapter extends HTMLElement {
             customElements.define(tagName, this);
         } catch (error) {
             if (error instanceof DOMException) {
-                console.error(
+                throw new DOMError(
                     `DOMException: '${this.name}' ` +
-                    `has already been defined to tag '${this.tagName}'\n` +
-                    `${error.stack}`
+                    `has already been defined to tag '${this.tagName}'`
                 );
-                return;
             }
         }
         this.tagName = tagName;
@@ -111,4 +118,4 @@ class Adapter extends HTMLElement {
     }
 }
 
-export { Adapter };
+export { Adapter, DOMError };

@@ -73,6 +73,7 @@ You can extends your components with great libraries:
 - Event: [mitt](https://www.npmjs.com/package/mitt),
   [nanoevents](https://github.com/ai/nanoevents])
 - Animation:
+  [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API),
   [anime.js](https://animejs.com/),
   [animate.css](https://animate.style/)
 
