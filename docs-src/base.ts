@@ -10,7 +10,6 @@ import 'highlight.js/styles/monokai.css';
 import { addStyle } from '../src/style';
 
 const __base_url = new URL(import.meta.url);
-window.__base_url = __base_url;
 const __event_source = new URL('./esbuild', __base_url.href)
 
 if (['0.0.0.0', '127.0.0.1', 'localhost'].includes(__base_url.hostname)) {

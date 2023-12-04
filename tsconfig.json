@@ -8,9 +8,7 @@
         "esModuleInterop": true, // Enable compatibility with CommonJS modules
         "declaration": true,
         "declarationMap": true,
-        // "emitDeclarationOnly": true,
-        // "outFile": "dist/export.ts",
-        "outDir": "dist/esm/"
+        "outDir": "dist/esm/",
     },
     "include": ["src/export.ts"]
 }

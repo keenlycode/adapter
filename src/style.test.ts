@@ -1,15 +1,35 @@
 import {
-    describe, expect, test
+    expect,
+    test
 } from '@jest/globals';
 
-import { css } from './style.js';
+import { 
+    _addStyle,
+    addStyle
+} from './style.js';
 
-test('css tag should return correct trimmed css string '
-        + 'compare to template literal', () => {
-    const borderStyle = 'solid';
-    const borderColor = '#fff';
-    const text = `border: 1px ${borderStyle} ${borderColor};`;
-    const style = css`border: 1px ${borderStyle} ${borderColor};`;
-    
-    expect(text).toEqual(style);
+test('_addStyle()', () => {
+    const css = `
+    body {
+        background: black;
+    }
+    `;
+    const styleNode = document.createElement('style');
+    _addStyle(styleNode, css, document.head);
+    expect(styleNode.textContent === css).toEqual(true);
+    expect(document.head.querySelector('style') == styleNode)
+        .toEqual(true);
+});
+
+test('addStyle()', () => {
+    const css = `
+    body {
+        background: black;
+    }
+    `;
+    const styleNode = addStyle(css);
+    styleNode.id = 'test_addStyle'
+    expect(styleNode.textContent === css).toEqual(true);
+    expect(document.head.querySelector('style#test_addStyle') == styleNode)
+        .toEqual(true);
 });

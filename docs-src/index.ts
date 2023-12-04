@@ -1,11 +1,10 @@
 // import { Adapter } from 'http://localhost:8000/lib/adapter/bundle/adapter.js';
-import { Adapter, addStyle } from '@devcapsule/adapter';
+import { Adapter, addStyle } from '@devcapsule/adapter/src/export';
 import { Button } from 'gadjet/src/gadjet';
 import { palette } from './_ux/color';
 
 
 const css = String.raw;
-
 
 addStyle(`
 button[el="github"] {
@@ -92,13 +91,13 @@ class ParticleScene extends Adapter {
     }
 };
 
-class Highlight extends Adapter {
+class Heading extends Adapter {
     constructor() {
         super();
     }
 };
 
-Highlight.tagStyle(css`
+Heading.tagStyle(css`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -136,7 +135,7 @@ Particle.tagStyle(css`
     border: 0.2em solid red;
 `)
 
-Highlight.define('el-highlight');
+Heading.define('el-heading');
 Particle.define('el-particle');
 ParticleScene.define('el-particle-scene');
 

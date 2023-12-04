@@ -1,5 +1,4 @@
-import { addStyle } from './style.js';
-
+import { _addStyle } from './style.js';
 
 interface Style {
     class_: string;
@@ -7,10 +6,27 @@ interface Style {
 }
 
 
+class DOMError extends Error {
+    constructor(message: string) {
+        super();
+        this.message = message;
+        this.name = 'DOMError';
+    }
+}
+
+
 class Adapter extends HTMLElement {
     static tagName: string;
-    static styles: Array<Style> = [];
+    static styles: Array<Style> = [
+        {class_: '', css: 'all: unset;'}
+    ];
     static _is_styled: boolean = false;
+
+    static addStyle(css: string) {
+        const styleNode = document.createElement('style');
+        styleNode.setAttribute('component', this.name);
+        _addStyle(styleNode, css, document.head);
+    }
     
     static define(tagName: string): void {
         // To extends this function, sub-elements must be defined before call
@@ -19,12 +35,10 @@ class Adapter extends HTMLElement {
             customElements.define(tagName, this);
         } catch (error) {
             if (error instanceof DOMException) {
-                console.error(
+                throw new DOMError(
                     `DOMException: '${this.name}' ` +
-                    `has already been defined to tag '${this.tagName}'\n` +
-                    `${error.stack}`
+                    `has already been defined to tag '${this.tagName}'`
                 );
-                return;
             }
         }
         this.tagName = tagName;
@@ -32,7 +46,7 @@ class Adapter extends HTMLElement {
     };
 
     static defineStyle(): void {
-        addStyle(`${this.tagName} { all: unset; }`);
+        let css = ``;
 
         const styles = [
             ...Object.getPrototypeOf(this).styles,
@@ -44,15 +58,16 @@ class Adapter extends HTMLElement {
             if (style['class_'] !== '') {
                 selector = `${this.tagName}.${style['class_']}`
             }
-            addStyle(`${selector} { ${style.css} }`);
+            css += `\n${selector} { ${style.css} }`;
         }
+        this.addStyle(css);
     };
 
     static tagStyle(css: string): void {
         // In case that component has been defined,
         // put css directly into html.
         if (this.tagName) {
-            addStyle(`${this.tagName} { ${css} }`);
+            this.addStyle(`\n${this.tagName} { ${css} }`);
         }
         this.styles = this.styles.concat({class_: '', css: css});
     }
@@ -61,7 +76,7 @@ class Adapter extends HTMLElement {
         // In case that component has been defined,
         // put css directly into html.
         if (this.tagName) {
-            addStyle(`${this.tagName}.${class_} { ${css} }`);
+            this.addStyle(`\n${this.tagName}.${class_} { ${css} }`);
         }
         this.styles = this.styles.concat({class_: class_, css: css});
     }
@@ -98,8 +113,9 @@ class Adapter extends HTMLElement {
     addStyle(style: string): void {
         this.classList.add(this._id);
         let selector = this.classList.value.replace(/ /g, '.');
-        addStyle(`${this.tagName}.${selector} { ${style} }`);
+        const styleNode = document.createElement('style');
+        _addStyle(styleNode, `${this.tagName}.${selector} { ${style} }`, this);
     }
 }
 
-export { Adapter };
+export { Adapter, DOMError };
