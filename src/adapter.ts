@@ -9,7 +9,9 @@ interface Style {
 
 class Adapter extends HTMLElement {
     static tagName: string;
-    static styles: Array<Style> = [];
+    static styles: Array<Style> = [
+        {class_: '', css: 'all: unset;'}
+    ];
     static _is_styled: boolean = false;
 
     static addStyle(css: string) {
@@ -38,7 +40,7 @@ class Adapter extends HTMLElement {
     };
 
     static defineStyle(): void {
-        let css = `\n${this.tagName} { all: unset; }`;
+        let css = ``;
 
         const styles = [
             ...Object.getPrototypeOf(this).styles,

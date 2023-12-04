@@ -23,7 +23,7 @@ export async function bundle(
         format: "esm",
         sourcemap: true,
         keepNames: true,
-        minify: true,
+        minify: false,
     })
 }
 

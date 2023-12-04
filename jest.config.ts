@@ -17,7 +17,7 @@ const jestConfig: JestConfigWithTsJest = {
     ],
   },
   testEnvironment: "jsdom",
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 }
 
 export default jestConfig
