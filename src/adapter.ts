@@ -1,5 +1,6 @@
 import { _addStyle } from './style.js';
 
+
 interface Style {
     class_: string;
     css: string;
@@ -19,9 +20,7 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class extends Base {
         static tagName: string;
-        static styles: Array<Style> = [
-            {class_: '', css: 'all: unset;'}
-        ];
+        static styles: Array<Style> = [];
         static _is_styled: boolean = false;
 
         static addStyle(css: string) {
@@ -48,7 +47,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         };
 
         static defineStyle(): void {
-            let css = ``;
+            let css = `${this.tagName} { all: unset }`;
 
             const styles = [
                 ...Object.getPrototypeOf(this).styles,
@@ -62,6 +61,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
                 }
                 css += `\n${selector} { ${style.css} }`;
             }
+
             this.addStyle(css);
         };
 
@@ -123,4 +123,4 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
 const Adapter = AdapterMixin(HTMLElement);
 
-export {Adapter, AdapterMixin, DOMError };
+export { Adapter, AdapterMixin, DOMError };

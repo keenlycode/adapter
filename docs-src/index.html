@@ -20,11 +20,20 @@
     </div>
     <el-particle-scene></el-particle-scene>
 </el-heading>
-<div class="container flex" style="justify-content: center; margin-top: 2rem;">
+<el-social-buttons class="container flex" style="justify-content: center; margin-top: 2rem;">
     <a href="https://github.com/keenlycode/adapter">
-        <button el="github" style="font-size: 1.25em;">Github</button>
+        <button el="github" style="font-size: 1.25em;">
+            <el-icon name="github" style="fill: white;"></el-icon>
+            Github
+        </button>
     </a>
-</div>
+    <a href="https://discord.gg/Z69dB6zxwC">
+        <button el="discord" style="font-size: 1.25em;">
+            <el-icon name="discord"></el-icon>
+            Discord
+        </button>
+    </a>
+</el-social-buttons>
 <div class="container">
     {{markdown('index.html.content.md')}}
 </div>

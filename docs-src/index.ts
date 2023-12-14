@@ -1,19 +1,19 @@
-// import { Adapter } from 'http://localhost:8000/lib/adapter/bundle/adapter.js';
 import { Adapter, addStyle } from '@devcapsule/adapter/src/export';
+import { Icon } from '@devcapsule/deficon/dist/icon';
 import { Button } from 'gadjet/src/gadjet';
 import { palette } from './_ux/color';
 
 
 const css = String.raw;
 
-addStyle(`
-button[el="github"] {
-    margin: auto;
-    ${Button.tagStyle({
-        color: palette.dark
-    })}
-}
-`)
+const __base_url = new URL(import.meta.url);
+window.__base_url = __base_url;
+
+const iconUrl = new URL('asset/icon/icomoon/symbol-defs.svg', __base_url);
+console.log(iconUrl.href);
+
+Icon.href = iconUrl.href;
+customElements.define('el-icon', Icon);
 
 
 class Particle extends Adapter {
@@ -86,16 +86,14 @@ class ParticleScene extends Adapter {
     resetScene() {
         const particles = this.querySelectorAll('el-particle');
         for (const particle of particles) {
-            particle.style.scale = 1;
+            (particle as HTMLElement).style.scale = '1';
         }
     }
 };
 
-class Heading extends Adapter {
-    constructor() {
-        super();
-    }
-};
+class Heading extends Adapter {};
+
+class SocialButtons extends Adapter {};
 
 Heading.tagStyle(css`
     display: flex;
@@ -109,6 +107,21 @@ Heading.tagStyle(css`
     }
     & h2 {
         margin-top: 1.5rem;
+    }
+`);
+
+SocialButtons.tagStyle(css`
+    & button {
+        margin: 0 1rem;
+        & el-icon {
+            margin-right: 0.5rem;
+        }
+    }
+    & button[el="github"] {
+        ${Button.Style.style({color: palette.dark})}
+    }
+    & button[el="discord"] {
+        ${Button.Style.style({color: palette.light})}
     }
 `);
 
@@ -136,6 +149,7 @@ Particle.tagStyle(css`
 `)
 
 Heading.define('el-heading');
+SocialButtons.define('el-social-buttons');
 Particle.define('el-particle');
 ParticleScene.define('el-particle-scene');
 
