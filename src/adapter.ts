@@ -21,7 +21,6 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class extends Base {
         static tagName: string;
         static styles: Array<Style> = [];
-        static _is_styled: boolean = false;
 
         static addStyle(css: string) {
             const styleNode = document.createElement('style');
