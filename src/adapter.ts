@@ -23,10 +23,24 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         static styles: Array<Style> = [];
         static cssStyleSheet: CSSStyleSheet;
 
+        static _css: String;
+        static get css(): string {
+            let css = `${this.tagName} { all: unset }`;
+
+            const styles = [
+                ...Object.getPrototypeOf(this).styles,
+                ...this.styles
+            ];
+
+            for (const style of styles) {
+                let selector = `${this.tagName}${style.selector}`;
+                css += `\n${selector} { ${style.css} }`;
+            }
+            
+            return css;
+        }
+
         static addStyle(selector: string, css: string) {
-            // const styleNode = document.createElement('style');
-            // styleNode.setAttribute('component', this.name);
-            // _addStyle(styleNode, css, document.head);
             this.styles = this.styles.concat({selector, css});
             if (this.tagName) {
                 const addIndex = this.cssStyleSheet.cssRules.length;
@@ -50,24 +64,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             }
             this.tagName = tagName;
             this.cssStyleSheet = new CSSStyleSheet();
-            this.cssStyleSheet.replaceSync(this.css());
+            this.cssStyleSheet.replaceSync(this.css);
             document.adoptedStyleSheets.push(this.cssStyleSheet);
-        };
-
-        static css(): string {
-            let css = `${this.tagName} { all: unset }`;
-
-            const styles = [
-                ...Object.getPrototypeOf(this).styles,
-                ...this.styles
-            ];
-
-            for (const style of styles) {
-                let selector = `${this.tagName}${style.selector}`;
-                css += `\n${selector} { ${style.css} }`;
-            }
-            
-            return css;
         }
 
         static tagStyle(css: string): void {
