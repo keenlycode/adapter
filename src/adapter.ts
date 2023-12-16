@@ -44,7 +44,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             this.styles = this.styles.concat({selector, css});
             if (this.tagName) {
                 const addIndex = this.cssStyleSheet.cssRules.length;
-                css = `${this.tagName}${selector} ${css}`;
+                css = `${this.tagName}${selector} { ${css} }`;
                 this.cssStyleSheet.insertRule(css, addIndex);
             };
         };
@@ -105,14 +105,13 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             super(...args);
             this._class = this.constructor;
             this._id = this._class._generate_id();
-            console.log(this, this._id);
         };
 
         addStyle(css: string): void {
-            // this.classList.add(this._id);
-            // let selector = this.classList.value.replace(/ /g, '.');
+            this.classList.add(this._id);
+            let class_ = this.classList.value.replace(/ /g, '.');
             // const styleNode = document.createElement('style');
-            // this._class.addStyle('', `.${selector} { ${css} }`);
+            this._class.addStyle(`.${class_}`, css);
             // _addStyle(styleNode, `${this.tagName}.${selector} { ${style} }`, this);
         };
     };
