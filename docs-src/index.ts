@@ -1,5 +1,4 @@
 import { Adapter, addStyle } from '@devcapsule/adapter/src/export';
-import { Icon } from '@devcapsule/deficon/dist/icon';
 import { Button } from 'gadjet/src/gadjet';
 import { palette } from './_ux/color';
 
@@ -8,13 +7,6 @@ const css = String.raw;
 
 const __base_url = new URL(import.meta.url);
 window.__base_url = __base_url;
-
-const iconUrl = new URL('asset/icon/icomoon/symbol-defs.svg', __base_url);
-console.log(iconUrl.href);
-
-Icon.href = iconUrl.href;
-customElements.define('el-icon', Icon);
-
 
 class Particle extends Adapter {
     constructor() {

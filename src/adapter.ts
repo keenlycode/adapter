@@ -2,7 +2,7 @@ import { _addStyle } from './style.js';
 
 
 interface Style {
-    class_: string;
+    selector: string;
     css: string;
 }
 
@@ -21,11 +21,18 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class extends Base {
         static tagName: string;
         static styles: Array<Style> = [];
+        static cssStyleSheet: CSSStyleSheet;
 
-        static addStyle(css: string) {
-            const styleNode = document.createElement('style');
-            styleNode.setAttribute('component', this.name);
-            _addStyle(styleNode, css, document.head);
+        static addStyle(selector: string, css: string) {
+            // const styleNode = document.createElement('style');
+            // styleNode.setAttribute('component', this.name);
+            // _addStyle(styleNode, css, document.head);
+            this.styles = this.styles.concat({selector, css});
+            if (this.tagName) {
+                const addIndex = this.cssStyleSheet.cssRules.length;
+                css = `${this.tagName}${selector} ${css}`;
+                this.cssStyleSheet.insertRule(css, addIndex);
+            }
         }
         
         static define(tagName: string): void {
@@ -42,10 +49,12 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
                 }
             }
             this.tagName = tagName;
-            this.defineStyle();
+            this.cssStyleSheet = new CSSStyleSheet();
+            this.cssStyleSheet.replaceSync(this.css());
+            document.adoptedStyleSheets.push(this.cssStyleSheet);
         };
 
-        static defineStyle(): void {
+        static css(): string {
             let css = `${this.tagName} { all: unset }`;
 
             const styles = [
@@ -54,32 +63,19 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             ];
 
             for (const style of styles) {
-                let selector = this.tagName;
-                if (style['class_'] !== '') {
-                    selector = `${this.tagName}.${style['class_']}`
-                }
+                let selector = `${this.tagName}${style.selector}`;
                 css += `\n${selector} { ${style.css} }`;
             }
-
-            this.addStyle(css);
-        };
+            
+            return css;
+        }
 
         static tagStyle(css: string): void {
-            // In case that component has been defined,
-            // put css directly into html.
-            if (this.tagName) {
-                this.addStyle(`\n${this.tagName} { ${css} }`);
-            }
-            this.styles = this.styles.concat({class_: '', css: css});
+            this.addStyle('', css);
         }
 
         static classStyle(class_: string, css: string) {
-            // In case that component has been defined,
-            // put css directly into html.
-            if (this.tagName) {
-                this.addStyle(`\n${this.tagName}.${class_} { ${css} }`);
-            }
-            this.styles = this.styles.concat({class_: class_, css: css});
+            this.addStyle(`.${class_}`, css);
         }
 
         static readonly max_id = Math.pow(16, 4) - 1;
