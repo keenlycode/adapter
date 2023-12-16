@@ -20,7 +20,7 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class extends Base {
         static tagName: string;
-        static styles: Array<Style> = [];
+        static styles: Array<string> = [];
         static cssStyleSheet: CSSStyleSheet;
 
         static _css: String;
@@ -33,18 +33,17 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             ];
 
             for (const style of styles) {
-                let selector = `${this.tagName}${style.selector}`;
-                css += `\n${selector} { ${style.css} }`;
+                css += `\n${this.tagName} { ${style} }`;
             };
             
             return css;
         };
 
-        static addStyle(selector: string, css: string) {
-            this.styles = this.styles.concat({selector, css});
+        static addStyle(css: string) {
+            this.styles = this.styles.concat(css);
             if (this.tagName) {
                 const addIndex = this.cssStyleSheet.cssRules.length;
-                css = `${this.tagName}${selector} { ${css} }`;
+                css = `${this.tagName} { ${css} }`;
                 this.cssStyleSheet.insertRule(css, addIndex);
             };
         };
@@ -69,11 +68,11 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         };
 
         static tagStyle(css: string): void {
-            this.addStyle('', css);
+            this.addStyle(css);
         };
 
         static classStyle(class_: string, css: string) {
-            this.addStyle(`.${class_}`, css);
+            this.addStyle(`&.${class_} { ${css} }`);
         };
 
         static readonly max_id = Math.pow(16, 4) - 1;
@@ -111,7 +110,10 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             this.classList.add(this._id);
             let class_ = this.classList.value.replace(/ /g, '.');
             // const styleNode = document.createElement('style');
-            this._class.addStyle(`.${class_}`, css);
+            console.log(class_);
+            css = `&.${class_} { ${css} }`;
+            console.log(css);
+            this._class.addStyle(css);
             // _addStyle(styleNode, `${this.tagName}.${selector} { ${style} }`, this);
         };
     };
