@@ -18,15 +18,9 @@ styling particles above with the codes below.
 
 ```js
 /* this code will style <el-particle> */
-Particle.tagStyle(`
+Particle.addStyle(`
     border-radius: 0;
     transform: rotate(45deg);
-`);
-
-/* this code will style <el-particle class="blue"> */
-Particle.classStyle('blue', `
-    background-color: aqua;
-    border-color: blueviolet;
 `);
 ```
 </el-code-block>
@@ -64,8 +58,6 @@ class Particle1 extends Particle {
 ## 🎉 Extensible
 
 You can extends your components with great libraries:
-- Web Components Libraries:
-  [lit.dev](https://lit.dev/)  
 - HTML:
   [uhtml](https://github.com/WebReflection/uhtml),
   [lit-html](https://lit.dev/docs/libraries/standalone-templates/)
@@ -78,23 +70,6 @@ You can extends your components with great libraries:
   [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API),
   [anime.js](https://animejs.com/),
   [animate.css](https://animate.style/)
-
-Example how to use **Adapter** with **lit.dev**
-
-<el-code-block style="margin-top: 0.5rem;">
-    <div el="bar-top-left"><b>js/ts</b></div>
-
-```ts
-import { AdapterMixin } from '@devcapsule/adapter';
-import { LitElement } from 'lit';
-
-class Card extends AdapterMixin(LitElement) {};
-
-Card.define('el-card');
-Card.tagStyle('background-color: grey;');
-Card.classStyle('blue', 'background-color: blue;');
-```
-</el-code-block>
 
 ## 🎉 Setup
 
@@ -113,7 +88,7 @@ The bundle's size is just about **~2kB** !!
 <head>
 <script defer type="module">
 import { Adapter }
-    from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter@2.0.0/+esm";
+    from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter@2.2/+esm";
 </script>
 </head>
 ```
@@ -146,7 +121,7 @@ import { Adapter } from '@devcapsule/adapter';
 
 ### The APIs
 
-**Adapter** Provide 3 simple APIs to style components.
+**Adapter** Provide simple APIs to style components.
 
 <el-code-block>
     <div el="bar-top-left">
@@ -155,8 +130,7 @@ import { Adapter } from '@devcapsule/adapter';
     </div>
 
 ```ts
-Adapter.tagStyle(css: string);
-Adapter.classStyle(className, css: string);
+Adapter.addStyle(css: string);
 <Adapter Object>.addStyle(css: string);
 ```
 
@@ -171,22 +145,34 @@ Adapter.classStyle(className, css: string);
 
 ```js
 import { AdapterMixin } from '@devcapsule/adapter';
+
 /* Extends `Adapter` */
+class Card extends Adapter {};
+
+/* or you can use mixin as
 class Card extends AdapterMixin(HTMLElement) {};
+*/
 
 /* Define your component to custome element name `el-card` */
 Card.define('el-card');
 
-/* Style element <el-card> */
-Card.tagStyle(`
+/* Style elements <el-card> */
+Card.addStyle(`
     display: flex;
     justify-content: center;
 `);
 
-/* Style element <el-card class="blue"> */
-Card.classStyle('blue', `
-    color: blue;
-`)
+/* Style elements <el-card class="blue"> */
+Card.addStyle(`
+    &.blue {
+        color: blue;
+    }
+`);
+
+/* Style only this element */
+const card = new Card();
+card.addStyle(`background-color: red;`);
+document.body.append(card);
 
 ```
 </el-code-block>

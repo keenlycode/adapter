@@ -1,12 +1,14 @@
-import { CodeBlock } from './_ux/ui/code-block';
-import './_ux/style';
-
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import typescript from 'highlight.js/lib/languages/typescript';
 import xml from 'highlight.js/lib/languages/xml';
 import shell from 'highlight.js/lib/languages/shell';
 import 'highlight.js/styles/monokai.css';
+
+import { DefIcon } from '@devcapsule/deficon';
+
+import { CodeBlock } from './_ux/ui/code-block';
+import './_ux/style';
 
 const __base_url = new URL(import.meta.url);
 const __event_source = new URL('./esbuild', __base_url.href)
@@ -16,6 +18,14 @@ if (['0.0.0.0', '127.0.0.1', 'localhost'].includes(__base_url.hostname)) {
         'change',
         () => location.reload());
 }
+
+const icomoon_url = new URL(
+    'asset/icon/icomoon/symbol-defs.svg', __base_url
+).toString();
+
+class Icon extends DefIcon({url: icomoon_url}) {};
+
+customElements.define('el-icon', Icon);
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
