@@ -1,12 +1,3 @@
-import { _addStyle } from './style.js';
-
-
-interface Style {
-    selector: string;
-    css: string;
-}
-
-
 class DOMError extends Error {
     constructor(message: string) {
         super();
@@ -23,7 +14,6 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         static styles: Array<string> = [];
         static cssStyleSheet: CSSStyleSheet;
 
-        static _css: String;
         static get css(): string {
             let css = `${this.tagName} { all: unset }`;
 
@@ -109,12 +99,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         addStyle(css: string): void {
             this.classList.add(this._id);
             let class_ = this.classList.value.replace(/ /g, '.');
-            // const styleNode = document.createElement('style');
-            console.log(class_);
             css = `&.${class_} { ${css} }`;
-            console.log(css);
             this._class.addStyle(css);
-            // _addStyle(styleNode, `${this.tagName}.${selector} { ${style} }`, this);
         };
     };
 }

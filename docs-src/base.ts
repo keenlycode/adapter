@@ -7,7 +7,6 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import xml from 'highlight.js/lib/languages/xml';
 import shell from 'highlight.js/lib/languages/shell';
 import 'highlight.js/styles/monokai.css';
-import { addStyle } from '../src/style';
 
 const __base_url = new URL(import.meta.url);
 const __event_source = new URL('./esbuild', __base_url.href)
@@ -28,7 +27,11 @@ const __fira_sans_url = new URL('./asset/font/FiraSans-Regular.ttf', __base_url.
 const __fira_code_url = new URL('./asset/font/FiraCode-Variable.ttf', __base_url.href);
 const css = String.raw;
 
-addStyle(css`
+
+const style = new CSSStyleSheet();
+document.adoptedStyleSheets.push(style);
+
+style.replaceSync(css`
 @font-face {
     font-family: sans;
     src: url(${__fira_sans_url});
