@@ -1,4 +1,3 @@
-import { addStyle } from "@devcapsule/adapter/src/export";
 import { bgColor, fontFluid, Button } from "gadjet/src/gadjet";
 import { palette } from "./color";
 
@@ -6,7 +5,10 @@ const css = String.raw;
 
 Button.define('button');
 
-addStyle(css`
+const style = new CSSStyleSheet();
+document.adoptedStyleSheets.push(style);
+
+style.replaceSync(css`
 html {
     line-height: 1.75;
     font-family: sans;

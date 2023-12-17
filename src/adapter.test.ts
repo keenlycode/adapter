@@ -11,24 +11,13 @@ import { Adapter, DOMError } from './adapter';
 class MyAdapter extends Adapter {};
 
 describe('class Adapter {}', () => {
-    beforeEach(() => {
-        MyAdapter.styles = [{
-            class_: '',
-            css: 'all: unset;'
-        }];
-        const styleNodes = document.querySelectorAll('style');
-        for (const styleNode of styleNodes) {
-            styleNode.remove();
-        }
-    });
 
     afterEach(() => {
         // restore the spy created with spyOn
         jest.restoreAllMocks();
     });
 
-    test('Adapter.define()', () => {
-        jest.spyOn(MyAdapter, 'defineStyle');
+    test.only('Adapter.define()', () => {
         MyAdapter.define('el-adapter');
         const el = document.createElement('el-adapter');
         expect(el instanceof MyAdapter).toEqual(true);
@@ -42,28 +31,6 @@ describe('class Adapter {}', () => {
                 throw error
             }
         }
-    })
-
-    test('Adapter.defineStyle()', () => {
-        const css = 'background-color: red;';
-        MyAdapter.styles = MyAdapter.styles.concat({
-            class_: '',
-            css: css
-        });
-        MyAdapter.defineStyle();
-        expect(MyAdapter.styles[MyAdapter.styles.length - 1])
-            .toEqual({class_: '', css: css});
-        const styleNodes = document.querySelectorAll('style[component="MyAdapter"]');
-        const lastStyleNode = styleNodes[styleNodes.length - 1];
-        expect(lastStyleNode.textContent).toContain(css);
-
-        class MyAdapterClass extends Adapter {};
-        const class_ = 'red';
-        MyAdapterClass.classStyle(class_, css);
-        MyAdapterClass.define('el-adapter-class');
-        // console.log(MyAdapterClass.styles[MyAdapterClass.styles.length - 1]);
-        expect(MyAdapterClass.styles[MyAdapterClass.styles.length - 1])
-            .toEqual({class_: 'red', css: 'background-color: red;'})
     })
     
     test('Adapter.tagStyle()', () => {

@@ -1,12 +1,3 @@
-import { _addStyle } from './style.js';
-
-
-interface Style {
-    class_: string;
-    css: string;
-}
-
-
 class DOMError extends Error {
     constructor(message: string) {
         super();
@@ -20,13 +11,32 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class extends Base {
         static tagName: string;
-        static styles: Array<Style> = [];
+        static styles: Array<string> = [];
+        static cssStyleSheet: CSSStyleSheet;
+
+        static get css(): string {
+            let css = `${this.tagName} { all: unset }`;
+
+            const styles = [
+                ...Object.getPrototypeOf(this).styles,
+                ...this.styles
+            ];
+
+            for (const style of styles) {
+                css += `\n${this.tagName} { ${style} }`;
+            };
+            
+            return css;
+        };
 
         static addStyle(css: string) {
-            const styleNode = document.createElement('style');
-            styleNode.setAttribute('component', this.name);
-            _addStyle(styleNode, css, document.head);
-        }
+            this.styles = this.styles.concat(css);
+            if (this.tagName) {
+                const addIndex = this.cssStyleSheet.cssRules.length;
+                css = `${this.tagName} { ${css} }`;
+                this.cssStyleSheet.insertRule(css, addIndex);
+            };
+        };
         
         static define(tagName: string): void {
             // To extends this function, sub-elements must be defined before call
@@ -39,84 +49,61 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
                         `DOMException: '${this.name}' ` +
                         `has already been defined to tag '${this.tagName}'`
                     );
-                }
-            }
+                };
+            };
             this.tagName = tagName;
-            this.defineStyle();
+            this.cssStyleSheet = new CSSStyleSheet();
+            this.cssStyleSheet.replaceSync(this.css);
+            document.adoptedStyleSheets.push(this.cssStyleSheet);
         };
 
-        static defineStyle(): void {
-            let css = `${this.tagName} { all: unset }`;
-
-            const styles = [
-                ...Object.getPrototypeOf(this).styles,
-                ...this.styles
-            ];
-
-            for (const style of styles) {
-                let selector = this.tagName;
-                if (style['class_'] !== '') {
-                    selector = `${this.tagName}.${style['class_']}`
-                }
-                css += `\n${selector} { ${style.css} }`;
-            }
-
+        /** Deprecated, will be removed in 3.x */
+        static tagStyle(css: string): void {
             this.addStyle(css);
         };
 
-        static tagStyle(css: string): void {
-            // In case that component has been defined,
-            // put css directly into html.
-            if (this.tagName) {
-                this.addStyle(`\n${this.tagName} { ${css} }`);
-            }
-            this.styles = this.styles.concat({class_: '', css: css});
-        }
-
+        /** Deprecated, will be removed in 3.x */
         static classStyle(class_: string, css: string) {
-            // In case that component has been defined,
-            // put css directly into html.
-            if (this.tagName) {
-                this.addStyle(`\n${this.tagName}.${class_} { ${css} }`);
-            }
-            this.styles = this.styles.concat({class_: class_, css: css});
-        }
+            this.addStyle(`&.${class_} { ${css} }`);
+        };
 
         static readonly max_id = Math.pow(16, 4) - 1;
         static ids: {[index: string]: any} = {};
         static idsCount = 0;
         static _generate_id() {
+            const _gen_id = () => {
+                return `${this.name}-${Math.floor(Math.random() * this.max_id).toString(16)}`;
+            }
+
             if (this.idsCount > 10000) {
                 throw new Error(
                     `${this} instance exceed 10,000. Too many instances.`
                 );
-            }
-            let id: string = '';
-            let gen_times = 0;
-            while (this.ids[id] === true) {
-                id = `${this.name}-${Math.floor(Math.random() * this.max_id).toString(16)}`;
-                gen_times++;
-            }
+            };
+            let id: string = _gen_id();
+            while (id in this.ids) {
+                id = _gen_id();
+            };
             this.ids[id] = true;
             this.idsCount++;
             return id;
-        }
+        };
 
         _class: any | Constructor<HTMLElement>; // store class to access static props.
         _id: string; // instance id.
         
         constructor(...args: any[]) {
-            super();
+            super(...args);
             this._class = this.constructor;
             this._id = this._class._generate_id();
-        }
+        };
 
-        addStyle(style: string): void {
+        addStyle(css: string): void {
             this.classList.add(this._id);
-            let selector = this.classList.value.replace(/ /g, '.');
-            const styleNode = document.createElement('style');
-            _addStyle(styleNode, `${this.tagName}.${selector} { ${style} }`, this);
-        }
+            let class_ = this.classList.value.replace(/ /g, '.');
+            css = `&.${class_} { ${css} }`;
+            this._class.addStyle(css);
+        };
     };
 }
 
