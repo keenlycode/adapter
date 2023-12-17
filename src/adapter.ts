@@ -57,10 +57,12 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             document.adoptedStyleSheets.push(this.cssStyleSheet);
         };
 
+        /** Deprecated, will be removed in 3.x */
         static tagStyle(css: string): void {
             this.addStyle(css);
         };
 
+        /** Deprecated, will be removed in 3.x */
         static classStyle(class_: string, css: string) {
             this.addStyle(`&.${class_} { ${css} }`);
         };
