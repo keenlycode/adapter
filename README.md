@@ -9,22 +9,11 @@
    <li>Just <strong>1 kB</strong> (minified + gzip)</li>
 </ul>
 
-## Sample Usage for Frontend (with uhtml)
+## Sample Usage
 ```js
 import { Adapter } from `@devcapsule/adapter`;
-import { render, html } from 'uhtml';
 
-class Card extends Adapter {
-   constructor() {
-      super();
-      this.renderHTML();
-   }
-   renderHTML(name="Card") {
-      render(this, html`
-         <h1>My name is ${name}</h1>
-      `)
-   }
-};
+class Card extends Adapter {};
 
 // Don't worry about tag's name conflicted, choose your own.
 Card.define('el-card');
@@ -33,16 +22,25 @@ Card.define('el-card');
  * It won't go anywhere outside the component.
  * All <el-card> style will be updated.
  */
-Card.tagStyle(`color: red;`);
+Card.addStyle(`
+   display: block;
+   min-height: 5rem;
+   width: 100%;
+   color: red;`
+);
 
 // Style class can also be used.
 // This will style <el-card class="text-blue">
-Card.classStyle('text-blue', `color: blue;`);
+Card.addStyle(`
+   &.text-blue {
+      color: blue;
+   }
+`);
 
 // Dynamically create stylable element.
-const card = document.createElement('el-card');
+const card = new Card();
 card.addStyle(`color: black`);
-card.renderHTML('black');
+document.body.append(card);
 ```
 
 ## Project Board
