@@ -1,7 +1,7 @@
 {
   "name": "@devcapsule/adapter",
   "description": "Adaptive Style Web Component Framework",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/keenly-coding/adapter.git"
@@ -17,7 +17,7 @@
     "css"
   ],
   "author": "Nitipit Nontasuwan",
-  "homepage": "https://github.com/keenly-coding/adapter#readme",
+  "homepage": "https://keenlycode.github.io/adapter/",
   "license": "MIT",
   "files": [
     "src/**/*",
