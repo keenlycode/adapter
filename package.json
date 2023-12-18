@@ -24,12 +24,13 @@
     "dist/**/*"
   ],
   "scripts": {
-    "test": "jest --coverage --verbose src/",
-    "test-watch": "jest --watch --coverage --verbose src/",
     "dist": "tsc --build --verbose tsconfig.json && node esbuild/bundle.mjs",
     "docs-js": "node esbuild/docs.mjs",
     "docs-html": "source venv/bin/activate && engrave dev docs-src docs --asset",
-    "docs": "concurrently -kr 'npm run docs-js' 'npm run docs-html'"
+    "docs": "concurrently -kr 'npm run docs-js' 'npm run docs-html'",
+    "test-html": "source venv/bin/activate && engrave dev docs-src/test/ docs/test/ --asset",
+    "test-js": "node esbuild/test.mjs",
+    "test": "concurrently -kr 'npm run test-html' 'npm run test-js'"
   },
   "devDependencies": {
     "@devcapsule/adapter": "file:./",

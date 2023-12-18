@@ -1,4 +1,4 @@
-import { Adapter } from '../../src/export';
+import { Adapter } from '@devcapsule/adapter';
 import { html, render } from 'uhtml';
 
 new EventSource('/esbuild')
