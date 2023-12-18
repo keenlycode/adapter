@@ -34,10 +34,12 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         static _cssStyleSheet: CSSStyleSheet;
         static get cssStyleSheet(): CSSStyleSheet {
             const superCSSStyleSheet = Object.getPrototypeOf(this)._cssStyleSheet;
+
             if ((this._cssStyleSheet === undefined) ||
                     (this._cssStyleSheet === superCSSStyleSheet)){
                 this._cssStyleSheet = new CSSStyleSheet();
             }
+
             return this._cssStyleSheet;
         }
 
@@ -47,7 +49,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             for (const style of this.styles) {
                 css += `\n${this.tagName} { ${style} }`;
             };
-            
+
             return css;
         };
 
@@ -74,8 +76,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
                     );
                 };
             };
+
             this._tagName = tagName;
-            // this._cssStyleSheet = new CSSStyleSheet();
             this.cssStyleSheet.replaceSync(this.css);
             document.adoptedStyleSheets.push(this.cssStyleSheet);
         };
