@@ -105,6 +105,9 @@ describe('AdapterMixin Class', () => {
             line-height: 1.5;
             background-color: aquamarine;
         `)
+
+        console.log(Tag.styles);
+
         Tag.define('el-tag');
         const tag = new Tag();
         tag.innerHTML = 'tag';
