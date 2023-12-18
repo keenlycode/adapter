@@ -23,17 +23,19 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             return styles;
         }
 
-        static _tagName: string|null = null;
-        static get tagName(): string|null {
+        static _tagName: string;
+        static get tagName(): string|undefined {
             if (this._tagName === Object.getPrototypeOf(this).tagName) {
-                return null;
+                return undefined;
             }
             return this._tagName;
         }
 
         static _cssStyleSheet: CSSStyleSheet;
         static get cssStyleSheet(): CSSStyleSheet {
-            if (this._cssStyleSheet === null) {
+            const superCSSStyleSheet = Object.getPrototypeOf(this)._cssStyleSheet;
+            if ((this._cssStyleSheet === undefined) ||
+                    (this._cssStyleSheet === superCSSStyleSheet)){
                 this._cssStyleSheet = new CSSStyleSheet();
             }
             return this._cssStyleSheet;
@@ -73,8 +75,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
                 };
             };
             this._tagName = tagName;
-            this._cssStyleSheet = new CSSStyleSheet();
-            this._cssStyleSheet.replaceSync(this.css);
+            // this._cssStyleSheet = new CSSStyleSheet();
+            this.cssStyleSheet.replaceSync(this.css);
             document.adoptedStyleSheets.push(this.cssStyleSheet);
         };
 
