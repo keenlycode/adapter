@@ -10,15 +10,17 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class extends Base {
-        static tagName: string|null = null;
         static _styles: Array<string> = [];
         static get styles() {
             const superClass = Object.getPrototypeOf(this);
+            let styles = this._styles;
             if (superClass.styles instanceof Array) {
-                this._styles = [...superClass.styles, ...this._styles]
-            }
-            return this._styles;
+                styles = [...superClass.styles, ...styles];
+            };
+            return styles;
         }
+
+        static tagName: string|null = null;
         static cssStyleSheet: CSSStyleSheet;
 
         static get css(): string {
