@@ -11,18 +11,20 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class extends Base {
         static tagName: string|null = null;
-        static styles: Array<string> = [];
+        static _styles: Array<string> = [];
+        static get styles() {
+            const superClass = Object.getPrototypeOf(this);
+            if (superClass.styles instanceof Array) {
+                this._styles = [...superClass.styles, ...this._styles]
+            }
+            return this._styles;
+        }
         static cssStyleSheet: CSSStyleSheet;
 
         static get css(): string {
             let css = `${this.tagName} { all: unset }`;
 
-            const styles = [
-                ...Object.getPrototypeOf(this).styles,
-                ...this.styles
-            ];
-
-            for (const style of styles) {
+            for (const style of this.styles) {
                 css += `\n${this.tagName} { ${style} }`;
             };
             
@@ -30,7 +32,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         };
 
         static addStyle(css: string) {
-            this.styles = this.styles.concat(css);
+            this._styles = this._styles.concat(css);
 
             /** Check if tagName has been defined to this class
              * Can be improved later when customElements.getTagName()

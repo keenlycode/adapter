@@ -91,6 +91,7 @@ describe('AdapterMixin Class', () => {
     document.querySelector('#render')?.append(row);
     it('Should be able to extends from another HTMLElement class', () => {
         class Tag extends AdapterMixin(HTMLElement) {};
+        class Badge extends AdapterMixin(Tag) {};
 
         Tag.addStyle(css`
             display: inline-flex;
@@ -108,6 +109,12 @@ describe('AdapterMixin Class', () => {
         const tag = new Tag();
         tag.innerHTML = 'tag';
         row.append(tag);
+
+        Badge.define('el-badge');
+        const badge = new Badge();
+        badge.innerHTML = '*';
+        row.append(badge);
+        console.log(badge._class.styles);
     })
 })
 
