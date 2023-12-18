@@ -10,35 +10,48 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class extends Base {
-        static tagName: string|null = null;
-        static styles: Array<string> = [];
-        static cssStyleSheet: CSSStyleSheet;
+        static _styles: Array<string> = [];
+        static get styles(): Array<string> {
+            const superClass = Object.getPrototypeOf(this);
+            let styles = this._styles;
+            if (superClass.styles instanceof Array) {
+                styles = [...superClass.styles, ...styles];
+            };
+            return styles;
+        }
+
+        static _tagName: string;
+        static get tagName(): string|undefined {
+            if (this._tagName === Object.getPrototypeOf(this).tagName) {
+                return undefined;
+            }
+            return this._tagName;
+        }
+
+        static _cssStyleSheet: CSSStyleSheet;
+        static get cssStyleSheet(): CSSStyleSheet {
+            const superCSSStyleSheet = Object.getPrototypeOf(this)._cssStyleSheet;
+
+            if ((this._cssStyleSheet === undefined) ||
+                    (this._cssStyleSheet === superCSSStyleSheet)){
+                this._cssStyleSheet = new CSSStyleSheet();
+            }
+
+            return this._cssStyleSheet;
+        }
 
         static get css(): string {
             let css = `${this.tagName} { all: unset }`;
 
-            const styles = [
-                ...Object.getPrototypeOf(this).styles,
-                ...this.styles
-            ];
-
-            for (const style of styles) {
+            for (const style of this.styles) {
                 css += `\n${this.tagName} { ${style} }`;
             };
-            
+
             return css;
         };
 
         static addStyle(css: string) {
-            this.styles = this.styles.concat(css);
-
-            /** Check if tagName has been defined to this class
-             * Can be improved later when customElements.getTagName()
-             * is wider support by browser engines.
-             */
-            if (this.tagName === Object.getPrototypeOf(this).tagName) {
-                return;
-            }
+            this._styles = this._styles.concat(css);
 
             if (this.tagName) {
                 const addIndex = this.cssStyleSheet.cssRules.length;
@@ -60,8 +73,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
                     );
                 };
             };
-            this.tagName = tagName;
-            this.cssStyleSheet = new CSSStyleSheet();
+
+            this._tagName = tagName;
             this.cssStyleSheet.replaceSync(this.css);
             document.adoptedStyleSheets.push(this.cssStyleSheet);
         };

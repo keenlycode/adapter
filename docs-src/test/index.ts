@@ -89,8 +89,9 @@ describe('Adapter Class', function() {
 describe('AdapterMixin Class', () => {
     const row = new Row();
     document.querySelector('#render')?.append(row);
-    it('Should be able to extends from another HTMLElement class', () => {
+    it('Should be able to extends from another HTMLElement subclass', () => {
         class Tag extends AdapterMixin(HTMLElement) {};
+        class Badge extends AdapterMixin(Tag) {};
 
         Tag.addStyle(css`
             display: inline-flex;
@@ -104,10 +105,19 @@ describe('AdapterMixin Class', () => {
             line-height: 1.5;
             background-color: aquamarine;
         `)
+
         Tag.define('el-tag');
         const tag = new Tag();
         tag.innerHTML = 'tag';
         row.append(tag);
+
+        Badge.define('el-badge');
+        Badge.addStyle(css`
+            color: red;
+        `)
+        const badge = new Badge();
+        badge.innerHTML = '*';
+        row.append(badge);
     })
 })
 
