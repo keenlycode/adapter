@@ -3,41 +3,38 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import { glob } from 'glob';
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function docs() {
     const docs_src_dir = path.join(__dirname, '../docs-src/');
     const entryFiles = await glob(
-        path.join(docs_src_dir, '**/*.ts'),
+        path.join(docs_src_dir, 'test/**/*.ts'),
         {
-            ignore: path.join(docs_src_dir, '**/_*')
+            ignore: path.join(docs_src_dir, 'test/**/_*')
         }
     );
 
-    const outDir = path.join(__dirname, '../docs/');
-    console.log(`Create docs at: ${outDir}`);
+    const outDir = path.join(__dirname, '../docs/test/');
+    console.log(`Create test at: ${outDir}`);
 
     const result = await esbuild.context({
         entryPoints: entryFiles,
         entryNames: '[dir]/[name]',
         outdir: outDir,
-        outbase: 'docs-src',
+        outbase: 'docs-src/test',
         bundle: true,
         format: "esm",
         sourcemap: true,
         keepNames: true,
-        minifyWhitespace: true,
-        minifyIdentifiers: false,
-        minifySyntax: true,
-        color: true,
-        logLevel: "info",
+        color: true
     })
     await result.watch();
     const { host, port } = await result.serve({
         servedir: "docs"
     })
-    console.log(`docs server => http://${host}:${port}`);
+    console.log(`\n> Test server => http://${host}:${port}/test/\n`);
 }
 
 await docs();
