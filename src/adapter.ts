@@ -11,7 +11,7 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class extends Base {
         static _styles: Array<string> = [];
-        static get styles() {
+        static get styles(): Array<string> {
             const superClass = Object.getPrototypeOf(this);
             let styles = this._styles;
             if (superClass.styles instanceof Array) {
@@ -20,8 +20,21 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             return styles;
         }
 
-        static tagName: string|null = null;
-        static cssStyleSheet: CSSStyleSheet;
+        static _tagName: string|null = null;
+        static get tagName(): string|null {
+            if (this._tagName === Object.getPrototypeOf(this).tagName) {
+                return null;
+            }
+            return this._tagName;
+        }
+
+        static _cssStyleSheet: CSSStyleSheet;
+        static get cssStyleSheet(): CSSStyleSheet {
+            if (this._cssStyleSheet === null) {
+                this._cssStyleSheet = new CSSStyleSheet();
+            }
+            return this._cssStyleSheet;
+        }
 
         static get css(): string {
             let css = `${this.tagName} { all: unset }`;
@@ -35,14 +48,6 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
         static addStyle(css: string) {
             this._styles = this._styles.concat(css);
-
-            /** Check if tagName has been defined to this class
-             * Can be improved later when customElements.getTagName()
-             * is wider support by browser engines.
-             */
-            if (this.tagName === Object.getPrototypeOf(this).tagName) {
-                return;
-            }
 
             if (this.tagName) {
                 const addIndex = this.cssStyleSheet.cssRules.length;
@@ -64,9 +69,9 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
                     );
                 };
             };
-            this.tagName = tagName;
-            this.cssStyleSheet = new CSSStyleSheet();
-            this.cssStyleSheet.replaceSync(this.css);
+            this._tagName = tagName;
+            this._cssStyleSheet = new CSSStyleSheet();
+            this._cssStyleSheet.replaceSync(this.css);
             document.adoptedStyleSheets.push(this.cssStyleSheet);
         };
 
