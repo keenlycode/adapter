@@ -10,8 +10,11 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class extends Base {
-        static _styles: Array<string> = [];
+        static _styles: Array<string>;
         static get styles(): Array<string> {
+            if (this._styles === undefined) {
+                this._styles = [];
+            }
             const superClass = Object.getPrototypeOf(this);
             let styles = this._styles;
             if (superClass.styles instanceof Array) {
@@ -47,7 +50,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         };
 
         static addStyle(css: string) {
-            this._styles = this._styles.concat(css);
+            this._styles = this.styles.concat(css);
 
             if (this.tagName) {
                 const addIndex = this.cssStyleSheet.cssRules.length;
