@@ -3,15 +3,16 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import { glob } from 'glob';
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function docs() {
     const docs_src_dir = path.join(__dirname, '../docs-src/');
     const entryFiles = await glob(
-        path.join(docs_src_dir, '**/*.ts'),
+        path.join(docs_src_dir, 'test/**/*.ts'),
         {
-            ignore: path.join(docs_src_dir, '**/_*')
+            ignore: path.join(docs_src_dir, 'test/**/_*')
         }
     );
 
