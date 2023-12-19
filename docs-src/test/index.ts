@@ -91,7 +91,7 @@ describe('AdapterMixin Class', () => {
     document.querySelector('#render')?.append(row);
     it('Should be able to extends from another HTMLElement subclass', () => {
         class Tag extends AdapterMixin(HTMLElement) {
-            static style = css`background-color: aquamarine`;
+            static css = css`background-color: aquamarine`;
         };
 
         Tag.addStyle(css`
@@ -111,7 +111,7 @@ describe('AdapterMixin Class', () => {
         row.append(tag);
 
         class Badge extends AdapterMixin(Tag) {
-            static style = `background-color: Navy;`;
+            static css = css`background-color: Navy;`;
         };
 
         Badge.define('el-badge');

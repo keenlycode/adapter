@@ -22,17 +22,15 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             return styles;
         }
 
-        static set style(css: string) {
+        static set css(css: string) {
             this._styles = [css];
         }
 
         static get css(): string {
-            let css: string = `${this.tagName} { all: unset }`;
-
+            let css: string = '';
             for (const style of this.styles) {
-                css += `\n${this.tagName} { ${style} }`;
+                css += `\n${style}`;
             };
-
             return css;
         };
 
@@ -55,7 +53,6 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
         static addStyle(css: string) {
             this._styles = this._styles.concat(css);
-
             if (this.tagName) {
                 const addIndex = this.cssStyleSheet.cssRules.length;
                 css = `${this.tagName} { ${css} }`;
@@ -78,7 +75,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             };
 
             this._tagName = tagName;
-            this.cssStyleSheet.replaceSync(this.css);
+            this.cssStyleSheet.replaceSync(`${this.tagName} {${this.css}`);
             document.adoptedStyleSheets.push(this.cssStyleSheet);
         };
 
