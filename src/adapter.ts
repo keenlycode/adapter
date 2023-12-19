@@ -119,6 +119,14 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         set css(css: string) {
             this.cssStyleSheet.replaceSync(`${this.tagName} { ${css} }`);
         }
+
+        get css(): string {
+            let css = '';
+            for (const cssRule of this.cssStyleSheet.cssRules) {
+                css += cssRule.cssText;
+            }
+            return css;
+        }
         
         constructor(...args: any[]) {
             super(...args);
