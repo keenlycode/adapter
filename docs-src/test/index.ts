@@ -118,7 +118,7 @@ describe('AdapterMixin Class', () => {
         Badge.addStyle(css`
             color: white;
         `)
-        const badge = new Badge();
+        let badge = new Badge();
         badge.innerHTML = '*';
         row.append(badge);
     })
