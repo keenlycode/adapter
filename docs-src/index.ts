@@ -87,7 +87,7 @@ class Heading extends Adapter {};
 
 class SocialButtons extends Adapter {};
 
-Heading.tagStyle(css`
+Heading.addStyle(css`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -102,7 +102,7 @@ Heading.tagStyle(css`
     }
 `);
 
-SocialButtons.tagStyle(css`
+SocialButtons.addStyle(css`
     & button {
         margin: 0 1rem;
         & el-icon {
@@ -117,7 +117,7 @@ SocialButtons.tagStyle(css`
     }
 `);
 
-ParticleScene.tagStyle(css`
+ParticleScene.addStyle(css`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -128,7 +128,7 @@ ParticleScene.tagStyle(css`
     min-width: 300px;
 `)
 
-Particle.tagStyle(css`
+Particle.addStyle(css`
     display: inline-flex;
     box-sizing: border-box;
     margin: 3.5%;
