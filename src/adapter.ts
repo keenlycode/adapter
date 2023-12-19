@@ -113,18 +113,28 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
         _class: any | Constructor<HTMLElement>; // store class to access static props.
         _id: string; // instance id.
+        cssStyleSheet: CSSStyleSheet;
+        adoptedStyleSheetIndex: number;
+
+        set css(css: string) {
+            this.cssStyleSheet.replaceSync(`${this.tagName} { ${css} }`);
+        }
         
         constructor(...args: any[]) {
             super(...args);
             this._class = this.constructor;
             this._id = this._class._generate_id();
+            this.cssStyleSheet = new CSSStyleSheet();
+            const index = document.adoptedStyleSheets.length;
+            document.adoptedStyleSheets[index] = this.cssStyleSheet;
+            this.adoptedStyleSheetIndex = index;
         };
 
         addStyle(css: string): void {
             this.classList.add(this._id);
             let class_ = this.classList.value.replace(/ /g, '.');
             css = `&.${class_} { ${css} }`;
-            this._class.addStyle(css);
+            this.cssStyleSheet.insertRule(`${this.tagName} { ${css} }`);
         };
     };
 }
