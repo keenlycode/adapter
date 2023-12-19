@@ -78,19 +78,12 @@ $ pip install -r require.pip
 $ npm run dist
 ```
 
-### 📕 Build Docs
-You need to run with Python Environment
-
+### 📕 Build & Run Docs Server
 ```shell
-$ source venv/bin/activate
-$ python run.py docs
+$ npm run docs
 ```
 
 ### 🔍 Run Test
 ```shell
 $ npm run test
-```
-Or in watch mode
-```shell
-$ npm run test-watch
 ```
