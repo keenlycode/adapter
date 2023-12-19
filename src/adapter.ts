@@ -119,14 +119,6 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         set css(css: string) {
             this.cssStyleSheet.replaceSync(`${this.tagName} { ${css} }`);
         }
-
-        get css(): string {
-            let css = '';
-            for (const cssRule of this.cssStyleSheet.cssRules) {
-                css += cssRule.cssText;
-            }
-            return css;
-        }
         
         constructor(...args: any[]) {
             super(...args);
@@ -144,6 +136,11 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             css = `&.${class_} { ${css} }`;
             this.cssStyleSheet.insertRule(`${this.tagName} { ${css} }`);
         };
+
+        delete() {
+            delete document.adoptedStyleSheets[this.adoptedStyleSheetIndex];
+            this.remove();
+        }
     };
 }
 
