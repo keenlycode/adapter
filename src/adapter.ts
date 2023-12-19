@@ -79,12 +79,12 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             document.adoptedStyleSheets.push(this.cssStyleSheet);
         };
 
-        /** Deprecated, will be removed in 3.x */
+        /** Deprecated, will be removed in v3 */
         static tagStyle(css: string): void {
             this.addStyle(css);
         };
 
-        /** Deprecated, will be removed in 3.x */
+        /** Deprecated, will be removed in v3 */
         static classStyle(class_: string, css: string) {
             this.addStyle(`&.${class_} { ${css} }`);
         };
