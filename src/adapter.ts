@@ -10,7 +10,9 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class extends Base {
+        /** _styles which contain only css for this component */
         static _styles: Array<string> = [];
+
         static get styles(): Array<string> {
             const superClass = Object.getPrototypeOf(this);
             let styles = this._styles;
@@ -19,6 +21,20 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             };
             return styles;
         }
+
+        static set style(css: string) {
+            this._styles = [css];
+        }
+
+        static get css(): string {
+            let css: string = `${this.tagName} { all: unset }`;
+
+            for (const style of this.styles) {
+                css += `\n${this.tagName} { ${style} }`;
+            };
+
+            return css;
+        };
 
         static _tagName: string;
         static get tagName(): string|undefined {
@@ -39,16 +55,6 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
             return this._cssStyleSheet;
         }
-
-        static get css(): string {
-            let css = `${this.tagName} { all: unset }`;
-
-            for (const style of this.styles) {
-                css += `\n${this.tagName} { ${style} }`;
-            };
-
-            return css;
-        };
 
         static addStyle(css: string) {
             this._styles = this._styles.concat(css);
