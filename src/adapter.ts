@@ -6,7 +6,7 @@ class DOMError extends Error {
     }
 }
 
-const uuid = () => {
+function uuid(): string {
     const end = new Date().getTime() + 1;
     let now = new Date().getTime();
     while (now < end) {
