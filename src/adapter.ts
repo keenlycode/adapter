@@ -11,7 +11,7 @@ class DOMError extends Error {
 type Constructor<T = {}> = new (...args: any[]) => T;
 
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
-    return class extends Base {
+    return class Adapter extends Base {
         /** _styles which contain only css for this component */
         static _styles: Array<string> = [];
 
@@ -37,10 +37,10 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             return css;
         };
 
-        static _tagName: string;
-        static get tagName(): string|undefined {
+        static _tagName: string|null;
+        static get tagName(): string|null {
             if (this._tagName === Object.getPrototypeOf(this).tagName) {
-                return undefined;
+                this._tagName = null;
             }
             return this._tagName;
         }
@@ -76,11 +76,14 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
                     );
                 };
             };
-
             this._tagName = tagName;
+            this.initStyle();
+        };
+
+        static initStyle() {
             this.cssStyleSheet.replaceSync(`${this.tagName} {${this.css}`);
             document.adoptedStyleSheets.push(this.cssStyleSheet);
-        };
+        }
 
         /** Deprecated, will be removed in v3 */
         static tagStyle(css: string): void {
@@ -93,6 +96,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         };
 
         _uuid!: string; // instance id.
+        _class: typeof Adapter;
         _cssStyleSheet!: CSSStyleSheet;
         adoptedStyleSheetIndex: number|null = null;
 
@@ -128,6 +132,15 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         
         constructor(...args: any[]) {
             super(...args);
+            if (this._class) { return };
+            this._class = this.constructor as unknown as typeof Adapter;
+
+            /** If class tagName has been defined from somewhere else.
+             * Then it shouldn't be initiailzed again.
+            */
+            if (this._class.tagName) { return };
+            this._class._tagName = this.tagName;
+            this._class.initStyle();
         };
 
         addStyle(css: string): void {
