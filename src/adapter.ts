@@ -1,22 +1,11 @@
+import { uuid } from './util';
+
 class DOMError extends Error {
     constructor(message: string) {
         super();
         this.message = message;
         this.name = 'DOMError';
     }
-}
-
-const sleepSync = (ms: number) => {
-    const end = new Date().getTime() + ms;
-    let time = new Date().getTime();
-    while (time < end) {
-        time = new Date().getTime()
-    }
-    return time;
-}
-
-function uuid() {
-    return sleepSync(1).toString(36);
 }
 
 type Constructor<T = {}> = new (...args: any[]) => T;
@@ -104,7 +93,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
         _uuid!: string; // instance id.
         _cssStyleSheet!: CSSStyleSheet;
-        adoptedStyleSheetIndex!: number;
+        adoptedStyleSheetIndex: number|null = null;
 
         get uuid(): string {
             if (!this._uuid) {
