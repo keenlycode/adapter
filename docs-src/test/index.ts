@@ -90,7 +90,7 @@ describe("Adapter Class: Use Case", function () {
 
         /** This should not affect inherited styles */
         RedCard.css = css`background-color: red;`;
-        
+
         assert(RedCard.css.includes("display: flex;"));
         assert(RedCard.css.includes("background-color: red;"));
     });
@@ -103,11 +103,32 @@ describe("Adapter Class: Use Case", function () {
 });
 
 describe("Adapter Object: Use Case", () => {
-    it("Should be able to create instance", () => {
-        Adapter.define("el-adapter");
-        const card = new Adapter();
-        assert(card instanceof Adapter);
+    class Button1 extends Adapter {};
+    class Button2 extends Adapter {};
+    Button1.define("el-button1");
+    customElements.define('el-button2', Button2);
+    const button1 = new Button1();
+    const button2 = new Button2();
+
+    it("Should be proper inherited instance", () => {
+        assert(button1 instanceof Button1);
+        assert(button1 instanceof Adapter);
     });
+
+    it("constructor() should be called and setup the instance", () => {
+        assert(button1._class === Button1);
+        assert(button1._class.tagName === "el-button1");
+        assert(document.adoptedStyleSheets.includes(button1._class.cssStyleSheet));
+
+        assert(button2._class === Button2);
+        assert(button2._class.tagName?.toLowerCase() === "el-button2");
+        assert(document.adoptedStyleSheets.includes(button2._class.cssStyleSheet));
+    });
+
+    it("It's uuid should be unique", () => {
+        assert(button1.uuid !== button2.uuid);
+    });
+
 });
 
 mocha.run();

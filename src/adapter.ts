@@ -121,7 +121,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
              * Then it shouldn't be initialized again.
             */
             if (this._class.tagName) { return };
-            // this._class._styles = [];
+            this._class._styles = [];
             this._class._tagName = this.tagName;
             this._class.initStyle();
         };
@@ -168,9 +168,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             );
         }
 
-        /**
-         * Add style for this element
-         */
+        /** Add style for this element */
         addStyle(css: string): void {
             this.cssStyleSheet.insertRule(`
                 ${this.tagName} {
@@ -180,9 +178,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             );
         };
 
-        /**
-         * Delete the adopted stylesheet and remove the element from DOM.
-         */
+        /** Delete the adopted stylesheet and remove the element from DOM. */
         delete() {
             delete document.adoptedStyleSheets[this.adoptedStyleSheetIndex!];
             this.remove();
