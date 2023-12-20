@@ -130,13 +130,17 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             );
         }
         
+        /** In constructor, there any some if condition to check
+         * if it has been init or not, because in Mixin,
+         * super will recursively call super class constructor or method.
+         */
         constructor(...args: any[]) {
             super(...args);
             if (this._class) { return };
             this._class = this.constructor as unknown as typeof Adapter;
 
             /** If class tagName has been defined from somewhere else.
-             * Then it shouldn't be initiailzed again.
+             * Then it shouldn't be initialized again.
             */
             if (this._class.tagName) { return };
             this._class._tagName = this.tagName;
