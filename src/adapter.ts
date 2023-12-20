@@ -1,12 +1,5 @@
 import { uuid } from './util';
 
-class DOMError extends Error {
-    constructor(message: string) {
-        super();
-        this.message = message;
-        this.name = 'DOMError';
-    }
-}
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
@@ -82,22 +75,13 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             };
         };
         
-        /** Define component to element tag and init component style */
+        /**
+         * Define component to element tag and init component style.
+         * To extends this function, sub-elements must be defined
+         * before call this function as `super.define(tagName);`
+        */
         static define(tagName: string): void {
-            /** 
-             * To extends this function, sub-elements must be defined
-             * before call this function as `super.define(tagName);`
-            */
-            try {
-                customElements.define(tagName, this);
-            } catch (error) {
-                if (error instanceof DOMException) {
-                    throw new DOMError(
-                        `DOMException: '${this.name}' ` +
-                        `has already been defined to tag '${this.tagName}'`
-                    );
-                };
-            };
+            customElements.define(tagName, this);
             this._tagName = tagName;
             this.initStyle();
         };
