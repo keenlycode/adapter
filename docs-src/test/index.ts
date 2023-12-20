@@ -111,7 +111,7 @@ describe('AdapterMixin Class', () => {
         row.append(tag);
 
         class Badge extends AdapterMixin(Tag) {
-            static css = css`background-color: Navy;`;
+            static css = css`background-color: blue;`;
         };
 
         Badge.define('el-badge');
