@@ -6,6 +6,13 @@ class DOMError extends Error {
     }
 }
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+async function uuid() {
+    await sleep(4);
+    return new Date().getTime().toString(16);
+};
+
 type Constructor<T = {}> = new (...args: any[]) => T;
 
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
@@ -89,30 +96,9 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             this.addStyle(`&.${class_} { ${css} }`);
         };
 
-        static readonly max_id = Math.pow(16, 4) - 1;
-        static ids: {[index: string]: any} = {};
-        static idsCount = 0;
-        static _generate_id() {
-            const _gen_id = () => {
-                return `${this.name}-${Math.floor(Math.random() * this.max_id).toString(16)}`;
-            }
+        static _last_generated_id: string;
 
-            if (this.idsCount > 10000) {
-                throw new Error(
-                    `${this} instance exceed 10,000. Too many instances.`
-                );
-            };
-            let id: string = _gen_id();
-            while (id in this.ids) {
-                id = _gen_id();
-            };
-            this.ids[id] = true;
-            this.idsCount++;
-            return id;
-        };
-
-        _class: any | Constructor<HTMLElement>; // store class to access static props.
-        _id: string; // instance id.
+        _id: string|any; // instance id.
         cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
         adoptedStyleSheetIndex: number;
 
@@ -122,11 +108,14 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         
         constructor(...args: any[]) {
             super(...args);
-            this._class = this.constructor;
-            this._id = this._class._generate_id();
+            this.setID();
             const index = document.adoptedStyleSheets.length;
             document.adoptedStyleSheets[index] = this.cssStyleSheet;
             this.adoptedStyleSheetIndex = index;
+        };
+
+        async setID() {
+            this._id = await uuid();
         };
 
         addStyle(css: string): void {
