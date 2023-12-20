@@ -16,12 +16,24 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         static _styles: Array<string> = [];
 
         static get styles(): Array<string> {
-            const superClass = Object.getPrototypeOf(this);
-            let styles = this._styles;
-            if (superClass.styles instanceof Array) {
-                styles = [...superClass.styles, ...styles];
-            };
-            return styles;
+            const superClassStyles = Object.getPrototypeOf(this).styles;
+            if (superClassStyles === undefined) {
+                return this._styles;
+            }
+            if (this._styles.toString() === superClassStyles.toString()) {
+                this._styles = [];
+            }
+            return this._styles;
+        }
+
+        static get inheritedStyles(): Array<string> {
+            let superClass = Object.getPrototypeOf(this);
+            let inheritedStyles: Array<string> = [];
+            while (superClass.styles !== undefined) {
+                inheritedStyles.push(...superClass.styles);
+                superClass = Object.getPrototypeOf(superClass);
+            }
+            return inheritedStyles;
         }
 
         static set css(css: string) {
@@ -31,7 +43,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
         static get css(): string {
             let css: string = '';
-            for (const style of this.styles) {
+            let styles = [...this.inheritedStyles, ...this.styles];
+            for (const style of styles) {
                 css += `\n${style}`;
             };
             return css;
@@ -143,6 +156,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
              * Then it shouldn't be initialized again.
             */
             if (this._class.tagName) { return };
+            // this._class._styles = [];
             this._class._tagName = this.tagName;
             this._class.initStyle();
         };
