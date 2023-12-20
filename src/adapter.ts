@@ -6,12 +6,14 @@ class DOMError extends Error {
     }
 }
 
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-async function uuid() {
-    await sleep(4);
-    return new Date().getTime().toString(16);
-};
+const uuid = () => {
+    const end = new Date().getTime() + 1;
+    let now = new Date().getTime();
+    while (now < end) {
+        now = new Date().getTime();
+    }
+    return now.toString(16)
+}
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
@@ -108,14 +110,10 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         
         constructor(...args: any[]) {
             super(...args);
-            this.setID();
+            this._id = uuid();
             const index = document.adoptedStyleSheets.length;
             document.adoptedStyleSheets[index] = this.cssStyleSheet;
             this.adoptedStyleSheetIndex = index;
-        };
-
-        async setID() {
-            this._id = await uuid();
         };
 
         addStyle(css: string): void {

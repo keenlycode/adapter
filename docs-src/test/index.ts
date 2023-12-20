@@ -121,6 +121,12 @@ describe('AdapterMixin Class', () => {
         let badge = new Badge();
         badge.innerHTML = '*';
         row.append(badge);
+
+        for (let i=0; i<5; i++) {
+            badge = new Badge();
+            badge.innerHTML = '*';
+            row.append(badge);
+        }
     })
 })
 
