@@ -77,8 +77,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
                 };
             };
             this._tagName = tagName;
-            this.cssStyleSheet.replaceSync(`${this.tagName} {${this.css}`);
-            document.adoptedStyleSheets.push(this.cssStyleSheet);
+            this.initStyle();
         };
 
         static initStyle() {
@@ -140,10 +139,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
              * Then it shouldn't be initiailzed again.
             */
             if (this._class.tagName) { return };
-            // this._class.define(this.tagName);
             this._class._tagName = this.tagName;
-            this._class.cssStyleSheet.replaceSync(`${this._class.tagName} {${this._class.css}`);
-            document.adoptedStyleSheets.push(this._class.cssStyleSheet);
+            this._class.initStyle();
         };
 
         addStyle(css: string): void {
