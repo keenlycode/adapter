@@ -32,7 +32,8 @@ mocha.setup('bdd');
 mocha.checkLeaks();
 
 class Row extends Adapter {};
-Row.define('el-row');
+// Row.define('el-row');
+customElements.define('el-row', Row);
 Row.tagStyle(css`
     display: flex;
     flex-wrap: wrap;
@@ -57,6 +58,7 @@ describe('Adapter Class', function() {
         assert(card instanceof HTMLElement);
         card.innerHTML = '<h2>Card</h2>';
         row.append(card);
+        console.log(card._class.tagName);
     })
     it('Should be able to use API: addStyle()', () => {
         Card.addStyle(css`
@@ -79,7 +81,8 @@ describe('Adapter Class', function() {
         RedCard.addStyle(css`
             background-color: red;
         `)
-        RedCard.define('el-card-red');
+        // RedCard.define('el-card-red');
+        customElements.define('el-red-card', RedCard);
         const redCard = new RedCard();
         redCard.innerHTML = '<h2>Red Card</h2>';
         row.append(redCard);
@@ -105,7 +108,8 @@ describe('AdapterMixin Class', () => {
             line-height: 1.5;
         `)
 
-        Tag.define('el-tag');
+        // Tag.define('el-tag');
+        customElements.define('el-tag', Tag);
         const tag = new Tag();
         tag.innerHTML = 'tag';
         row.append(tag);
@@ -114,9 +118,9 @@ describe('AdapterMixin Class', () => {
             static css = css`background-color: blue;`;
         };
 
-        Badge.define('el-badge');
+        // Badge.define('el-badge');
+        customElements.define('el-badge', Badge);
         Badge.addStyle(css`color: white;`);
-        // Badge.css = 'background: red;';
         let badge = new Badge();
         badge.innerHTML = '*';
         row.append(badge);
