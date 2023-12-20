@@ -7,149 +7,172 @@ import { Adapter, AdapterMixin } from "@devcapsule/adapter/src/export";
 const __base_url = new URL(import.meta.url);
 
 if (["0.0.0.0", "127.0.0.1", "localhost"].includes(__base_url.hostname)) {
-  new EventSource("/esbuild").addEventListener("change", () =>
-    location.reload()
-  );
+    new EventSource("/esbuild").addEventListener("change", () =>
+        location.reload()
+    );
 }
 
 const css = String.raw;
 const style = new CSSStyleSheet();
 document.adoptedStyleSheets.push(style);
 style.replaceSync(css`
-  body {
-    padding-bottom: 10rem;
-  }
-  #render {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+    body {
+        padding-bottom: 10rem;
+    }
+    #render {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+    }
 `);
 
 mocha.setup("bdd");
 
 mocha.checkLeaks();
 
-class Row extends Adapter {}
-// Row.define('el-row');
-customElements.define("el-row", Row);
-Row.tagStyle(css`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
-`);
+describe("Adapter Class: Use Case", function () {
+    class Card1 extends Adapter {};
+    class Card2 extends Adapter {};
+    class RedCard extends Card1 {};
 
-describe("Adapter Class", function () {
-  const row = new Row();
-  document.querySelector("#render")?.append(row);
-  class Card extends Adapter {}
-  it("Should be extendable", () => {
-    assert(Object.getPrototypeOf(Card) === Adapter);
-  });
-  it("Should be able to define tagName", () => {
-    Card.define("el-card");
-    assert(Card.tagName === "el-card");
-  });
-  it("Should be able to create instance", () => {
-    const card = new Card();
-    assert(card instanceof Card);
-    assert(card instanceof HTMLElement);
-    card.innerHTML = "<h2>Card</h2>";
-    row.append(card);
-  });
-  it("Should be able to use API: addStyle()", () => {
-    Card.addStyle(css`
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
-      min-width: 200px;
-      max-width: 300px;
-      min-height: 100px;
-      width: 90%;
-      background-color: white;
-      border: 2px solid;
-      border-radius: 10px;
-      margin: 1rem 1rem;
-    `);
-  });
-  it("Should inherit style from parent class", () => {
-    class RedCard extends Card {}
-    RedCard.addStyle(css`
-      background-color: red;
-    `);
-    // RedCard.define('el-card-red');
-    customElements.define("el-red-card", RedCard);
-    const redCard = new RedCard();
-    redCard.innerHTML = "<h2>Red Card</h2>";
-    row.append(redCard);
-  });
+    it("Should be extendable", () => {
+        assert(Object.getPrototypeOf(Card1) === Adapter);
+    });
+
+    it("Each sub-class or sibling-class should have different styles object", () => {
+        assert(Card1.styles !== Card2.styles,
+            `Card1.styles !== Card2.styles`
+        );
+        assert(Card1.styles !== RedCard.styles,
+            `Card1.styles !== RedCard.styles`
+        );
+    });
+
+    it("Should be able to define tagName", () => {
+        Card1.define("el-card1");
+        assert(Card1.tagName?.toLowerCase() === "el-card1");
+        customElements.define("el-card2", Card2);
+        const card2 = new Card2();
+        assert(card2.tagName.toLowerCase() === "el-card2");
+        assert(card2._class.tagName?.toLowerCase() === "el-card2");
+    });
+
+    it("Should be able to create instance", () => {
+        const card1 = new Card1();
+        assert(card1 instanceof Card1);
+        assert(card1 instanceof Adapter);
+    });
+
+    it("Should be able to use API: addStyle()", () => {
+        Card1.addStyle(css`display: flex;`);
+        Card2.addStyle(css`display: block;`);
+    });
+
+    it("Should inherit style from super class", () => {
+        assert(RedCard.css === Card1.css);
+        RedCard.addStyle(css`background-color: red;`);
+        assert(RedCard.css.includes("display: flex;"));
+        assert(RedCard.css.includes("background-color: red;"));
+        RedCard.define("el-red-card");
+    });
+
+    it("Should be able to set css in class declaration", () => {
+        class Card3 extends Adapter {
+            static css = css`display: grid;`;
+        };
+        assert(Card3.css.includes("display: grid;"));
+    });
+
+    it("Should be able to set the whole css for this component", () => {
+        Card1.css = css`display: flex;`;
+        assert(RedCard.css.includes("display: flex;"));
+
+        /** This should not affect inherited styles */
+        RedCard.css = css`background-color: red;`;
+
+        assert(RedCard.css.includes("display: flex;"));
+        assert(RedCard.css.includes("background-color: red;"));
+    });
+
+    it("Class' CSSStyleSheet() should be adopted by document", () => {
+        assert(document.adoptedStyleSheets.includes(Card1.cssStyleSheet));
+        assert(document.adoptedStyleSheets.includes(Card2.cssStyleSheet));
+        assert(document.adoptedStyleSheets.includes(RedCard.cssStyleSheet));
+    });
 });
 
-describe("AdapterMixin Class", () => {
-  const row = new Row();
-  document.querySelector("#render")?.append(row);
-  it("Should be able to extends from another HTMLElement subclass", () => {
-    class Tag extends AdapterMixin(HTMLElement) {
-      static css = css`
-        background-color: aquamarine;
-      `;
-    }
+describe("Adapter Object: Use Case", () => {
+    class Button1 extends Adapter {};
+    class Button2 extends Adapter {};
+    Button1.define("el-button1");
+    customElements.define('el-button2', Button2);
+    const button1 = new Button1();
+    const button2 = new Button2();
 
-    Tag.addStyle(css`
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
-      padding: 0.2rem 0.7rem 0.2rem 0.7rem;
-      border: 4px solid darkseagreen;
-      border-radius: 5px;
-      line-height: 1.5;
-    `);
+    it("Should be proper inherited instance", () => {
+        assert(button1 instanceof Button1);
+        assert(button1 instanceof Adapter);
+    });
 
-    // Tag.define('el-tag');
-    customElements.define("el-tag", Tag);
-    const tag = new Tag();
-    tag.innerHTML = "tag";
-    row.append(tag);
+    it("constructor() should be called and setup the instance", () => {
+        assert(button1._class === Button1);
+        assert(button1._class.tagName === "el-button1");
+        assert(document.adoptedStyleSheets.includes(button1._class.cssStyleSheet));
 
-    class Badge extends AdapterMixin(Tag) {
-      static css = css`
-        background-color: blue;
-      `;
-    }
+        assert(button2._class === Button2);
+        assert(button2._class.tagName?.toLowerCase() === "el-button2");
+        assert(document.adoptedStyleSheets.includes(button2._class.cssStyleSheet));
+    });
 
-    // Badge.define('el-badge');
-    customElements.define("el-badge", Badge);
-    Badge.addStyle(
-      css`
-        color: white;
-      `
-    );
-    let badge = new Badge();
-    badge.innerHTML = "*";
-    row.append(badge);
+    it("It's uuid should be unique", () => {
+        assert(button1.uuid !== button2.uuid);
+    });
 
-    for (let i = 0; i < 5; i++) {
-      badge = new Badge();
-      badge.innerHTML = i.toString();
-      row.append(badge);
-    }
-  });
+    it(`Should have cssStyleSheet and is adopted by document`, () => {
+        assert(button1.cssStyleSheet instanceof CSSStyleSheet);
+        assert(button2.cssStyleSheet instanceof CSSStyleSheet);
+        assert(document.adoptedStyleSheets.includes(button1.cssStyleSheet));
+        assert(document.adoptedStyleSheets.includes(button2.cssStyleSheet));
+    });
+
+    it("Should have adoptedStyleSheetIndex", () => {
+        assert(button1.adoptedStyleSheetIndex !== null);
+        assert(button2.adoptedStyleSheetIndex !== null);
+    });
+
+    it("Can set css for this instance", () => {
+        button1.css = css`display: flex;`;
+        assert(button1.cssStyleSheet.cssRules[0].cssText.includes("display: flex;"));
+    });
+
+    it("Can add style for this instance", () => {
+        button1.addStyle(css`background-color: red;`);
+        assert(button1.cssStyleSheet.cssRules[1].cssText.includes("background-color: red;"));
+    });
+
+    it("Can be deleted from document", () => {
+        button1.delete();
+        assert(!document.adoptedStyleSheets.includes(button1.cssStyleSheet));
+    });
 });
 
-describe("test", () => {
-  class Card1 extends Adapter {
-    static css = `background-color: red`;
-  }
-  class Card2 extends Card1 {}
-  class Card3 extends Card2 {}
+describe("Adapter Mixin: Use Case", () => {
+    class Pin1 extends AdapterMixin(HTMLElement) {};
+    class Pin2 extends AdapterMixin(Pin1) {};
 
-  console.log(Card1.css);
-  console.log(Card2.css);
-  console.log(Card3.css);
+    Pin1.define('el-pin1');
+    Pin2.define('el-pin2');
+
+    const pin1 = new Pin1();
+    const pin2 = new Pin2();
+    it("Should be able to mixin", () => {
+        assert(pin1 instanceof Pin1);
+        assert(pin1 instanceof HTMLElement);
+        assert(pin2 instanceof Pin2);
+        assert(pin2 instanceof Pin1);
+        assert(pin2 instanceof HTMLElement);
+    });
 });
 
 mocha.run();
