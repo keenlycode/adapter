@@ -6,6 +6,19 @@ class DOMError extends Error {
     }
 }
 
+const sleepSync = (ms: number) => {
+    const end = new Date().getTime() + ms;
+    let time = new Date().getTime();
+    while (time < end) {
+        time = new Date().getTime()
+    }
+    return time;
+}
+
+function uuid() {
+    return sleepSync(1).toString(36);
+}
+
 type Constructor<T = {}> = new (...args: any[]) => T;
 
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
@@ -89,16 +102,21 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             this.addStyle(`&.${class_} { ${css} }`);
         };
 
-        static _last_generated_id: string;
-
-        _id!: string; // instance id.
+        _uuid!: string; // instance id.
         _cssStyleSheet!: CSSStyleSheet;
         adoptedStyleSheetIndex!: number;
+
+        get uuid(): string {
+            if (!this._uuid) {
+                this._uuid = `${this.tagName}-${uuid()}`;
+            }
+            return this._uuid;
+        }
 
         get cssStyleSheet() {
             if (!this._cssStyleSheet) {
                 const index = document.adoptedStyleSheets.length;
-                this.classList.add(this._id);
+                this.classList.add(this.uuid);
                 this._cssStyleSheet = new CSSStyleSheet();
                 document.adoptedStyleSheets[index] = this._cssStyleSheet;
                 this.adoptedStyleSheetIndex = index;
@@ -120,11 +138,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         
         constructor(...args: any[]) {
             super(...args);
-            if (this._id) {return}; 
-            const id = crypto.getRandomValues(
-                new Uint32Array(1))[0].toString(36);
-            this._id = `${this.tagName}-${id}`;
-            console.log(this.tagName);
+            if (this._uuid) {return}; 
         };
 
         addStyle(css: string): void {
