@@ -12,11 +12,12 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class Adapter extends Base {
-        /** _styles which contain only css for this component */
+        /** Styles which contain only css for this component */
         static _styles: Array<string> = [];
 
-        /** Retreive styles for this class,
-         * it prevent inherit values from super class.
+        /**
+         * Retreive styles for this component, also prevent inherit values
+         * from super class.
          */
         static get styles(): Array<string> {
             if (this._styles === Object.getPrototypeOf(this).styles) {
@@ -25,8 +26,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             return this._styles;
         }
 
-        /** Retreive inherited styles for all super classes.
-         */
+        /** Retreive inherited styles for all super classes. */
         static get inheritedStyles(): Array<string> {
             let superClass = Object.getPrototypeOf(this);
             let inheritedStyles: Array<string> = [];
@@ -72,6 +72,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             return this._cssStyleSheet;
         }
 
+        /** Add style to this component */
         static addStyle(css: string) {
             this._styles = this._styles.concat(css);
             if (this.tagName) {
@@ -81,9 +82,12 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             };
         };
         
+        /** Define component to element tag and init component style */
         static define(tagName: string): void {
-            // To extends this function, sub-elements must be defined before call
-            // this function as `super.define(tagName);`
+            /** 
+             * To extends this function, sub-elements must be defined
+             * before call this function as `super.define(tagName);`
+            */
             try {
                 customElements.define(tagName, this);
             } catch (error) {
@@ -98,6 +102,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             this.initStyle();
         };
 
+        /** Init component style */
         static initStyle() {
             this.cssStyleSheet.replaceSync(`${this.tagName} {${this.css}`);
             document.adoptedStyleSheets.push(this.cssStyleSheet);
@@ -114,10 +119,30 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         };
 
         _uuid!: string; // instance id.
-        _class: typeof Adapter;
+        _class: typeof Adapter; // instance class.
         _cssStyleSheet!: CSSStyleSheet;
         adoptedStyleSheetIndex: number|null = null;
+        
+        /**
+         * In constructor, there any some if condition to check
+         * if it has been inited or not to prevent recursive call in Mixin
+         */
+        constructor(...args: any[]) {
+            super(...args);
+            if (this._class) { return };
+            this._class = this.constructor as unknown as typeof Adapter;
 
+            /**
+             * If class tagName has been defined from somewhere else.
+             * Then it shouldn't be initialized again.
+            */
+            if (this._class.tagName) { return };
+            // this._class._styles = [];
+            this._class._tagName = this.tagName;
+            this._class.initStyle();
+        };
+
+        /** Dynamically create and return uuid for the element */
         get uuid(): string {
             if (!this._uuid) {
                 this._uuid = `${this.tagName}-${uuid()}`;
@@ -125,6 +150,10 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             return this._uuid;
         }
 
+        /**
+         * Dynamically create a CSSStyleSheet() and keep track of the adopted
+         * stylesheet index for later reference.
+         */
         get cssStyleSheet() {
             if (!this._cssStyleSheet) {
                 const index = document.adoptedStyleSheets.length;
@@ -136,10 +165,17 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             return this._cssStyleSheet;
         }
 
+        /**
+         * Return a selector for the this element as a class chain.
+         */
         get objectClassSelector(): string {
             return '&.' + this.classList.value.replace(/ /g, '.');
         }
 
+        /**
+         * Set whole CSS for this element.
+         * It works like `<el style="">` with nest syntax.
+         */
         set css(css: string) {
             this.cssStyleSheet.replaceSync(`
                 ${this.tagName} {
@@ -147,25 +183,10 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
                 }`
             );
         }
-        
-        /** In constructor, there any some if condition to check
-         * if it has been init or not, because in Mixin,
-         * super will recursively call super class constructor or method.
+
+        /**
+         * Add style for this element
          */
-        constructor(...args: any[]) {
-            super(...args);
-            if (this._class) { return };
-            this._class = this.constructor as unknown as typeof Adapter;
-
-            /** If class tagName has been defined from somewhere else.
-             * Then it shouldn't be initialized again.
-            */
-            if (this._class.tagName) { return };
-            // this._class._styles = [];
-            this._class._tagName = this.tagName;
-            this._class.initStyle();
-        };
-
         addStyle(css: string): void {
             this.cssStyleSheet.insertRule(`
                 ${this.tagName} {
@@ -175,6 +196,9 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             );
         };
 
+        /**
+         * Delete the adopted stylesheet and remove the element from DOM.
+         */
         delete() {
             delete document.adoptedStyleSheets[this.adoptedStyleSheetIndex!];
             this.remove();
