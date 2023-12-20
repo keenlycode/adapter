@@ -56,9 +56,9 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         static addStyle(css: string) {
             this._styles = this._styles.concat(css);
             if (this.tagName) {
-                const addIndex = this.cssStyleSheet.cssRules.length;
                 css = `${this.tagName} { ${css} }`;
-                this.cssStyleSheet.insertRule(css, addIndex);
+                this.cssStyleSheet.insertRule(css,
+                    this.cssStyleSheet.cssRules.length);
             };
         };
         
@@ -127,7 +127,6 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         
         constructor(...args: any[]) {
             super(...args);
-            if (this._uuid) {return}; 
         };
 
         addStyle(css: string): void {

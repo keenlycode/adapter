@@ -115,16 +115,15 @@ describe('AdapterMixin Class', () => {
         };
 
         Badge.define('el-badge');
-        Badge.addStyle(css`
-            color: white;
-        `)
+        Badge.addStyle(css`color: white;`);
+        Badge.css = 'background: red;';
         let badge = new Badge();
         badge.innerHTML = '*';
         row.append(badge);
 
         for (let i=0; i<5; i++) {
             badge = new Badge();
-            badge.innerHTML = '*';
+            badge.innerHTML = i.toString();
             row.append(badge);
         }
     })
