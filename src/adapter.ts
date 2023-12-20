@@ -9,8 +9,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         static _styles: Array<string> = [];
 
         /**
-         * Retreive styles for this component, also prevent inherit values
-         * from super class.
+         * Retreive styles for this component,
+         * also prevent inherit values from super class.
          */
         static get styles(): Array<string> {
             if (this._styles === Object.getPrototypeOf(this).styles) {
@@ -192,4 +192,4 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
 const Adapter = AdapterMixin(HTMLElement);
 
-export { Adapter, AdapterMixin, DOMError };
+export { Adapter, AdapterMixin };

@@ -31,38 +31,31 @@ mocha.setup("bdd");
 
 mocha.checkLeaks();
 
-class Row extends Adapter {}
-// Row.define('el-row');
-customElements.define("el-row", Row);
-Row.tagStyle(css`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-`);
-
-describe("Adapter Class", function () {
-    const row = new Row();
-    document.querySelector("#render")?.append(row);
+describe("Adapter Class: Use Case", function () {
     class Card1 extends Adapter {};
     class Card2 extends Adapter {};
+    class RedCard extends Card1 {};
 
     it("Should be extendable", () => {
         assert(Object.getPrototypeOf(Card1) === Adapter);
     });
 
-    it("Sub-classes should have different styles", () => {
+    it("Each sub-class or sibling-class should have different styles object", () => {
         assert(Card1.styles !== Card2.styles,
             `Card1.styles !== Card2.styles`
         );
-        Card1.addStyle(css`background-color: red;`);
-        Card2.addStyle(css`background-color: blue;`);
-        assert(Card1.css !== Card2.css, `Card1.css !== Card2.css`);
+        assert(Card1.styles !== RedCard.styles,
+            `Card1.styles !== RedCard.styles`
+        );
     });
 
     it("Should be able to define tagName", () => {
         Card1.define("el-card1");
-        assert(Card1.tagName === "el-card1");
+        assert(Card1.tagName?.toLowerCase() === "el-card1");
+        customElements.define("el-card2", Card2);
+        const card2 = new Card2();
+        assert(card2.tagName.toLowerCase() === "el-card2");
+        assert(card2._class.tagName?.toLowerCase() === "el-card2");
     });
 
     it("Should be able to create instance", () => {
@@ -71,101 +64,50 @@ describe("Adapter Class", function () {
         assert(card1 instanceof Adapter);
     });
 
-    it("Should raise error when define same tagName", () => {
-        Card2.define("el-card1");
-    });
-
     it("Should be able to use API: addStyle()", () => {
-        Card.addStyle(css`
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-            min-width: 200px;
-            max-width: 300px;
-            min-height: 100px;
-            width: 90%;
-            background-color: white;
-            border: 2px solid;
-            border-radius: 10px;
-            margin: 1rem 1rem;
-        `);
+        Card1.addStyle(css`display: flex;`);
+        Card2.addStyle(css`display: block;`);
     });
-    it("Should inherit style from parent class", () => {
-        class RedCard extends Card {}
-        RedCard.addStyle(css`
-            background-color: red;
-        `);
-        // RedCard.define('el-card-red');
-        customElements.define("el-red-card", RedCard);
-        const redCard = new RedCard();
-        redCard.innerHTML = "<h2>Red Card</h2>";
-        row.append(redCard);
+
+    it("Should inherit style from super class", () => {
+        assert(RedCard.css === Card1.css);
+        RedCard.addStyle(css`background-color: red;`);
+        assert(RedCard.css.includes("display: flex;"));
+        assert(RedCard.css.includes("background-color: red;"));
+        RedCard.define("el-red-card");
     });
-});
 
-describe("AdapterMixin Class", () => {
-    const row = new Row();
-    document.querySelector("#render")?.append(row);
-    it("Should be able to extends from another HTMLElement subclass", () => {
-        class Tag extends AdapterMixin(HTMLElement) {
-            static css = css`
-                background-color: aquamarine;
-            `;
-        }
+    it("Should be able to set css in class declaration", () => {
+        class Card3 extends Adapter {
+            static css = css`display: grid;`;
+        };
+        assert(Card3.css.includes("display: grid;"));
+    });
 
-        Tag.addStyle(css`
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-            padding: 0.2rem 0.7rem 0.2rem 0.7rem;
-            border: 4px solid darkseagreen;
-            border-radius: 5px;
-            line-height: 1.5;
-        `);
+    it("Should be able to set the whole css for this component", () => {
+        Card1.css = css`display: flex;`;
+        assert(RedCard.css.includes("display: flex;"));
 
-        // Tag.define('el-tag');
-        customElements.define("el-tag", Tag);
-        const tag = new Tag();
-        tag.innerHTML = "tag";
-        row.append(tag);
+        /** This should not affect inherited styles */
+        RedCard.css = css`background-color: red;`;
+        
+        assert(RedCard.css.includes("display: flex;"));
+        assert(RedCard.css.includes("background-color: red;"));
+    });
 
-        class Badge extends AdapterMixin(Tag) {
-            static css = css`
-                background-color: blue;
-            `;
-        }
-
-        // Badge.define('el-badge');
-        customElements.define("el-badge", Badge);
-        Badge.addStyle(
-            css`
-                color: white;
-            `
-        );
-        let badge = new Badge();
-        badge.innerHTML = "*";
-        row.append(badge);
-
-        for (let i = 0; i < 5; i++) {
-            badge = new Badge();
-            badge.innerHTML = i.toString();
-            row.append(badge);
-        }
+    it("Class' CSSStyleSheet() should be adopted by document", () => {
+        assert(document.adoptedStyleSheets.includes(Card1.cssStyleSheet));
+        assert(document.adoptedStyleSheets.includes(Card2.cssStyleSheet));
+        assert(document.adoptedStyleSheets.includes(RedCard.cssStyleSheet));
     });
 });
 
-describe("test", () => {
-    class Card1 extends Adapter {
-        static css = `background-color: red`;
-    }
-    class Card2 extends Card1 {}
-    class Card3 extends Card2 {}
-
-    console.log(Card1.css);
-    console.log(Card2.css);
-    console.log(Card3.css);
+describe("Adapter Object: Use Case", () => {
+    it("Should be able to create instance", () => {
+        Adapter.define("el-adapter");
+        const card = new Adapter();
+        assert(card instanceof Adapter);
+    });
 });
 
 mocha.run();
