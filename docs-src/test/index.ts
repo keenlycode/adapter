@@ -157,4 +157,22 @@ describe("Adapter Object: Use Case", () => {
     });
 });
 
+describe("Adapter Mixin: Use Case", () => {
+    class Pin1 extends AdapterMixin(HTMLElement) {};
+    class Pin2 extends AdapterMixin(Pin1) {};
+
+    Pin1.define('el-pin1');
+    Pin2.define('el-pin2');
+
+    const pin1 = new Pin1();
+    const pin2 = new Pin2();
+    it("Should be able to mixin", () => {
+        assert(pin1 instanceof Pin1);
+        assert(pin1 instanceof HTMLElement);
+        assert(pin2 instanceof Pin2);
+        assert(pin2 instanceof Pin1);
+        assert(pin2 instanceof HTMLElement);
+    });
+});
+
 mocha.run();
