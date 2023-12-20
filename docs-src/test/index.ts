@@ -140,7 +140,7 @@ describe("AdapterMixin Class", () => {
   });
 });
 
-describe.only("test", () => {
+describe("test", () => {
   class Card1 extends Adapter {
     static css = `background-color: red`;
   }

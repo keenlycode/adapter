@@ -15,17 +15,18 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         /** _styles which contain only css for this component */
         static _styles: Array<string> = [];
 
+        /** Retreive styles for this class,
+         * it prevent inherit values from super class.
+         */
         static get styles(): Array<string> {
-            const superClassStyles = Object.getPrototypeOf(this).styles;
-            if (superClassStyles === undefined) {
-                return this._styles;
-            }
-            if (this._styles.toString() === superClassStyles.toString()) {
+            if (this._styles === Object.getPrototypeOf(this).styles) {
                 this._styles = [];
             }
             return this._styles;
         }
 
+        /** Retreive inherited styles for all super classes.
+         */
         static get inheritedStyles(): Array<string> {
             let superClass = Object.getPrototypeOf(this);
             let inheritedStyles: Array<string> = [];
@@ -36,11 +37,13 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             return inheritedStyles;
         }
 
+        /** Set CSS for this component */
         static set css(css: string) {
             this._styles = [css];
             this.cssStyleSheet.replaceSync(`${this.tagName} {${this.css}`);
         }
 
+        /** Get CSS for this component, includes inherited styles */
         static get css(): string {
             let css: string = '';
             let styles = [...this.inheritedStyles, ...this.styles];
@@ -50,6 +53,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             return css;
         };
 
+        /** Tag name of this component */
         static _tagName: string|null;
         static get tagName(): string|null {
             if (this._tagName === Object.getPrototypeOf(this).tagName) {
@@ -58,6 +62,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             return this._tagName;
         }
 
+        /** CSSStyleSheet() for this component */
         static _cssStyleSheet: CSSStyleSheet;
         static get cssStyleSheet(): CSSStyleSheet {
             const superCSSStyleSheet = Object.getPrototypeOf(this)._cssStyleSheet;
