@@ -26,6 +26,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
         static set css(css: string) {
             this._styles = [css];
+            this.cssStyleSheet.replaceSync(`${this.tagName} {${this.css}`);
         }
 
         static get css(): string {
