@@ -100,31 +100,45 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
         static _last_generated_id: string;
 
-        _id: string|any; // instance id.
-        cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
-        adoptedStyleSheetIndex: number;
+        _id!: string; // instance id.
+        cssStyleSheet!: CSSStyleSheet;
+        adoptedStyleSheetIndex!: number;
+
+        get objectClassSelector(): string {
+            return '&.' + this.classList.value.replace(/ /g, '.');
+        }
 
         set css(css: string) {
-            this.cssStyleSheet.replaceSync(`${this.tagName} { ${css} }`);
+            this.cssStyleSheet.replaceSync(`
+                ${this.tagName} {
+                    ${this.objectClassSelector} { ${css} }
+                }`);
         }
         
         constructor(...args: any[]) {
             super(...args);
-            this._id = uuid();
+            if (this._id) {return};
+            this._id = `${this.tagName}-${uuid()}`;
+            this.classList.add(this._id);
             const index = document.adoptedStyleSheets.length;
+            this.cssStyleSheet = new CSSStyleSheet();
             document.adoptedStyleSheets[index] = this.cssStyleSheet;
             this.adoptedStyleSheetIndex = index;
         };
 
         addStyle(css: string): void {
-            this.classList.add(this._id);
+            console.log('addStyle');
             let class_ = this.classList.value.replace(/ /g, '.');
-            css = `&.${class_} { ${css} }`;
-            this.cssStyleSheet.insertRule(`${this.tagName} { ${css} }`);
+            css = `${this.tagName} { ${this.objectClassSelector} { ${css} } }`;
+            this.cssStyleSheet.insertRule(
+                css,
+                this.cssStyleSheet.cssRules.length
+            );
+            // document.adoptedStyleSheets.push(this.cssStyleSheet);
         };
 
         delete() {
-            delete document.adoptedStyleSheets[this.adoptedStyleSheetIndex];
+            delete document.adoptedStyleSheets[this.adoptedStyleSheetIndex!];
             this.remove();
         }
     };
