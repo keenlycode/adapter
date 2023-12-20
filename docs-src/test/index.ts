@@ -110,7 +110,7 @@ describe("Adapter Object: Use Case", () => {
     const button1 = new Button1();
     const button2 = new Button2();
 
-    it("Should be proper inherited instance", () => {
+    it("Should inherited from parent class properly", () => {
         assert(button1 instanceof Button1);
         assert(button1 instanceof Adapter);
     });
