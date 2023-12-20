@@ -78,6 +78,7 @@ describe('Adapter Class', function() {
     })
     it('Should inherit style from parent class', () => {
         class RedCard extends Card {};
+        console.log(RedCard._styles);
         RedCard.addStyle(css`
             background-color: red;
         `)
