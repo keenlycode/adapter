@@ -127,14 +127,12 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         };
 
         addStyle(css: string): void {
-            console.log('addStyle');
             let class_ = this.classList.value.replace(/ /g, '.');
             css = `${this.tagName} { ${this.objectClassSelector} { ${css} } }`;
             this.cssStyleSheet.insertRule(
                 css,
                 this.cssStyleSheet.cssRules.length
             );
-            // document.adoptedStyleSheets.push(this.cssStyleSheet);
         };
 
         delete() {
