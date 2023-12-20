@@ -133,7 +133,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         addStyle(css: string): void {
             this.cssStyleSheet.insertRule(`
                 ${this.tagName} {
-                    ${this.objectClassSelector} { ${css} } }`,
+                    ${this.objectClassSelector} { ${css} }
+                }`,
                 this.cssStyleSheet.cssRules.length
             );
         };
