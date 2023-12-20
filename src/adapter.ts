@@ -113,7 +113,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
         _class: any | Constructor<HTMLElement>; // store class to access static props.
         _id: string; // instance id.
-        cssStyleSheet: CSSStyleSheet;
+        cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
         adoptedStyleSheetIndex: number;
 
         set css(css: string) {
@@ -124,7 +124,6 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             super(...args);
             this._class = this.constructor;
             this._id = this._class._generate_id();
-            this.cssStyleSheet = new CSSStyleSheet();
             const index = document.adoptedStyleSheets.length;
             document.adoptedStyleSheets[index] = this.cssStyleSheet;
             this.adoptedStyleSheetIndex = index;
