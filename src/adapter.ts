@@ -6,15 +6,6 @@ class DOMError extends Error {
     }
 }
 
-function uuid(): string {
-    const end = new Date().getTime() + 1;
-    let now = new Date().getTime();
-    while (now < end) {
-        now = new Date().getTime();
-    }
-    return now.toString(16)
-}
-
 type Constructor<T = {}> = new (...args: any[]) => T;
 
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
@@ -101,8 +92,19 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         static _last_generated_id: string;
 
         _id!: string; // instance id.
-        cssStyleSheet!: CSSStyleSheet;
+        _cssStyleSheet!: CSSStyleSheet;
         adoptedStyleSheetIndex!: number;
+
+        get cssStyleSheet() {
+            if (!this._cssStyleSheet) {
+                const index = document.adoptedStyleSheets.length;
+                this.classList.add(this._id);
+                this._cssStyleSheet = new CSSStyleSheet();
+                document.adoptedStyleSheets[index] = this._cssStyleSheet;
+                this.adoptedStyleSheetIndex = index;
+            }
+            return this._cssStyleSheet;
+        }
 
         get objectClassSelector(): string {
             return '&.' + this.classList.value.replace(/ /g, '.');
@@ -112,25 +114,23 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             this.cssStyleSheet.replaceSync(`
                 ${this.tagName} {
                     ${this.objectClassSelector} { ${css} }
-                }`);
+                }`
+            );
         }
         
         constructor(...args: any[]) {
             super(...args);
-            if (this._id) {return};
-            this._id = `${this.tagName}-${uuid()}`;
-            this.classList.add(this._id);
-            const index = document.adoptedStyleSheets.length;
-            this.cssStyleSheet = new CSSStyleSheet();
-            document.adoptedStyleSheets[index] = this.cssStyleSheet;
-            this.adoptedStyleSheetIndex = index;
+            if (this._id) {return}; 
+            const id = crypto.getRandomValues(
+                new Uint32Array(1))[0].toString(36);
+            this._id = `${this.tagName}-${id}`;
+            console.log(this.tagName);
         };
 
         addStyle(css: string): void {
-            let class_ = this.classList.value.replace(/ /g, '.');
-            css = `${this.tagName} { ${this.objectClassSelector} { ${css} } }`;
-            this.cssStyleSheet.insertRule(
-                css,
+            this.cssStyleSheet.insertRule(`
+                ${this.tagName} {
+                    ${this.objectClassSelector} { ${css} } }`,
                 this.cssStyleSheet.cssRules.length
             );
         };
