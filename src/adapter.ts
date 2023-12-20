@@ -102,10 +102,11 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             this.addStyle(`&.${class_} { ${css} }`);
         };
 
-        _uuid!: string; // instance id.
         _class: typeof Adapter; // instance class.
         _cssStyleSheet!: CSSStyleSheet;
-        adoptedStyleSheetIndex: number|null = null;
+        adoptedStyleSheetIndex!: number;
+        _uuid?: string; // instance id.
+        _css: string = '';
         
         /**
          * In constructor, there any some if condition to check
@@ -157,10 +158,11 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         }
 
         /**
-         * Set whole CSS for this element.
+         * Set CSS for this element.
          * It works like `<el style="">` with nest syntax.
          */
         set css(css: string) {
+            this._css = css;
             this.cssStyleSheet.replaceSync(`
                 ${this.tagName} {
                     ${this.objectClassSelector} { ${css} }
@@ -178,9 +180,10 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             );
         };
 
-        /** Delete the adopted stylesheet and remove the element from DOM. */
+        /** Remove the element from DOM and remove adoptedStyleSheet */
         delete() {
-            delete document.adoptedStyleSheets[this.adoptedStyleSheetIndex!];
+            document.adoptedStyleSheets.splice(
+                this.adoptedStyleSheetIndex, 1);
             this.remove();
         }
     };

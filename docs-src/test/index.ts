@@ -129,6 +129,32 @@ describe("Adapter Object: Use Case", () => {
         assert(button1.uuid !== button2.uuid);
     });
 
+    it(`Should have cssStyleSheet and is adopted by document`, () => {
+        assert(button1.cssStyleSheet instanceof CSSStyleSheet);
+        assert(button2.cssStyleSheet instanceof CSSStyleSheet);
+        assert(document.adoptedStyleSheets.includes(button1.cssStyleSheet));
+        assert(document.adoptedStyleSheets.includes(button2.cssStyleSheet));
+    });
+
+    it("Should have adoptedStyleSheetIndex", () => {
+        assert(button1.adoptedStyleSheetIndex !== null);
+        assert(button2.adoptedStyleSheetIndex !== null);
+    });
+
+    it("Can set css for this instance", () => {
+        button1.css = css`display: flex;`;
+        assert(button1.cssStyleSheet.cssRules[0].cssText.includes("display: flex;"));
+    });
+
+    it("Can add style for this instance", () => {
+        button1.addStyle(css`background-color: red;`);
+        assert(button1.cssStyleSheet.cssRules[1].cssText.includes("background-color: red;"));
+    });
+
+    it("Can be deleted from document", () => {
+        button1.delete();
+        assert(!document.adoptedStyleSheets.includes(button1.cssStyleSheet));
+    });
 });
 
 mocha.run();
