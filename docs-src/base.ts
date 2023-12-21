@@ -8,6 +8,7 @@ import 'highlight.js/styles/monokai.css';
 import { DefIcon } from '@devcapsule/deficon';
 
 import { CodeBlock } from './_ux/ui/code-block';
+import { Sidebar } from './_ux/ui/sidebar';
 import './_ux/style';
 
 const __base_url = new URL(import.meta.url);
@@ -19,6 +20,9 @@ if (['0.0.0.0', '127.0.0.1', 'localhost'].includes(__base_url.hostname)) {
         () => location.reload());
 }
 
+CodeBlock.define('el-code-block');
+Sidebar.define('el-sidebar');
+
 const icomoon_url = new URL(
     'asset/icon/icomoon/symbol-defs.svg', __base_url
 ).toString();
@@ -26,6 +30,9 @@ const icomoon_url = new URL(
 class Icon extends DefIcon({url: icomoon_url}) {};
 
 customElements.define('el-icon', Icon);
+
+CodeBlock.define('el-code-block');
+
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
@@ -52,5 +59,3 @@ style.replaceSync(css`
     src: url(${__fira_code_url});
 }
 `)
-
-CodeBlock.define('el-code-block');

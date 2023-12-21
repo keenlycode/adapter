@@ -1,4 +1,4 @@
-import { uuid } from './util';
+import { uuid } from './util.js';
 
 
 type Constructor<T = {}> = new (...args: any[]) => T;
