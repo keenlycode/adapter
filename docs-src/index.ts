@@ -1,4 +1,4 @@
-import { Adapter } from '@devcapsule/adapter/src/export';
+import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { Button } from 'gadjet/src/gadjet';
 import { palette } from './_ux/color';
 

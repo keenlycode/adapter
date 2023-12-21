@@ -31,9 +31,6 @@ class Icon extends DefIcon({url: icomoon_url}) {};
 
 customElements.define('el-icon', Icon);
 
-CodeBlock.define('el-code-block');
-
-
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('html', xml);

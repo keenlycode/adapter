@@ -1,55 +1,55 @@
 {
-  "name": "@devcapsule/adapter",
-  "description": "Adaptive Style Web Component Framework",
-  "version": "2.3.1dev",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/keenly-coding/adapter.git"
-  },
-  "bugs": {
-    "url": "https://github.com/keenly-coding/adapter/issues"
-  },
-  "keywords": [
-    "javascript",
-    "web-component",
-    "html",
-    "ui",
-    "css"
-  ],
-  "author": "Nitipit Nontasuwan",
-  "homepage": "https://keenlycode.github.io/adapter/",
-  "license": "MIT",
-  "files": [
-    "src/**/*",
-    "dist/**/*"
-  ],
-  "scripts": {
-    "dist": "tsc --build --verbose tsconfig.json",
-    "docs-js": "node esbuild/docs.mjs",
-    "docs-html": "source venv/bin/activate && engrave dev docs-src docs --asset",
-    "docs": "concurrently -kr 'npm run docs-js' 'npm run docs-html'",
-    "test-html": "source venv/bin/activate && engrave dev docs-src/test/ docs/test/ --asset",
-    "test-js": "node esbuild/test.mjs",
-    "test": "concurrently -kr 'npm run test-html' 'npm run test-js'"
-  },
-  "devDependencies": {
-    "@devcapsule/adapter": "file:./",
-    "@devcapsule/deficon": "^2.0.2",
-    "@types/stylis": "^4.2.5",
-    "chai": "^4.3.10",
-    "color": "^4.2.3",
-    "concurrently": "^8.2.2",
-    "esbuild": "^0.19.5",
-    "gadjet": "^1.0.4",
-    "glob": "^10.3.10",
-    "highlight.js": "^11.9.0",
-    "install": "^0.13.0",
-    "mocha": "^10.2.0",
-    "stylis": "^4.3.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2",
-    "uhtml": "^4.1.19"
-  },
-  "type": "module",
-  "main": "dist/esm/adapter.js"
+    "name": "@devcapsule/adapter",
+    "description": "Adaptive Style Web Component Framework",
+    "version": "2.3.1dev",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/keenly-coding/adapter.git"
+    },
+    "bugs": {
+        "url": "https://github.com/keenly-coding/adapter/issues"
+    },
+    "keywords": [
+        "javascript",
+        "web-component",
+        "html",
+        "ui",
+        "css"
+    ],
+    "author": "Nitipit Nontasuwan",
+    "homepage": "https://keenlycode.github.io/adapter/",
+    "license": "MIT",
+    "files": [
+        "src/**/*",
+        "dist/**/*"
+    ],
+    "scripts": {
+        "dist": "tsc --build --verbose tsconfig.json && node esbuild/dist.mjs",
+        "docs-js": "node esbuild/docs.mjs",
+        "docs-html": "source venv/bin/activate && engrave dev docs-src docs --asset",
+        "docs": "concurrently -kr 'npm run docs-js' 'npm run docs-html'",
+        "test-html": "source venv/bin/activate && engrave dev docs-src/test/ docs/test/ --asset",
+        "test-js": "node esbuild/test.mjs",
+        "test": "concurrently -kr 'npm run test-html' 'npm run test-js'"
+    },
+    "devDependencies": {
+        "@devcapsule/adapter": "file:./",
+        "@devcapsule/deficon": "^2.0.2",
+        "@types/stylis": "^4.2.5",
+        "chai": "^4.3.10",
+        "color": "^4.2.3",
+        "concurrently": "^8.2.2",
+        "esbuild": "^0.19.5",
+        "gadjet": "^1.0.4",
+        "glob": "^10.3.10",
+        "highlight.js": "^11.9.0",
+        "install": "^0.13.0",
+        "mocha": "^10.2.0",
+        "stylis": "^4.3.0",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.2.2",
+        "uhtml": "^4.1.19"
+    },
+    "type": "module",
+    "main": "dist/adapter.js"
 }

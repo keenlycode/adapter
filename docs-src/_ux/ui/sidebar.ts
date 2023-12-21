@@ -1,4 +1,4 @@
-import { Adapter } from '@devcapsule/adapter/src/export';
+import { Adapter } from '@devcapsule/adapter/src/adapter';
 import {compile, serialize, stringify} from 'stylis';
 
 const css = (strings, ...values) => {
