@@ -81,8 +81,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
          * before call this function as `super.define(tagName);`
         */
         static define(tagName: string): void {
-            customElements.define(tagName, this);
             this._tagName = tagName;
+            customElements.define(tagName, this);
             this.initStyle();
         };
 
