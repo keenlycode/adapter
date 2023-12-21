@@ -2,10 +2,25 @@ import { bgColor, fontFluid } from "gadjet/src/gadjet";
 import { css } from '@devcapsule/adapter/src/style';
 import { palette } from "./_ux/color";
 
+const __base_url = new URL(import.meta.url);
+
 const style = new CSSStyleSheet();
 document.adoptedStyleSheets.push(style);
 
+const __fira_sans_url = new URL('./asset/font/FiraSans-Regular.ttf', __base_url.href);
+const __fira_code_url = new URL('./asset/font/FiraCode-Variable.ttf', __base_url.href);
+
 style.replaceSync(css`
+@font-face {
+    font-family: sans;
+    src: url(${__fira_sans_url});
+}
+
+@font-face {
+    font-family: monospace;
+    src: url(${__fira_code_url});
+}
+
 html {
     line-height: 1.75;
     font-family: sans;
