@@ -26,6 +26,7 @@ const result = await esbuild.context({
     format: "esm",
     sourcemap: true,
     keepNames: true,
+    lineLimit: 80,
     minifyWhitespace: true,
     minifyIdentifiers: false,
     minifySyntax: true,

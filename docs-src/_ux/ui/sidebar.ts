@@ -3,13 +3,11 @@ import { css } from '@devcapsule/adapter/src/style';
 
 const sidebarStyle = ({show=true} = {}): string => {
     function showCSS(show) {
-        let style = css`transition: transform 0.4s ease;`
         if (show) {
-            style += css`transform: translateX(0);`;
+            return css`transform: translateX(0);`;
         } else {
-            style += css`transform: translateX(-100%);`;
+            return css`transform: translateX(-100%);`;
         }
-        return style;
     }
 
     return css`
@@ -22,6 +20,7 @@ const sidebarStyle = ({show=true} = {}): string => {
         min-height: 50dvh;
         max-height: 100dvh;
         z-index: 100;
+        transition: transform 0.4s ease;
         ${showCSS(show)}
         & h1 {
             font-size: 1.5rem;
@@ -44,6 +43,12 @@ class Sidebar extends Adapter {
                 this.css = Sidebar.style({show: false});
             }
         });
+        setTimeout(() => {
+            const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            if (width < 1000) {
+                this.css = Sidebar.style({show: false});
+            }
+        }, 1000);
     }
 
     cssFn({show=true} = {}) {
