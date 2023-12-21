@@ -1,1 +1,1 @@
-export { Adapter, AdapterMixin, DOMError } from './adapter.js'
+export { Adapter, AdapterMixin } from './adapter.js'
