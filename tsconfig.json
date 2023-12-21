@@ -10,5 +10,5 @@
         "declarationMap": true,
         "outDir": "dist/esm/",
     },
-    "include": ["src/bundle.ts", "src/style.ts"]
+    "include": ["src/adapter.ts", "src/style.ts"]
 }
