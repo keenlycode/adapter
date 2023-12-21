@@ -7,8 +7,9 @@
         "noImplicitAny": true, // Enable strict type checking for any types
         "esModuleInterop": true, // Enable compatibility with CommonJS modules
         "declaration": true,
+        "emitDeclarationOnly": true,
         "declarationMap": true,
-        "outDir": "dist/esm/",
+        "outDir": "dist/",
     },
     "include": ["src/adapter.ts", "src/style.ts"]
 }
