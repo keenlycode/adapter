@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 const docs_src_dir = path.join(__dirname, '../docs-src/');
 const entryFiles = await glob.sync(
-    path.join(docs_src_dir, '**/*.{ts,js,svg,png,jpg}'),
+    path.join(docs_src_dir, '**/*.{ts,js,svg,png,jpg,ttf}'),
     {
         ignore: path.join(docs_src_dir, '**/_*')
     }
@@ -26,6 +26,7 @@ const result = await esbuild.context({
         '.png': 'copy',
         '.svg': 'copy',
         '.jpg': 'copy',
+        '.ttf': 'copy',
     },
     outdir: outDir,
     outbase: 'docs-src',

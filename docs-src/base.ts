@@ -1,5 +1,11 @@
-import './_base.lib';
-import './_base.comp';
-import './_base.style';
-import './_ux/style';
-import './_base.esbuild';
+import {baseLib} from './_base.lib';
+baseLib();
+
+import { baseStyle } from './_base.style';
+baseStyle('./');
+
+import { baseComponents } from './_base.comp';
+baseComponents('./');
+
+import { pageReload } from './_base.esbuild';
+pageReload('./');
