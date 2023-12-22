@@ -37,15 +37,18 @@ class Menu extends Adapter {
 
     constructor() {
         super();
-        for (const el_summary of this.querySelectorAll('summary')) {
-            el_summary.addEventListener('click', (e) => {
-                const el_details = el_summary.parentElement! as HTMLDetailsElement;
-                const closest :HTMLElement = el_details.parentElement!.closest('div.container')!;
-                e.preventDefault();
-                closest ? closest.style.height = "auto" : null;
-                el_details.open ? this.close(el_details) : this.open(el_details);
-            });
-        }
+        this.addEventListener('click', (e) => {
+            const target = e.target as HTMLElement;
+            const el_details = target
+                .closest(`${this.tagName} summary`)!
+                .parentElement as HTMLDetailsElement;
+            e.preventDefault();
+            const el_container :HTMLElement = el_details
+                .parentElement!
+                .closest(`${this.tagName} div.container`)! as HTMLElement;
+            el_container ? el_container.style.height = "auto" : null;
+            el_details.open ? this.close(el_details) : this.open(el_details);
+        });
     }
 
     open(el_details: HTMLDetailsElement) {
