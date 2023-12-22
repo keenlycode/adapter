@@ -26,7 +26,7 @@
     "scripts": {
         "dist": "tsc --build --verbose tsconfig.json && node esbuild/dist.mjs",
         "docs-js": "node esbuild/docs.mjs",
-        "docs-html": "source venv/bin/activate && engrave dev docs-src docs --asset",
+        "docs-html": "source venv/bin/activate && engrave dev docs-src docs",
         "docs": "concurrently -kr 'npm run docs-js' 'npm run docs-html'",
         "test-html": "source venv/bin/activate && engrave dev docs-src/test/ docs/test/ --asset",
         "test-js": "node esbuild/test.mjs",
@@ -43,12 +43,11 @@
         "gadjet": "^1.0.4",
         "glob": "^10.3.10",
         "highlight.js": "^11.9.0",
-        "install": "^0.13.0",
         "mocha": "^10.2.0",
+        "normalize.css": "^8.0.1",
         "stylis": "^4.3.0",
-        "ts-node": "^10.9.1",
         "typescript": "^5.2.2",
-        "uhtml": "^4.1.19"
+        "uhtml": "^4.1.24"
     },
     "type": "module",
     "main": "dist/adapter.js"

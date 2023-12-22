@@ -1,6 +1,6 @@
 import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { Button } from 'gadjet/src/gadjet';
-import { palette } from './_ux/color';
+import { color } from './_ux/designToken';
 
 
 const css = String.raw;
@@ -110,10 +110,10 @@ SocialButtons.addStyle(css`
         }
     }
     & button[el="github"] {
-        ${Button.Style.style({color: palette.dark})}
+        ${Button.Style.style({color: color.dark})}
     }
     & button[el="discord"] {
-        ${Button.Style.style({color: palette.light})}
+        ${Button.Style.style({color: color.light})}
     }
 `);
 

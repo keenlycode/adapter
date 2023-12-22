@@ -1,4 +1,4 @@
-const palette = {
+const color = {
     blue: "#3584e4",
     green: "#33d17a",
     yellow: "#f6d32d",
@@ -11,4 +11,4 @@ const palette = {
     dark: "#3d3846"
 }
 
-export { palette };
+export { color };

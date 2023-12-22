@@ -102,8 +102,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             this.addStyle(`&.${class_} { ${css} }`);
         };
 
-        _class: typeof Adapter | null = null; // instance class.
-        _cssStyleSheet!: CSSStyleSheet;
+        _class?: typeof Adapter; // instance class.
+        _cssStyleSheet?: CSSStyleSheet;
         adoptedStyleSheetIndex!: number;
         _uuid?: string; // instance id.
         _css: string = '';
