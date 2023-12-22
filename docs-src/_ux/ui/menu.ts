@@ -48,7 +48,7 @@ class Menu extends Adapter {
         }
     }
 
-    open(el_details: HTMLElement) {
+    open(el_details: HTMLDetailsElement) {
         el_details.open = true;
         const el_container: HTMLElement = el_details.querySelector('div.container')!;
         const height = getComputedStyle(el_container).height;
@@ -58,7 +58,7 @@ class Menu extends Adapter {
         }, 0);
     }
 
-    close(el_details: HTMLElement) {
+    close(el_details: HTMLDetailsElement) {
         const el_container: HTMLElement = el_details.querySelector('div.container')!;
         el_container.style.height = getComputedStyle(el_container).height;
         setTimeout(() => {
