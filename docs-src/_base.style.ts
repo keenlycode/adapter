@@ -1,6 +1,6 @@
 import { bgColor, fontFluid } from "gadjet/src/gadjet";
 import { css } from '@devcapsule/adapter/src/style';
-import { palette } from "./_ux/color";
+import { color } from "./_ux/designToken";
 
 
 function baseStyle(to_base_url: string) {
@@ -40,7 +40,7 @@ function baseStyle(to_base_url: string) {
 
     code {
         padding: 0.1rem 0.5rem;
-        ${bgColor(palette.light)}
+        ${bgColor(color.light)}
         border-radius: 0.25em;
         font-family: monospace;
         font-size: 0.8em;

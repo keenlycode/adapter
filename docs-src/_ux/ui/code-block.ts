@@ -1,6 +1,6 @@
 import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { bgColor } from 'gadjet/src/gadjet';
-import { palette } from '../color'; 
+import { color } from '../designToken'; 
 
 class CodeBlock extends Adapter {};
 
@@ -14,7 +14,7 @@ CodeBlock.tagStyle(css`
     line-height: 1.5;
     [el="bar-top-left"] {
         display: inline-flex;
-        ${bgColor(palette.yellow)}
+        ${bgColor(color.yellow)}
         border-top-left-radius: 0.4em;
         border-top-right-radius: 0.4em;
         line-height: 2;

@@ -11,6 +11,21 @@
     {% block head %}{% endblock %}
 </head>
 <body>
+<el-sidebar>
+    <el-menu>
+        <details>
+            <summary>Getting Started</summary>
+            <div class="width-100">1</div>
+            <div class="width-100">2</div>
+            <div class="width-100">
+                <details>
+                    <summary>Child</summary>
+                    <div class="width-100">2-1</div>
+                </details>
+            </div>
+        </details>
+    </el-menu>
+</el-sidebar>
 {% block body %}{% endblock %}
 </body>
 </html>
