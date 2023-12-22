@@ -1,6 +1,5 @@
 import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { css } from '@devcapsule/adapter/src/style';
-import { create } from 'domain';
 
 function menuStyle() {
     return css`
@@ -40,9 +39,9 @@ class Menu extends Adapter {
         super();
         for (const el_summary of this.querySelectorAll('summary')) {
             el_summary.addEventListener('click', (e) => {
-                const el_details = el_summary.parentElement!;
+                const el_details = el_summary.parentElement! as HTMLDetailsElement;
                 const el_container = el_details.querySelector('div.container')!;
-                const closest = el_details.parentNode!.closest('div.container');
+                const closest = el_details.parentElement!.closest('div.container');
                 e.preventDefault();
                 if (closest) {
                     closest.style.height = "auto";
@@ -58,7 +57,7 @@ class Menu extends Adapter {
 
     open(el_details: HTMLElement) {
         el_details.open = true;
-        const el_container = el_details.querySelector('div.container')!;
+        const el_container: HTMLElement = el_details.querySelector('div.container')!;
         const height = getComputedStyle(el_container).height;
         el_container.style.height = "0";
         setTimeout(() => {
@@ -67,7 +66,7 @@ class Menu extends Adapter {
     }
 
     close(el_details: HTMLElement) {
-        const el_container = el_details.querySelector('div.container')!;
+        const el_container: HTMLElement = el_details.querySelector('div.container')!;
         el_container.style.height = getComputedStyle(el_container).height;
         setTimeout(() => {
             el_container.style.height = "0";
