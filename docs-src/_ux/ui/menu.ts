@@ -1,6 +1,12 @@
 import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { css } from '@devcapsule/adapter/src/style';
 
+function pxToRem(px: any) {
+    px = parseFloat(px);
+    const rem1 = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    return `${px / rem1}rem`;
+}
+
 function menuStyle() {
     return css`
     display: flex;
@@ -11,21 +17,20 @@ function menuStyle() {
         cursor: pointer;
         overflow: hidden;
     }
-    details summary {
+    summary {
+        display: flex;
+        justify-content: flex-start;
         outline: none;
-        list-style: none;
-        > * {
-            display: inline-block;
-        }
+        list-style: none outside;
     }
     details {
         div.container {
             display: block;
             width: calc(100% - 0.5em);
             box-sizing: border-box;
-            border-left: 0.2rem solid;
-            margin-left: 0.4em;
-            border-bottom-left-radius: 0.4rem;
+            border-left: 0.2rem groove;
+            margin-left: 0.4rem;
+            border-bottom-left-radius: 0.3rem;
             transition: height 0.3s ease;
         }
     }
@@ -34,6 +39,7 @@ function menuStyle() {
 
 class Menu extends Adapter {
     static css = menuStyle();
+    static style = menuStyle;
 
     constructor() {
         super();
@@ -54,7 +60,7 @@ class Menu extends Adapter {
     open(el_details: HTMLDetailsElement) {
         el_details.open = true;
         const el_container: HTMLElement = el_details.querySelector('div.container')!;
-        const height = getComputedStyle(el_container).height;
+        const height = pxToRem(getComputedStyle(el_container).height);
         el_container.style.height = "0";
         setTimeout(() => {
             el_container.style.height = height;
@@ -63,7 +69,7 @@ class Menu extends Adapter {
 
     close(el_details: HTMLDetailsElement) {
         const el_container: HTMLElement = el_details.querySelector('div.container')!;
-        el_container.style.height = getComputedStyle(el_container).height;
+        el_container.style.height = pxToRem(getComputedStyle(el_container).height);
         setTimeout(() => {
             el_container.style.height = "0";
         }, 0);
