@@ -20,18 +20,14 @@ function menuStyle() {
         }
     }
     details {
-        > div.container {
+        div.container {
             display: block;
             width: calc(100% - 0.5em);
             box-sizing: border-box;
             border-left: 0.2rem solid;
             margin-left: 0.4em;
             border-bottom-left-radius: 0.4rem;
-        }
-    }
-    details[open] {
-        > div.container {
-            max-height: 400px;
+            transition: height 0.3s ease;
         }
     }
     `
@@ -44,42 +40,42 @@ class Menu extends Adapter {
         super();
         for (const el_summary of this.querySelectorAll('summary')) {
             el_summary.addEventListener('click', (e) => {
-                e.preventDefault();
                 const el_details = el_summary.parentElement!;
-                this.menuAnimation(el_details);
+                const el_container = el_details.querySelector('div.container')!;
+                const closest = el_details.parentNode!.closest('div.container');
+                e.preventDefault();
+                if (closest) {
+                    closest.style.height = "auto";
+                }
+                if(!el_details.open) {
+                    this.open(el_details);
+                } else {
+                    this.close(el_details);
+                }
             });
         }
     }
 
-    menuAnimation(el_details: HTMLElement, {duration = 300, easing = 'ease'} = {}) {
-        function createAnimateObject(
-                startHeight: number,
-                endHeight: number,
-                duration: number,
-                easing: string): any[] {
-            return [
-                [{height: `${startHeight}px`},{height: `${endHeight}px`}],
-                { duration: duration, easing: easing }
-            ]
-        }
+    open(el_details: HTMLElement) {
+        el_details.open = true;
+        const el_container = el_details.querySelector('div.container')!;
+        const height = getComputedStyle(el_container).height;
+        el_container.style.height = "0";
+        setTimeout(() => {
+            el_container.style.height = height;
+        }, 0);
+    }
 
-        const el_container: HTMLElement = el_details!
-            .querySelector('div.container')!;
-        const clientHeight = el_container.clientHeight;
-        let startHeight = 0;
-        let endHeight = clientHeight;
-        if (el_details.open) {
-            startHeight = clientHeight;
-            endHeight = 0;
-            const args: any[] = createAnimateObject(startHeight, endHeight, duration, easing);
-            el_container.animate(...args).onfinish = () => {
-                el_details.open = false;
-            }
-        } else {
-            el_details.open = true;
-            const args: any[] = createAnimateObject(startHeight, endHeight, duration, easing);
-            el_container.animate(...args);
-        }
+    close(el_details: HTMLElement) {
+        const el_container = el_details.querySelector('div.container')!;
+        el_container.style.height = getComputedStyle(el_container).height;
+        setTimeout(() => {
+            el_container.style.height = "0";
+        }, 0);
+        setTimeout(() => {
+            el_details.open = false;
+            el_container.style.height = "auto";
+        }, 300);
     }
 }
 
