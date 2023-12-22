@@ -43,11 +43,9 @@
         "gadjet": "^1.0.4",
         "glob": "^10.3.10",
         "highlight.js": "^11.9.0",
-        "install": "^0.13.0",
         "mocha": "^10.2.0",
         "normalize.css": "^8.0.1",
         "stylis": "^4.3.0",
-        "ts-node": "^10.9.1",
         "typescript": "^5.2.2",
         "uhtml": "^4.1.24"
     },
