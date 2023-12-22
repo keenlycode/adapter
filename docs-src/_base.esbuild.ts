@@ -5,4 +5,4 @@ if (['0.0.0.0', '127.0.0.1', 'localhost'].includes(__base_url.hostname)) {
     new EventSource(__event_source).addEventListener(
         'change',
         () => location.reload());
-}
+};

@@ -16,7 +16,7 @@ const sidebarStyle = ({show=true} = {}): string => {
         box-sizing: border-box;
         position: fixed;
         background-color: grey;
-        width: 30ch;
+        width: 32ch;
         min-height: 50dvh;
         max-height: 100dvh;
         z-index: 100;

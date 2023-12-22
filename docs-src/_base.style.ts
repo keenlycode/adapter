@@ -3,7 +3,7 @@ import { css } from '@devcapsule/adapter/src/style';
 import { palette } from "./_ux/color";
 
 const __base_url = new URL(import.meta.url);
-
+console.log(__base_url.href);
 const style = new CSSStyleSheet();
 document.adoptedStyleSheets.push(style);
 

@@ -26,7 +26,7 @@
     "scripts": {
         "dist": "tsc --build --verbose tsconfig.json && node esbuild/dist.mjs",
         "docs-js": "node esbuild/docs.mjs",
-        "docs-html": "source venv/bin/activate && engrave dev docs-src docs --asset",
+        "docs-html": "source venv/bin/activate && engrave dev docs-src docs",
         "docs": "concurrently -kr 'npm run docs-js' 'npm run docs-html'",
         "test-html": "source venv/bin/activate && engrave dev docs-src/test/ docs/test/ --asset",
         "test-js": "node esbuild/test.mjs",
