@@ -79,17 +79,6 @@ class Menu extends Adapter {
             el_details.open = true;
             const args: any[] = createAnimateObject(startHeight, endHeight, duration, easing);
             el_container.animate(...args);
-            // animate(a, b)
-            // el_container.animate(
-            //     [
-            //         {height: `${startHeight}px`},
-            //         {height: `${endHeight}px`}
-            //     ],
-            //     {
-            //         duration: 300,
-            //         easing: 'ease'
-            //     }
-            // )
         }
     }
 }
