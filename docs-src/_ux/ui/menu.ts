@@ -26,11 +26,12 @@ function menuStyle() {
     details {
         div.container {
             display: block;
-            width: calc(100% - 0.5em);
             box-sizing: border-box;
             border-left: 0.2rem groove;
             margin-left: 0.4rem;
+            width: calc(100% - 0.4rem);
             border-bottom-left-radius: 0.3rem;
+            border-top-left-radius: 0.3rem;
             transition: height 0.3s ease;
         }
     }

@@ -46,8 +46,8 @@ Sidebar.css = css`
     border-radius: 0 10px 0 0;
 `;
 
-setTimeout(() => {
-    Sidebar.addStyle(css`
-        ${Sidebar.style({showAt: 1000, bgColor: color.dark})}
-    `)
-}, 1000);
+// setTimeout(() => {
+//     Sidebar.addStyle(css`
+//         ${Sidebar.style({showAt: 1000, bgColor: color.dark})}
+//     `)
+// }, 1000);

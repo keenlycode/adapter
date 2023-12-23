@@ -34,7 +34,6 @@ const sidebarStyle = (param: StyleParam = {}): string => {
         position: fixed;
         z-index: 100;
         bottom: 0;
-        padding-bottom: 5rem;
         width: 32ch;
         min-height: 70dvh;
         overflow-y: auto;
