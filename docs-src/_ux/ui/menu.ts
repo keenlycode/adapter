@@ -28,8 +28,8 @@ function menuStyle() {
             display: block;
             box-sizing: border-box;
             border-left: 0.2rem groove;
-            margin-left: 0.4rem;
-            width: calc(100% - 0.4rem);
+            margin-left: 0.5rem;
+            width: calc(100% - 0.5rem);
             border-bottom-left-radius: 0.3rem;
             border-top-left-radius: 0.3rem;
             transition: height 0.3s ease;
@@ -47,7 +47,7 @@ class Menu extends Adapter {
         this.addEventListener('click', (e) => {
             const target = e.target as HTMLElement;
             let el_details = target.closest(`${this.tagName} summary`) as HTMLDetailsElement;
-            
+
             if (!el_details) {return};
             el_details = el_details.parentElement as HTMLDetailsElement;
 
@@ -63,16 +63,17 @@ class Menu extends Adapter {
 
     open(el_details: HTMLDetailsElement) {
         const el_container: HTMLElement = el_details.querySelector('div.container')!;
-        const parent_details_list: HTMLDetailsElement[] = [];
         const height = pxToRem(getComputedStyle(el_container).height);
 
-        // let detailsNode = el_details.parentElement!.closest('details') as HTMLDetailsElement;
-        // while (detailsNode) {
-        //     parent_details_list.push(detailsNode);
-        //     detailsNode = detailsNode.parentElement!.closest('details') as HTMLDetailsElement;
-        // }
-
-        // console.log(parent_details_list);
+        let parentDetails = el_details
+            .parentElement!
+            .closest(`${this.tagName} details`) as HTMLDetailsElement;
+        while (parentDetails) {
+            parentDetails.open ? null : this.open(parentDetails);
+            parentDetails = parentDetails
+                .parentElement!
+                .closest('details') as HTMLDetailsElement;
+        }
 
         el_details.open = true;
         el_container.style.height = "0";

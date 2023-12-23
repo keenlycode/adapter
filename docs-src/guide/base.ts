@@ -16,23 +16,21 @@ Menu.css = css`
     summary {
         line-height: 2.5;
     }
-    div.item {
+    .item {
         line-height: 2.5;
     }
-    div.item:not(:has(details)) {
+    .item:not(:has(details)) {
         padding-left: 0.5rem;
     }
-    div.item:hover:not(:has(details)) {
+    .item:hover:not(:has(details)) {
         ${bgColor(color.light)}
         padding-left: 0.5rem;
     }
-
-    div.item:has(details) summary {
+    .item:has(details) summary {
         padding-left: 0.5rem;
     }
-    div.item:has(details) summary:hover{
+    .item:has(details) summary:hover{
         ${bgColor(color.light)}
-        padding-left: 0.5rem;
     }
 `;
 
