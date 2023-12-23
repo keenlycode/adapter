@@ -53,29 +53,31 @@ class Menu extends Adapter {
             const target = e.target as HTMLElement;
             let el_details = target.closest(`${this.tagName} summary`) as HTMLDetailsElement;
 
+            e.preventDefault();
+
             if (!el_details) {return};
             el_details = el_details.parentElement as HTMLDetailsElement;
-
-            const el_container :HTMLElement = el_details
-                .parentElement!
-                .closest(`${this.tagName} div.container`)! as HTMLElement;
-
-            e.preventDefault();
-            el_container ? el_container.style.height = "auto" : null;
             el_details.open ? this.close(el_details) : this.open(el_details);
         });
     }
 
     open(el_details: HTMLDetailsElement) {
-        const el_container: HTMLElement = el_details.querySelector('div.container')!;
+        const el_parentContainer :HTMLElement = el_details
+                .parentElement!
+                .closest(`${this.tagName} div.container`)! as HTMLElement;
+        el_parentContainer ? el_parentContainer.style.height = "auto" : null;
+
+        const el_container: HTMLElement = el_details
+            .querySelector('div.container') as HTMLElement;
+
         const height = pxToRem(getComputedStyle(el_container).height);
 
-        let parentDetails = el_details
+        let parentDetailsElement = el_details
             .parentElement!
             .closest(`${this.tagName} details`) as HTMLDetailsElement;
-        while (parentDetails) {
-            parentDetails.open ? null : this.open(parentDetails);
-            parentDetails = parentDetails
+        while (parentDetailsElement) {
+            parentDetailsElement.open ? null : this.open(parentDetailsElement);
+            parentDetailsElement = parentDetailsElement
                 .parentElement!
                 .closest('details') as HTMLDetailsElement;
         }
@@ -85,6 +87,16 @@ class Menu extends Adapter {
         setTimeout(() => {
             el_container.style.height = height;
         }, 0);
+    }
+
+    expand(el_details: HTMLDetailsElement) {
+        let childDetailsElement = el_details
+            .querySelector('details') as HTMLDetailsElement;
+        while (childDetailsElement) {
+            this.open(childDetailsElement);
+            childDetailsElement = childDetailsElement
+                .querySelector('details') as HTMLDetailsElement;
+        }
     }
 
     close(el_details: HTMLDetailsElement) {
@@ -97,6 +109,9 @@ class Menu extends Adapter {
             el_details.open = false;
             el_container.style.height = "auto";
         }, 300);
+    }
+
+    closeChildes(el_details: HTMLDetailsElement) {
     }
 }
 
