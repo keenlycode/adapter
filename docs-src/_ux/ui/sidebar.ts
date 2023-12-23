@@ -1,9 +1,9 @@
 import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { css } from '@devcapsule/adapter/src/style';
 
-function htmlUnsafe(strings, ...values) {
-    return html([String.raw(strings, ...values)]);
-};
+// function htmlUnsafe(strings, ...values) {
+//     return html([String.raw(strings, ...values)]);
+// };
 
 interface StyleParam {
     showAt?: number;

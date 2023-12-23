@@ -1,29 +1,22 @@
 import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { css } from '@devcapsule/adapter/src/style';
-
-function pxToRem(px: any) {
-    px = parseFloat(px);
-    const rem1 = parseFloat(getComputedStyle(document.documentElement).fontSize);
-    return `${px / rem1}rem`;
-}
+import { bgColor, pxToRem } from '../style';
+import { color } from '../designToken';
 
 function menuStyle() {
     return css`
     display: flex;
     align-items: flex-start;
     width: 100%;
+
+    summary {
+        list-style: none outside;
+    }
+
     details {
         width: 100%;
         cursor: pointer;
         overflow: hidden;
-    }
-    summary {
-        display: flex;
-        justify-content: flex-start;
-        outline: none;
-        list-style: none outside;
-    }
-    details {
         div.container {
             display: block;
             box-sizing: border-box;
@@ -35,7 +28,19 @@ function menuStyle() {
             transition: height 0.3s ease;
         }
     }
-    `
+
+    /** Item styles */
+    .item:not(:has(details)),
+    .item:has(details) summary  {
+        padding-left: 0.5rem;
+    }
+
+    /** Item on hover styles */
+    .item:hover:not(:has(details)),
+    .item:has(details) summary:hover {
+        ${bgColor(color.light)}
+    }
+    `.trim();
 }
 
 class Menu extends Adapter {

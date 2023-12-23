@@ -12,4 +12,11 @@ function lift(level: number, color: string = 'black') {
     return `filter: drop-shadow(0 0 ${level * 2}px ${color});`;
 }
 
-export { bgColor, lift };
+function pxToRem(px: any) {
+    px = parseFloat(px);
+    const rem1 = parseFloat(
+        getComputedStyle(document.documentElement).fontSize);
+    return `${px / rem1}rem`;
+}
+
+export { bgColor, lift, pxToRem };

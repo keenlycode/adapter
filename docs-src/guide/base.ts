@@ -19,19 +19,6 @@ Menu.css = css`
     .item {
         line-height: 2.5;
     }
-    .item:not(:has(details)) {
-        padding-left: 0.5rem;
-    }
-    .item:hover:not(:has(details)) {
-        ${bgColor(color.light)}
-        padding-left: 0.5rem;
-    }
-    .item:has(details) summary {
-        padding-left: 0.5rem;
-    }
-    .item:has(details) summary:hover{
-        ${bgColor(color.light)}
-    }
 `;
 
 Sidebar.define('el-sidebar');
