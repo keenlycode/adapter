@@ -1,7 +1,5 @@
 import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { css } from '@devcapsule/adapter/src/style';
-import { bgColor as bgColor_ } from '../style';
-import { render, html } from 'uhtml';
 
 function htmlUnsafe(strings, ...values) {
     return html([String.raw(strings, ...values)]);
@@ -9,11 +7,10 @@ function htmlUnsafe(strings, ...values) {
 
 interface StyleParam {
     showAt?: number;
-    bgColor?: string;
 }
 
 const sidebarStyle = (param: StyleParam = {}): string => {
-    param = {...{showAt: 0, bgColor: 'white'}, ...param};
+    param = {...{showAt: 0}, ...param};
     
     function showAt(breakpoint: number) {
         return css`
@@ -33,32 +30,18 @@ const sidebarStyle = (param: StyleParam = {}): string => {
         box-sizing: border-box;
         position: fixed;
         z-index: 100;
-        bottom: 0;
         width: 32ch;
-        min-height: 70dvh;
+        min-height: 50dvh;
         overflow-y: auto;
+        background-color: white;
         transition: transform 0.4s ease;
     `.trim();
-
     param.showAt ? style += showAt(param.showAt) : null;
-    param.bgColor ? style += bgColor_(param.bgColor) : null;
-
     return style;
 };
 
 class Sidebar extends Adapter {
     static style = sidebarStyle;
-    
-    constructor() {
-        super();
-        this.render();
-    }
-
-    render() {
-        render(this, htmlUnsafe`
-            ${this.innerHTML}
-        `)
-    }
 };
 
 export { Sidebar };

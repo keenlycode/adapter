@@ -12,7 +12,7 @@ function menuStyle() {
     display: flex;
     align-items: flex-start;
     width: 100%;
-    details{
+    details {
         width: 100%;
         cursor: pointer;
         overflow: hidden;
@@ -46,22 +46,35 @@ class Menu extends Adapter {
         super();
         this.addEventListener('click', (e) => {
             const target = e.target as HTMLElement;
-            const el_details = target
-                .closest(`${this.tagName} summary`)!
-                .parentElement as HTMLDetailsElement;
-            e.preventDefault();
+            let el_details = target.closest(`${this.tagName} summary`) as HTMLDetailsElement;
+            
+            if (!el_details) {return};
+            el_details = el_details.parentElement as HTMLDetailsElement;
+
             const el_container :HTMLElement = el_details
                 .parentElement!
                 .closest(`${this.tagName} div.container`)! as HTMLElement;
+
+            e.preventDefault();
             el_container ? el_container.style.height = "auto" : null;
             el_details.open ? this.close(el_details) : this.open(el_details);
         });
     }
 
     open(el_details: HTMLDetailsElement) {
-        el_details.open = true;
         const el_container: HTMLElement = el_details.querySelector('div.container')!;
+        const parent_details_list: HTMLDetailsElement[] = [];
         const height = pxToRem(getComputedStyle(el_container).height);
+
+        // let detailsNode = el_details.parentElement!.closest('details') as HTMLDetailsElement;
+        // while (detailsNode) {
+        //     parent_details_list.push(detailsNode);
+        //     detailsNode = detailsNode.parentElement!.closest('details') as HTMLDetailsElement;
+        // }
+
+        // console.log(parent_details_list);
+
+        el_details.open = true;
         el_container.style.height = "0";
         setTimeout(() => {
             el_container.style.height = height;

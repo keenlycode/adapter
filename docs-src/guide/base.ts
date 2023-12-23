@@ -38,12 +38,12 @@ Menu.css = css`
 
 Sidebar.define('el-sidebar');
 Sidebar.css = css`
-    ${Sidebar.style({showAt: 0, bgColor: color.dark})}
+    ${Sidebar.style({showAt: 0})}
     height: 100dvh;
+    ${bgColor(color.dark)}
     filter:
         drop-shadow(2px 2px 4px ${Color(color.dark)
         .alpha(0.8).string()});
-    border-radius: 0 10px 0 0;
 `;
 
 // setTimeout(() => {
