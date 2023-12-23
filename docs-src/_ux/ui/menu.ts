@@ -111,7 +111,15 @@ class Menu extends Adapter {
         }, 300);
     }
 
-    closeChildes(el_details: HTMLDetailsElement) {
+    collapse(el_details: HTMLDetailsElement) {
+        this.close(el_details);
+        let childDetailsElement = el_details
+            .querySelector('details') as HTMLDetailsElement;
+        while (childDetailsElement) {
+            this.close(childDetailsElement);
+            childDetailsElement = childDetailsElement
+                .querySelector('details') as HTMLDetailsElement;
+        }
     }
 }
 
