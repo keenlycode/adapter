@@ -10,7 +10,7 @@ interface StyleParam {
 }
 
 const sidebarStyle = (param: StyleParam = {}): string => {
-    param = {...{showAt: 0}, ...param};
+    param = {showAt: 0, ...param};
     
     function showAt(breakpoint: number) {
         return css`

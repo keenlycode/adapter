@@ -3,7 +3,19 @@ import { css } from '@devcapsule/adapter/src/style';
 import { bgColor, pxToRem } from '../style';
 import { color } from '../designToken';
 
-function menuStyle() {
+
+interface MenuStyleParam {
+    itemCSS?: string;
+    itemHoverCSS?: string;
+}
+
+function menuStyle(param: MenuStyleParam = {}) {
+    param = {
+        itemCSS: 'padding-left: 0.5rem;',
+        itemHoverCSS: css`${bgColor(color.light)}`,
+        ...param
+    }
+
     return css`
     display: flex;
     align-items: flex-start;
@@ -32,13 +44,13 @@ function menuStyle() {
     /** Item styles */
     .item:not(:has(details)),
     .item:has(details) summary  {
-        padding-left: 0.5rem;
+        ${param.itemCSS}
     }
 
     /** Item on hover styles */
     .item:hover:not(:has(details)),
     .item:has(details) summary:hover {
-        ${bgColor(color.light)}
+        ${param.itemHoverCSS}
     }
     `.trim();
 }
@@ -61,7 +73,10 @@ class Menu extends Adapter {
         });
     }
 
-    open(el_details: HTMLDetailsElement) {
+    open(el_details?: HTMLDetailsElement) {
+        if (!el_details) {
+            el_details = this.querySelector('details') as HTMLDetailsElement;
+        };
         const el_parentContainer :HTMLElement = el_details
                 .parentElement!
                 .closest(`${this.tagName} div.container`)! as HTMLElement;
@@ -87,6 +102,7 @@ class Menu extends Adapter {
         setTimeout(() => {
             el_container.style.height = height;
         }, 0);
+        return this;
     }
 
     expand(el_details: HTMLDetailsElement) {
