@@ -2,6 +2,7 @@ import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { css } from '@devcapsule/adapter/src/style';
 import { bgColor, pxToRem } from '../style';
 import { color } from '../designToken';
+import { aspectRatio } from '../style';
 
 
 interface MenuStyleParam {
@@ -11,7 +12,10 @@ interface MenuStyleParam {
 
 function menuStyle(param: MenuStyleParam = {}) {
     param = {
-        itemCSS: 'padding-left: 0.5rem;',
+        itemCSS: css`
+            padding-left: 0.5rem;
+            width: calc(100% - 0.5rem);
+        `,
         itemHoverCSS: css`${bgColor(color.light)}`,
         ...param
     }
@@ -22,7 +26,7 @@ function menuStyle(param: MenuStyleParam = {}) {
     width: 100%;
 
     summary {
-        list-style: none outside;
+        list-style: none;
     }
 
     details {

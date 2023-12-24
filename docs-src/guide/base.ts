@@ -6,6 +6,7 @@ import { css } from '@devcapsule/adapter/src/style';
 import { bgColor } from '../_ux/style';
 import { color } from '../_ux/designToken';
 import Color from 'color';
+import { aspectRatio } from '../_ux/style';
 
 baseStyle('../');
 pageReload('../');
@@ -18,6 +19,15 @@ Menu.css = css`
     }
     .item {
         line-height: 2.5;
+    }
+
+    summary {
+        .toggle {
+            width: 2rem;
+            font-size: 1.2rem;
+            line-height: 1;
+            ${aspectRatio('1/1')}
+        }
     }
 `;
 

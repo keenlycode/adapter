@@ -19,4 +19,23 @@ function pxToRem(px: any) {
     return `${px / rem1}rem`;
 }
 
-export { bgColor, lift, pxToRem };
+const aspectRatio = (ratio: string = '1/1'): string => {
+    return `
+    aspect-ratio: ${ratio};
+    @supports not (aspect-ratio: ${ratio}) {
+        &::before {
+            float: left;
+            padding-top: 100% / ${ratio};
+            content: "";
+        }
+
+        &::after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+    }
+    `.trim();
+}
+
+export { bgColor, lift, pxToRem, aspectRatio };

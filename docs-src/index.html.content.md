@@ -1,7 +1,7 @@
 ## 🎉 Javascript UX/UI is fun, like never before.
 
 Adapter focus on features which doesn't exist, to bring **CSS**
-into **OOP** with **Web Component**
+into **OOP** with **CSS-in-JS** and **Web Component**
 
 ## 🎉 Easy to start & learn
 You can start using **Adapter** without **Node.js** or any
@@ -35,11 +35,13 @@ Object and much more...
 ```js
 /* Particle1 also inherit style defined from Particle */
 class Particle1 extends Particle {
+    static css = `Initial CSS Here`;
+
     constructor() {
         super();
     }
     connectedCallback() {
-        // Do something when Particle1 instance is attached to DOM
+        // Do something when instance is attached to DOM
     }
 };
 
@@ -142,7 +144,7 @@ Adapter.addStyle(css: string);
     </div>
 
 ```js
-import { AdapterMixin } from '@devcapsule/adapter';
+import { Adapter } from '@devcapsule/adapter';
 
 /* Extends `Adapter` */
 class Card extends Adapter {};
