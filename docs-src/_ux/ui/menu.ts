@@ -2,7 +2,6 @@ import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { css } from '@devcapsule/adapter/src/style';
 import { bgColor, pxToRem } from '../style';
 import { color } from '../designToken';
-import { Color } from 'color';
 
 
 interface MenuStyleParam {
@@ -13,6 +12,7 @@ interface MenuStyleParam {
 function menuStyle(param: MenuStyleParam = {}) {
 
     return css`
+    [class] {all: unset};
     display: flex;
     align-items: flex-start;
     width: 100%;
@@ -20,7 +20,7 @@ function menuStyle(param: MenuStyleParam = {}) {
     details, details[class] {
         width: 100%;
         overflow: hidden;
-        div.container {
+        > div.container {
             display: block;
             box-sizing: border-box;
             border-left: 0.2rem groove;
@@ -28,6 +28,14 @@ function menuStyle(param: MenuStyleParam = {}) {
             border-top-left-radius: 0.3rem;
             margin-left: 0.6rem;
             transition: height 0.3s ease;
+            > div:not(:has(details)),
+            > div:has(details) summary {
+                display: flex;
+                box-sizing: border-box;
+                padding-left: 0.5rem;
+                line-height: 2.5;
+                ${param.itemCSS}
+            }
         }
     }
 
@@ -36,8 +44,9 @@ function menuStyle(param: MenuStyleParam = {}) {
         justify-content: center;
         align-items: center;
         font-size: 1.5rem;
-        line-height: 2;
-        width: 3rem;
+        line-height: 1;
+        min-width: 2.5rem;
+        height: 2.5rem;
         cursor: pointer;
         user-select: none;
         outline: none;
@@ -54,27 +63,22 @@ function menuStyle(param: MenuStyleParam = {}) {
     summary {
         list-style: none;
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        justify-content: space-between;
-    }
-
-    /** Item styles */
-    .item:not(:has(details)),
-    .item:has(details) summary  {
-        display: flex;
-        justify-content: space-between;
         box-sizing: border-box;
         width: 100%;
         padding-left: 0.5rem;
-        cursor: pointer;
-        ${param.itemCSS}
     }
 
-    /** Item on hover styles */
-    .item:hover:not(:has(details)),
-    .item:has(details) summary:hover {
-        ${bgColor(color.light)}
-        ${param.itemHoverCSS}
+    a {
+        display: flex;
+        box-sizing: border-box;
+        cursor: pointer;
+        width: 100%;
+        &:hover {
+            ${bgColor(color.light)}
+            ${param.itemHoverCSS}
+        }
     }
     `.trim();
 }

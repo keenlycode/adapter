@@ -12,16 +12,12 @@ pageReload('../');
 
 Menu.define('el-menu');
 Menu.css = css`
-    [class] {all: unset};
     ${Menu.style()}
     summary {
         h2 {
-            line-height: 2;
-            width: 80%;
+            line-height: 1.7;
+            margin: 0;
         }
-    }
-    .item {
-        line-height: 2.5;
     }
 `;
 
