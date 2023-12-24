@@ -88,7 +88,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
         /** Init component style */
         static initStyle() {
-            this.cssStyleSheet.replaceSync(`${this.tagName} {${this.css}`);
+            this.cssStyleSheet.replaceSync(`${this.tagName} {${this.css}}`);
             document.adoptedStyleSheets.push(this.cssStyleSheet);
         }
 
