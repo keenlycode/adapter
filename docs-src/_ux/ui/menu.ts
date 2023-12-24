@@ -2,7 +2,7 @@ import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { css } from '@devcapsule/adapter/src/style';
 import { bgColor, pxToRem } from '../style';
 import { color } from '../designToken';
-import { aspectRatio } from '../style';
+import { Color } from 'color';
 
 
 interface MenuStyleParam {
@@ -25,13 +25,8 @@ function menuStyle(param: MenuStyleParam = {}) {
     align-items: flex-start;
     width: 100%;
 
-    summary {
-        list-style: none;
-    }
-
     details {
         width: 100%;
-        cursor: pointer;
         overflow: hidden;
         div.container {
             display: block;
@@ -45,9 +40,30 @@ function menuStyle(param: MenuStyleParam = {}) {
         }
     }
 
+    details > summary > .toggle {
+        cursor: pointer;
+        user-select: none;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 0.3s ease;
+        transform: rotate(0deg)
+    }
+    details.open > summary > .toggle {
+        transition: transform 0.3s ease;
+        transform: rotate(90deg);
+    }
+
+    summary {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
     /** Item styles */
     .item:not(:has(details)),
     .item:has(details) summary  {
+        cursor: pointer;
         ${param.itemCSS}
     }
 
@@ -66,10 +82,12 @@ class Menu extends Adapter {
     constructor() {
         super();
         this.addEventListener('click', (e) => {
-            const target = e.target as HTMLElement;
-            let el_details = target.closest(`${this.tagName} summary`) as HTMLDetailsElement;
-
             e.preventDefault();
+            const target = e.target as HTMLElement;
+            if (!target.classList.contains('toggle')) { 
+                return;
+            };
+            let el_details = target.closest(`${this.tagName} summary`) as HTMLDetailsElement;
 
             if (!el_details) {return};
             el_details = el_details.parentElement as HTMLDetailsElement;
@@ -81,6 +99,7 @@ class Menu extends Adapter {
         if (!el_details) {
             el_details = this.querySelector('details') as HTMLDetailsElement;
         };
+        el_details.classList.add('open');
         const el_parentContainer :HTMLElement = el_details
                 .parentElement!
                 .closest(`${this.tagName} div.container`)! as HTMLElement;
@@ -120,6 +139,7 @@ class Menu extends Adapter {
     }
 
     close(el_details: HTMLDetailsElement) {
+        el_details.classList.remove('open');
         const el_container: HTMLElement = el_details.querySelector('div.container')!;
         el_container.style.height = pxToRem(getComputedStyle(el_container).height);
         setTimeout(() => {

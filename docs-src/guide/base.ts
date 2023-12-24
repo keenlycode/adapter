@@ -15,19 +15,22 @@ Menu.define('el-menu');
 Menu.css = css`
     ${Menu.style()}
     summary {
-        line-height: 2.5;
+        h2 {
+            line-height: 2;
+            width: 80%;
+        }
+        .toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            line-height: 2;
+            width: 3rem;
+            ${aspectRatio('1')}
+        }
     }
     .item {
         line-height: 2.5;
-    }
-
-    summary {
-        .toggle {
-            width: 2rem;
-            font-size: 1.2rem;
-            line-height: 1;
-            ${aspectRatio('1/1')}
-        }
     }
 `;
 
