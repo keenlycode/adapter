@@ -88,7 +88,7 @@ The bundle's size is just about **~2kB** !!
 <head>
 <script defer type="module">
 import { Adapter }
-    from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter@2.2/+esm";
+    from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter@2.3/+esm";
 </script>
 </head>
 ```
