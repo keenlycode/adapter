@@ -2,7 +2,6 @@ import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { css } from '@devcapsule/adapter/src/style';
 import { bgColor, pxToRem } from '../style';
 import { color } from '../designToken';
-import { Color } from 'color';
 
 
 interface MenuStyleParam {
@@ -11,36 +10,43 @@ interface MenuStyleParam {
 }
 
 function menuStyle(param: MenuStyleParam = {}) {
-    param = {
-        itemCSS: css`
-            padding-left: 0.5rem;
-            width: calc(100% - 0.5rem);
-        `,
-        itemHoverCSS: css`${bgColor(color.light)}`,
-        ...param
-    }
 
     return css`
+    [class] {all: unset};
     display: flex;
     align-items: flex-start;
     width: 100%;
 
-    details {
+    details, details[class] {
         width: 100%;
         overflow: hidden;
-        div.container {
+        > div.container {
             display: block;
             box-sizing: border-box;
             border-left: 0.2rem groove;
-            margin-left: 0.5rem;
-            width: calc(100% - 0.5rem);
             border-bottom-left-radius: 0.3rem;
             border-top-left-radius: 0.3rem;
+            margin-left: 0.6rem;
             transition: height 0.3s ease;
+            > div:not(:has(details)),
+            > div:has(details) summary {
+                display: flex;
+                box-sizing: border-box;
+                padding-left: 0.5rem;
+                line-height: 2.5;
+                ${param.itemCSS}
+            }
         }
     }
 
     details > summary > .toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        line-height: 1;
+        min-width: 2.5rem;
+        height: 2.5rem;
         cursor: pointer;
         user-select: none;
         outline: none;
@@ -48,6 +54,7 @@ function menuStyle(param: MenuStyleParam = {}) {
         transition: transform 0.3s ease;
         transform: rotate(0deg)
     }
+
     details.open > summary > .toggle {
         transition: transform 0.3s ease;
         transform: rotate(90deg);
@@ -56,21 +63,22 @@ function menuStyle(param: MenuStyleParam = {}) {
     summary {
         list-style: none;
         display: flex;
-        align-items: center;
         justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        width: 100%;
+        padding-left: 0.5rem;
     }
 
-    /** Item styles */
-    .item:not(:has(details)),
-    .item:has(details) summary  {
+    a {
+        display: flex;
+        box-sizing: border-box;
         cursor: pointer;
-        ${param.itemCSS}
-    }
-
-    /** Item on hover styles */
-    .item:hover:not(:has(details)),
-    .item:has(details) summary:hover {
-        ${param.itemHoverCSS}
+        width: 100%;
+        &:hover {
+            ${bgColor(color.light)}
+            ${param.itemHoverCSS}
+        }
     }
     `.trim();
 }
