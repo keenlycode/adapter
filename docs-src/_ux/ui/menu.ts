@@ -12,7 +12,7 @@ interface MenuStyleParam {
 function menuStyle(param: MenuStyleParam = {}) {
 
     return css`
-    [class] {all: unset};
+    div[class] {all: unset};
     display: flex;
     align-items: flex-start;
     width: 100%;
@@ -28,14 +28,26 @@ function menuStyle(param: MenuStyleParam = {}) {
             border-top-left-radius: 0.3rem;
             margin-left: 0.6rem;
             transition: height 0.3s ease;
-            > div:not(:has(details)),
-            > div:has(details) summary {
-                display: flex;
-                box-sizing: border-box;
-                padding-left: 0.5rem;
-                line-height: 2.5;
-                ${param.itemCSS}
-            }
+        }
+    }
+
+    /** Item CSS */
+    div.container {
+        > div:not(:has(details)),
+        > div:has(details) summary {
+            display: flex;
+            box-sizing: border-box;
+            padding-left: 0.5rem;
+            line-height: 2.5;
+            ${param.itemCSS}
+        }
+    }
+
+    /** Item Hover CSS */
+    summary:has(> a), div:has(> a) {
+        &:hover {
+            ${bgColor(color.light)}
+            ${param.itemHoverCSS}
         }
     }
 
@@ -44,7 +56,6 @@ function menuStyle(param: MenuStyleParam = {}) {
         justify-content: center;
         align-items: center;
         font-size: 1.5rem;
-        line-height: 1;
         min-width: 3rem;
         cursor: pointer;
         user-select: none;
@@ -62,19 +73,11 @@ function menuStyle(param: MenuStyleParam = {}) {
     summary {
         list-style: none;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
         box-sizing: border-box;
         width: 100%;
         padding-left: 0.5rem;
     }
 
-    summary:has(> a), div:has(> a) {
-        &:hover {
-            ${bgColor(color.light)}
-            ${param.itemHoverCSS}
-        }
-    }
     a {
         width: 100%;
     }
