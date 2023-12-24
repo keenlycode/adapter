@@ -45,7 +45,7 @@ function menuStyle(param: MenuStyleParam = {}) {
         align-items: center;
         font-size: 1.5rem;
         line-height: 1;
-        min-width: 2.7rem;
+        min-width: 3rem;
         cursor: pointer;
         user-select: none;
         outline: none;
@@ -69,15 +69,14 @@ function menuStyle(param: MenuStyleParam = {}) {
         padding-left: 0.5rem;
     }
 
-    a {
-        display: flex;
-        box-sizing: border-box;
-        cursor: pointer;
-        width: 100%;
+    summary:has(> a), div:has(> a) {
         &:hover {
             ${bgColor(color.light)}
             ${param.itemHoverCSS}
         }
+    }
+    a {
+        width: 100%;
     }
     `.trim();
 }
@@ -89,11 +88,15 @@ class Menu extends Adapter {
     constructor() {
         super();
         this.addEventListener('click', (e) => {
-            e.preventDefault();
             const target = e.target as HTMLElement;
+            if (target.tagName.toLowerCase() === 'summary') {
+                e.preventDefault();
+                return
+            };
             if (!target.classList.contains('toggle')) { 
                 return;
             };
+            e.preventDefault();
             let el_details = target.closest(`${this.tagName} summary`) as HTMLDetailsElement;
 
             if (!el_details) {return};

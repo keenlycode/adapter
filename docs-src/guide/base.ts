@@ -13,10 +13,15 @@ pageReload('../');
 Menu.define('el-menu');
 Menu.css = css`
     ${Menu.style()}
+    a {
+        text-decoration: none;
+        color: unset;
+    }
     summary {
         h2 {
             line-height: 2;
             margin: 0;
+            padding-left: 0.5rem;
         }
     }
 `;
