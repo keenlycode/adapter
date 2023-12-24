@@ -15,7 +15,7 @@ Menu.css = css`
     ${Menu.style()}
     summary {
         h2 {
-            line-height: 1.7;
+            line-height: 2;
             margin: 0;
         }
     }

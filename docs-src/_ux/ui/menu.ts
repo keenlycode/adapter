@@ -45,8 +45,7 @@ function menuStyle(param: MenuStyleParam = {}) {
         align-items: center;
         font-size: 1.5rem;
         line-height: 1;
-        min-width: 2.5rem;
-        height: 2.5rem;
+        min-width: 2.7rem;
         cursor: pointer;
         user-select: none;
         outline: none;
