@@ -6,13 +6,13 @@ import { css } from '@devcapsule/adapter/src/style';
 import { bgColor } from '../_ux/style';
 import { color } from '../_ux/designToken';
 import Color from 'color';
-import { aspectRatio } from '../_ux/style';
 
 baseStyle('../');
 pageReload('../');
 
 Menu.define('el-menu');
 Menu.css = css`
+    [class] {all: unset};
     ${Menu.style()}
     summary {
         h2 {

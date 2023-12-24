@@ -11,31 +11,22 @@ interface MenuStyleParam {
 }
 
 function menuStyle(param: MenuStyleParam = {}) {
-    param = {
-        itemCSS: css`
-            padding-left: 0.5rem;
-            width: calc(100% - 0.5rem);
-        `,
-        itemHoverCSS: css`${bgColor(color.light)}`,
-        ...param
-    }
 
     return css`
     display: flex;
     align-items: flex-start;
     width: 100%;
 
-    details {
+    details, details[class] {
         width: 100%;
         overflow: hidden;
         div.container {
             display: block;
             box-sizing: border-box;
             border-left: 0.2rem groove;
-            margin-left: 0.5rem;
-            width: calc(100% - 0.5rem);
             border-bottom-left-radius: 0.3rem;
             border-top-left-radius: 0.3rem;
+            margin-left: 0.6rem;
             transition: height 0.3s ease;
         }
     }
@@ -70,6 +61,11 @@ function menuStyle(param: MenuStyleParam = {}) {
     /** Item styles */
     .item:not(:has(details)),
     .item:has(details) summary  {
+        display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
+        width: 100%;
+        padding-left: 0.5rem;
         cursor: pointer;
         ${param.itemCSS}
     }
@@ -77,6 +73,7 @@ function menuStyle(param: MenuStyleParam = {}) {
     /** Item on hover styles */
     .item:hover:not(:has(details)),
     .item:has(details) summary:hover {
+        ${bgColor(color.light)}
         ${param.itemHoverCSS}
     }
     `.trim();
