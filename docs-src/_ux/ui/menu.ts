@@ -41,6 +41,12 @@ function menuStyle(param: MenuStyleParam = {}) {
     }
 
     details > summary > .toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        line-height: 2;
+        width: 3rem;
         cursor: pointer;
         user-select: none;
         outline: none;
@@ -48,6 +54,7 @@ function menuStyle(param: MenuStyleParam = {}) {
         transition: transform 0.3s ease;
         transform: rotate(0deg)
     }
+
     details.open > summary > .toggle {
         transition: transform 0.3s ease;
         transform: rotate(90deg);

@@ -19,15 +19,6 @@ Menu.css = css`
             line-height: 2;
             width: 80%;
         }
-        .toggle {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            line-height: 2;
-            width: 3rem;
-            ${aspectRatio('1')}
-        }
     }
     .item {
         line-height: 2.5;
