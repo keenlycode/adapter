@@ -2,17 +2,14 @@
 import { css } from '@devcapsule/adapter/src/style';
 import Color from 'color';
 
-import { baseStyle } from '../_base.style';
 import { pageReload } from '../_base.esbuild'
 import { Sidebar } from '../_ux/ui/sidebar';
 import { Menu } from '../_ux/ui/menu';
 import { bgColor } from '../_ux/style';
 import { color } from '../_ux/designToken';
-import { baseLib } from '../_base.lib';
 import { baseStyle as guideBaseStyle } from './_base.style';
 
-baseLib();
-baseStyle('../');
+
 guideBaseStyle();
 pageReload('../');
 

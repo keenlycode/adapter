@@ -14,7 +14,6 @@ function baseComponents(to_base_url: string) {
     customElements.define('el-icon', Icon);
 
     CodeBlock.define('el-code-block');
-    Sidebar.define('el-sidebar');
     Button.define('button');
 };
 
