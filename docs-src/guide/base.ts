@@ -1,13 +1,19 @@
+/** 3rd Party */
+import { css } from '@devcapsule/adapter/src/style';
+import Color from 'color';
+
 import { baseStyle } from '../_base.style';
 import { pageReload } from '../_base.esbuild'
 import { Sidebar } from '../_ux/ui/sidebar';
 import { Menu } from '../_ux/ui/menu';
-import { css } from '@devcapsule/adapter/src/style';
 import { bgColor } from '../_ux/style';
 import { color } from '../_ux/designToken';
-import Color from 'color';
+import { baseLib } from '../_base.lib';
+import { baseStyle as guideBaseStyle } from './_base.style';
 
+baseLib();
 baseStyle('../');
+guideBaseStyle();
 pageReload('../');
 
 Menu.define('el-menu');
@@ -26,9 +32,7 @@ Menu.css = css`
     }
 `;
 
-Sidebar.define('el-sidebar');
-Sidebar.css = css`
-    ${Sidebar.style({showAt: 0})}
+const sideBarStyle = css`
     height: 100dvh;
     ${bgColor(color.dark)}
     filter:
@@ -36,8 +40,15 @@ Sidebar.css = css`
         .alpha(0.8).string()});
 `;
 
-// setTimeout(() => {
-//     Sidebar.addStyle(css`
-//         ${Sidebar.style({showAt: 1000, bgColor: color.dark})}
-//     `)
-// }, 1000);
+Sidebar.define('el-sidebar');
+Sidebar.css = css`
+    ${Sidebar.style({showAt: 0})}
+    ${sideBarStyle}
+`;
+
+setTimeout(() => {
+    Sidebar.css = css`
+        ${Sidebar.style({showAt: 1200})}
+        ${sideBarStyle}
+    `;
+}, 1000);

@@ -26,8 +26,10 @@ const sidebarStyle = (param: StyleParam = {}): string => {
         box-sizing: border-box;
         position: fixed;
         z-index: 100;
-        width: 32ch;
+        width: 28ch;
         min-height: 50dvh;
+        padding-top: 30dvh;
+        padding-bottom: 20dvh;
         overflow-y: auto;
         background-color: white;
         transition: transform 0.4s ease;

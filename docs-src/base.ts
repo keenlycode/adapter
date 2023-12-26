@@ -1,4 +1,6 @@
-import {baseLib} from './_base.lib';
+import 'highlight.js/styles/monokai.css';
+
+import { baseLib } from './_base.lib';
 baseLib();
 
 import { baseStyle } from './_base.style';

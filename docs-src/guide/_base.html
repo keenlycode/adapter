@@ -7,7 +7,9 @@
     {% block title %}
     <title>Adapter - Guide</title>
     {% endblock %}
-    <script defer type="module" src="{{to_base}}base.js?v={{_v}}"></script>
+    <link rel="stylesheet" href="{{to_base}}base.css?v={{_v}}">
+    <link rel="stylesheet" href="{{to_base}}guide/base.css?v={{_v}}">
+    <script defer type="module" src="{{to_base}}guide/base.js?v={{_v}}"></script>
     {% block head %}{% endblock %}
 </head>
 <body>
@@ -16,12 +18,12 @@
     <el-menu>
         <details open class="open">
             <summary>
-                <a href="./setup.html"><h2>Setup</h2></a>
+                <a href="{{to_base}}guide/setup/index.html"><h2>Setup</h2></a>
                 <div class="toggle">▸</div>
             </summary>
             <div class="container">
-                <div><a href="./setup.html#cdn">CDN</a></div>
-                <div><a href="./setup.html#npm">NPM</a></div>
+                <div><a href="{{to_base}}guide/setup/index.html#cdn">CDN</a></div>
+                <div><a href="{{to_base}}guide/setup/index.html#npm">NPM</a></div>
             </div>
         </details>
     </el-menu>
