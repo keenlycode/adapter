@@ -5,20 +5,23 @@ interface StyleParam {
     showAt?: number;
 }
 
-const sidebarStyle = (param: StyleParam = {}): string => {
-    param = {showAt: 0, ...param};
+const sidebarStyle = (inputParam: StyleParam = {}): string => {
+    const param = {showAt: 0, ...inputParam};
     
     function showAt(breakpoint: number) {
         return css`
             @media (max-width: ${breakpoint}px) {
                 transform: translateX(-100%);
-                filter: drop-shadow(0 0 0);
-                box-shadow: 0 0 0;
             }
         `.trim();
     }
 
-    let style = css`
+    let style = ``;
+    param.showAt ? style += showAt(param.showAt) : null;
+    if (Object.keys(inputParam).length !== 0) { return style };
+
+    style += css`
+        all: unset;
         display: flex;
         flex-wrap: wrap;
         align-items: flex-start;
@@ -30,16 +33,37 @@ const sidebarStyle = (param: StyleParam = {}): string => {
         min-height: 50dvh;
         padding-top: 30dvh;
         padding-bottom: 20dvh;
-        overflow-y: auto;
         background-color: white;
         transition: transform 0.4s ease;
+        transform: translateX(0);
     `.trim();
-    param.showAt ? style += showAt(param.showAt) : null;
     return style;
 };
 
 class Sidebar extends Adapter {
+    static css = `${sidebarStyle()}`;
     static style = sidebarStyle;
+
+    constructor() {
+        super();
+    }
+
+    show() {
+        this.addStyle(css`
+            transform: translateX(0);
+        `)
+    }
+
+    hide() {
+        this.addStyle(css`
+            transform: translateX(-100%);
+        `)
+    }
+
+    toggle() {
+        getComputedStyle(this).transform === 'matrix(1, 0, 0, 1, 0, 0)' ?
+            this.hide() : this.show();
+    }
 };
 
 export { Sidebar };

@@ -1,5 +1,4 @@
 import { CodeBlock } from './_ux/ui/code-block';
-import { Sidebar } from './_ux/ui/sidebar';
 import { Button } from 'gadjet/src/gadjet';
 import { DefIcon } from '@devcapsule/deficon';
 

@@ -1,11 +1,9 @@
 {% extends 'guide/_base.html' %}
 {% set to_base = '../../' %}
 
-{% block head %}
-{{super()}}
-{% endblock %}
 
 {% block body %}
+{{ super() }}
 <div class="container">
 {{markdown('index.html.md')}}
 </div>

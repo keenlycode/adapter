@@ -1,19 +1,16 @@
-{% set _v = 1 %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block title %}
-    <title>Adapter - Guide</title>
-    {% endblock %}
-    <link rel="stylesheet" href="{{to_base}}base.css?v={{_v}}">
-    <link rel="stylesheet" href="{{to_base}}guide/base.css?v={{_v}}">
-    <script defer type="module" src="{{to_base}}base.js?v={{_v}}"></script>
-    <script defer type="module" src="{{to_base}}guide/base.js?v={{_v}}"></script>
-    {% block head %}{% endblock %}
-</head>
-<body>
+{% extends '_base.html' %}
+
+{% block title %}
+<title>Adapter - Guide</title>
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+<script type="module" src="{{to_base}}guide/base.js?v={{_v}}"></script>
+{% endblock %}
+
+{% block body %}
+{{ super () }}
 <el-sidebar>
     <h1>Guide</h1>
     <el-menu>
@@ -28,7 +25,6 @@
             </div>
         </details>
     </el-menu>
+    <button el="toggle"><span>»</span></button>
 </el-sidebar>
-{% block body %}{% endblock %}
-</body>
-</html>
+{% endblock %}

@@ -21,6 +21,7 @@ function pxToRem(px: any) {
 
 const aspectRatio = (ratio: string = '1/1'): string => {
     return `
+    height: auto;
     aspect-ratio: ${ratio};
     @supports not (aspect-ratio: ${ratio}) {
         &::before {

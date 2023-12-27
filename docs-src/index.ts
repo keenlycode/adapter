@@ -85,7 +85,7 @@ class ParticleScene extends Adapter {
 
 class Heading extends Adapter {};
 
-class SocialButtons extends Adapter {};
+class HeadingButtons extends Adapter {};
 
 Heading.addStyle(css`
     display: flex;
@@ -102,12 +102,15 @@ Heading.addStyle(css`
     }
 `);
 
-SocialButtons.addStyle(css`
+HeadingButtons.addStyle(css`
     & button {
         margin: 0 1rem;
         & el-icon {
             margin-right: 0.5rem;
         }
+    }
+    & button[el="guide"] {
+        ${Button.Style.style({color: color.blue})}
     }
     & button[el="github"] {
         ${Button.Style.style({color: color.dark})}
@@ -141,7 +144,7 @@ Particle.addStyle(css`
 `)
 
 Heading.define('el-heading');
-SocialButtons.define('el-social-buttons');
+HeadingButtons.define('el-social-buttons');
 Particle.define('el-particle');
 ParticleScene.define('el-particle-scene');
 
