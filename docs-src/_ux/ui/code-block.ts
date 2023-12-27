@@ -10,7 +10,7 @@ CodeBlock.tagStyle(css`
     display: block;
     margin: auto;
     margin-top: 1.5rem;
-    max-width: 40rem;
+    max-width: 80ch;
     line-height: 1.5;
     [el="bar-top-left"] {
         display: inline-flex;

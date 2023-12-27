@@ -8,6 +8,39 @@ const css = String.raw;
 const __base_url = new URL(import.meta.url);
 window.__base_url = __base_url;
 
+
+const cssStyleSheet = new CSSStyleSheet();
+cssStyleSheet.replaceSync(css`
+.container {
+    display: block;
+    max-width: 1000px;
+    min-width: 300px;
+    width: 90%;
+    margin: auto;
+
+    & h2 {
+        line-height: 2;
+        text-align: center;
+        margin: auto;
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+        font-size: 1.5rem;
+    }
+    & h3 {
+        text-decoration: underline;
+        margin: auto;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-size: 1.25rem;
+    }
+    & h4 {
+        font-size: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+}`);
+
+
 class Particle extends Adapter {
     constructor() {
         super();
