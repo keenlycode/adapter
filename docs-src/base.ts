@@ -11,3 +11,5 @@ baseComponents('./');
 
 import { pageReload } from './_base.esbuild';
 pageReload('./');
+
+import './styleClass';

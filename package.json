@@ -1,7 +1,7 @@
 {
     "name": "@devcapsule/adapter",
     "description": "Adaptive Style Web Component Framework",
-    "version": "2.3.1",
+    "version": "2.3.2dev",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/keenly-coding/adapter.git"
@@ -50,5 +50,5 @@
         "uhtml": "^4.1.24"
     },
     "type": "module",
-    "main": "dist/adapter.js"
+    "main": "dist/export.js"
 }

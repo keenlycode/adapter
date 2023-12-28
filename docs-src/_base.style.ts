@@ -25,9 +25,9 @@ function baseStyle(to_base_url: string) {
         line-height: 1.75;
         font-family: sans;
         ${fontFluid({
-            fontSizeMin: 14,
-            fontSizeMax: 20,
-            vwMin: 300,
+            fontSizeMin: 16,
+            fontSizeMax: 18,
+            vwMin: 400,
             vwMax: 1200
         })}
     }
@@ -43,7 +43,7 @@ function baseStyle(to_base_url: string) {
         ${bgColor(color.light)}
         border-radius: 0.25em;
         font-family: monospace;
-        font-size: 0.8em;
+        font-size: 0.85em;
     }
 
     p, h1, h2, h3, h4, ul, li {
@@ -57,7 +57,7 @@ function baseStyle(to_base_url: string) {
 
     .text-width {
         width: 100%;
-        max-width: 40rem;
+        max-width: 80ch;
     }
 
     .container {

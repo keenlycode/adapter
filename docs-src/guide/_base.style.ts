@@ -7,11 +7,11 @@ function baseStyle() {
         display: flex;
         justify-content: center;
     }
-    h1 {
+    h1, h2, h3 {
         margin: auto;
-        text-align: center;
         max-width: 80ch;
     }
+    h1 { text-align: center }
     p {
         margin: 0.7rem auto;
     }
