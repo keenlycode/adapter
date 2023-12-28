@@ -4,9 +4,6 @@
 {% block body %}
 {{ super () }}
 <el-container>
-    <h1>Guide</h1>
-    <p>
-        This is the guide page.
-    </p>
+{{markdown('index.html.md')}}
 </el-container>
 {% endblock %}

@@ -10,6 +10,10 @@ function baseStyle() {
     h1 {
         margin: auto;
         text-align: center;
+        max-width: 80ch;
+    }
+    p {
+        margin: 0.7rem auto;
     }
     `);
     document.adoptedStyleSheets.push(cssStyleSheet);

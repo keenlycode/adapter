@@ -52,17 +52,11 @@ class Sidebar extends _Sidebar {
         this.querySelector('[el="toggle"]')?.addEventListener('click', () => {  
             this.toggle();
         });
-        // this.querySelector('[el="toggle"]')?.animate({
-        //     opacity: [1, 0],
-        // }, {
-        //     duration: 600,
-        //     iterations: 2
-        // });
         setTimeout(() => {
             Sidebar.addStyle(css`
                 ${Sidebar.style({showAt: 1200})}
             `);
-        }, 1600);
+        }, 1000);
     }
 
     show() {

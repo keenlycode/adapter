@@ -14,6 +14,7 @@ function menuStyle(param: MenuStyleParam = {}) {
     return css`
     div[class] {all: unset};
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
     width: 100%;
 

@@ -3,7 +3,7 @@ import { css } from '@devcapsule/adapter/src/style';
 
 import { pageReload } from '../_base.esbuild'
 import { Sidebar as _Sidebar } from '../_ux/ui/sidebar';
-import { Menu } from '../_ux/ui/menu';
+import { Menu } from './_ui/menu';
 import { baseStyle as guideBaseStyle } from './_base.style';
 
 import { Sidebar } from './_ui/sidebar';
