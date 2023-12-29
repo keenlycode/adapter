@@ -100,7 +100,7 @@ Heading.addStyle(css`
 
 HeadingButtons.addStyle(css`
     & button {
-        margin: 0 1rem;
+        margin: 1rem 1rem;
         & el-icon {
             margin-right: 0.5rem;
         }
