@@ -21,9 +21,20 @@ Using content delivery network is the easiest way to use **Adapter**
 Install using NPM is recommended for production use.
 
 <el-code-block>
-<div el="bar-top-left">html</div>
+<div el="bar-top-left">shell</div>
 
 ```shell
 $ npm install @devcapsule/adapter
 ```
 </el-code-block>
+
+It's recommended to use Javascript Building Tools such as 
+**ESBuild**, **Parcel**, **Rollup** etc. Please read thier documentation.
+After setting up, you can import Adapter in javascript
+
+<el-code-block>
+<div el="bar-top-left">Javascript</div>
+
+```js
+import { Adapter } from '@devcapsule/adapter';
+```

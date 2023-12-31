@@ -7,13 +7,27 @@ import { Sidebar as _Sidebar } from '../../_ux/ui/sidebar';
 
 
 const sideBarStyle = css`
-    height: 100dvh;
+    height: 110dvh;
     left: 0;
     ${bgColor(color.dark)}
-    @media screen and (min-width: 1200px) {
-        filter:
-            drop-shadow(2px 2px 4px ${Color(color.dark)
-            .alpha(0.8).string()});
+
+    filter: drop-shadow(2px 2px 4px ${Color(color.dark)
+        .alpha(0.8).string()});
+    span { transform: rotate(0deg) }
+
+    &.show {
+        filter: drop-shadow(2px 2px 4px ${Color(color.dark)
+        .alpha(0.8).string()});
+        [el="toggle"] {
+            span { transform: rotate(180deg) }
+        };
+    }
+    
+    &.hide {
+        filter: none;
+        [el="toggle"] {
+            span { transform: rotate(0deg) }
+        };
     }
 
     button[el="toggle"] {
@@ -25,7 +39,7 @@ const sideBarStyle = css`
         border-top-left-radius:0 ;
         border-bottom-left-radius: 0;
         transform: translateX(100%);
-        opacity: 0.3;
+        opacity: 0.5;
         &:hover { opacity: 1 };
         ${aspectRatio('1')}
         span {
@@ -43,7 +57,6 @@ const sideBarStyle = css`
 class Sidebar extends _Sidebar {
     static css = css`
         ${Sidebar.style()}
-        ${Sidebar.style({showAt: 0})}
         ${sideBarStyle}
     `;
 
@@ -52,34 +65,15 @@ class Sidebar extends _Sidebar {
         this.querySelector('[el="toggle"]')?.addEventListener('click', () => {  
             this.toggle();
         });
-        setTimeout(() => {
-            Sidebar.addStyle(css`
-                ${Sidebar.style({showAt: 1200})}
-            `);
-        }, 1000);
     }
 
     show() {
         super.show();
-        this.addStyle(css`
-            filter:
-                drop-shadow(2px 2px 4px ${Color(color.dark)
-                .alpha(0.8).string()});
-            [el="toggle"] {
-                span { transform: rotate(180deg) }
-            };
-        `);
         this.dispatchEvent(new CustomEvent('show'));
     }
 
     hide() {
         super.hide();
-        this.addStyle(css`
-            filter: none;
-            [el="toggle"] {
-                span { transform: rotate(0deg) }
-            };
-        `);
         this.dispatchEvent(new CustomEvent('hide'));
     }
 }

@@ -3,6 +3,7 @@ import "mocha/mocha.css";
 import { assert } from "chai";
 
 import { Adapter, AdapterMixin } from "@devcapsule/adapter/src/adapter";
+import { stylis } from '@devcapsule/adapter/src/cssProcessor/stylis';
 
 const __base_url = new URL(import.meta.url);
 
@@ -27,9 +28,10 @@ style.replaceSync(css`
     }
 `);
 
-mocha.setup("bdd");
-
-mocha.checkLeaks();
+mocha.setup({
+    ui: "bdd",
+    checkLeaks: true
+});
 
 describe("Adapter Class: Use Case", function () {
     class Card1 extends Adapter {};
@@ -173,6 +175,30 @@ describe("Adapter Mixin: Use Case", () => {
         assert(pin2 instanceof Pin1);
         assert(pin2 instanceof HTMLElement);
     });
+});
+
+describe.only("CSS Processor", () => {
+    class MyAdapter extends Adapter {
+        static cssProcess(tagName, css) {
+            css = stylis(`${tagName} { ${css} }`);
+            console.log(css);
+            return css;
+        }
+    }
+
+    MyAdapter.define('el-my-adapter');
+    MyAdapter.css = css`
+        display: flex;
+        min-height: 20vh;
+        background-color: #eee;
+        &.red {
+            background-color: red;
+        }
+    `;
+    let div = new MyAdapter();
+    document.body.appendChild(div);
+    div.classList.add('red');
+    // console.log(MyAdapter.css);
 });
 
 mocha.run();

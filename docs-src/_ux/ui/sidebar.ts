@@ -1,26 +1,9 @@
 import { Adapter } from '@devcapsule/adapter/src/adapter';
 import { css } from '@devcapsule/adapter/src/style';
 
-interface StyleParam {
-    showAt?: number;
-}
+const sidebarStyle = (): string => {
 
-const sidebarStyle = (inputParam: StyleParam = {}): string => {
-    const param = {showAt: 0, ...inputParam};
-    
-    function showAt(breakpoint: number) {
-        return css`
-            @media (max-width: ${breakpoint}px) {
-                transform: translateX(-100%);
-            }
-        `.trim();
-    }
-
-    let style = ``;
-    param.showAt ? style += showAt(param.showAt) : null;
-    if (Object.keys(inputParam).length !== 0) { return style };
-
-    style += css`
+    const style = css`
         all: unset;
         display: flex;
         flex-wrap: wrap;
@@ -36,6 +19,15 @@ const sidebarStyle = (inputParam: StyleParam = {}): string => {
         background-color: white;
         transition: transform 0.4s ease;
         transform: translateX(0);
+
+        &.show {
+            transform: translateX(0);
+        }
+        
+        &.hide {
+            transform: translateX(-100%);
+        }
+
     `.trim();
     return style;
 };
@@ -49,20 +41,21 @@ class Sidebar extends Adapter {
     }
 
     show() {
-        this.addStyle(css`
-            transform: translateX(0);
-        `)
+        this.classList.remove('hide');
+        this.classList.add('show');
     }
 
     hide() {
-        this.addStyle(css`
-            transform: translateX(-100%);
-        `)
+        this.classList.remove('show');
+        this.classList.add('hide');
     }
 
     toggle() {
-        getComputedStyle(this).transform === 'matrix(1, 0, 0, 1, 0, 0)' ?
-            this.hide() : this.show();
+        if (this.classList.contains('show')) {
+            this.hide();
+        } else {
+            this.show();
+        }
     }
 };
 
