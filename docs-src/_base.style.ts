@@ -51,6 +51,14 @@ function baseStyle(to_base_url: string) {
         margin: auto;
     }
 
+    p ~ ol {
+        margin-top: -0.7rem;
+    }
+
+    p ~ ol ~ p {
+        margin-top: -0.7rem;
+    }
+
     .width-100 {
         width: 100%;
     }

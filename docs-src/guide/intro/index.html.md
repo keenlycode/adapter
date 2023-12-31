@@ -16,7 +16,7 @@ Despite its simplicity, **Adapter** unlocks endless possibilities
 for enhancing UX/UI in web applications. While traditional **CSS** frameworks
 have faced limitations, on the other hand, **Adapter** can implement features
 such as encapsulation, inheritance, composition, event-interaction,
-and other complex styling requirements which opens up new possibilities
+and other complex styling requirements which opens up new potential
 for creating dynamic and feature-rich user interfaces.
 
 ## Examples
@@ -102,6 +102,6 @@ export { bgColor, RedFlexBox };
 
 <div style="margin-top: 2rem;"></div>
 
-### Variables / Functions / OOP , That's it !
+### Variables / Functions / OOP / Modules , That's it !
 
-### CSS now is programmable with ES6 ! What else do we need 😉
+### CSS now is programmable with ES6 ! ... What else do we need ? 😉
