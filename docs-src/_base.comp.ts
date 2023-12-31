@@ -1,4 +1,5 @@
 import { CodeBlock } from './_ux/ui/code-block';
+import { BlockQuote } from './_ux/ui/blockquote';
 import { Button } from 'gadjet/src/gadjet';
 import { DefIcon } from '@devcapsule/deficon';
 
@@ -14,6 +15,7 @@ function baseComponents(to_base_url: string) {
 
     CodeBlock.define('el-code-block');
     Button.define('button');
+    BlockQuote.define('el-blockquote');
 };
 
 export { baseComponents };

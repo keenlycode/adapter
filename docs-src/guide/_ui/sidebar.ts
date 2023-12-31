@@ -60,11 +60,13 @@ class Sidebar extends _Sidebar {
             this.toggle();
         });
 
-        let mql = window.matchMedia('(max-width: 1200px)');
-        this.onMediaQueryChange(mql);
-        mql.addEventListener('change', () => {
+        let mql = window.matchMedia('screen and (max-width: 1200px)');
+        setTimeout(() => {
             this.onMediaQueryChange(mql);
-        });
+            mql.addEventListener('change', () => {
+                this.onMediaQueryChange(mql);
+            });
+        }, 1000);
     }
 
     onMediaQueryChange(mql: MediaQueryList) {

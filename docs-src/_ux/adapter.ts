@@ -1,7 +1,6 @@
-import { Adapter as _Adapter, stylis } from '@devcapsule/adapter';
+import { AdapterMixin, stylis } from '@devcapsule/adapter';
 
-
-class Adapter extends _Adapter {
+class Adapter extends AdapterMixin(HTMLElement) {
     static cssProcess(css: string): string {
         return stylis(css);
     }

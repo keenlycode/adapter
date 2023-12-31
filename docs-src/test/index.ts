@@ -1,9 +1,13 @@
+/** Mocha test framework */
 import mocha from "mocha/mocha";
 import "mocha/mocha.css";
 import { assert } from "chai";
+
+/** LigntningCSS */
 import init, { transform, browserslistToTargets } from 'https://esm.run/lightningcss-wasm';
 import browserslist from 'browserslist';
 
+/** Adapter */
 import { Adapter, AdapterMixin } from "@devcapsule/adapter/src/adapter";
 import { stylis } from '@devcapsule/adapter/src/cssProcessor/stylis.bundle';
 
@@ -17,6 +21,7 @@ if (["0.0.0.0", "127.0.0.1", "localhost"].includes(__base_url.hostname)) {
 
 const css = String.raw;
 const style = new CSSStyleSheet();
+
 document.adoptedStyleSheets.push(style);
 style.replaceSync(css`
     body {
