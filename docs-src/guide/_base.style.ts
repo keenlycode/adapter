@@ -1,4 +1,4 @@
-import { css } from '@devcapsule/adapter/src/style';
+import { css } from '@devcapsule/adapter';
 
 function baseStyle() {
     const cssStyleSheet = new CSSStyleSheet();

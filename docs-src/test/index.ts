@@ -181,8 +181,7 @@ describe("CSS Processor", () => {
     it('Can use stylis processor', () => {
         class MyAdapter extends Adapter {
             static cssProcess(css: string): string {
-                css = stylis(css);
-                return css;
+                return stylis(css);
             }
 
             static css = `

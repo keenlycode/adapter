@@ -1,5 +1,4 @@
-import { Adapter } from '@devcapsule/adapter/src/adapter';
-import { css } from '@devcapsule/adapter/src/style';
+import { Adapter, css } from '@devcapsule/adapter';
 import { bgColor, pxToRem } from '../style';
 import { color } from '../designToken';
 

@@ -1,5 +1,5 @@
 /** 3rd Party */
-import { css } from '@devcapsule/adapter/src/style';
+import { css } from '@devcapsule/adapter';
 
 import { pageReload } from '../_base.esbuild'
 import { Sidebar as _Sidebar } from '../_ux/ui/sidebar';

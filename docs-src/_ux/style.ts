@@ -1,5 +1,5 @@
 import Color from "color";
-import { css } from '@devcapsule/adapter/src/style';
+import { css } from '@devcapsule/adapter';
 
 function bgColor(color) {
     return css`
@@ -39,4 +39,4 @@ const aspectRatio = (ratio: string = '1/1'): string => {
     `.trim();
 }
 
-export { bgColor, lift, pxToRem, aspectRatio };
+export { css, bgColor, lift, pxToRem, aspectRatio };

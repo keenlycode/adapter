@@ -11,4 +11,8 @@ function uuid() {
     return sleepSync(1).toString(36);
 }
 
-export { sleepSync, uuid };
+function css(strings: TemplateStringsArray, ...values: any[]) {
+    return String.raw(strings, ...values);
+}
+
+export { sleepSync, uuid, css };

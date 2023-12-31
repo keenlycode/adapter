@@ -1,6 +1,6 @@
 import { bgColor, fontFluid } from "gadjet/src/gadjet";
-import { css } from '@devcapsule/adapter/src/style';
 import { color } from "./_ux/designToken";
+import { css } from "@devcapsule/adapter";
 
 
 function baseStyle(to_base_url: string) {
@@ -96,4 +96,4 @@ function baseStyle(to_base_url: string) {
     `);
 }
 
-export { baseStyle };
+export { baseStyle, css };

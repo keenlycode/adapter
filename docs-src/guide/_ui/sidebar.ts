@@ -1,4 +1,4 @@
-import { css } from '@devcapsule/adapter/src/style';
+import { css } from '@devcapsule/adapter';
 import Color from 'color';
 
 import { aspectRatio, bgColor } from '../../_ux/style';

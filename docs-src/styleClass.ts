@@ -1,4 +1,4 @@
-import { css } from '@devcapsule/adapter/src/style';
+import { css } from '@devcapsule/adapter';
 import { aspectRatio } from 'gadjet/src/style';
 
 const cssStyleSheet = new CSSStyleSheet();
