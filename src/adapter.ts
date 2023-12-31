@@ -1,4 +1,5 @@
 import { uuid } from './util.js';
+import { stylis } from './cssProcessor/stylis.bundle.js';
 
 
 type Constructor<T = {}> = new (...args: any[]) => T;
@@ -203,6 +204,10 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     };
 }
 
-const Adapter = AdapterMixin(HTMLElement);
+class Adapter extends AdapterMixin(HTMLElement) {
+    static cssProcess(css: string): string {
+        return stylis(css);
+    }
+};
 
 export { Adapter, AdapterMixin };

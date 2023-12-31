@@ -1,5 +1,5 @@
-import { Menu as _Menu } from '../../_ux/ui/menu';
 import { css } from '@devcapsule/adapter';
+import { Menu as _Menu } from '../../_ux/ui/menu';
 
 
 class Menu extends _Menu {

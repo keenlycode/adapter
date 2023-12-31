@@ -1,8 +1,7 @@
-import { Adapter } from '@devcapsule/adapter';
+import { Adapter } from '../adapter';
 import { css } from '@devcapsule/adapter';
 
 const sidebarStyle = (): string => {
-
     const style = css`
         all: unset;
         display: flex;
@@ -11,6 +10,7 @@ const sidebarStyle = (): string => {
         align-content: flex-start;
         box-sizing: border-box;
         position: fixed;
+        left: 0;
         z-index: 100;
         width: 28ch;
         min-height: 50dvh;

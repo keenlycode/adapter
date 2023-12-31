@@ -1,4 +1,5 @@
-import { Adapter, css } from '@devcapsule/adapter';
+import { css } from '@devcapsule/adapter';
+import { Adapter } from '../../_ux/adapter';
 
 class Container extends Adapter {
     static css = css`

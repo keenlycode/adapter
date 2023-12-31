@@ -3,18 +3,24 @@ import { css } from '@devcapsule/adapter';
 function baseStyle() {
     const cssStyleSheet = new CSSStyleSheet();
     cssStyleSheet.replaceSync(css`
-    body {
-        display: flex;
-        justify-content: center;
-    }
-    h1, h2, h3 {
-        margin: auto;
-        max-width: 80ch;
-    }
-    h1 { text-align: center }
-    p {
-        margin: 1rem auto;
-    }
+        body {
+            display: flex;
+            justify-content: center;
+            > el-container:first-of-type {
+                margin-top: 2rem;
+            }
+        }
+        h1, h2, h3 {
+            margin: auto;
+            max-width: 80ch;
+        }
+        h1 { text-align: center }
+        h2 {
+            margin-top: 2.5rem;
+        }
+        p {
+            margin: 1rem auto;
+        }
     `);
     document.adoptedStyleSheets.push(cssStyleSheet);
 };

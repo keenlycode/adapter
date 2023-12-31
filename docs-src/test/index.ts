@@ -1,9 +1,15 @@
+/** Mocha test framework */
 import mocha from "mocha/mocha";
 import "mocha/mocha.css";
 import { assert } from "chai";
 
+/** LigntningCSS */
+import init, { transform, browserslistToTargets } from 'https://esm.run/lightningcss-wasm';
+import browserslist from 'browserslist';
+
+/** Adapter */
 import { Adapter, AdapterMixin } from "@devcapsule/adapter/src/adapter";
-import { stylis } from '@devcapsule/adapter/src/cssProcessor/stylis';
+import { stylis } from '@devcapsule/adapter/src/cssProcessor/stylis.bundle';
 
 const __base_url = new URL(import.meta.url);
 
@@ -15,6 +21,7 @@ if (["0.0.0.0", "127.0.0.1", "localhost"].includes(__base_url.hostname)) {
 
 const css = String.raw;
 const style = new CSSStyleSheet();
+
 document.adoptedStyleSheets.push(style);
 style.replaceSync(css`
     body {
@@ -177,7 +184,9 @@ describe("Adapter Mixin: Use Case", () => {
     });
 });
 
-describe("CSS Processor", () => {
+await init();
+
+describe("CSS Processor (Beta)", () => {
     it('Can use stylis processor', () => {
         class MyAdapter extends Adapter {
             static cssProcess(css: string): string {
@@ -193,11 +202,40 @@ describe("CSS Processor", () => {
                 }
             `
         }
-        MyAdapter.define('el-my-adapter');
+        MyAdapter.define('el-adapter-stylis');
         /** This will prove that stylis works as expected
          * because it will create `<element>.red` rule from `&.red`
          */
-        assert(MyAdapter.cssStyleSheet.cssRules[1].cssText.includes('el-my-adapter.red'));
+        assert(MyAdapter.cssStyleSheet.cssRules[1].cssText.includes('el-adapter-stylis.red'));
+    })
+
+    it('Can use lightningcss-wasm processor', async () => {
+        class MyAdapter extends Adapter {
+            static cssProcess(css: string): string {
+                let {code} = transform({
+                    code: new TextEncoder().encode(css),
+                    sourceMap: false,
+                    targets: browserslistToTargets(browserslist('>= 0.25%'))
+                });
+                code = new TextDecoder().decode(code);
+                return code;
+            }
+
+            static css = `
+                display: flex;
+                min-height: 20vh;
+                background-color: #eee;
+                &.red {
+                    background-color: red;
+                }
+            `
+        }
+
+        MyAdapter.define('el-adapter-lightningcss');
+        /** This will prove that stylis works as expected
+         * because it will create `<element>.red` rule from `&.red`
+         */
+        assert(MyAdapter.cssStyleSheet.cssRules[1].cssText.includes('el-adapter-lightningcss.red'));
     })
 });
 

@@ -1,4 +1,4 @@
-## 🎉 Javascript UX/UI is fun, like never before.
+## 🎉 Javascript UX/UI to the next level.
 
 Adapter focus on features which doesn't exist, to bring **CSS**
 into **OOP** with **CSS-in-JS** and **Web Component**
@@ -63,8 +63,9 @@ You can extends your components with great libraries:
   [lit-html](https://lit.dev/docs/libraries/standalone-templates/)
 - CSS Parser:
   [csstree](https://github.com/csstree/csstree),
-  [stylis](https://stylis.js.org/)
-- Event: [mitt](https://www.npmjs.com/package/mitt),
+  [stylis](https://stylis.js.org/),
+  [ligntningcss](https://lightningcss.dev/)
+- Event/Signal: [mitt](https://www.npmjs.com/package/mitt),
   [nanoevents](https://github.com/ai/nanoevents])
 - Animation:
   [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API),
