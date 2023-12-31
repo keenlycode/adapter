@@ -9,7 +9,7 @@ let result = await esbuild.build({
     entryPoints: [
         path.join(__dirname, "../src/export.ts"),
         path.join(__dirname, "../src/adapter.ts"),
-        path.join(__dirname, "../src/style.ts"),
+        path.join(__dirname, "../src/cssProcessor/*.ts"),
     ],
     bundle: true,
     outdir: "dist",

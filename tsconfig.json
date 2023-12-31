@@ -11,5 +11,5 @@
         "declarationMap": true,
         "outDir": "dist/",
     },
-    "include": ["src/export.ts"]
+    "include": ["src/**/*.ts"]
 }

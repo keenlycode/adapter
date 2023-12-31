@@ -1,2 +1,1 @@
-export { Adapter } from './adapter';
-export { css } from './style';
+export { Adapter, AdapterMixin } from './adapter';
