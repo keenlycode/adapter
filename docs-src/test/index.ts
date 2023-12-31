@@ -3,7 +3,7 @@ import "mocha/mocha.css";
 import { assert } from "chai";
 
 import { Adapter, AdapterMixin } from "@devcapsule/adapter/src/adapter";
-import { stylis } from '@devcapsule/adapter/src/cssProcessor/stylis';
+import { stylis } from '@devcapsule/adapter/src/cssProcessor/stylis.bundle';
 
 const __base_url = new URL(import.meta.url);
 

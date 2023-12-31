@@ -1,4 +1,4 @@
-import { Adapter } from '@devcapsule/adapter/src/adapter';
+import { Adapter } from '../adapter';
 import { bgColor } from 'gadjet/src/gadjet';
 import { color } from '../designToken'; 
 
