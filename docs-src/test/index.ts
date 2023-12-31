@@ -89,8 +89,15 @@ describe("Adapter Class: Use Case", function () {
     it("Should be able to set css in class declaration", () => {
         class Card3 extends Adapter {
             static css = css`display: grid;`;
+            constructor() {
+                super();
+                this.innerHTML = "Card3";
+            }
         };
+        Card3.define("el-card3");
+        Card3.css = `${Card3.css} &.red {color: red}`;
         assert(Card3.css.includes("display: grid;"));
+        assert(Card3.css.includes("&.red {color: red}"));
     });
 
     it("Should be able to set the whole css for this component", () => {
