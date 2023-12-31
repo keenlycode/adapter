@@ -13,7 +13,7 @@ function baseStyle() {
     }
     h1 { text-align: center }
     p {
-        margin: 0.7rem auto;
+        margin: 1rem auto;
     }
     `);
     document.adoptedStyleSheets.push(cssStyleSheet);

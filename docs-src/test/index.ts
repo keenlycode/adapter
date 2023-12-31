@@ -3,6 +3,7 @@ import "mocha/mocha.css";
 import { assert } from "chai";
 
 import { Adapter, AdapterMixin } from "@devcapsule/adapter/src/adapter";
+import { stylis } from '@devcapsule/adapter/src/cssProcessor/stylis';
 
 const __base_url = new URL(import.meta.url);
 
@@ -27,9 +28,10 @@ style.replaceSync(css`
     }
 `);
 
-mocha.setup("bdd");
-
-mocha.checkLeaks();
+mocha.setup({
+    ui: "bdd",
+    checkLeaks: true
+});
 
 describe("Adapter Class: Use Case", function () {
     class Card1 extends Adapter {};
@@ -173,6 +175,31 @@ describe("Adapter Mixin: Use Case", () => {
         assert(pin2 instanceof Pin1);
         assert(pin2 instanceof HTMLElement);
     });
+});
+
+describe("CSS Processor", () => {
+    it('Can use stylis processor', () => {
+        class MyAdapter extends Adapter {
+            static cssProcess(css: string): string {
+                css = stylis(css);
+                return css;
+            }
+
+            static css = `
+                display: flex;
+                min-height: 20vh;
+                background-color: #eee;
+                &.red {
+                    background-color: red;
+                }
+            `
+        }
+        MyAdapter.define('el-my-adapter');
+        /** This will prove that stylis works as expected
+         * because it will create `<element>.red` rule from `&.red`
+         */
+        assert(MyAdapter.cssStyleSheet.cssRules[1].cssText.includes('el-my-adapter.red'));
+    })
 });
 
 mocha.run();

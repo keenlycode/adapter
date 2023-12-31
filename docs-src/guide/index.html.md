@@ -8,17 +8,14 @@
 </div>
 
 **Adapter** is a JavaScript framework designed to seamlessly integrate
-**CSS-in-JS** with **Web Components**, setting it apart from other
-**CSS** libraries. It's important to note that Adapter a Web Component
-framework which focus is on **Web Component Styling**.
+**CSS-in-JS** with **Web Components**. Setting it apart from other
+**CSS** libraries, Adapter is framework which focus is on
+**Web Component Styling**.
 
 Despite its simplicity, **Adapter** unlocks endless possibilities
 for enhancing UX/UI in web applications. While traditional **CSS** frameworks
 have faced limitations, on the other hand, **Adapter** can implement features such as encapsulation, inheritance, composition, event-interaction,
-and other complex styling requirements.
-
-**Adapter**, by combining **CSS-in-JS** with Web Components,
-addresses these challenges and opens up new avenues for creating dynamic
+and other complex styling requirements which opens up new avenues for creating dynamic
 and feature-rich user interfaces.
 
 ### OOP
@@ -102,4 +99,4 @@ class RedFlexBox extends FlexBox {
 
 ### Variables / Functions / OOP , That's it !
 
-### CSS now is programmable with ES6 ! What's else do we need 😉
+### CSS now is programmable with ES6 ! What else do we need 😉

@@ -5,6 +5,13 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 
 function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class Adapter extends Base {
+        /** CSS Process middleware, This function will be called
+         * before applying CSS to CSSStyleSheet.
+         */
+        static cssProcess(css: string): string {
+            return css;
+        }
+
         /** Styles which contain only css for this component */
         static _styles: Array<string> = [];
 
@@ -33,7 +40,12 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         /** Set CSS for this component */
         static set css(css: string) {
             this._styles = [css];
-            this.cssStyleSheet.replaceSync(`${this.tagName} {${this.css}`);
+
+            if (this.tagName) {
+                this.cssStyleSheet.replaceSync(
+                    this.cssProcess(`${this.tagName} { ${this.css} }`)
+                );
+            }
         }
 
         /** Get CSS for this component, includes inherited styles */
@@ -69,7 +81,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         static addStyle(css: string) {
             this._styles = this._styles.concat(css);
             if (this.tagName) {
-                css = `${this.tagName} { ${css} }`;
+                css = this.cssProcess(`${this.tagName} { ${css} }`);
                 this.cssStyleSheet.insertRule(css,
                     this.cssStyleSheet.cssRules.length);
             };
@@ -88,7 +100,9 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
         /** Init component style */
         static initStyle() {
-            this.cssStyleSheet.replaceSync(`${this.tagName} {${this.css}}`);
+            this.cssStyleSheet.replaceSync(
+                this.cssProcess(`${this.tagName} { ${this.css} }`)
+            );
             document.adoptedStyleSheets.push(this.cssStyleSheet);
         }
 
@@ -102,7 +116,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
             this.addStyle(`&.${class_} { ${css} }`);
         };
 
-        _class?: typeof Adapter; // instance class.
+        _class!: typeof Adapter; // instance class.
         _cssStyleSheet?: CSSStyleSheet;
         adoptedStyleSheetIndex!: number;
         _uuid?: string; // instance id.
@@ -163,10 +177,10 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
          */
         set css(css: string) {
             this._css = css;
-            this.cssStyleSheet.replaceSync(`
-                ${this.tagName} {
-                    ${this.objectClassSelector} { ${css} }
-                }`
+            this.cssStyleSheet.replaceSync(
+                this._class.cssProcess(`
+                    ${this.objectClassSelector} { ${ css } }
+                `)
             );
         }
 
