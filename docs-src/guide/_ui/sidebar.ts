@@ -8,12 +8,10 @@ import { Sidebar as _Sidebar } from '../../_ux/ui/sidebar';
 
 const sideBarStyle = css`
     height: 110dvh;
-    left: 0;
     ${bgColor(color.dark)}
 
     filter: drop-shadow(2px 2px 4px ${Color(color.dark)
         .alpha(0.8).string()});
-    span { transform: rotate(0deg) }
 
     &.show {
         filter: drop-shadow(2px 2px 4px ${Color(color.dark)
@@ -46,10 +44,6 @@ const sideBarStyle = css`
             font-size: 1.5em;
             transition: transform 0.4s ease;
             transform: rotate(0deg);
-            /** When screen wider than 1200px */
-            @media screen and (min-width: 1200px) {
-                transform: rotate(180deg);
-            }
         }
     }
 `;
@@ -65,6 +59,16 @@ class Sidebar extends _Sidebar {
         this.querySelector('[el="toggle"]')?.addEventListener('click', () => {  
             this.toggle();
         });
+
+        let mql = window.matchMedia('(max-width: 1200px)');
+        this.onMediaQueryChange(mql);
+        mql.addEventListener('change', () => {
+            this.onMediaQueryChange(mql);
+        });
+    }
+
+    onMediaQueryChange(mql: MediaQueryList) {
+        mql.matches ? this.hide() : this.show();
     }
 
     show() {

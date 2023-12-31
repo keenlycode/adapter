@@ -1,4 +1,5 @@
 import { uuid } from './util.js';
+import { stylis } from './cssProcessor/stylis.bundle.js';
 
 
 type Constructor<T = {}> = new (...args: any[]) => T;
@@ -9,7 +10,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
          * before applying CSS to CSSStyleSheet.
          */
         static cssProcess(css: string): string {
-            return css;
+            return stylis(css);
         }
 
         /** Styles which contain only css for this component */
