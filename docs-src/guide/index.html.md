@@ -1,4 +1,4 @@
-<h1 style="margin-top: 1.5rem;">Guide</h1>
+<h1>Guide</h1>
 
 ## What is Adapter ?
 ---

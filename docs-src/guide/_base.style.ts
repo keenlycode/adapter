@@ -6,6 +6,7 @@ function baseStyle() {
     body {
         display: flex;
         justify-content: center;
+        padding-top: 2rem;
     }
     h1, h2, h3 {
         margin: auto;
