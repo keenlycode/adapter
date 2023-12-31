@@ -180,8 +180,8 @@ describe("Adapter Mixin: Use Case", () => {
 describe("CSS Processor", () => {
     it('Can use stylis processor', () => {
         class MyAdapter extends Adapter {
-            static cssProcess(tagName: string, css: string): string {
-                css = stylis(`${tagName} { ${css} }`);
+            static cssProcess(css: string): string {
+                css = stylis(css);
                 return css;
             }
 
@@ -194,11 +194,11 @@ describe("CSS Processor", () => {
                 }
             `
         }
-    
         MyAdapter.define('el-my-adapter');
-        let div = new MyAdapter();
-        document.body.appendChild(div);
-        div.classList.add('red');
+        /** This will prove that stylis works as expected
+         * because it will create `<element>.red` rule from `&.red`
+         */
+        assert(MyAdapter.cssStyleSheet.cssRules[1].cssText.includes('el-my-adapter.red'));
     })
 });
 

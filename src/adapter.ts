@@ -7,7 +7,6 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
     return class Adapter extends Base {
         /** CSS Process middleware, This function will be called
          * before applying CSS to CSSStyleSheet.
-         * - Must return valid css string with selector.
          */
         static cssProcess(css: string): string {
             return css;
