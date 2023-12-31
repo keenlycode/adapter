@@ -177,28 +177,29 @@ describe("Adapter Mixin: Use Case", () => {
     });
 });
 
-describe.only("CSS Processor", () => {
-    class MyAdapter extends Adapter {
-        static cssProcess(tagName, css) {
-            css = stylis(`${tagName} { ${css} }`);
-            console.log(css);
-            return css;
-        }
-    }
+describe("CSS Processor", () => {
+    it('Can use stylis processor', () => {
+        class MyAdapter extends Adapter {
+            static cssProcess(tagName: string, css: string): string {
+                css = stylis(`${tagName} { ${css} }`);
+                return css;
+            }
 
-    MyAdapter.define('el-my-adapter');
-    MyAdapter.css = css`
-        display: flex;
-        min-height: 20vh;
-        background-color: #eee;
-        &.red {
-            background-color: red;
+            static css = `
+                display: flex;
+                min-height: 20vh;
+                background-color: #eee;
+                &.red {
+                    background-color: red;
+                }
+            `
         }
-    `;
-    let div = new MyAdapter();
-    document.body.appendChild(div);
-    div.classList.add('red');
-    // console.log(MyAdapter.css);
+    
+        MyAdapter.define('el-my-adapter');
+        let div = new MyAdapter();
+        document.body.appendChild(div);
+        div.classList.add('red');
+    })
 });
 
 mocha.run();

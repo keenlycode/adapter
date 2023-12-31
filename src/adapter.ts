@@ -9,8 +9,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
          * before applying CSS to CSSStyleSheet.
          * - Must return valid css string with selector.
          */
-        static cssProcess(tagName: string, css: string): string {
-            return `${tagName} { ${css} }`;
+        static cssProcess(css: string): string {
+            return css;
         }
 
         /** Styles which contain only css for this component */
@@ -44,7 +44,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
             if (this.tagName) {
                 this.cssStyleSheet.replaceSync(
-                    this.cssProcess(this.tagName, this.css)
+                    this.cssProcess(`${this.tagName} { ${this.css} }`)
                 );
             }
         }
@@ -82,7 +82,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
         static addStyle(css: string) {
             this._styles = this._styles.concat(css);
             if (this.tagName) {
-                css = this.cssProcess(this.tagName, css);
+                css = this.cssProcess(`${this.tagName} { ${css} }`);
                 this.cssStyleSheet.insertRule(css,
                     this.cssStyleSheet.cssRules.length);
             };
@@ -101,7 +101,9 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
 
         /** Init component style */
         static initStyle() {
-            this.cssStyleSheet.replaceSync(`${this.tagName} {${this.css}}`);
+            this.cssStyleSheet.replaceSync(
+                this.cssProcess(`${this.tagName} { ${this.css} }`)
+            );
             document.adoptedStyleSheets.push(this.cssStyleSheet);
         }
 
@@ -176,10 +178,10 @@ function AdapterMixin<TBase extends Constructor<HTMLElement>>(Base: TBase) {
          */
         set css(css: string) {
             this._css = css;
-            this.cssStyleSheet.replaceSync(`
-                ${this.tagName} {
-                    ${this.objectClassSelector} { ${css} }
-                }`
+            this.cssStyleSheet.replaceSync(
+                this._class.cssProcess(`
+                    ${this.objectClassSelector} { ${ css } }
+                `)
             );
         }
 
