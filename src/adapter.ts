@@ -8,10 +8,17 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 ) {
   return class Adapter extends Base {
     _class!: typeof Adapter; // instance class.
+
     _cssStyleSheet?: CSSStyleSheet;
+
     adoptedStyleSheetIndex!: number;
+
     _uuid?: string; // instance id.
+
     _css: string = '';
+
+    /** CSSStyleSheet() for this component */
+    static _cssStyleSheet: CSSStyleSheet;
 
     /** Tag name of this component */
     static _tagName: string | null;
@@ -73,8 +80,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       return this._tagName;
     }
 
-    /** CSSStyleSheet() for this component */
-    static _cssStyleSheet: CSSStyleSheet;
     static get cssStyleSheet(): CSSStyleSheet {
       const superCSSStyleSheet =
         Object.getPrototypeOf(this)._cssStyleSheet;
