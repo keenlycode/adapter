@@ -1,7 +1,5 @@
-import {compile, serialize, stringify} from 'stylis';
+import { compile, serialize, stringify } from 'stylis';
 
-const stylis = (css: string) => {
-    return serialize(compile(css), stringify);
-};
-
-export { stylis };
+export function stylis(css: string) {
+  return serialize(compile(css), stringify);
+}
