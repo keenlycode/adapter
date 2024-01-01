@@ -3,4 +3,3 @@ venv
 package-lock.json
 .parcel-cache/
 dist
-pnpm-lock.yaml
