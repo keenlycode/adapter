@@ -1,6 +1,6 @@
 # Mixin
 
-Use `AdapterMixin()` to implement **Adapter** with other Web Components
+Use `AdapterMixin()` to implement **Adapter** with other Web Components.
 
 <el-blockquote>
 
@@ -17,15 +17,9 @@ import { AdapterMixin, css, stylis } from "@devcapsule/adapter";
 
 class SimpleGreeting extends AdapterMixin(HTMLElement) {
     /** Manually set CSS Processor */
-    static cssProcess(css) {
-        return stylis(css);
-    }
+    static cssProcess(css) { return stylis(css) };
 
-    static css = css`
-        p {
-            color: blue;
-        }
-    `;
+    static css = css`p { color: blue }`;
 
     name = "Somebody";
 

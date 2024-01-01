@@ -146,7 +146,6 @@ more specific like,
 .componentA {
     div > button { background-color: blue }
 }
-
 </style>
 ```
 This is just a simple example. Imagine when we have many elements
@@ -164,5 +163,5 @@ between elements/components or libraries.
 2. Defined custom elements have their own unique tags,
    preventing global styles from **unintentionally** overriding components
    and their elements. However, you still have full control of a component
-   from global styles if desired, making it ideal for theming.
-   **Shadow DOM lacks this features**.
+   from global styles if desired, making it ideal for theming
+   which **Shadow DOM lacks this features**.
