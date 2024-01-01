@@ -105,3 +105,64 @@ export { bgColor, RedFlexBox };
 ### Variables / Functions / OOP / Modules , That's it !
 
 ### CSS now is programmable with ES6 ! ... What else do we need ? 😉
+
+## What problem is the adapter trying to solve ?
+---
+
+One of the most common problems for **CSS** which is hard to implement
+is **Style Encapsulation and Inheritance**, since we can't easily make sure that element styles
+won't **unintentionally** be inherited or overridden from somewhere else.
+
+Consider this situation where button style has been defined
+in one of `<style>` tag
+
+```html
+<style>
+    div > button { background-color: red }
+</style>
+```
+
+If we have a component somewhere which contains `<button>` without using
+`customElements`
+
+```html
+<div class="componentA">
+    <div><button>Button</button></div>
+</div>
+```
+
+In this situation, your components style **might** be overridden by
+global `<style>` from somewhere if you don't make **CSS** selector
+more specific like,
+
+```html
+<style>
+/* this won't work */
+.componentA {
+    div button { background-color: blue }
+}
+
+/* this work */
+.componentA {
+    div > button { background-color: blue }
+}
+
+</style>
+```
+This is just a simple example. Imagine when we have many elements
+and more style properties; this could be a headache
+and prone to causing errors in component styling,
+or at least it prevents us from achieving a composed style
+between elements/components or libraries.
+
+### Component Styling to save the world !
+
+**Web Component Styling** can solve this problems, because
+1. When you use `customElements.define()`, it will show errors
+   if the custom element has already been defined somewhere else,
+   allowing you to decide how to deal with it.
+2. Defined custom elements have their own unique tags,
+   preventing global styles from **unintentionally** overriding components
+   and their elements. However, you still have full control of a component
+   from global styles if desired, making it ideal for theming.
+   **Shadow DOM lacks this features**.

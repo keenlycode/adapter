@@ -1,5 +1,4 @@
-import { Adapter } from '../adapter';
-import { css } from '@devcapsule/adapter';
+import { Adapter, css } from '@devcapsule/adapter';
 
 const sidebarStyle = (): string => {
     const style = css`

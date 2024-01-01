@@ -1,6 +1,5 @@
-import { Adapter } from './_ux/adapter';
-import { css } from '@devcapsule/adapter';
-import { Button } from 'gadjet/src/gadjet';
+import { Adapter, css } from '@devcapsule/adapter';
+import { Button, buttonStyle } from './_ux/ui/button';
 import { color } from './_ux/designToken';
 
 
@@ -99,20 +98,20 @@ Heading.addStyle(css`
 `);
 
 HeadingButtons.addStyle(css`
-    & button {
+    & el-button {
         margin: 1rem 1rem;
         & el-icon {
             margin-right: 0.5rem;
         }
     }
-    & button[el="guide"] {
-        ${Button.Style.style({color: color.blue})}
+    & el-button[el="guide"] {
+        ${buttonStyle(color.blue)}
     }
-    & button[el="github"] {
-        ${Button.Style.style({color: color.dark})}
+    & el-button[el="github"] {
+        ${buttonStyle(color.dark)}
     }
-    & button[el="discord"] {
-        ${Button.Style.style({color: color.light})}
+    & el-button[el="discord"] {
+        ${buttonStyle(color.light)}
     }
 `);
 

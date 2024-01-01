@@ -2,6 +2,7 @@ import { css } from '@devcapsule/adapter';
 import Color from 'color';
 
 import { aspectRatio, bgColor } from '../../_ux/style';
+import { buttonStyle } from '../../_ux/ui/button';
 import { color } from '../../_ux/designToken';
 import { Sidebar as _Sidebar } from '../../_ux/ui/sidebar';
 
@@ -28,19 +29,26 @@ const sideBarStyle = css`
         };
     }
 
-    button[el="toggle"] {
+    el-button[el="toggle"] {
+        ${buttonStyle('blue')}
         display: flex;
+        justify-content: center;
+        align-items: stretch;
         position: fixed;
         top: 70dvh;
         right: 0;
         width: 3em;
-        border-top-left-radius:0 ;
-        border-bottom-left-radius: 0;
         transform: translateX(100%);
-        opacity: 0.5;
+        opacity: 0.7;
         &:hover { opacity: 1 };
         ${aspectRatio('1')}
+        button {
+            width: 100%;
+            border-top-left-radius:0 ;
+            border-bottom-left-radius: 0;
+        }
         span {
+            line-height: 1;
             font-size: 1.5em;
             transition: transform 0.4s ease;
             transform: rotate(0deg);
@@ -66,7 +74,7 @@ class Sidebar extends _Sidebar {
             mql.addEventListener('change', () => {
                 this.onMediaQueryChange(mql);
             });
-        }, 1000);
+        }, 750);
     }
 
     onMediaQueryChange(mql: MediaQueryList) {
