@@ -63,6 +63,9 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       return [...this.inheritedStyles, ...this.styles].join("\n");
     }
 
+    /** Get tagName for this class which will be defined after
+     * the class has been registerd with CustomElementsRegistry.
+     */
     static get tagName(): string | null {
       if (this._tagName === Object.getPrototypeOf(this).tagName) {
         this._tagName = null;
@@ -70,6 +73,9 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       return this._tagName;
     }
 
+    /** Get CSSStyleSheet() for this component.
+     * Create a new one if haven't been created yet.
+     */
     static get cssStyleSheet(): CSSStyleSheet {
       const superCSSStyleSheet = Object.getPrototypeOf(this)._cssStyleSheet;
       if (this._cssStyleSheet === superCSSStyleSheet) {
@@ -113,23 +119,23 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     /** Deprecated, will be removed in v3 */
     static tagStyle(css: string): void {
+      console.warn('tagStyle() is deprecated, use addStyle() instead');
       this.addStyle(css);
     }
 
     /** Deprecated, will be removed in v3 */
     static classStyle(class_: string, css: string) {
+      console.warn('classStyle() is deprecated, use addStyle() instead');
       this.addStyle(`&.${class_} { ${css} }`);
     }
 
-    _class!: typeof Adapter; // instance class.
+    _class!: typeof Adapter; // instance's class for using as shortcut
 
     _cssStyleSheet?: CSSStyleSheet;
 
     adoptedStyleSheetIndex!: number;
 
-    _uuid?: string; // instance id.
-
-    _css: string = "";
+    _uuid?: string;
 
     /**
      * In constructor, there any some if condition to check
@@ -186,10 +192,9 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     /**
      * Set CSS for this element.
-     * It works like `<el style="">` with nest syntax.
+     * It works like `<el style="">` but with CSS processor.
      */
     set css(css: string) {
-      this._css = css;
       this.cssStyleSheet.replaceSync(
         this._class.cssProcess(`
           ${this.objectClassSelector} { ${css} }
