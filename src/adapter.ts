@@ -190,7 +190,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     /**
      * Set CSS for this element.
-     * It works like `<el style="">` with nest syntax.
+     * It works like `<el style="">` but with CSS processor.
      */
     set css(css: string) {
       this.cssStyleSheet.replaceSync(
