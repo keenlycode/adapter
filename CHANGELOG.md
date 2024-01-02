@@ -1,5 +1,18 @@
 # Change Log
 
+## [v2.3.5]
+
+### Added
+xxx
+
+### Changed
+- Deprecate `Adapter.tagStyle()` and `Adapter.classStyle()`.
+  Will be remove in v3.x
+
+### Fixed
+- perf: improve tree shaking process, refactor, formatter
+- `npm run test` now works in Javascript Environment.
+
 ## [v2.3.4]
 
 ### Added
