@@ -127,15 +127,13 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       this.addStyle(`&.${class_} { ${css} }`);
     }
 
-    _class!: typeof Adapter; // instance class.
+    _class!: typeof Adapter; // instance's class for using as shortcut
 
     _cssStyleSheet?: CSSStyleSheet;
 
     adoptedStyleSheetIndex!: number;
 
-    _uuid?: string; // instance id.
-
-    _css: string = "";
+    _uuid?: string;
 
     /**
      * In constructor, there any some if condition to check
@@ -195,7 +193,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      * It works like `<el style="">` with nest syntax.
      */
     set css(css: string) {
-      this._css = css;
       this.cssStyleSheet.replaceSync(
         this._class.cssProcess(`
           ${this.objectClassSelector} { ${css} }
