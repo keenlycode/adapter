@@ -28,9 +28,7 @@
         "docs-js": "node esbuild/docs.mjs",
         "docs-html": "source venv/bin/activate && engrave dev docs-src docs",
         "docs": "concurrently -kr 'npm run docs-js' 'npm run docs-html'",
-        "test-html": "source venv/bin/activate && engrave dev docs-src/test/ docs/test/ --asset",
-        "test-js": "node esbuild/test.mjs",
-        "test": "concurrently -kr 'npm run test-html' 'npm run test-js'"
+        "test": "node esbuild/test.mjs"
     },
     "devDependencies": {
         "@devcapsule/adapter": "file:./",

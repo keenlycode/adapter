@@ -193,7 +193,7 @@ describe("Adapter Mixin: Use Case", () => {
 
 await init();
 
-describe("CSS Processor (Beta)", () => {
+describe("CSS Processor", () => {
     it('Can use stylis processor', () => {
         class MyAdapter extends Adapter {
             static cssProcess(css: string): string {
@@ -216,7 +216,7 @@ describe("CSS Processor (Beta)", () => {
         assert(MyAdapter.cssStyleSheet.cssRules[1].cssText.includes('el-adapter-stylis.red'));
     })
 
-    it('Can use lightningcss-wasm processor', async () => {
+    it('Can use lightningcss-wasm processor (beta)', async () => {
         class MyAdapter extends Adapter {
             static cssProcess(css: string): string {
                 let {code} = transform({
