@@ -37,7 +37,6 @@ FilterButton.define('el-filter-button');
 
 <el-filter-button>
     This component filter out (revert) `<button>` style
-    but let `<a>` style pass through
 
     <div class="width-100">
         <button>Button</button>
@@ -50,7 +49,12 @@ FilterButton.define('el-filter-button');
 ## Filter out all styles
 ---
 
-```ts
+<el-code-block>
+<div el="bar-top-left">JS</div>
+
+```js
 class IsolatedComponent extends Adapter {
     static css = `all: revert; * { all: revert };`;
 }
+```
+</el-code-block>
