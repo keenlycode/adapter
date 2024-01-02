@@ -119,11 +119,13 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     /** Deprecated, will be removed in v3 */
     static tagStyle(css: string): void {
+      console.warn('tagStyle() is deprecated, use addStyle() instead');
       this.addStyle(css);
     }
 
     /** Deprecated, will be removed in v3 */
     static classStyle(class_: string, css: string) {
+      console.warn('classStyle() is deprecated, use addStyle() instead');
       this.addStyle(`&.${class_} { ${css} }`);
     }
 
