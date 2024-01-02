@@ -2,3 +2,4 @@ node_modules
 venv
 package-lock.json
 .parcel-cache/
+dist
