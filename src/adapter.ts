@@ -63,6 +63,9 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       return [...this.inheritedStyles, ...this.styles].join("\n");
     }
 
+    /** Get tagName for this class which will be defined after
+     * the class has been registerd with CustomElementsRegistry.
+     */
     static get tagName(): string | null {
       if (this._tagName === Object.getPrototypeOf(this).tagName) {
         this._tagName = null;
@@ -70,6 +73,9 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       return this._tagName;
     }
 
+    /** Get CSSStyleSheet() for this component.
+     * Create a new one if haven't been created yet.
+     */
     static get cssStyleSheet(): CSSStyleSheet {
       const superCSSStyleSheet = Object.getPrototypeOf(this)._cssStyleSheet;
       if (this._cssStyleSheet === superCSSStyleSheet) {
