@@ -1,6 +1,6 @@
 import { bgColor, fontFluid } from "gadjet/src/gadjet";
 import { color } from "./_ux/designToken";
-import { css } from "@devcapsule/adapter";
+import { stylis, css } from "@devcapsule/adapter";
 
 
 function baseStyle(to_base_url: string) {
@@ -10,7 +10,7 @@ function baseStyle(to_base_url: string) {
 
     const style = new CSSStyleSheet();
     document.adoptedStyleSheets.push(style);
-    style.replaceSync(css`
+    style.replaceSync(stylis(css`
     @font-face {
         font-family: sans;
         src: url(${__fira_sans_url});
@@ -75,6 +75,10 @@ function baseStyle(to_base_url: string) {
         width: 90%;
         margin: auto;
 
+        h1, h2, h3 {
+            max-width: 45rem;
+        }
+
         & h2 {
             line-height: 2;
             text-align: center;
@@ -101,7 +105,7 @@ function baseStyle(to_base_url: string) {
         display: flex;
         flex-wrap: wrap;
     }
-    `);
+    `));
 }
 
-export { baseStyle, css };
+export { baseStyle };
