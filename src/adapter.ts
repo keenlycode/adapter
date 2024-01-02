@@ -60,7 +60,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     /** Get CSS for this component, includes inherited styles */
     static get css(): string {
-      return [...this.inheritedStyles, ...this.styles].join('\n');
+      return [...this.inheritedStyles, ...this.styles].join("\n");
     }
 
     static get tagName(): string | null {
@@ -71,8 +71,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     static get cssStyleSheet(): CSSStyleSheet {
-      const superCSSStyleSheet =
-        Object.getPrototypeOf(this)._cssStyleSheet;
+      const superCSSStyleSheet = Object.getPrototypeOf(this)._cssStyleSheet;
       if (this._cssStyleSheet === superCSSStyleSheet) {
         this._cssStyleSheet = new CSSStyleSheet();
       }
@@ -130,7 +129,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     _uuid?: string; // instance id.
 
-    _css: string = '';
+    _css: string = "";
 
     /**
      * In constructor, there any some if condition to check
@@ -182,7 +181,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      * Return a selector for the this element as a class chain.
      */
     get objectClassSelector(): string {
-      return `&.${this.classList.value.replace(/ /g, '.')}`;
+      return `&.${this.classList.value.replace(/ /g, ".")}`;
     }
 
     /**
@@ -193,28 +192,24 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       this._css = css;
       this.cssStyleSheet.replaceSync(
         this._class.cssProcess(`
-                    ${this.objectClassSelector} { ${css} }
-                `)
+          ${this.objectClassSelector} { ${css} }
+        `)
       );
     }
 
     /** Add style for this element */
     addStyle(css: string): void {
       this.cssStyleSheet.insertRule(
-        `
-                ${this.tagName} {
-                    ${this.objectClassSelector} { ${css} }
-                }`,
+        `${this.tagName} {
+          ${this.objectClassSelector} { ${css} }
+        }`,
         this.cssStyleSheet.cssRules.length
       );
     }
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
     delete() {
-      document.adoptedStyleSheets.splice(
-        this.adoptedStyleSheetIndex,
-        1
-      );
+      document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1);
       this.remove();
     }
   };
