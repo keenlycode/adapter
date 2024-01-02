@@ -7,16 +7,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase
 ) {
   return class Adapter extends Base {
-    _class!: typeof Adapter; // instance class.
-
-    _cssStyleSheet?: CSSStyleSheet;
-
-    adoptedStyleSheetIndex!: number;
-
-    _uuid?: string; // instance id.
-
-    _css: string = '';
-
     /** CSSStyleSheet() for this component */
     static _cssStyleSheet: CSSStyleSheet;
 
@@ -131,6 +121,16 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     static classStyle(class_: string, css: string) {
       this.addStyle(`&.${class_} { ${css} }`);
     }
+
+    _class!: typeof Adapter; // instance class.
+
+    _cssStyleSheet?: CSSStyleSheet;
+
+    adoptedStyleSheetIndex!: number;
+
+    _uuid?: string; // instance id.
+
+    _css: string = '';
 
     /**
      * In constructor, there any some if condition to check
