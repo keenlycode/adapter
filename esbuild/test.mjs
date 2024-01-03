@@ -5,8 +5,7 @@ import { glob } from "glob";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const test_src_dir = path.join(__dirname, "test-src");
+const test_src_dir = path.join(__dirname, "../test-src");
 
 async function test() {
   const entryFiles = await glob(
@@ -16,7 +15,7 @@ async function test() {
     }
   );
 
-  const outDir = path.join(__dirname, "docs/test");
+  const outDir = path.join(__dirname, "../docs/test");
   console.log(`Create test at: ${outDir}`);
 
   const result = await esbuild.context({
