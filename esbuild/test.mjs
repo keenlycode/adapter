@@ -6,17 +6,17 @@ import { glob } from "glob";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const docs_src_dir = path.join(__dirname, "../docs-src/");
+const test_src_dir = path.join(__dirname, "test-src");
 
 async function test() {
   const entryFiles = await glob(
-    path.join(docs_src_dir, "test/**/*.{ts,html}"),
+    path.join(test_src_dir, "**/*.{ts,html}"),
     {
-      ignore: path.join(docs_src_dir, "test/**/_*"),
+      ignore: path.join(test_src_dir, "**/_*"),
     }
   );
 
-  const outDir = path.join(__dirname, "../docs/test/");
+  const outDir = path.join(__dirname, "docs/test");
   console.log(`Create test at: ${outDir}`);
 
   const result = await esbuild.context({
@@ -24,7 +24,7 @@ async function test() {
     entryNames: "[dir]/[name]",
     assetNames: "[dir]/[name]",
     outdir: outDir,
-    outbase: "docs-src/test",
+    outbase: test_src_dir,
     bundle: true,
     format: "esm",
     sourcemap: true,
@@ -36,9 +36,9 @@ async function test() {
   });
   await result.watch();
   const { host, port } = await result.serve({
-    servedir: "docs",
+    servedir: "docs/test",
   });
-  console.log(`\n> Test server => http://${host}:${port}/test/\n`);
+  console.log(`\n> Test server => http://${host}:${port}/\n`);
 }
 
 await test();
