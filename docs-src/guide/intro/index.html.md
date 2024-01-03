@@ -175,7 +175,7 @@ Let's see how to implement CSS Styling in Adapter Component.
 ```js
 class ComponentA extends Adapter {
     /** CSS will be isolated in ComponentA
-     * Moreover, we can write CSS for this component without thinking
+     * Moreover, we can write CSS for this component without worrying
      * about this component tagName.
      */
     static css = `div button { background-color: blue} `;
