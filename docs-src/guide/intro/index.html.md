@@ -25,10 +25,10 @@ for creating dynamic and feature-rich user interfaces.
 ### OOP
 
 ```ts
-import { Adapter, css } from '@devcapsule/adapter';
+import { Adapter } from '@devcapsule/adapter';
 
 class FlexBox extends Adapter {
-    static css = css`
+    static css = `
         display: flex;
         justify-content: center;
     `;
@@ -36,7 +36,7 @@ class FlexBox extends Adapter {
 
 /** WrapFlexBox also inhertit styles from FlexBox */
 class WrapFlexBox extends Flexbox {
-    static css = css`
+    static css = `
         flex-wrap: wrap;
     `;
 }
@@ -86,14 +86,14 @@ document.body.append(flexBox);
 import Color from 'color';
 
 function bgColor(color) {
-    return css`
+    return `
         background-color: ${color};
         color: ${Color(color).isDark() ? 'white' : 'black'};
     `.trim();
 }
 
 class RedFlexBox extends FlexBox {
-    static css = css`${bgColor('red')}`;
+    static css = `${bgColor('red')}`;
 }
 
 export { bgColor, RedFlexBox };

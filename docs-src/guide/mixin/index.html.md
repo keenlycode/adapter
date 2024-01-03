@@ -13,13 +13,13 @@ Use `AdapterMixin()` to implement **Adapter** with other Web Components.
 <div el="bar-top-left">Javascript</div>
 
 ```ts
-import { AdapterMixin, css, stylis } from "@devcapsule/adapter";
+import { AdapterMixin, stylis } from "@devcapsule/adapter";
 
 class SimpleGreeting extends AdapterMixin(HTMLElement) {
     /** Manually set CSS Processor */
     static cssProcess(css) { return stylis(css) };
 
-    static css = css`p { color: blue }`;
+    static css = `p { color: blue }`;
 
     name = "Somebody";
 
