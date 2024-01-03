@@ -1,8 +1,6 @@
-import { css } from '@devcapsule/adapter';
-
 function baseStyle() {
     const cssStyleSheet = new CSSStyleSheet();
-    cssStyleSheet.replaceSync(css`
+    cssStyleSheet.replaceSync(/*css*/`
         body {
             display: flex;
             justify-content: center;

@@ -1,9 +1,8 @@
-import { css } from '@devcapsule/adapter';
 import { Menu as _Menu } from '../../_ux/ui/menu';
 
 
 class Menu extends _Menu {
-    static css = css`
+    static css = /*css*/`
         ${_Menu.style()}
         a {
             width: 100%;

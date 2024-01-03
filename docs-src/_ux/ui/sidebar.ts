@@ -1,23 +1,25 @@
-import { Adapter, css } from '@devcapsule/adapter';
+import { Adapter } from '@devcapsule/adapter';
 
 const sidebarStyle = (): string => {
-    const style = css`
-        all: unset;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        align-content: flex-start;
-        box-sizing: border-box;
-        position: fixed;
-        left: 0;
-        z-index: 100;
-        width: 28ch;
-        min-height: 50dvh;
-        padding-top: 30dvh;
-        padding-bottom: 20dvh;
-        background-color: white;
-        transition: transform 0.4s ease;
-        transform: translateX(0);
+    const style = /*css*/`
+        & {
+            all: unset;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            align-content: flex-start;
+            box-sizing: border-box;
+            position: fixed;
+            left: 0;
+            z-index: 100;
+            width: 28ch;
+            min-height: 50dvh;
+            padding-top: 30dvh;
+            padding-bottom: 20dvh;
+            background-color: white;
+            transition: transform 0.4s ease;
+            transform: translateX(0);
+        }
 
         &.show {
             transform: translateX(0);

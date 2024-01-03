@@ -1,5 +1,5 @@
-import { Adapter, css } from '@devcapsule/adapter';
-import { Button, buttonStyle } from './_ux/ui/button';
+import { Adapter } from '@devcapsule/adapter';
+import { buttonStyle } from './_ux/ui/button';
 import { color } from './_ux/designToken';
 
 
@@ -82,10 +82,12 @@ class Heading extends Adapter {};
 
 class HeadingButtons extends Adapter {};
 
-Heading.addStyle(css`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+Heading.addStyle(/*css*/`
+    & {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
     & h1, h2 {
         text-align: center;
     }
@@ -97,7 +99,7 @@ Heading.addStyle(css`
     }
 `);
 
-HeadingButtons.addStyle(css`
+HeadingButtons.addStyle(/*css*/`
     & el-button {
         margin: 1rem 1rem;
         & el-icon {
@@ -115,27 +117,31 @@ HeadingButtons.addStyle(css`
     }
 `);
 
-ParticleScene.addStyle(css`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    margin-top: 2rem;
-    max-width: 400px;
-    min-width: 300px;
+ParticleScene.addStyle(/*css*/`
+    & {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        margin-top: 2rem;
+        max-width: 400px;
+        min-width: 300px;
+    }
 `)
 
-Particle.addStyle(css`
-    display: inline-flex;
-    box-sizing: border-box;
-    margin: 3.5%;
-    width: 3%;
-    height: auto;
-    aspect-ratio: 1;
-    background-color: orange;
-    border-radius: 100%;
-    border: 0.2em solid red;
+Particle.addStyle(/*css*/`
+    & {
+        display: inline-flex;
+        box-sizing: border-box;
+        margin: 3.5%;
+        width: 3%;
+        height: auto;
+        aspect-ratio: 1;
+        background-color: orange;
+        border-radius: 100%;
+        border: 0.2em solid red;
+    }
 `)
 
 Heading.define('el-heading');

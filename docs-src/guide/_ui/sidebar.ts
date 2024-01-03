@@ -1,4 +1,3 @@
-import { css } from '@devcapsule/adapter';
 import Color from 'color';
 
 import { aspectRatio, bgColor } from '../../_ux/style';
@@ -7,9 +6,11 @@ import { color } from '../../_ux/designToken';
 import { Sidebar as _Sidebar } from '../../_ux/ui/sidebar';
 
 
-const sideBarStyle = css`
-    height: 110dvh;
-    ${bgColor(color.dark)}
+const sideBarStyle = /*css*/`
+    & {
+        height: 110dvh;
+        ${bgColor(color.dark)}
+    }
 
     filter: drop-shadow(2px 2px 4px ${Color(color.dark)
         .alpha(0.8).string()});
@@ -57,7 +58,7 @@ const sideBarStyle = css`
 `;
 
 class Sidebar extends _Sidebar {
-    static css = css`
+    static css = /*css*/`
         ${Sidebar.style()}
         ${sideBarStyle}
     `;

@@ -1,8 +1,7 @@
 import Color from "color";
-import { css } from '@devcapsule/adapter';
 
 function bgColor(color) {
-    return css`
+    return /*css*/`
         background-color: ${color};
         color: ${Color(color).isDark() ? 'white' : 'black'};
     `.trim();
@@ -39,4 +38,4 @@ const aspectRatio = (ratio: string = '1/1'): string => {
     `.trim();
 }
 
-export { css, bgColor, lift, pxToRem, aspectRatio };
+export { bgColor, lift, pxToRem, aspectRatio };

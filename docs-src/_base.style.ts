@@ -1,6 +1,6 @@
 import { bgColor, fontFluid } from "gadjet/src/gadjet";
 import { color } from "./_ux/designToken";
-import { stylis, css } from "@devcapsule/adapter";
+import { stylis } from "@devcapsule/adapter";
 
 
 function baseStyle(to_base_url: string) {
@@ -10,7 +10,7 @@ function baseStyle(to_base_url: string) {
 
     const style = new CSSStyleSheet();
     document.adoptedStyleSheets.push(style);
-    style.replaceSync(stylis(css`
+    style.replaceSync(stylis(/*css*/`
     @font-face {
         font-family: sans;
         src: url(${__fira_sans_url});

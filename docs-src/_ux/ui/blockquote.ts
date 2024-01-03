@@ -3,9 +3,11 @@ import { color } from '../designToken.js';
 import Color from 'color';
 
 export class BlockQuote extends Adapter {
-    static css = `
-        display: flex;
-        blockquote {
+    static css = /*css*/`
+        & {
+            display: flex;
+        }
+        & blockquote {
             margin: 0;
             padding: 0rem 1rem;
             background-color: ${Color(color.yellow).alpha(0.2)};

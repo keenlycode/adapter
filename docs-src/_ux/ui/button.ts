@@ -1,15 +1,18 @@
-import { Adapter, css } from "@devcapsule/adapter";
+import { Adapter } from "@devcapsule/adapter";
 import Color from 'color';
 import { bgColor, lift } from '../style';
 
 const buttonStyle = (color) => {
-    return css`
-    display: inline-flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    button {
+    return /*css*/`
+    & {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    & button {
         display: inline-flex;
         flex-wrap: wrap;
         justify-content: center;

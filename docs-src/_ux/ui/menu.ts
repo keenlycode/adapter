@@ -1,4 +1,4 @@
-import { Adapter, css } from '@devcapsule/adapter';
+import { Adapter } from '@devcapsule/adapter';
 import { bgColor, pxToRem } from '../style';
 import { color } from '../designToken';
 
@@ -10,12 +10,15 @@ interface MenuStyleParam {
 
 function menuStyle(param: MenuStyleParam = {}) {
 
-    return css`
+    return /*css*/`
     div[class] {all: unset};
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    width: 100%;
+
+    & {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        width: 100%;
+    }
 
     details, details[class] {
         width: 100%;
