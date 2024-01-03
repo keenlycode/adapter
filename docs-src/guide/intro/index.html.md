@@ -165,3 +165,33 @@ between elements/components or libraries.
    and their elements. However, you still have full control of a component
    from global styles if desired, making it ideal for theming
    which **Shadow DOM lacks this features**.
+
+
+Let's see how to implement CSS Styling in Adapter Component.
+
+<el-code-block>
+<div el="bar-top-left">JS</div>
+
+```js
+class ComponentA extends Adapter {
+    /** CSS will be isolated in ComponentA
+     * Moreover, we can write CSS for this component without thinking
+     * about this component tagName.
+     */
+    static css = `div button { background-color: blue} `;
+}
+
+ComponentA.define('el-component-a');
+```
+</el-code-block>
+
+<el-code-block>
+<div el="bar-top-left">HTML</div>
+
+```html
+<el-component-a>
+    <div><button>Button</button></div>
+</el-component-a>
+```
+
+</el-code-block>
