@@ -1,4 +1,4 @@
-import { Adapter } from "@devcapsule/adapter";
+import { Adapter } from "../../adapter.js";
 import { color } from '../designToken.js';
 import Color from 'color';
 

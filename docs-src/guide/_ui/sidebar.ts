@@ -45,6 +45,7 @@ const sideBarStyle = /*css*/`
         ${aspectRatio('1')}
         button {
             width: 100%;
+            height: 100%;
             border-top-left-radius:0 ;
             border-bottom-left-radius: 0;
         }
@@ -72,6 +73,8 @@ class Sidebar extends _Sidebar {
         let mql = window.matchMedia('screen and (max-width: 1200px)');
         setTimeout(() => {
             this.onMediaQueryChange(mql);
+        }, 0);
+        setTimeout(() => {
             mql.addEventListener('change', () => {
                 this.onMediaQueryChange(mql);
             });
@@ -79,6 +82,7 @@ class Sidebar extends _Sidebar {
     }
 
     onMediaQueryChange(mql: MediaQueryList) {
+        console.log(mql);
         mql.matches ? this.hide() : this.show();
     }
 

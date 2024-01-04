@@ -1,4 +1,4 @@
-import { Adapter } from '@devcapsule/adapter';
+import { Adapter } from '../../adapter';
 
 
 class Container extends Adapter {
@@ -21,9 +21,7 @@ class Container extends Adapter {
             this.css = this.defaultStyle();
         }, 0);
         el_sidebar.addEventListener('hide', () => {
-            this.addStyle(/*css*/`
-                margin: unset;
-            `);
+            this.addStyle(`margin: unset;`);
         });
         el_sidebar.addEventListener('show', () => {
             this.css = this.defaultStyle();

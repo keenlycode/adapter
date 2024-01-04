@@ -1,3 +1,3 @@
-import { Adapter } from '@devcapsule/adapter';
+import { Adapter } from '../../adapter';
 
 window.Adapter = Adapter;

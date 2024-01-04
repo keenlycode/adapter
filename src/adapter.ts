@@ -35,16 +35,16 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     /** Retreive inherited styles for all super classes. */
-    static get inheritedStyles(): string[] {
+    static get allStyles(): string[] {
       let superClass = Object.getPrototypeOf(this);
-      let inheritedStyles: string[] = [];
+      const allStyles = [];
 
       while (superClass.styles !== undefined) {
-        inheritedStyles.push(...superClass.styles);
+        allStyles.push(...superClass.styles);
         superClass = Object.getPrototypeOf(superClass);
       }
-
-      return inheritedStyles;
+      allStyles.push(this.styles);
+      return allStyles;
     }
 
     /** Set CSS for this component */
@@ -53,14 +53,18 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
       if (this.tagName) {
         this.cssStyleSheet.replaceSync(
-          this.cssProcess(`${this.tagName} { ${this.css} }`)
+          this.cssProcess(`${this.tagName} { ${this.allCSS} }`)
         );
       }
     }
 
     /** Get CSS for this component, includes inherited styles */
     static get css(): string {
-      return [...this.inheritedStyles, ...this.styles].join("\n");
+      return this.styles.join("\n");
+    }
+
+    static get allCSS(): string {
+      return this.allStyles.join("\n");
     }
 
     /** Get tagName for this class which will be defined after
@@ -133,9 +137,12 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     _cssStyleSheet?: CSSStyleSheet;
 
+    // index of this.cssStyleSheet in document.adoptedStyleSheets
     adoptedStyleSheetIndex!: number;
 
     _uuid?: string;
+
+    _shadowRoot!: ShadowRoot|null;
 
     /**
      * In constructor, there any some if condition to check
@@ -170,16 +177,21 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     /**
      * Dynamically create a CSSStyleSheet() and keep track of the adopted
-     * stylesheet index for later reference.
+     * stylesheet index for reference.
      */
     get cssStyleSheet() {
-      if (!this._cssStyleSheet) {
+      if (this._cssStyleSheet) { return this._cssStyleSheet };
+
+      this._cssStyleSheet = new CSSStyleSheet();
+
+      /** For normal element, attach this._cssStyleSheet to the document */
+      if (!this._shadowRoot) {
         const index = document.adoptedStyleSheets.length;
         this.classList.add(this.uuid);
-        this._cssStyleSheet = new CSSStyleSheet();
         document.adoptedStyleSheets[index] = this._cssStyleSheet;
         this.adoptedStyleSheetIndex = index;
       }
+
       return this._cssStyleSheet;
     }
 
@@ -187,7 +199,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      * Return a selector for the this element as a class chain.
      */
     get objectClassSelector(): string {
-      return `&.${this.classList.value.replace(/ /g, ".")}`;
+      return this.classList.value.replace(/ /g, ".");
     }
 
     /**
@@ -195,26 +207,41 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      * It works like `<el style="">` but with CSS processor.
      */
     set css(css: string) {
-      this.cssStyleSheet.replaceSync(
-        this._class.cssProcess(`
-          ${this.objectClassSelector} { ${css} }
-        `)
+      const processedCss = this._class.cssProcess(
+        `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );
+      this.cssStyleSheet.replaceSync(processedCss);
+    }
+
+    /** Override super.attachShadow()
+     * to add this.cssStyleSheet to shadowRoot
+     */
+    attachShadow(init: ShadowRootInit): ShadowRoot {
+      this._shadowRoot = super.attachShadow(init);
+      this._shadowRoot.adoptedStyleSheets = [
+        this._class.cssStyleSheet,
+        this.cssStyleSheet
+      ];
+      document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1);
+      return this._shadowRoot;
     }
 
     /** Add style for this element */
     addStyle(css: string): void {
+      const processedCss = this._class.cssProcess(
+        `${this.tagName}.${this.objectClassSelector} { ${css} }`
+      );
       this.cssStyleSheet.insertRule(
-        `${this.tagName} {
-          ${this.objectClassSelector} { ${css} }
-        }`,
+        processedCss,
         this.cssStyleSheet.cssRules.length
       );
     }
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
     delete() {
-      document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1);
+      if (!this._shadowRoot) {
+        document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1)
+      };
       this.remove();
     }
   };

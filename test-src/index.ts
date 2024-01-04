@@ -19,11 +19,10 @@ if (["0.0.0.0", "127.0.0.1", "localhost"].includes(__base_url.hostname)) {
     );
 }
 
-const css = String.raw;
 const style = new CSSStyleSheet();
 
 document.adoptedStyleSheets.push(style);
-style.replaceSync(css`
+style.replaceSync(`
     body {
         padding-bottom: 10rem;
     }
@@ -74,21 +73,20 @@ describe("Adapter Class: Use Case", function () {
     });
 
     it("Should be able to use API: addStyle()", () => {
-        Card1.addStyle(css`display: flex;`);
-        Card2.addStyle(css`display: block;`);
+        Card1.addStyle(`display: flex;`);
+        Card2.addStyle(`display: block;`);
     });
 
     it("Should inherit style from super class", () => {
-        assert(RedCard.css === Card1.css);
-        RedCard.addStyle(css`background-color: red;`);
-        assert(RedCard.css.includes("display: flex;"));
+        RedCard.addStyle(`background-color: red;`);
+        assert(RedCard.allCSS.includes("display: flex;"));
         assert(RedCard.css.includes("background-color: red;"));
         RedCard.define("el-red-card");
     });
 
     it("Should be able to set css in class declaration", () => {
         class Card3 extends Adapter {
-            static css = css`display: grid;`;
+            static css = `display: grid;`;
             constructor() {
                 super();
                 this.innerHTML = "Card3";
@@ -100,15 +98,11 @@ describe("Adapter Class: Use Case", function () {
         assert(Card3.css.includes("&.red {color: red}"));
     });
 
-    it("Should be able to set the whole css for this component", () => {
-        Card1.css = css`display: flex;`;
-        assert(RedCard.css.includes("display: flex;"));
-
-        /** This should not affect inherited styles */
-        RedCard.css = css`background-color: red;`;
-
-        assert(RedCard.css.includes("display: flex;"));
-        assert(RedCard.css.includes("background-color: red;"));
+    it("Should be able to set css for this component", () => {
+        const additionStyle = `background-color: red;`;
+        RedCard.css = additionStyle;
+        assert(RedCard.allCSS.includes(additionStyle));
+        assert(RedCard.allCSS.includes(Card1.css));
     });
 
     it("Class' CSSStyleSheet() should be adopted by document", () => {
@@ -158,12 +152,12 @@ describe("Adapter Object: Use Case", () => {
     });
 
     it("Can set css for this instance", () => {
-        button1.css = css`display: flex;`;
+        button1.css = `display: flex;`;
         assert(button1.cssStyleSheet.cssRules[0].cssText.includes("display: flex;"));
     });
 
     it("Can add style for this instance", () => {
-        button1.addStyle(css`background-color: red;`);
+        button1.addStyle(`background-color: red;`);
         assert(button1.cssStyleSheet.cssRules[1].cssText.includes("background-color: red;"));
     });
 
@@ -245,5 +239,25 @@ describe("CSS Processor", () => {
         assert(MyAdapter.cssStyleSheet.cssRules[1].cssText.includes('el-adapter-lightningcss.red'));
     })
 });
+
+describe("Shadow DOM Support", () => {
+    class ShadowComponent extends Adapter {
+        static css = `color: red;`;
+
+        constructor() {
+            super();
+            this._shadowRoot = this.attachShadow({mode: 'open'});
+            this._shadowRoot.innerHTML = 'Shadow DOM';
+        }
+
+    }
+    ShadowComponent.define('el-shadow-component');
+    it('Can style Shadow DOM', () => { 
+        const shadowComponent = new ShadowComponent();
+        shadowComponent.hidden = true;
+        document.body.appendChild(shadowComponent);
+        assert(getComputedStyle(shadowComponent).color === 'rgb(255, 0, 0)');
+    })
+})
 
 mocha.run();
