@@ -1,5 +1,16 @@
 # Change Log
 
+## [v2.4.0], 2024-01-05
+
+### Added
+- Support for Shadow DOM 🎉
+
+### Changed
+xxx
+
+### Fixed
+xxx
+
 ## [v2.3.5], 2024-01-02
 
 ### Added
@@ -13,6 +24,7 @@ xxx
 - perf: improve tree shaking process, refactor, formatter
 - `npm run test` now works in Javascript Environment.
 
+
 ## [v2.3.4]
 
 ### Added
@@ -22,6 +34,7 @@ xxx
 ### Changed
 
 ### Fixed
+
 
 ## [v2.1.0]
 
