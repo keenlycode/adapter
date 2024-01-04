@@ -213,6 +213,15 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       this.cssStyleSheet.replaceSync(processedCss);
     }
 
+    /** Get CSS for this element */
+    get css(): string {
+      let css = ``;
+      for (const rule of this.cssStyleSheet.cssRules) {
+        css += rule.cssText + "\n";
+      }
+      return css;
+    }
+
     /** Override super.attachShadow()
      * to add this.cssStyleSheet to shadowRoot
      */

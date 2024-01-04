@@ -156,6 +156,10 @@ describe("Adapter Object: Use Case", () => {
         assert(button1.cssStyleSheet.cssRules[0].cssText.includes("display: flex;"));
     });
 
+    it("Can get CSS for this instance", () => {
+        assert(button1.css.includes("display: flex;"));
+    })
+
     it("Can add style for this instance", () => {
         button1.addStyle(`background-color: red;`);
         assert(button1.cssStyleSheet.cssRules[1].cssText.includes("background-color: red;"));
@@ -246,7 +250,7 @@ describe("Shadow DOM Support", () => {
 
         constructor() {
             super();
-            this._shadowRoot = this.attachShadow({mode: 'closed'});
+            this._shadowRoot = this.attachShadow({mode: 'open'});
             this._shadowRoot.innerHTML = 'Shadow DOM';
         }
     }
@@ -269,7 +273,7 @@ describe("Shadow DOM Support", () => {
         document.body.appendChild(component);
         assert(getComputedStyle(component).color === 'rgb(255, 0, 0)');
     })
-    
+
     it(`Can style attachShadow({mode: 'closed'})`, () => { 
         const component = new ShadowClosedComponent();
         component.hidden = true;
