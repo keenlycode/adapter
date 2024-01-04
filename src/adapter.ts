@@ -195,7 +195,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      * Return a selector for the this element as a class chain.
      */
     get objectClassSelector(): string {
-      return `&.${this.classList.value.replace(/ /g, ".")}`;
+      return this.classList.value.replace(/ /g, ".");
     }
 
     /**
@@ -203,11 +203,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      * It works like `<el style="">` but with CSS processor.
      */
     set css(css: string) {
-      this.cssStyleSheet.replaceSync(
-        this._class.cssProcess(`
-          ${this.objectClassSelector} { ${css} }
-        `)
+      const processedCss = this._class.cssProcess(
+        `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );
+      this.cssStyleSheet.replaceSync(processedCss);
     }
 
     /** Override super.attachShadow()
@@ -219,16 +218,14 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
         this._class.cssStyleSheet,
         this.cssStyleSheet
       ];
-      document.adoptedStyleSheets.splice
+      document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1);
       return shadowRoot;
     }
 
     /** Add style for this element */
     addStyle(css: string): void {
       const processedCss = this._class.cssProcess(
-        `${this.tagName} {
-          ${this.objectClassSelector} { ${css} }
-        }`
+        `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );
       this.cssStyleSheet.insertRule(
         processedCss,
