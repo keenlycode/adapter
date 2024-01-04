@@ -87,14 +87,12 @@ Heading.addStyle(/*css*/`
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-    }
-    & h1, h2 {
         text-align: center;
     }
     & h1 {
         margin-top: 2rem;
     }
-    & h2 {
+    & h2, h3 {
         margin-top: 1.5rem;
     }
 `);

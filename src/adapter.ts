@@ -213,17 +213,27 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       this.cssStyleSheet.replaceSync(processedCss);
     }
 
+    /** Get CSS for this element */
+    get css(): string {
+      let css = ``;
+      for (const rule of this.cssStyleSheet.cssRules) {
+        css += rule.cssText + "\n";
+      }
+      return css;
+    }
+
     /** Override super.attachShadow()
      * to add this.cssStyleSheet to shadowRoot
      */
     attachShadow(init: ShadowRootInit): ShadowRoot {
-      this._shadowRoot = super.attachShadow(init);
-      this._shadowRoot.adoptedStyleSheets = [
+      const shadowRoot = super.attachShadow(init);
+      shadowRoot.adoptedStyleSheets = [
         this._class.cssStyleSheet,
         this.cssStyleSheet
       ];
       document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1);
-      return this._shadowRoot;
+      this._shadowRoot = shadowRoot;
+      return shadowRoot;
     }
 
     /** Add style for this element */
