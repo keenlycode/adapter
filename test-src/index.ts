@@ -246,17 +246,35 @@ describe("Shadow DOM Support", () => {
 
         constructor() {
             super();
-            this._shadowRoot = this.attachShadow({mode: 'open'});
+            this._shadowRoot = this.attachShadow({mode: 'closed'});
             this._shadowRoot.innerHTML = 'Shadow DOM';
         }
+    }
 
+    class ShadowClosedComponent extends Adapter {
+        static css = `color: red;`;
+
+        constructor() {
+            super();
+            this._shadowRoot = this.attachShadow({mode: 'closed'});
+            this._shadowRoot.innerHTML = 'Shadow DOM';
+        }
     }
     ShadowComponent.define('el-shadow-component');
-    it('Can style Shadow DOM', () => { 
-        const shadowComponent = new ShadowComponent();
-        shadowComponent.hidden = true;
-        document.body.appendChild(shadowComponent);
-        assert(getComputedStyle(shadowComponent).color === 'rgb(255, 0, 0)');
+    ShadowClosedComponent.define('el-shadow-closed-component');
+
+    it(`Can style attachShadow({mode: 'open'})`, () => { 
+        const component = new ShadowComponent();
+        component.hidden = true;
+        document.body.appendChild(component);
+        assert(getComputedStyle(component).color === 'rgb(255, 0, 0)');
+    })
+    
+    it(`Can style attachShadow({mode: 'closed'})`, () => { 
+        const component = new ShadowClosedComponent();
+        component.hidden = true;
+        document.body.appendChild(component);
+        assert(getComputedStyle(component).color === 'rgb(255, 0, 0)');
     })
 })
 
