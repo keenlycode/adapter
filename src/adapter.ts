@@ -173,16 +173,21 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     /**
      * Dynamically create a CSSStyleSheet() and keep track of the adopted
-     * stylesheet index for later reference.
+     * stylesheet index for reference.
      */
     get cssStyleSheet() {
-      if (!this._cssStyleSheet) {
+      if (this._cssStyleSheet) { return this._cssStyleSheet };
+
+      this._cssStyleSheet = new CSSStyleSheet();
+
+      /** For normal element, attach this._cssStyleSheet to the document */
+      if (!this._shadowRoot) {
         const index = document.adoptedStyleSheets.length;
         this.classList.add(this.uuid);
-        this._cssStyleSheet = new CSSStyleSheet();
         document.adoptedStyleSheets[index] = this._cssStyleSheet;
         this.adoptedStyleSheetIndex = index;
       }
+
       return this._cssStyleSheet;
     }
 
@@ -214,22 +219,28 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
         this._class.cssStyleSheet,
         this.cssStyleSheet
       ];
+      document.adoptedStyleSheets.splice
       return shadowRoot;
     }
 
     /** Add style for this element */
     addStyle(css: string): void {
-      this.cssStyleSheet.insertRule(
+      const processedCss = this._class.cssProcess(
         `${this.tagName} {
           ${this.objectClassSelector} { ${css} }
-        }`,
+        }`
+      );
+      this.cssStyleSheet.insertRule(
+        processedCss,
         this.cssStyleSheet.cssRules.length
       );
     }
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
     delete() {
-      document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1);
+      if (!this._shadowRoot) {
+        document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1)
+      };
       this.remove();
     }
   };
