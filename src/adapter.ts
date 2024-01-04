@@ -133,9 +133,12 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     _cssStyleSheet?: CSSStyleSheet;
 
+    // index of this.cssStyleSheet in document.adoptedStyleSheets
     adoptedStyleSheetIndex!: number;
 
     _uuid?: string;
+
+    _shadowRoot?: ShadowRoot;
 
     /**
      * In constructor, there any some if condition to check
@@ -200,6 +203,18 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
           ${this.objectClassSelector} { ${css} }
         `)
       );
+    }
+
+    /** Override super.attachShadow()
+     * to add this.cssStyleSheet to shadowRoot
+     */
+    attachShadow(init: ShadowRootInit): ShadowRoot {
+      const shadowRoot = super.attachShadow(init);
+      shadowRoot.adoptedStyleSheets = [
+        this._class.cssStyleSheet,
+        this.cssStyleSheet
+      ];
+      return shadowRoot;
     }
 
     /** Add style for this element */
