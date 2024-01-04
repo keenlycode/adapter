@@ -138,7 +138,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     _uuid?: string;
 
-    _shadowRoot?: ShadowRoot;
+    _shadowRoot!: ShadowRoot|null;
 
     /**
      * In constructor, there any some if condition to check
@@ -213,13 +213,13 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      * to add this.cssStyleSheet to shadowRoot
      */
     attachShadow(init: ShadowRootInit): ShadowRoot {
-      const shadowRoot = super.attachShadow(init);
-      shadowRoot.adoptedStyleSheets = [
+      this._shadowRoot = super.attachShadow(init);
+      this._shadowRoot.adoptedStyleSheets = [
         this._class.cssStyleSheet,
         this.cssStyleSheet
       ];
       document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1);
-      return shadowRoot;
+      return this._shadowRoot;
     }
 
     /** Add style for this element */

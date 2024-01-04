@@ -246,4 +246,24 @@ describe("CSS Processor", () => {
     })
 });
 
+describe("Shadow DOM Support", () => {
+    class ShadowComponent extends Adapter {
+        static css = `color: red;`;
+
+        constructor() {
+            super();
+            this._shadowRoot = this.attachShadow({mode: 'open'});
+            this._shadowRoot.innerHTML = 'Shadow DOM';
+        }
+
+    }
+    ShadowComponent.define('el-shadow-component');
+    it('Can style Shadow DOM', () => { 
+        const shadowComponent = new ShadowComponent();
+        shadowComponent.hidden = true;
+        document.body.appendChild(shadowComponent);
+        assert(getComputedStyle(shadowComponent).color === 'rgb(255, 0, 0)');
+    })
+})
+
 mocha.run();
