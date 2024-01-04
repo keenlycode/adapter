@@ -1,0 +1,1 @@
+export { Adapter, AdapterMixin, stylis } from '@devcapsule/adapter/src/export';

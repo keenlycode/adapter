@@ -35,16 +35,16 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     /** Retreive inherited styles for all super classes. */
-    static get inheritedStyles(): string[] {
+    static get allStyles(): string[] {
       let superClass = Object.getPrototypeOf(this);
-      let inheritedStyles: string[] = [];
+      const allStyles = [];
 
       while (superClass.styles !== undefined) {
-        inheritedStyles.push(...superClass.styles);
+        allStyles.push(...superClass.styles);
         superClass = Object.getPrototypeOf(superClass);
       }
-
-      return inheritedStyles;
+      allStyles.push(this.styles);
+      return allStyles;
     }
 
     /** Set CSS for this component */
@@ -53,14 +53,18 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
       if (this.tagName) {
         this.cssStyleSheet.replaceSync(
-          this.cssProcess(`${this.tagName} { ${this.css} }`)
+          this.cssProcess(`${this.tagName} { ${this.allCSS} }`)
         );
       }
     }
 
     /** Get CSS for this component, includes inherited styles */
     static get css(): string {
-      return [...this.inheritedStyles, ...this.styles].join("\n");
+      return this.styles.join("\n");
+    }
+
+    static get allCSS(): string {
+      return this.allStyles.join("\n");
     }
 
     /** Get tagName for this class which will be defined after

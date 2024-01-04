@@ -1,4 +1,4 @@
-import { aspectRatio } from 'gadjet/src/style';
+import { aspectRatio } from './_ux/style';
 
 const cssStyleSheet = new CSSStyleSheet();
 

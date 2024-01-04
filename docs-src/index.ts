@@ -1,4 +1,4 @@
-import { Adapter } from '@devcapsule/adapter';
+import { Adapter } from './adapter';
 import { buttonStyle } from './_ux/ui/button';
 import { color } from './_ux/designToken';
 

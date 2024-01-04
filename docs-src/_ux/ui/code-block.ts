@@ -1,5 +1,5 @@
-import { Adapter } from '@devcapsule/adapter';
-import { bgColor } from 'gadjet/src/gadjet';
+import { Adapter } from "../../adapter.js";
+import { bgColor } from '../style.js';
 import { color } from '../designToken'; 
 
 class CodeBlock extends Adapter {};

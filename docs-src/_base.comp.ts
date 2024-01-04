@@ -1,5 +1,5 @@
 import { DefIcon } from '@devcapsule/deficon';
-import { AdapterMixin } from '@devcapsule/adapter';
+import { AdapterMixin } from './adapter';
 
 import { CodeBlock } from './_ux/ui/code-block';
 import { BlockQuote } from './_ux/ui/blockquote';

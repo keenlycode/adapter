@@ -1,6 +1,6 @@
 import { bgColor, fontFluid } from "gadjet/src/gadjet";
 import { color } from "./_ux/designToken";
-import { stylis } from "@devcapsule/adapter";
+import { stylis } from './adapter';
 
 
 function baseStyle(to_base_url: string) {

@@ -1,4 +1,4 @@
-import { Adapter } from '@devcapsule/adapter';
+import { Adapter } from "../../adapter.js";
 import { bgColor, pxToRem } from '../style';
 import { color } from '../designToken';
 
