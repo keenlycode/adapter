@@ -43,7 +43,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
         allStyles.push(...superClass.styles);
         superClass = Object.getPrototypeOf(superClass);
       }
-      allStyles.push(this.styles);
+      allStyles.push(...this.styles);
       return allStyles;
     }
 
@@ -120,14 +120,13 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       );
       document.adoptedStyleSheets.push(this.cssStyleSheet);
     }
-
-    /** Deprecated, will be removed in v3 */
+    /** @deprecated, will be removed */
     static tagStyle(css: string): void {
       console.warn('tagStyle() is deprecated, use addStyle() instead');
       this.addStyle(css);
     }
 
-    /** Deprecated, will be removed in v3 */
+    /** @deprecated, will be removed */
     static classStyle(class_: string, css: string) {
       console.warn('classStyle() is deprecated, use addStyle() instead');
       this.addStyle(`&.${class_} { ${css} }`);
