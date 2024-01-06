@@ -1,0 +1,13 @@
+{% extends 'guide/_base.html' %}
+{% set to_base = '../../' %}
+
+{% block head %}
+{{ super() }}
+<script type="module" src="index.js?_v={{_v}}"></script>
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+<el-container>
+</el-container>
+{% endblock %}

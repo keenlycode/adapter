@@ -2,9 +2,8 @@ import { Adapter } from "../../adapter.js";
 import { bgColor } from '../style.js';
 import { color } from '../designToken'; 
 
-class CodeBlock extends Adapter {};
-
-CodeBlock.tagStyle(/*css*/`
+class CodeBlock extends Adapter {
+    static css = /*css*/`
     & {
         display: block;
         margin: auto;
@@ -32,6 +31,7 @@ CodeBlock.tagStyle(/*css*/`
             border-top-right-radius: 0.4em;
         }
     }
-`)
+    `;
+};
 
 export { CodeBlock };

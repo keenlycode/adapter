@@ -82,7 +82,6 @@ class Sidebar extends _Sidebar {
     }
 
     onMediaQueryChange(mql: MediaQueryList) {
-        console.log(mql);
         mql.matches ? this.hide() : this.show();
     }
 
