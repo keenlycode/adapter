@@ -207,9 +207,13 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      * It works like `<el style="">` but with CSS processor.
      */
     set css(css: string) {
+      // Init cssStyleSheet if it hasn't been inited yet.
+      this.cssStyleSheet;
+
       const processedCss = this._class.cssProcess(
         `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );
+      
       this.cssStyleSheet.replaceSync(processedCss);
     }
 
@@ -238,9 +242,13 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     /** Add style for this element */
     addStyle(css: string): void {
+      // Init cssStyleSheet if it hasn't been inited yet.
+      this.cssStyleSheet;
+
       const processedCss = this._class.cssProcess(
         `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );
+
       this.cssStyleSheet.insertRule(
         processedCss,
         this.cssStyleSheet.cssRules.length
