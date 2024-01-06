@@ -99,7 +99,7 @@ describe("Adapter Class: Use Case", function () {
         assert(Card3.css.includes("&.red {color: red}"));
     });
 
-    it("Should be able to set css for this component", () => {
+    it("Should be able to set css for component", () => {
         const additionStyle = `background-color: red;`;
         RedCard.css = additionStyle;
         assert(RedCard.allCSS.includes(additionStyle));
