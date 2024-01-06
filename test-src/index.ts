@@ -79,6 +79,7 @@ describe("Adapter Class: Use Case", function () {
 
     it("Should inherit style from super class", () => {
         RedCard.addStyle(`background-color: red;`);
+        assert(RedCard.allStyles.includes("display: flex;"));
         assert(RedCard.allCSS.includes("display: flex;"));
         assert(RedCard.css.includes("background-color: red;"));
         RedCard.define("el-red-card");

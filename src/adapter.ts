@@ -43,7 +43,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
         allStyles.push(...superClass.styles);
         superClass = Object.getPrototypeOf(superClass);
       }
-      allStyles.push(this.styles);
+      allStyles.push(...this.styles);
       return allStyles;
     }
 
