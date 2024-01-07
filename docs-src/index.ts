@@ -3,6 +3,8 @@ import { buttonStyle } from './_ux/ui/button';
 import { color } from './_ux/designToken';
 
 
+const css = String.raw;
+
 class Particle extends Adapter {
     constructor() {
         super();
@@ -78,69 +80,63 @@ class ParticleScene extends Adapter {
     }
 };
 
-class Heading extends Adapter {};
-
-class HeadingButtons extends Adapter {};
-
-Heading.addStyle(/*css*/`
-    & {
+class Heading extends Adapter {
+    static css = css`
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         text-align: center;
-    }
-    & h1 {
-        margin-top: 2rem;
-    }
-    & h2, h3 {
-        margin-top: 1.5rem;
-    }
-`);
-
-HeadingButtons.addStyle(/*css*/`
-    & el-button {
-        margin: 1rem 1rem;
-        & el-icon {
-            margin-right: 0.5rem;
+        & h1 {
+            margin-top: 2rem;
         }
-    }
-    & el-button[el="guide"] {
-        ${buttonStyle(color.blue)}
-    }
-    & el-button[el="github"] {
+        & h2, h3 {
+            margin-top: 1.5rem;
+        }
+    `
+};
+
+class HeadingButtons extends Adapter {
+    static css = css`
+        el-button {
+            margin: 1rem 1rem;
+            & el-icon {
+                margin-right: 0.5rem;
+            }
+        }
+    `
+};
+
+HeadingButtons.addStyle(css`
+    el-button[el="github"] {
         ${buttonStyle(color.dark)}
     }
-    & el-button[el="discord"] {
+    el-button[el="discord"] {
         ${buttonStyle(color.light)}
     }
 `);
 
-ParticleScene.addStyle(/*css*/`
-    & {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        margin: auto;
-        margin-top: 2rem;
-        max-width: 400px;
-        min-width: 300px;
-    }
-`)
+ParticleScene.css = `
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 2rem;
+    max-width: 400px;
+    min-width: 300px;
+`;
 
-Particle.addStyle(/*css*/`
-    & {
-        display: inline-flex;
-        box-sizing: border-box;
-        margin: 3.5%;
-        width: 3%;
-        height: auto;
-        aspect-ratio: 1;
-        background-color: orange;
-        border-radius: 100%;
-        border: 0.2em solid red;
-    }
-`)
+Particle.css = `
+    display: inline-flex;
+    box-sizing: border-box;
+    margin: 3.5%;
+    width: 3%;
+    height: auto;
+    aspect-ratio: 1;
+    background-color: orange;
+    border-radius: 100%;
+    border: 0.2em solid red;
+`;
 
 Heading.define('el-heading');
 HeadingButtons.define('el-heading-buttons');
@@ -149,4 +145,3 @@ ParticleScene.define('el-particle-scene');
 
 window.Adapter = Adapter;
 window.Particle = Particle;
-window.css = css;

@@ -35,7 +35,8 @@ Object and much more...
 ```js
 /* Particle1 also inherit style defined from Particle */
 class Particle1 extends Particle {
-    static css = `Initial CSS Here`;
+    /** Initial CSS */
+    static css = `display: inline-flex`;
 
     constructor() {
         super();
@@ -89,7 +90,7 @@ The bundle's size is just about **~2kB** !!
 <head>
 <script defer type="module">
 import { Adapter }
-    from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter@2.3/+esm";
+    from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter@2.4/+esm";
 </script>
 </head>
 ```
@@ -131,6 +132,7 @@ import { Adapter } from '@devcapsule/adapter';
     </div>
 
 ```ts
+Adapter.css: string // CSS string
 Adapter.addStyle(css: string);
 <Adapter Object>.addStyle(css: string);
 ```
@@ -148,31 +150,23 @@ Adapter.addStyle(css: string);
 import { Adapter } from '@devcapsule/adapter';
 
 /* Extends `Adapter` */
-class Card extends Adapter {};
-
-/* or you can use mixin as
-class Card extends AdapterMixin(HTMLElement) {};
-*/
+class Card extends Adapter {
+    static css =`
+        display: flex;
+        justify-content: center;
+        &.blue {
+            color: blue;
+        }
+    `
+};
 
 /* Define your component to custome element name `el-card` */
 Card.define('el-card');
 
-/* Style elements <el-card> */
-Card.addStyle(`
-    display: flex;
-    justify-content: center;
-`);
 
-/* Style elements <el-card class="blue"> */
-Card.addStyle(`
-    &.blue {
-        color: blue;
-    }
-`);
-
-/* Style only this element */
+/* Style created element */
 const card = new Card();
-card.addStyle(`background-color: red;`);
+card.css = `background-color: red;`;
 document.body.append(card);
 
 ```

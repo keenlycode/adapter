@@ -116,7 +116,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     /** Init component style */
     static initStyle() {
       this.cssStyleSheet.replaceSync(
-        this.cssProcess(`${this.tagName} { ${this.css} }`)
+        this.cssProcess(`${this.tagName} { ${this.allCSS} }`)
       );
       document.adoptedStyleSheets.push(this.cssStyleSheet);
     }
