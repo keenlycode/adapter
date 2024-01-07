@@ -20,7 +20,7 @@ import { AdapterMixin } from '@devcapsule/adapter';
 import {compile, serialize, stringify} from 'stylis';
 
 class Component extends AdapterMixin(HTMLElement) {
-    static cssProcess(css) { serialize(compile(css), stringify) };
+    static cssProcess(css) { return serialize(compile(css), stringify) };
 }
 ```
 </el-code-block>
