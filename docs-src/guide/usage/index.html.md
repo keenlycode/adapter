@@ -144,7 +144,7 @@ This will replace component object styles, but not affect
     <div el="bar-top-left"><strong>JS</strong></div>
 
 ```js
-document.querySelector('#blue-card').css = `
+document.querySelector('el-bluecard#blue-card-lift').css = `
     filter: drop-shadow(10px 10px 10px #444);
 `;
 ```
