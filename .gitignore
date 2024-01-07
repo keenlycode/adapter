@@ -1,6 +1,7 @@
 node_modules
 venv
 package-lock.json
+pnpm-lock.yaml
 .parcel-cache/
 dist
 docs
