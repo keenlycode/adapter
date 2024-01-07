@@ -214,6 +214,9 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     initClass() {
       this._class = this.constructor as unknown as typeof Adapter;
 
+      console.log(this._class.name);
+      console.log(this._class.tagName);
+
       /**
        * If class tagName has been defined from somewhere else.
        * Then it shouldn't be initialized again.
@@ -222,7 +225,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
         return;
       }
       this._class._tagName = this.tagName;
-      this._class._styles = [];
+      // this._class._styles = [];
       this._class.initStyle();
     }
 
