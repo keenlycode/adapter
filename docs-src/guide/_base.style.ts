@@ -4,6 +4,7 @@ function baseStyle() {
         body {
             display: flex;
             justify-content: center;
+            padding: 0;
             > el-container:first-of-type {
                 margin-top: 2rem;
             }
@@ -12,9 +13,14 @@ function baseStyle() {
             margin: auto;
             max-width: 80ch;
         }
-        h1 { text-align: center }
-        h2 {
+        h1 {
+            text-align: center
+        }
+        h2{
             margin-top: 2.5rem;
+        }
+        h3 {
+            margin-top: 1.5rem;
         }
         p {
             margin: 1rem auto;

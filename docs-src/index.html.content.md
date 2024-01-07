@@ -52,7 +52,7 @@ class Particle1 extends Particle {
 ## 🎉 Compact
 
 <div style="text-align: center;">
-<strong style="font-size: 1.5em;">~ 2kB</strong> minify<br>
+<strong style="font-size: 1.5em;">~ 3kB</strong> minify<br>
 <strong style="font-size: 1.5em;">~ 1kB</strong> minify gzip
 </div>
 
@@ -79,7 +79,6 @@ You can extends your components with great libraries:
 
 This way is super easy !! **Adapter** was born for **ES Modules** and
 nothing else. Just import module right away in your browser.
-The bundle's size is just about **~2kB** !!
 
 <el-code-block>
     <div el="bar-top-left">
@@ -89,8 +88,7 @@ The bundle's size is just about **~2kB** !!
 ```html
 <head>
 <script defer type="module">
-import { Adapter }
-    from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter@2.4/+esm";
+import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
 </script>
 </head>
 ```

@@ -222,7 +222,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
         return;
       }
       this._class._tagName = this.tagName;
-      this._class._styles = [];
       this._class.initStyle();
     }
 
