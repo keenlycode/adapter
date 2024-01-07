@@ -17,7 +17,7 @@ el-tagname {
 ```
 </el-code-block>
 
-There are 3 ways to do thisas following description.
+There are 3 APIs to do this as following description.
 
 <el-blockquote>
 
@@ -66,7 +66,7 @@ Card.define('el-card');
 ### 2. Setting `static css` property
 
 Component can be styled later by setting `static css`.
-This will replace all styles for this component (excludes inherit styles).
+This will replace all styles for this component (not affect inherit styles).
 
 This example also show how component can be extended and inherit
 parent class style.
@@ -126,3 +126,62 @@ BlueCard.addStyle(`
 
 ## Object Tier Styling
 ---
+**Object Tier Styling** will render **CSS**
+with the auto-generated unique class selector, much like the following code.
+```css
+el-card.autogen.unique.class { /* style */ }
+```
+This way, the style will be very specific to an element,
+but with a bit lower priority than inline style.
+There are 2 APIs to style component object (element)
+with the same manner as **Class / Component Styling**
+
+### 1. Setting `css` property
+This will replace component object styles, but not affect
+**Class / Component Styles**
+
+<el-code-block>
+    <div el="bar-top-left"><strong>JS</strong></div>
+
+```js
+document.querySelector('#blue-card').css = `
+    filter: drop-shadow(10px 10px 10px #444);
+`;
+```
+</el-code-block>
+
+<el-code-block>
+    <div el="bar-top-left"><strong>HTML</strong></div>
+
+```html
+<el-bluecard id="blue-card-lift">Lift me up</el-bluecard>
+```
+</el-code-block>
+
+#### Result :
+<el-bluecard id="blue-card-lift">Lift me up</el-bluecard>
+
+### 2. Using `addStyle(css: string)`
+This will add more style to component object (element).
+
+<el-code-block>
+    <div el="bar-top-left"><strong>JS</strong></div>
+
+```js
+document.querySelector('#blue-card-rotate').addStyle(`
+    transform: rotate(45deg);
+`);
+```
+</el-code-block>
+
+<el-code-block>
+    <div el="bar-top-left"><strong>HTML</strong></div>
+
+```html
+<el-bluecard id="blue-card-rotate">Rotate me</el-bluecard>
+```
+</el-code-block>
+
+#### Result :
+
+<el-bluecard id="blue-card-rotate">Rotate me</el-bluecard>
