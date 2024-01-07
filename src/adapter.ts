@@ -116,7 +116,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     /** Init component style */
     static initStyle() {
       this.cssStyleSheet.replaceSync(
-        this.cssProcess(`${this.tagName} { ${this.css} }`)
+        this.cssProcess(`${this.tagName} { ${this.allCSS} }`)
       );
       document.adoptedStyleSheets.push(this.cssStyleSheet);
     }
@@ -149,21 +149,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      */
     constructor(...args: any[]) {
       super(...args);
-      if (this._class) {
-        return;
-      }
-      this._class = this.constructor as unknown as typeof Adapter;
-
-      /**
-       * If class tagName has been defined from somewhere else.
-       * Then it shouldn't be initialized again.
-       */
-      if (this._class.tagName) {
-        return;
-      }
-      this._class._styles = [];
-      this._class._tagName = this.tagName;
-      this._class.initStyle();
+      if (!this._class) { this.initClass() };
     }
 
     /** Dynamically create and return uuid for the element */
@@ -223,6 +209,21 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
         css += rule.cssText + "\n";
       }
       return css;
+    }
+
+    initClass() {
+      this._class = this.constructor as unknown as typeof Adapter;
+
+      /**
+       * If class tagName has been defined from somewhere else.
+       * Then it shouldn't be initialized again.
+       */
+      if (this._class.tagName) {
+        return;
+      }
+      this._class._tagName = this.tagName;
+      this._class._styles = [];
+      this._class.initStyle();
     }
 
     /** Override super.attachShadow()

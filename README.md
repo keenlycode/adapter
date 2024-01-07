@@ -11,46 +11,59 @@
 
 ## Sample Usage
 ```js
-import { Adapter } from `@devcapsule/adapter`;
+import { Adapter } from `https://cdn.jsdelivr.net/npm/@devcapsule/adapter@2.4.4/+esm`;
 
-class Card extends Adapter {};
-
-// Don't worry about tag's name conflicted, choose your own.
-Card.define('el-card');
-
-/* Style is isolated with defined tag name.
- * It won't go anywhere outside the component.
- * All <el-card> style will be updated.
- */
-Card.addStyle(`
+const cardStyle = `
    display: block;
    min-height: 5rem;
    width: 100%;
-   color: red;`
-);
+   color: red;
+`;
 
-// Style class can also be used.
-// This will style <el-card class="text-blue">
+class Card extends Adapter {
+   /** Style is isolated in defined tag name. */
+   static css = cardStyle;
+};
+
+/** Don't worry about tag's name conflicted, choose your own. */
+Card.define('el-card');
+
+/**
+ * More style can be added later, class can also be used.
+ * This will render CSS as `el-card.text-blue { color: blue }`
+ */
 Card.addStyle(`
-   &.text-blue {
-      color: blue;
-   }
+   &.text-blue { color: blue }
 `);
 
-// Dynamically create stylable element.
+/** Replace component styles with the base style `cardStyle`,
+ * This is just one from many way to do it.
+ */
+Card.css = cardStyle;
+
+/** Dynamically create stylable element <el-card>
+ * which inherit all styles from `Card`
+ */
 const card = new Card();
-card.addStyle(`color: black`);
+
+/** <el-card> object has the same API as `Card`
+ * but style will be specific for this element only.
+ */
+card.css = `display: flex;`;
+card.addStyle(`color: black;`);
 document.body.append(card);
 ```
 
-## Project Board
-https://github.com/orgs/keenlycode/projects/2
-
 ## Software Development 💻
+
+### Project Board
+https://github.com/orgs/keenlycode/projects/2
 
 ### Prerequisites
 - NodeJS : https://nodejs.org/en/
 - Git : https://git-scm.com/
+
+### Prerequisites for document creation.
 - Python >= 3.10 : https://www.python.org/
 
 ### 🛠️ Setup
@@ -65,25 +78,21 @@ $ cd adapter
 $ npm install
 ```
 
-3. Setup **Python** environment & libs
-```shell
-$ python -m venv venv
-$ source venv/bin/activate
-$ pip install -r require.pip
-```
-
 ### 🗃️ Build Library
 ```shell
 # Build
 $ npm run dist
 ```
 
-### 📕 Build & Run Docs Server
-```shell
-$ npm run docs
-```
-
 ### 🔍 Run Test
 ```shell
 $ npm run test
+```
+
+### Document Creation (Python 🐍)
+```shell
+$ python -m venv venv
+$ source venv/bin/activate
+$ pip install -r require.pip
+$ npm run docs
 ```
