@@ -44,7 +44,6 @@
     "glob": "^10.3.10",
     "highlight.js": "^11.9.0",
     "lightningcss": "^1.22.1",
-    "lume": "^0.3.0-alpha.39",
     "mocha": "^10.2.0",
     "normalize.css": "^8.0.1",
     "stylis": "^4.3.0",
