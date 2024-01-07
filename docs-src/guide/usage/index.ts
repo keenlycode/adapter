@@ -23,10 +23,10 @@ BlueCard.addStyle(`
     &.largeFont { font-size: 2em }
 `);
 
-document.querySelector('#blue-card-lift')!.css = `
+document.querySelector('el-bluecard#blue-card-lift')!.css = `
     filter: drop-shadow(5px 5px 10px #444);
 `;
 
-document.querySelector('#blue-card-rotate')!.addStyle(`
+document.querySelector('el-bluecard#blue-card-rotate')!.addStyle(`
     transform: rotate(45deg);
 `);
