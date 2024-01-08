@@ -30,3 +30,23 @@ document.querySelector('el-bluecard#blue-card-lift')!.css = `
 document.querySelector('el-bluecard#blue-card-rotate')!.addStyle(`
     transform: rotate(45deg);
 `);
+
+class BlueCardShadow extends BlueCard {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot!.innerHTML = `This card use open Shadow DOM`;
+    }
+}
+
+customElements.define('el-bluecard-shadow', BlueCardShadow);
+
+class BlueCardShadowClosed extends BlueCard {
+    constructor() {
+        super();
+        const shadowRoot = this.attachShadow({ mode: 'closed' });
+        shadowRoot.innerHTML = `This card use closed Shadow DOM`;
+    }
+}
+
+customElements.define('el-bluecard-shadow-closed', BlueCardShadowClosed);
