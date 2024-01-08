@@ -99,7 +99,7 @@ $ npm run docs
 
 ## Special Thanks
 2024-01-09
-- [Joe Pea](https://github.com/trusktr): for a lot of suggession
+- [Joe Pea](https://github.com/trusktr): for a lot of suggestions
   at the very beginning about style rendering and Shadow DOM.
   Knowing him by chance when I found interesting project : Lume.io 👍️
   
