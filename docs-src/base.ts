@@ -13,3 +13,7 @@ import { pageReload } from './_base.esbuild';
 pageReload('./');
 
 import './styleClass';
+
+window.addEventListener('load', () => {
+    document.body.style.visibility = 'visible';
+});
