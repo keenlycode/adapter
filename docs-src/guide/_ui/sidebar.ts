@@ -12,6 +12,17 @@ const sideBarStyle = /*css*/`
         ${bgColor(color.dark)}
     }
 
+    a:has(h1) {
+        color: white;
+        text-align: center;
+        width: 100%;
+        margin-bottom: 0.8rem;
+        &:hover {
+            color: ${color.blue};
+            transition: color 0.2s ease;
+        }
+    }
+
     filter: drop-shadow(2px 2px 4px ${Color(color.dark)
         .alpha(0.8).string()});
 
