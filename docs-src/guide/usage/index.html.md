@@ -185,3 +185,54 @@ document.querySelector('#blue-card-rotate').addStyle(`
 #### Result :
 
 <el-bluecard id="blue-card-rotate">Rotate me</el-bluecard>
+
+## Shadow DOM
+---
+Most of the time, styling the DOM with **Adapter** will cover everything
+you need to program CSS in an object-oriented manner.
+However, if you are seeking complete control and isolation
+for your components, Shadow DOM is the way to go.
+
+Thanks to `adoptedStyleSheets`, **Adapter** can use it as the proper way
+to style Shadow DOM with ease. You have freedom to style your component
+without any concorn of Shadow DOM. **Adapter** will automatically style
+Shadow DOM when you use it.
+
+<el-code-block>
+    <div el="bar-top-left"><strong>JS</strong></div>
+
+```js
+class BlueCardShadow extends BlueCard {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot!.innerHTML = `This card use open Shadow DOM`;
+    }
+}
+
+customElements.define('el-bluecard-shadow', BlueCardShadow);
+
+class BlueCardShadowClosed extends BlueCard {
+    constructor() {
+        super();
+        const shadowRoot = this.attachShadow({ mode: 'closed' });
+        shadowRoot.innerHTML = `This card use closed Shadow DOM`;
+    }
+}
+
+customElements.define('el-bluecard-shadow-closed', BlueCardShadowClosed);
+```
+</el-code-block>
+
+<el-code-block>
+    <div el="bar-top-left"><strong>HTML</strong></div>
+
+```html
+<el-bluecard-shadow></el-bluecard-shadow>
+<el-bluecard-shadow-closed></el-bluecard-shadow-closed>
+```
+</el-code-block>
+
+#### Result :
+<el-bluecard-shadow></el-bluecard-shadow>
+<el-bluecard-shadow-closed></el-bluecard-shadow-closed>
