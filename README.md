@@ -101,6 +101,6 @@ $ npm run docs
 2024-01-09
 - [Joe Pea](https://github.com/trusktr): for a lot of suggestions
   at the very beginning about style rendering and Shadow DOM.
-  Knowing him by chance when I found interesting project : Lume.io 👍️
+  Knowing him by chance when I found interesting project : [Lume.io](https://lume.io) 👍️
   
 <div style="min-height: 20vh;"></div>
