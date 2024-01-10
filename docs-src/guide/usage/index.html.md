@@ -1,6 +1,8 @@
 # Usage
 
-## Class / Component Tier Styling
+<div id="component-style"></div>
+
+## Component Style ( Class Style )
 ---
 
 Class / Component Tier Styling will affect all elements
@@ -124,7 +126,9 @@ BlueCard.addStyle(`
 #### Result :
 <el-bluecard class="largeFont">This is a blue card with large font</el-bluecard>
 
-## Object Tier Styling
+<div id="element-style"></div>
+
+## Element Style ( Object Style )
 ---
 **Object Tier Styling** will render **CSS**
 with the auto-generated unique class selector, much like the following code.
@@ -186,7 +190,9 @@ document.querySelector('#blue-card-rotate').addStyle(`
 
 <el-bluecard id="blue-card-rotate">Rotate me</el-bluecard>
 
-## Shadow DOM
+<div id="shadow-dom-style"></div>
+
+## Shadow DOM Style
 ---
 Most of the time, styling the DOM with **Adapter** will cover everything
 you need to program CSS in an object-oriented manner.
