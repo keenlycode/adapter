@@ -8,8 +8,7 @@ import init, { transform, browserslistToTargets } from 'https://esm.run/lightnin
 import browserslist from 'browserslist';
 
 /** Adapter */
-import { Adapter, AdapterMixin } from "@devcapsule/adapter/src/adapter";
-import { stylis } from '@devcapsule/adapter/src/cssProcessor/stylis.bundle';
+import { Adapter, AdapterMixin, stylis } from "@devcapsule/adapter/src/export";
 
 const __base_url = new URL(import.meta.url);
 

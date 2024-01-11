@@ -1,5 +1,9 @@
 # Style Filtering
 
+Style Filtering is a useful technique for filtering or bypassing styles
+from other components are used inside the container component.
+As a result, we can effortlessly mix and match or isolate styles between components.
+
 ## Filter out & Bypass
 ---
 
@@ -43,18 +47,5 @@ FilterButton.define('el-filter-button');
         <a href="#">Link</a>
     </div>
 </el-filter-button>
-```
-</el-code-block>
-
-## Filter out all styles
----
-
-<el-code-block>
-<div el="bar-top-left">JS</div>
-
-```js
-class IsolatedComponent extends Adapter {
-    static css = `all: revert; * { all: revert };`;
-}
 ```
 </el-code-block>
