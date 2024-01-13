@@ -35,7 +35,7 @@ function baseStyle(to_base_url: string) {
     body {
         margin: 0;
         padding: 0;
-        padding-bottom: 10rem;
+        padding-bottom: 50dvh;
     }
 
     code {

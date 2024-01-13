@@ -6,7 +6,6 @@ class Container extends Adapter {
         all: unset;
         display: block;
         box-sizing: border-box;
-        margin-bottom: 40dvh;
         max-width: 80ch;
         min-height: 100dvh;
         width: 90%;

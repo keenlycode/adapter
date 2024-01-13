@@ -4,7 +4,6 @@ function baseStyle() {
         body {
             display: flex;
             justify-content: center;
-            padding: 0;
             > el-container:first-of-type {
                 margin-top: 2rem;
             }
