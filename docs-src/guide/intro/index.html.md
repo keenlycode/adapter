@@ -178,7 +178,7 @@ class ComponentA extends Adapter {
      * Moreover, we can write CSS for this component without worrying
      * about this component tagName.
      */
-    static css = `div button { background-color: blue} `;
+    static css = `div button { background-color: blue }`;
 }
 
 ComponentA.define('el-component-a');

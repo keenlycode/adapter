@@ -9,6 +9,7 @@ import browserslist from 'browserslist';
 
 /** Adapter */
 import { Adapter, AdapterMixin, stylis } from "@devcapsule/adapter/src/export";
+import { addStyle } from "../src/util";
 
 const __base_url = new URL(import.meta.url);
 
@@ -279,6 +280,14 @@ describe("Shadow DOM Support", () => {
         component.hidden = true;
         document.body.appendChild(component);
         assert(getComputedStyle(component).color === 'rgb(255, 0, 0)');
+    })
+})
+
+describe.only("Utilities", () => {
+    it("addStyle(el, css)", () => {
+        const el = document.createElement('div');
+        addStyle(el, `color: red;`);
+        assert(el.cssStyleSheet.cssRules[0].cssText.includes('color: red;'));
     })
 })
 

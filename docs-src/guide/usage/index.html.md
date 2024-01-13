@@ -133,7 +133,7 @@ BlueCard.addStyle(`
 **Object Tier Styling** will render **CSS**
 with the auto-generated unique class selector, much like the following code.
 ```css
-el-card.autogen.unique.class { /* style */ }
+el-card.predefine.class.and.autogen { /* style */ }
 ```
 This way, the style will be very specific to an element,
 but with a bit lower priority than inline style.
@@ -201,7 +201,7 @@ for your components, Shadow DOM is the way to go.
 
 Thanks to `adoptedStyleSheets`, **Adapter** can use it as the proper way
 to style Shadow DOM with ease. You have freedom to style your component
-without any concorn of Shadow DOM. **Adapter** will automatically style
+without any concern of Shadow DOM. **Adapter** will automatically style
 Shadow DOM when you use it.
 
 <el-code-block>
