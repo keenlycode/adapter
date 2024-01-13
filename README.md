@@ -11,7 +11,7 @@
 
 ## Sample Usage
 ```js
-import { Adapter } from `https://cdn.jsdelivr.net/npm/@devcapsule/adapter@2.4.4/+esm`;
+import { Adapter } from `https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm`;
 
 const cardStyle = `
    display: block;
