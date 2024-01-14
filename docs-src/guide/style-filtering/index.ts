@@ -19,7 +19,6 @@ document.adoptedStyleSheets.push(cssStyleSheet);
 
 class FilterButton extends Adapter {
     static css = /*css*/`
-        all: revert;
         display: inline-flex;
         flex-wrap: wrap;
         box-sizing: border-box;
@@ -27,6 +26,7 @@ class FilterButton extends Adapter {
         padding: 1rem;
 
         & button { all: revert };
+        & button:hover { all: revert };
     `;
 }
 

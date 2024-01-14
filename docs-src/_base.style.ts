@@ -1,4 +1,4 @@
-import { bgColor, fontFluid } from "gadjet/src/gadjet";
+import { Button, bgColor, fontFluid } from "gadjet/src/gadjet";
 import { color } from "./_ux/designToken";
 import { stylis } from './adapter';
 
@@ -35,7 +35,7 @@ function baseStyle(to_base_url: string) {
     body {
         margin: 0;
         padding: 0;
-        padding-bottom: 10rem;
+        padding-bottom: 50dvh;
     }
 
     code {
@@ -57,6 +57,10 @@ function baseStyle(to_base_url: string) {
 
     p ~ ol ~ p {
         margin-top: -0.7rem;
+    }
+
+    button {
+        ${Button.Style.css()}
     }
 
     .width-100 {
