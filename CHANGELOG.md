@@ -1,20 +1,16 @@
 # Change Log
 
+## [v2.4.7], 2024-01-14
+
+### Added
+- Support setting CSS by `<element>.setAttribute('css')`
+
 ## [v2.4.0], 2024-01-05
 
 ### Added
 - Support for Shadow DOM 🎉
 
-### Changed
-xxx
-
-### Fixed
-xxx
-
 ## [v2.3.5], 2024-01-02
-
-### Added
-xxx
 
 ### Changed
 - Deprecate `Adapter.tagStyle()` and `Adapter.classStyle()`.
@@ -31,11 +27,6 @@ xxx
 - `cssProcess()` : Can use CSS Processor like **stylis** or **lightencss**.
 - **stylis** is the default CSS processor.
 
-### Changed
-
-### Fixed
-
-
 ## [v2.1.0]
 
 ### Addded
@@ -43,7 +34,3 @@ xxx
 - Improve `Adapter.define()` <style> injection.
 - `[Adapter Object].addStyle()` insert <style> inside component's tag.
 - Test Framework and Unit Test.
-
-### Changed
-
-### Fixed
