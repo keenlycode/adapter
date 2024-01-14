@@ -145,6 +145,8 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     _cssObserver!: MutationObserver;
 
+    _isConnectedOnce = false;
+
     /**
      * In constructor, there any some if condition to check
      * if it has been inited or not to prevent recursive call in Mixin
@@ -152,8 +154,13 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     constructor(...args: any[]) {
       super(...args);
       if (!this._class) { this.initClass() };
-      this.css = this.getAttribute('css') || '';
       this.cssObserve(true);
+    }
+
+    connectedCallback() {
+      if (!this._isConnectedOnce) {
+        this.css = this.css;
+      };
     }
 
     get cssObserver() {
@@ -221,7 +228,8 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     /** Get CSS for this element */
     get css(): string {
-      let css = ``;
+      let css = this.getAttribute("css") || "";
+      if (css) { return css };
       for (const rule of this.cssStyleSheet.cssRules) {
         css += rule.cssText + "\n";
       }
