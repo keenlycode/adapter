@@ -6,11 +6,12 @@ import { color } from '../../_ux/designToken';
 import { Sidebar as _Sidebar } from '../../_ux/ui/sidebar';
 
 
-const sideBarStyle = /*css*/`
-    & {
-        height: 110dvh;
-        ${bgColor(color.dark)}
-    }
+const css = String.raw;
+
+const sideBarStyle = css`
+    height: 110dvh;
+    ${bgColor(color.dark)}
+    transition: transform 0.4s ease;
 
     a:has(h1) {
         color: white;
@@ -26,9 +27,7 @@ const sideBarStyle = /*css*/`
     filter: drop-shadow(2px 2px 4px ${Color(color.dark)
         .alpha(0.8).string()});
 
-    &.show {
-        filter: drop-shadow(2px 2px 4px ${Color(color.dark)
-        .alpha(0.8).string()});
+    &.show {        
         [el="toggle"] {
             span { transform: rotate(180deg) }
         };
@@ -70,21 +69,28 @@ const sideBarStyle = /*css*/`
 `;
 
 class Sidebar extends _Sidebar {
-    static css = /*css*/`
+    static css = css`
         ${Sidebar.style()}
         ${sideBarStyle}
     `;
 
     constructor() {
         super();
+
         this.querySelector('[el="toggle"]')?.addEventListener('click', () => {  
             this.toggle();
         });
 
+        this.addEventListener('click', (event) => {
+            if (['A', 'H1', 'H2'].includes(event.target.tagName)) {
+                this.onLinkClick();
+            }
+        })
+
         let mql = window.matchMedia('screen and (max-width: 1200px)');
         setTimeout(() => {
             this.onMediaQueryChange(mql);
-        }, 0);
+        }, 750);
         setTimeout(() => {
             mql.addEventListener('change', () => {
                 this.onMediaQueryChange(mql);
@@ -94,6 +100,13 @@ class Sidebar extends _Sidebar {
 
     onMediaQueryChange(mql: MediaQueryList) {
         mql.matches ? this.hide() : this.show();
+    }
+
+    onLinkClick() {
+        if (window.innerWidth > 1200) { return };
+        setTimeout(() => {
+            this.hide();
+        }, 500);
     }
 
     show() {
