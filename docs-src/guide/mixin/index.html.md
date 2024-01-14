@@ -4,8 +4,8 @@ Use `AdapterMixin()` to implement **Adapter** with other Web Components.
 
 <el-blockquote>
 
-> 📍 Please note that `AdapterMixin` doesn't include CSS processor like `Adapter`,
-> It has to manually set `cssProcess()` function to use CSS processor library
+> 📍 `AdapterMixin` doesn't include CSS processor like `Adapter`,
+> It has to be manually set by `cssProcess()` function.
 
 </el-blockquote>
 

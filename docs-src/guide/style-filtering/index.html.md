@@ -26,7 +26,10 @@ This component filter out (revert) `<button>` style
 import { Adapter } from '@devcapsule/adapter';
 
 class FilterButton extends Adapter {
-    static css = `& button { all: revert }`;
+    static css = `
+        & button { all: revert }
+        & button:hover { all: revert };
+    `;
 }
 
 FilterButton.define('el-filter-button');

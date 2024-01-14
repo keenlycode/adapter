@@ -143,6 +143,8 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     _shadowRoot!: ShadowRoot|null;
 
+    _cssObserver!: MutationObserver;
+
     /**
      * In constructor, there any some if condition to check
      * if it has been inited or not to prevent recursive call in Mixin
@@ -150,6 +152,21 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     constructor(...args: any[]) {
       super(...args);
       if (!this._class) { this.initClass() };
+      this.css = this.getAttribute('css') || '';
+      this.cssObserve(true);
+    }
+
+    get cssObserver() {
+      if (this._cssObserver) { return this._cssObserver };
+
+      this._cssObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.attributeName === 'css') {
+            this.css = this.getAttribute('css') || '';
+          };
+        };
+      });
+      return this._cssObserver;
     }
 
     /** Dynamically create and return uuid for the element */
@@ -223,6 +240,15 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       }
       this._class._tagName = this.tagName;
       this._class.initStyle();
+    }
+
+    /** Enable or disable CSS Observation */
+    cssObserve(enable: boolean) {
+      if (enable) {
+        this.cssObserver.observe(this, { attributes: true });
+      } else {
+        this.cssObserver.disconnect();
+      }
     }
 
     /** Override super.attachShadow()
