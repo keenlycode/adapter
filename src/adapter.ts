@@ -164,12 +164,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     connectedCallback() {
-      if (!this._isConnectedOnce) {
-        // Update CSS to document
-        this.css = this.css;
-
-        this._isConnectedOnce = true;
-      };
+      const rootNode = this.getRootNode() as Document|ShadowRoot;
+      if (rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet) === -1) {
+        rootNode.adoptedStyleSheets.push(this.cssStyleSheet)
+      }
     }
 
     /** Retreive styles for this object */
@@ -210,10 +208,8 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     get cssStyleSheet() {
       if (this._cssStyleSheet) { return this._cssStyleSheet };
 
-      this._cssStyleSheet = new CSSStyleSheet();
-      document.adoptedStyleSheets.push(this._cssStyleSheet);
       this.classList.add(this.uuid);
-      this.adoptedStyleSheetIndex = document.adoptedStyleSheets.length - 1;
+      this._cssStyleSheet = new CSSStyleSheet();
       return this._cssStyleSheet;
     }
 
@@ -232,7 +228,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       this._styles = [css];
 
       // Init cssStyleSheet if it hasn't been inited yet.
-      this.cssStyleSheet;
+      // this.cssStyleSheet;
 
       const processedCss = this._class.cssProcess(
         `${this.tagName}.${this.objectClassSelector} { ${css} }`
@@ -272,30 +268,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       } else {
         this.cssObserver.disconnect();
       }
-    }
-
-    /** Override super.attachShadow()
-     * to add this.cssStyleSheet to shadowRoot
-     */
-    attachShadow(init: ShadowRootOption): ShadowRoot {
-      const innerHTML = this.innerHTML;
-      const shadowRoot = super.attachShadow(init);
-      if ('keepHTML' in init) {
-        if (init['keepHTML'] === true) {
-          shadowRoot.innerHTML = innerHTML;
-        }
-      }
-      const cssStyleSheet = new CSSStyleSheet();
-      let i = 0;
-      for (const style of this.allStyles) {
-        try {
-          cssStyleSheet.insertRule(style, cssStyleSheet.cssRules.length);
-          i += 1;
-        } catch (e) {};
-      }
-      shadowRoot.adoptedStyleSheets.push(cssStyleSheet);
-      this._shadowRoot = shadowRoot;
-      return shadowRoot;
     }
 
     /** Add style for this element */
