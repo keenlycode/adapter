@@ -32,6 +32,7 @@ const result = await esbuild.context({
   outbase: "docs-src",
   bundle: true,
   format: "esm",
+  target: ["chrome100"],
   sourcemap: true,
   keepNames: true,
   lineLimit: 80,
