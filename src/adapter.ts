@@ -165,7 +165,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     connectedCallback() {
       if (!this._isConnectedOnce) {
+        // Update CSS to document
         this.css = this.css;
+
+        this._isConnectedOnce = true;
       };
     }
 
