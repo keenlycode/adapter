@@ -3,10 +3,6 @@ import { stylis } from './cssProcessor/stylis.bundle.js';
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
-interface ShadowRootOption extends ShadowRootInit {
-  keepHTML: boolean;
-}
-
 export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase
 ) {
@@ -207,8 +203,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      */
     get cssStyleSheet() {
       if (this._cssStyleSheet) { return this._cssStyleSheet };
-
-      this.classList.add(this.uuid);
       this._cssStyleSheet = new CSSStyleSheet();
       return this._cssStyleSheet;
     }
@@ -226,12 +220,12 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      */
     set css(css: string) {
       this._styles = [css];
+      this.classList.add(this.uuid);
 
       /** Init cssStyleSheet if it hasn't been inited yet.
        * This will make `this.objectClassSelector` works as expeced.
        */
       this.cssStyleSheet;
-
       const processedCss = this._class.cssProcess(
         `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );
@@ -275,10 +269,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     /** Add style for this element */
     addStyle(css: string): void {
       this._styles = this._styles.concat(css);
+      this.classList.add(this.uuid);
 
       // Init cssStyleSheet if it hasn't been inited yet.
       this.cssStyleSheet;
-
       const processedCss = this._class.cssProcess(
         `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );
