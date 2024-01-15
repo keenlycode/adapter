@@ -1,4 +1,4 @@
-import { Adapter } from '../../adapter';
+import { Adapter, stylis } from '../../adapter';
 
 class Card extends Adapter {
     static css = `
@@ -31,22 +31,13 @@ document.querySelector('el-bluecard#blue-card-rotate')!.addStyle(`
     transform: rotate(45deg);
 `);
 
-class BlueCardShadow extends BlueCard {
+class ShadowHost extends Adapter {
     constructor() {
         super();
+        const innerHTML = this.innerHTML;
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot!.innerHTML = `This card use open Shadow DOM`;
+        this.shadowRoot!.innerHTML = innerHTML;
     }
 }
 
-customElements.define('el-bluecard-shadow', BlueCardShadow);
-
-class BlueCardShadowClosed extends BlueCard {
-    constructor() {
-        super();
-        const shadowRoot = this.attachShadow({ mode: 'closed' });
-        shadowRoot.innerHTML = `This card use closed Shadow DOM`;
-    }
-}
-
-customElements.define('el-bluecard-shadow-closed', BlueCardShadowClosed);
+customElements.define('el-shadow-host', ShadowHost);
