@@ -270,6 +270,33 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       }
     }
 
+    /** Override super.attachShadow()
+     * to add this.cssStyleSheet to shadowRoot
+     */
+    // attachShadow(init: ShadowRootOption): ShadowRoot {
+    //   const innerHTML = this.innerHTML;
+    //   const shadowRoot = super.attachShadow(init);
+    //   if ('keepHTML' in init) {
+    //     if (init['keepHTML'] === true) {
+    //       shadowRoot.innerHTML = innerHTML;
+    //     }
+    //   }
+    //   const cssStyleSheet = new CSSStyleSheet();
+    //   let i = 0;
+    //   for (const style of this.allStyles) {
+    //     try {
+    //       const rule = stylis(style);
+    //       cssStyleSheet.insertRule(style, cssStyleSheet.cssRules.length);
+    //       i += 1;
+    //     } catch (e) {
+    //       console.error(e);
+    //     };
+    //   }
+    //   shadowRoot.adoptedStyleSheets.push(cssStyleSheet);
+    //   this._shadowRoot = shadowRoot;
+    //   return shadowRoot;
+    // }
+
     /** Add style for this element */
     addStyle(css: string): void {
       this._styles = this._styles.concat(css);
