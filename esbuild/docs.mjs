@@ -14,7 +14,7 @@ const entryFiles = await glob.sync(
   }
 );
 
-console.log(entryFiles);
+// console.log(entryFiles);
 
 const outDir = path.join(__dirname, "../docs/");
 console.log(`Create docs at: ${outDir}`);
@@ -39,10 +39,11 @@ const result = await esbuild.context({
   minifyWhitespace: true,
   minifyIdentifiers: false,
   minifySyntax: true,
-  color: true,
   logLevel: "info",
 });
+
 await result.watch();
+
 const { host, port } = await result.serve({
   servedir: "docs",
 });
