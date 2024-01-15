@@ -227,8 +227,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     set css(css: string) {
       this._styles = [css];
 
-      // Init cssStyleSheet if it hasn't been inited yet.
-      // this.cssStyleSheet;
+      /** Init cssStyleSheet if it hasn't been inited yet.
+       * This will make `this.objectClassSelector` works as expeced.
+       */
+      this.cssStyleSheet;
 
       const processedCss = this._class.cssProcess(
         `${this.tagName}.${this.objectClassSelector} { ${css} }`
