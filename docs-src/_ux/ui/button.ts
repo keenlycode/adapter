@@ -4,15 +4,13 @@ import { bgColor, lift } from '../style';
 
 const buttonStyle = (color) => {
     return /*css*/`
-    & {
-        display: inline-flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-    }
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
 
-    & button {
+    button {
         display: inline-flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -24,19 +22,19 @@ const buttonStyle = (color) => {
         font-weight: bold;
         line-height: 1;
         cursor: pointer;
-        ${lift(0.7, '#555')}
+        ${lift(0.2, '#555')}
         ${bgColor(color)}
         &:hover {
             background-color: ${Color(color)
                 .lighten(0.1)
                 .saturate(0.1)};
-            ${lift(1.1, '#555')}
+            ${lift(1.2, '#555')}
         }
         &:active {
             background-color: ${Color(color)
                 .darken(0.1)
                 .saturate(-0.1)};
-            ${lift(0.5, '#555')}
+            ${lift(0, '#555')}
         }
     }
     `

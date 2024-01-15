@@ -3,10 +3,6 @@ import { stylis } from './cssProcessor/stylis.bundle.js';
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
-interface ShadowRootOption extends ShadowRootInit {
-  keepHTML: boolean;
-}
-
 export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase
 ) {
@@ -161,6 +157,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     connectedCallback() {
+      if (!this._isConnectedOnce) {
+        this.css = this.css;
+        this._isConnectedOnce = true;
+      }
       const rootNode = this.getRootNode() as Document|ShadowRoot;
       if (rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet) === -1) {
         rootNode.adoptedStyleSheets.push(
@@ -186,6 +186,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       this._cssObserver = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
           if (mutation.attributeName === 'css') {
+            console.log('css');
             this.css = this.getAttribute('css') || '';
           };
         };
@@ -207,8 +208,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      */
     get cssStyleSheet() {
       if (this._cssStyleSheet) { return this._cssStyleSheet };
-
-      this.classList.add(this.uuid);
       this._cssStyleSheet = new CSSStyleSheet();
       return this._cssStyleSheet;
     }
@@ -226,12 +225,12 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      */
     set css(css: string) {
       this._styles = [css];
+      this.classList.add(this.uuid);
 
       /** Init cssStyleSheet if it hasn't been inited yet.
        * This will make `this.objectClassSelector` works as expeced.
        */
       this.cssStyleSheet;
-
       const processedCss = this._class.cssProcess(
         `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );
@@ -272,40 +271,13 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       }
     }
 
-    /** Override super.attachShadow()
-     * to add this.cssStyleSheet to shadowRoot
-     */
-    // attachShadow(init: ShadowRootOption): ShadowRoot {
-    //   const innerHTML = this.innerHTML;
-    //   const shadowRoot = super.attachShadow(init);
-    //   if ('keepHTML' in init) {
-    //     if (init['keepHTML'] === true) {
-    //       shadowRoot.innerHTML = innerHTML;
-    //     }
-    //   }
-    //   const cssStyleSheet = new CSSStyleSheet();
-    //   let i = 0;
-    //   for (const style of this.allStyles) {
-    //     try {
-    //       const rule = stylis(style);
-    //       cssStyleSheet.insertRule(style, cssStyleSheet.cssRules.length);
-    //       i += 1;
-    //     } catch (e) {
-    //       console.error(e);
-    //     };
-    //   }
-    //   shadowRoot.adoptedStyleSheets.push(cssStyleSheet);
-    //   this._shadowRoot = shadowRoot;
-    //   return shadowRoot;
-    // }
-
     /** Add style for this element */
     addStyle(css: string): void {
       this._styles = this._styles.concat(css);
+      this.classList.add(this.uuid);
 
       // Init cssStyleSheet if it hasn't been inited yet.
       this.cssStyleSheet;
-
       const processedCss = this._class.cssProcess(
         `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );

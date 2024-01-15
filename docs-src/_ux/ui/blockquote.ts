@@ -2,8 +2,10 @@ import { Adapter } from "../../adapter.js";
 import { color } from "../designToken.js";
 import Color from "color";
 
+const css = String.raw
+
 export class BlockQuote extends Adapter {
-  static css = /*css*/`
+  static css = css`
     display: flex;
     flex-wrap: wrap;
 
