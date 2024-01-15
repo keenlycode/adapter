@@ -158,7 +158,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     connectedCallback() {
       if (!this._isConnectedOnce) {
-        this.css = this.css;
+        /** Apply css if it's set in attributes */
+        const css = this.getAttribute('css');
+        if (css) { this.css = css };
+        
         this._isConnectedOnce = true;
       }
       const rootNode = this.getRootNode() as Document|ShadowRoot;
