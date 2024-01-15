@@ -140,9 +140,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     _cssStyleSheet?: CSSStyleSheet;
 
-    // index of this.cssStyleSheet in document.adoptedStyleSheets
-    adoptedStyleSheetIndex!: number;
-
     _uuid?: string;
 
     _styles: string[] = [];
@@ -166,7 +163,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     connectedCallback() {
       const rootNode = this.getRootNode() as Document|ShadowRoot;
       if (rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet) === -1) {
-        rootNode.adoptedStyleSheets.push(this.cssStyleSheet)
+        rootNode.adoptedStyleSheets.push(
+          this._class.cssStyleSheet,
+          this.cssStyleSheet
+        );
       }
     }
 
@@ -318,9 +318,9 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
     remove() {
-      if (!this._shadowRoot) {
-        document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1)
-      };
+      const rootNode = this.getRootNode() as Document|ShadowRoot;
+      const i = rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet);
+      rootNode.adoptedStyleSheets.splice(i, 1);
       super.remove();
     }
   };
