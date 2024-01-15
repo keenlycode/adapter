@@ -10,6 +10,10 @@ let files = await glob(path.join(__dirname, "../src/**/*.ts"), {
   ignore: path.join(__dirname, "../src/**/*.bundle.ts"),
 });
 
+console.log(
+`📦️ Create adapter distributed files
+===================================`);
+
 let result = await esbuild.build({
   entryPoints: files,
   bundle: false,
@@ -30,9 +34,11 @@ console.log(
   })
 );
 
-// process.exit(0);
-
 files = await glob(path.join(__dirname, "../src/**/*.bundle.ts"));
+
+console.log(
+`📦️ Create external library bundle files
+=======================================`);
 
 result = await esbuild.build({
   entryPoints: files,
