@@ -157,6 +157,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     connectedCallback() {
+      if (!this._isConnectedOnce) {
+        this.css = this.css;
+        this._isConnectedOnce = true;
+      }
       const rootNode = this.getRootNode() as Document|ShadowRoot;
       if (rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet) === -1) {
         rootNode.adoptedStyleSheets.push(
@@ -182,6 +186,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       this._cssObserver = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
           if (mutation.attributeName === 'css') {
+            console.log('css');
             this.css = this.getAttribute('css') || '';
           };
         };
