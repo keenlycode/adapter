@@ -3,6 +3,10 @@ import { stylis } from './cssProcessor/stylis.bundle.js';
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
+interface ShadowRootOption extends ShadowRootInit {
+  keepHTML: boolean;
+}
+
 export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase
 ) {
@@ -262,8 +266,14 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     /** Override super.attachShadow()
      * to add this.cssStyleSheet to shadowRoot
      */
-    attachShadow(init: ShadowRootInit): ShadowRoot {
+    attachShadow(init: ShadowRootOption): ShadowRoot {
+      const innerHTML = this.innerHTML;
       const shadowRoot = super.attachShadow(init);
+      if ('keepHTML' in init) {
+        if (init['keepHTML'] === true) {
+          shadowRoot.innerHTML = innerHTML;
+        }
+      }
       shadowRoot.adoptedStyleSheets = [
         this._class.cssStyleSheet,
         this.cssStyleSheet
