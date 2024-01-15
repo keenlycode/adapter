@@ -1,5 +1,10 @@
 # Change Log
 
+## [v2.4.10], 2024-01-15
+
+### Fixed
+- Shadow DOM Styling
+
 ## [v2.4.7], 2024-01-14
 
 ### Added
