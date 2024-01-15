@@ -165,8 +165,8 @@ describe("Adapter Object: Use Case", () => {
         assert(button1.cssStyleSheet.cssRules[1].cssText.includes("background-color: red;"));
     });
 
-    it("Can be deleted from document", () => {
-        button1.delete();
+    it("Can be removed from document", () => {
+        button1.remove();
         assert(!document.adoptedStyleSheets.includes(button1.cssStyleSheet));
     });
 });

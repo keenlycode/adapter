@@ -145,6 +145,8 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     _uuid?: string;
 
+    _styles: string[] = [];
+
     _shadowRoot!: ShadowRoot|null;
 
     _cssObserver!: MutationObserver;
@@ -165,6 +167,16 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       if (!this._isConnectedOnce) {
         this.css = this.css;
       };
+    }
+
+    /** Retreive styles for this object */
+    get styles(): string[] {
+      return this._styles;
+    }
+
+    /** Retreive styles from class and object */
+    get allStyles(): string[] {
+      return [...this.styles, ...this._class.allStyles];
     }
 
     get cssObserver() {
@@ -220,6 +232,8 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      * It works like `<el style="">` but with CSS processor.
      */
     set css(css: string) {
+      this._styles = [css];
+
       // Init cssStyleSheet if it hasn't been inited yet.
       this.cssStyleSheet;
 
@@ -238,6 +252,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
         css += rule.cssText + "\n";
       }
       return css;
+    }
+
+    get allCSS(): string {
+      return this.allStyles.join("\n");
     }
 
     initClass() {
@@ -274,17 +292,23 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
           shadowRoot.innerHTML = innerHTML;
         }
       }
-      shadowRoot.adoptedStyleSheets = [
-        this._class.cssStyleSheet,
-        this.cssStyleSheet
-      ];
-      document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1);
+      const cssStyleSheet = new CSSStyleSheet();
+      let i = 0;
+      for (const style of this.allStyles) {
+        try {
+          cssStyleSheet.insertRule(style, cssStyleSheet.cssRules.length);
+          i += 1;
+        } catch (e) {};
+      }
+      shadowRoot.adoptedStyleSheets.push(cssStyleSheet);
       this._shadowRoot = shadowRoot;
       return shadowRoot;
     }
 
     /** Add style for this element */
     addStyle(css: string): void {
+      this._styles = this._styles.concat(css);
+
       // Init cssStyleSheet if it hasn't been inited yet.
       this.cssStyleSheet;
 
@@ -299,11 +323,11 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
-    delete() {
+    remove() {
       if (!this._shadowRoot) {
         document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1)
       };
-      this.remove();
+      super.remove();
     }
   };
 }
