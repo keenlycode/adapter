@@ -113,8 +113,12 @@ describe("Adapter Class: Use Case", function () {
 });
 
 describe("Adapter Object: Use Case", () => {
-    class Button1 extends Adapter {};
-    class Button2 extends Adapter {};
+    class Button1 extends Adapter {
+        static css = `visibility: hidden;`;
+    };
+    class Button2 extends Adapter {
+        static css = `visibility: hidden;`;
+    };
     Button1.define("el-button1");
     customElements.define('el-button2', Button2);
     const button1 = new Button1();
@@ -142,13 +146,10 @@ describe("Adapter Object: Use Case", () => {
     it(`Should have cssStyleSheet and is adopted by document`, () => {
         assert(button1.cssStyleSheet instanceof CSSStyleSheet);
         assert(button2.cssStyleSheet instanceof CSSStyleSheet);
+        document.body.append(button1);
+        document.body.append(button2);
         assert(document.adoptedStyleSheets.includes(button1.cssStyleSheet));
         assert(document.adoptedStyleSheets.includes(button2.cssStyleSheet));
-    });
-
-    it("Should have adoptedStyleSheetIndex", () => {
-        assert(button1.adoptedStyleSheetIndex !== null);
-        assert(button2.adoptedStyleSheetIndex !== null);
     });
 
     it("Can set css for this instance", () => {
@@ -165,8 +166,9 @@ describe("Adapter Object: Use Case", () => {
         assert(button1.cssStyleSheet.cssRules[1].cssText.includes("background-color: red;"));
     });
 
-    it("Can be deleted from document", () => {
-        button1.delete();
+    it("Can be removed from document", () => {
+        button1.remove();
+        button2.remove();
         assert(!document.adoptedStyleSheets.includes(button1.cssStyleSheet));
     });
 });
@@ -245,40 +247,34 @@ describe("CSS Processor", () => {
 });
 
 describe("Shadow DOM Support", () => {
-    class ShadowComponent extends Adapter {
-        static css = `color: red;`;
-
+    class ShadowHost extends Adapter {
+        static css = `visibility: hidden;`;
         constructor() {
             super();
-            this._shadowRoot = this.attachShadow({mode: 'open'});
-            this._shadowRoot.innerHTML = 'Shadow DOM';
+            this.attachShadow({mode: 'open'});
         }
     }
 
-    class ShadowClosedComponent extends Adapter {
-        static css = `color: red;`;
-
-        constructor() {
-            super();
-            this._shadowRoot = this.attachShadow({mode: 'closed'});
-            this._shadowRoot.innerHTML = 'Shadow DOM';
-        }
+    class Button extends Adapter {
+        static css = `
+            display: flex;
+            justify-content: center;
+            color: white;
+            background-color: red;
+            width: 100px;
+            height: 2rem;
+        `;
     }
-    ShadowComponent.define('el-shadow-component');
-    ShadowClosedComponent.define('el-shadow-closed-component');
 
-    it(`Can style attachShadow({mode: 'open'})`, () => { 
-        const component = new ShadowComponent();
-        component.hidden = true;
-        document.body.appendChild(component);
-        assert(getComputedStyle(component).color === 'rgb(255, 0, 0)');
-    })
+    Button.define('el-button');
+    ShadowHost.define('el-shadow-host');
 
-    it(`Can style attachShadow({mode: 'closed'})`, () => { 
-        const component = new ShadowClosedComponent();
-        component.hidden = true;
-        document.body.appendChild(component);
-        assert(getComputedStyle(component).color === 'rgb(255, 0, 0)');
+    it(`Component is styled under Shadow DOM`, () => { 
+        const shadowHost = new ShadowHost();
+        const button = new Button();
+        shadowHost.shadowRoot?.append(button);
+        document.body.append(shadowHost);
+        assert(getComputedStyle(button).backgroundColor === 'rgb(255, 0, 0)');
     })
 })
 

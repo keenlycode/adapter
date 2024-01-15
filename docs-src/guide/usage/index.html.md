@@ -208,25 +208,16 @@ Shadow DOM when you use it.
     <div el="bar-top-left"><strong>JS</strong></div>
 
 ```js
-class BlueCardShadow extends BlueCard {
+class ShadowHost extends Adapter {
     constructor() {
         super();
+        const innerHTML = this.innerHTML;
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot!.innerHTML = `This card use open Shadow DOM`;
+        this.shadowRoot.innerHTML = innerHTML;
     }
 }
 
-customElements.define('el-bluecard-shadow', BlueCardShadow);
-
-class BlueCardShadowClosed extends BlueCard {
-    constructor() {
-        super();
-        const shadowRoot = this.attachShadow({ mode: 'closed' });
-        shadowRoot.innerHTML = `This card use closed Shadow DOM`;
-    }
-}
-
-customElements.define('el-bluecard-shadow-closed', BlueCardShadowClosed);
+customElements.define('el-shadow-host', ShadowHost);
 ```
 </el-code-block>
 
@@ -234,11 +225,13 @@ customElements.define('el-bluecard-shadow-closed', BlueCardShadowClosed);
     <div el="bar-top-left"><strong>HTML</strong></div>
 
 ```html
-<el-bluecard-shadow></el-bluecard-shadow>
-<el-bluecard-shadow-closed></el-bluecard-shadow-closed>
+<el-shadow-host>
+    <el-bluecard>This card is in Shadow DOM</el-bluecard>
+</el-shadow-host>
 ```
 </el-code-block>
 
 #### Result :
-<el-bluecard-shadow></el-bluecard-shadow>
-<el-bluecard-shadow-closed></el-bluecard-shadow-closed>
+<el-shadow-host>
+    <el-bluecard>This card is in Shadow DOM</el-bluecard>
+</el-shadow-host>

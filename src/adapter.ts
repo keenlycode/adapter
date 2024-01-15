@@ -140,10 +140,9 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     _cssStyleSheet?: CSSStyleSheet;
 
-    // index of this.cssStyleSheet in document.adoptedStyleSheets
-    adoptedStyleSheetIndex!: number;
-
     _uuid?: string;
+
+    _styles: string[] = [];
 
     _shadowRoot!: ShadowRoot|null;
 
@@ -162,9 +161,23 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     connectedCallback() {
-      if (!this._isConnectedOnce) {
-        this.css = this.css;
-      };
+      const rootNode = this.getRootNode() as Document|ShadowRoot;
+      if (rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet) === -1) {
+        rootNode.adoptedStyleSheets.push(
+          this._class.cssStyleSheet,
+          this.cssStyleSheet
+        );
+      }
+    }
+
+    /** Retreive styles for this object */
+    get styles(): string[] {
+      return this._styles;
+    }
+
+    /** Retreive styles from class and object */
+    get allStyles(): string[] {
+      return [...this.styles, ...this._class.allStyles];
     }
 
     get cssObserver() {
@@ -195,16 +208,8 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     get cssStyleSheet() {
       if (this._cssStyleSheet) { return this._cssStyleSheet };
 
+      this.classList.add(this.uuid);
       this._cssStyleSheet = new CSSStyleSheet();
-
-      /** For normal element, attach this._cssStyleSheet to the document */
-      if (!this._shadowRoot) {
-        const index = document.adoptedStyleSheets.length;
-        this.classList.add(this.uuid);
-        document.adoptedStyleSheets[index] = this._cssStyleSheet;
-        this.adoptedStyleSheetIndex = index;
-      }
-
       return this._cssStyleSheet;
     }
 
@@ -220,7 +225,11 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
      * It works like `<el style="">` but with CSS processor.
      */
     set css(css: string) {
-      // Init cssStyleSheet if it hasn't been inited yet.
+      this._styles = [css];
+
+      /** Init cssStyleSheet if it hasn't been inited yet.
+       * This will make `this.objectClassSelector` works as expeced.
+       */
       this.cssStyleSheet;
 
       const processedCss = this._class.cssProcess(
@@ -266,25 +275,34 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     /** Override super.attachShadow()
      * to add this.cssStyleSheet to shadowRoot
      */
-    attachShadow(init: ShadowRootOption): ShadowRoot {
-      const innerHTML = this.innerHTML;
-      const shadowRoot = super.attachShadow(init);
-      if ('keepHTML' in init) {
-        if (init['keepHTML'] === true) {
-          shadowRoot.innerHTML = innerHTML;
-        }
-      }
-      shadowRoot.adoptedStyleSheets = [
-        this._class.cssStyleSheet,
-        this.cssStyleSheet
-      ];
-      document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1);
-      this._shadowRoot = shadowRoot;
-      return shadowRoot;
-    }
+    // attachShadow(init: ShadowRootOption): ShadowRoot {
+    //   const innerHTML = this.innerHTML;
+    //   const shadowRoot = super.attachShadow(init);
+    //   if ('keepHTML' in init) {
+    //     if (init['keepHTML'] === true) {
+    //       shadowRoot.innerHTML = innerHTML;
+    //     }
+    //   }
+    //   const cssStyleSheet = new CSSStyleSheet();
+    //   let i = 0;
+    //   for (const style of this.allStyles) {
+    //     try {
+    //       const rule = stylis(style);
+    //       cssStyleSheet.insertRule(style, cssStyleSheet.cssRules.length);
+    //       i += 1;
+    //     } catch (e) {
+    //       console.error(e);
+    //     };
+    //   }
+    //   shadowRoot.adoptedStyleSheets.push(cssStyleSheet);
+    //   this._shadowRoot = shadowRoot;
+    //   return shadowRoot;
+    // }
 
     /** Add style for this element */
     addStyle(css: string): void {
+      this._styles = this._styles.concat(css);
+
       // Init cssStyleSheet if it hasn't been inited yet.
       this.cssStyleSheet;
 
@@ -299,11 +317,11 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
-    delete() {
-      if (!this._shadowRoot) {
-        document.adoptedStyleSheets.splice(this.adoptedStyleSheetIndex, 1)
-      };
-      this.remove();
+    remove() {
+      const rootNode = this.getRootNode() as Document|ShadowRoot;
+      const i = rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet);
+      rootNode.adoptedStyleSheets.splice(i, 1);
+      super.remove();
     }
   };
 }
