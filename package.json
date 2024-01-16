@@ -47,8 +47,7 @@
     "mocha": "^10.2.0",
     "normalize.css": "^8.0.1",
     "stylis": "^4.3.0",
-    "typescript": "^5.2.2",
-    "uhtml": "^4.1.24"
+    "typescript": "^5.2.2"
   },
   "type": "module",
   "main": "dist/export.js"
