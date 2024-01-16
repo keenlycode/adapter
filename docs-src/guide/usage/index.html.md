@@ -190,9 +190,9 @@ document.querySelector('#blue-card-rotate').addStyle(`
 
 <el-bluecard id="blue-card-rotate">Rotate me</el-bluecard>
 
-<div id="shadow-dom-style"></div>
+<div id="shadow-dom"></div>
 
-## Shadow DOM Style
+## Shadow DOM just works !!
 ---
 Most of the time, styling the DOM with **Adapter** will cover everything
 you need to program CSS in an object-oriented manner.
