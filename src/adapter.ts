@@ -157,13 +157,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     connectedCallback() {
-      if (!this._isConnectedOnce) {
-        /** Apply css if it's set in attributes */
-        const css = this.getAttribute('css');
-        if (css) { this.css = css };
-        
-        this._isConnectedOnce = true;
-      }
+      /** Apply css if it's set in attributes */
+      const css = this.getAttribute('css');
+      if (css) { this.css = css };
+
       const rootNode = this.getRootNode() as Document|ShadowRoot;
       if (rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet) === -1) {
         rootNode.adoptedStyleSheets.push(
@@ -199,9 +196,8 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
 
     /** Dynamically create and return uuid for the element */
     get uuid(): string {
-      if (!this._uuid) {
-        this._uuid = `${this.tagName}-${uuid()}`;
-      }
+      if (this._uuid) { return this._uuid };
+      this._uuid = `${this.tagName}-${uuid()}`;
       return this._uuid;
     }
 

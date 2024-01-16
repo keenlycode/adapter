@@ -10,7 +10,10 @@ const docs_src_dir = path.join(__dirname, "../docs-src/");
 const entryFiles = await glob.sync(
   path.join(docs_src_dir, "**/*.{ts,js,svg,png,jpg,ttf}"),
   {
-    ignore: path.join(docs_src_dir, "**/_*"),
+    ignore: [
+      path.join(docs_src_dir, "**/_*/**"),
+      path.join(docs_src_dir, "**/_*")
+    ],
   }
 );
 
