@@ -200,9 +200,8 @@ However, if you are seeking complete control and isolation
 for your components, Shadow DOM is the way to go.
 
 Thanks to `adoptedStyleSheets`, **Adapter** can use it as the proper way
-to style Shadow DOM with ease. You have freedom to style your component
-without any concern of Shadow DOM. **Adapter** will automatically style
-Shadow DOM when you use it.
+to style Shadow DOM with ease. **Adapter** will automatically style element
+when attach it inside a Shadow DOM.
 
 <el-code-block>
     <div el="bar-top-left"><strong>JS</strong></div>
