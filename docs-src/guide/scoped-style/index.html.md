@@ -59,6 +59,9 @@ button { background-color: red };
 ">
     <button>Button 1</button>
 </el-style>
-<el-style css="button { background-color: blue };">
+
+<div></div>
+
+<!-- <el-style css="button { background-color: blue };">
     <button>Button 2</button>
-</el-style>
+</el-style> -->
