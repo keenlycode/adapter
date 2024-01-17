@@ -11,7 +11,12 @@ export function IsolatorMixin<TBase extends Constructor<_HTMLElement>>(
   return class Isolator extends Base {
 
     _host?: HTMLElement;
+
     _hostShadowRoot?: ShadowRoot;
+
+    constructor(...args: any[]) {
+      super(...args);
+    }
 
     get isolation(): ShadowRootMode {
       let isolation = this.getAttribute('isolation');
@@ -26,19 +31,13 @@ export function IsolatorMixin<TBase extends Constructor<_HTMLElement>>(
       const host = document.createElement('div');
       const shadowRoot = host.attachShadow({ mode: mode });
       this.insertAdjacentElement('beforebegin', host);
-      this.remove();
       shadowRoot.append(this);
       this._host = host;
       this._hostShadowRoot = shadowRoot;
       return host;
     }
 
-    constructor(...args: any[]) {
-      super(...args);
-    }
-
     connectedCallback() {
-      console.log('connectedCallback');
       super.connectedCallback ? super.connectedCallback() : null;
       if (!this._host) {
         /** Not isolated */
@@ -46,7 +45,6 @@ export function IsolatorMixin<TBase extends Constructor<_HTMLElement>>(
       };
       if ( (this.getRootNode() as ShadowRoot).host !== this._host ) {
         /** On move without host */
-        console.log('On move without host');
         const host = this._host;
         this._host = undefined;
         this.insertAdjacentElement('beforebegin', host);
@@ -56,7 +54,6 @@ export function IsolatorMixin<TBase extends Constructor<_HTMLElement>>(
     }
 
     disconnectedCallback() {
-      console.log('disconnectedCallback');
       if (!this._host) {
         /** Not isolated */
         return super.disconnectedCallback ? super.disconnectedCallback() : null;

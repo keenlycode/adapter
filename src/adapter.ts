@@ -1,9 +1,15 @@
 import { uuid } from './util.js';
 import { stylis } from './cssProcessor/stylis.bundle.js';
 
+
+interface _HTMLElement extends HTMLElement {
+  connectedCallback?(): void;
+  disconnectedCallback?(): void;
+}
+
 type Constructor<T = {}> = new (...args: any[]) => T;
 
-export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
+export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
   Base: TBase
 ) {
   return class Adapter extends Base {
@@ -156,20 +162,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       this.cssObserve(true);
     }
 
-    connectedCallback() {
-      /** Apply css if it's set in attributes */
-      const css = this.getAttribute('css');
-      if (css) { this.css = css };
-
-      const rootNode = this.getRootNode() as Document|ShadowRoot;
-      if (rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet) === -1) {
-        rootNode.adoptedStyleSheets.push(
-          this._class.cssStyleSheet,
-          this.cssStyleSheet
-        );
-      }
-    }
-
     /** Retreive styles for this object */
     get styles(): string[] {
       return this._styles;
@@ -186,7 +178,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       this._cssObserver = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
           if (mutation.attributeName === 'css') {
-            console.log('css');
             this.css = this.getAttribute('css') || '';
           };
         };
@@ -259,6 +250,21 @@ export function AdapterMixin<TBase extends Constructor<HTMLElement>>(
       }
       this._class._tagName = this.tagName;
       this._class.initStyle();
+    }
+
+    connectedCallback() {
+      super.connectedCallback ? super.connectedCallback() : null;
+      /** Apply css if it's set in attributes */
+      const css = this.getAttribute('css');
+      if (css) { this.css = css };
+
+      const rootNode = this.getRootNode() as Document|ShadowRoot;
+      if (rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet) === -1) {
+        rootNode.adoptedStyleSheets.push(
+          this._class.cssStyleSheet,
+          this.cssStyleSheet
+        );
+      }
     }
 
     /** Enable or disable CSS Observation */
