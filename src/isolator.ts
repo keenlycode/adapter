@@ -1,57 +1,75 @@
+interface _HTMLElement extends HTMLElement {
+  connectedCallback?(): void;
+  disconnectedCallback?(): void;
+}
+
 type Constructor<T = {}> = new (...args: any[]) => T;
 
-export function IsolatorMixin<TBase extends Constructor<HTMLElement>>(
+export function IsolatorMixin<TBase extends Constructor<_HTMLElement>>(
   Base: TBase
 ) {
   return class Isolator extends Base {
-    _isolator?: HTMLElement;
+
+    _host?: HTMLElement;
     _hostShadowRoot?: ShadowRoot;
 
-    isolated(mode: "open" | "closed" = "open") {
-      if (this.isIsolated) {
-        return;
-      };
-      const isolator = document.createElement("div");
-      const shadowRoot = isolator.attachShadow({ mode: mode });
-      this._isolator = isolator;
-      this.insertAdjacentElement("beforebegin", isolator);
+    get isolation(): ShadowRootMode {
+      let isolation = this.getAttribute('isolation');
+      if (isolation === '') {
+        isolation = 'open';
+      }
+      return isolation as ShadowRootMode;
+    }
+
+    isolate(mode: ShadowRootMode = 'open') {
+      this.setAttribute('isolation', mode);
+      const host = document.createElement('div');
+      const shadowRoot = host.attachShadow({ mode: mode });
+      this.insertAdjacentElement('beforebegin', host);
+      this.remove();
       shadowRoot.append(this);
+      this._host = host;
       this._hostShadowRoot = shadowRoot;
+      return host;
     }
 
-    get isIsolated() {
-      const host = (this.getRootNode() as ShadowRoot).host;
-      if (host === undefined) {
-        return false;
-      }
-      if (host == this._isolator) {
-        return true;
-      }
-    }
-
-    attachIsolator() {
-      this.insertAdjacentElement("beforebegin", this._isolator!);
-      this._hostShadowRoot?.append(this);
-    }
-
-    remove() {
-      this.isolator?.remove();
+    constructor(...args: any[]) {
+      super(...args);
     }
 
     connectedCallback() {
-      console.log("connectedCallback");
-      /** Initial isolation */
-      if (this._isolator === undefined) {
-        this.isolated();
+      console.log('connectedCallback');
+      super.connectedCallback ? super.connectedCallback() : null;
+      if (!this._host) {
+        /** Not isolated */
+        return;
+      };
+      if ( (this.getRootNode() as ShadowRoot).host !== this._host ) {
+        /** On move without host */
+        console.log('On move without host');
+        const host = this._host;
+        this._host = undefined;
+        this.insertAdjacentElement('beforebegin', host);
+        this._hostShadowRoot?.append(this);
+        this._host = host;
       }
-      /** Check isolation state and attach if needed */
-      if (!this.isIsolated) {
-        this.attachIsolator();
-      }
-      return super.connectedCallback();
     }
+
     disconnectedCallback() {
-      console.log("disconnectedCallback");
+      console.log('disconnectedCallback');
+      if (!this._host) {
+        /** Not isolated */
+        return super.disconnectedCallback ? super.disconnectedCallback() : null;
+      };
+      if (this.getRootNode() === this) {
+        /** On remove */
+        this._host.remove();
+      };
+      if (!((this.getRootNode() as ShadowRoot).host === this._host)) {
+        /** On move without host */
+        this._host.remove();
+      }
+      super.disconnectedCallback ? super.disconnectedCallback() : null;
     }
   };
 }
