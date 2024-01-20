@@ -1,4 +1,4 @@
 import { Adapter, IsolatorMixin } from "../../adapter";
 
 class Style extends IsolatorMixin(Adapter) {};
-Style.define('el-style');
+Style.define('el-div');

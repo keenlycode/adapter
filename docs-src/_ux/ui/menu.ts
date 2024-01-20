@@ -17,6 +17,7 @@ function menuStyle(param: MenuStyleParam = {}) {
         display: flex;
         flex-wrap: wrap;
         align-items: flex-start;
+        align-content: flex-start;
         box-sizing: border-box;
         width: 100%;
     }

@@ -2,10 +2,10 @@
 
 <div id="component-style"></div>
 
-## Component Style ( Class Style )
+## Class Level
 ---
 
-Class / Component Tier Styling will affect all elements
+Class Level Styling will affect all elements
 created from class with a defined **tagName**.
 The result **CSS** will be rendered like..
 
@@ -128,9 +128,9 @@ BlueCard.addStyle(`
 
 <div id="element-style"></div>
 
-## Element Style ( Object Style )
+## Element Object Level
 ---
-**Object Tier Styling** will render **CSS**
+**Element Object Styling** will render **CSS**
 with the auto-generated unique class selector, much like the following code.
 ```css
 el-card.predefine.class.and.autogen { /* style */ }
@@ -192,7 +192,7 @@ document.querySelector('#blue-card-rotate').addStyle(`
 
 <div id="shadow-dom"></div>
 
-## Shadow DOM just works !!
+## Style inside Shadow DOM just works !!
 ---
 Most of the time, styling the DOM with **Adapter** will cover everything
 you need to program CSS in an object-oriented manner.

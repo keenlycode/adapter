@@ -145,7 +145,7 @@ Adapter.addStyle(css: string);
     </div>
 
 ```js
-import { Adapter } from '@devcapsule/adapter';
+import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
 
 /* Extends `Adapter` */
 class Card extends Adapter {
