@@ -16,6 +16,7 @@ export function IsolatorMixin<TBase extends Constructor<_HTMLElement>>(
 
     constructor(...args: any[]) {
       super(...args);
+      this.isolation ? this.isolate(this.isolation) : null;
     }
 
     get isolation(): ShadowRootMode {
