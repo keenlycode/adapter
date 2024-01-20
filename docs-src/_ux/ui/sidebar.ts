@@ -7,16 +7,14 @@ const sidebarStyle = (): string => {
         all: unset;
         display: flex;
         flex-wrap: wrap;
-        align-items: flex-start;
-        align-content: flex-start;
+        align-content: flex-end;
+        padding-bottom: 8rem;
         box-sizing: border-box;
         position: fixed;
         left: 0;
         z-index: 100;
         width: 28ch;
         min-height: 50dvh;
-        padding-top: 30dvh;
-        padding-bottom: 20dvh;
         background-color: white;
 
         &.show {
