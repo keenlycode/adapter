@@ -98,7 +98,7 @@ class Sidebar extends _Sidebar {
       }
     });
 
-    let mql = window.matchMedia("screen and (max-width: 0px)");
+    let mql = window.matchMedia("screen and (max-width: 1200px)");
     setTimeout(() => {
       this.onMediaQueryChange(mql);
     }, 750);
