@@ -1,6 +1,6 @@
 import { Adapter, AdapterMixin, IsolatorMixin } from '../../adapter';
 
-class ElementA extends IsolatorMixin(Adapter) {
+class ElementA extends Adapter {
   // ...
 }
 

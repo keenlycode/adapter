@@ -1,5 +1,6 @@
 import { uuid } from './util.js';
 import { stylis } from './cssProcessor/stylis.bundle.js';
+import { IsolatorMixin } from './isolator.js';
 
 
 interface _HTMLElement extends HTMLElement {
@@ -303,7 +304,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
   };
 }
 
-export class Adapter extends AdapterMixin(HTMLElement) {
+export class Adapter extends IsolatorMixin(AdapterMixin(HTMLElement)) {
   static cssProcess(css: string): string {
     return stylis(css);
   }
