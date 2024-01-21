@@ -29,7 +29,7 @@ export function IsolatorMixin<TBase extends Constructor<_HTMLElement>>(
 
     isolate(mode: ShadowRootMode = 'open') {
       this.setAttribute('isolation', mode);
-      this._isolate(mode);
+      return this._isolate(mode);
     }
 
     _isolate(mode: ShadowRootMode) {

@@ -83,6 +83,7 @@ This is the rendered DOM
 A **Closed Shadow DOM** can prevent manipulation from other JavaScript code spaces,
 such as within other `<script>` tags, for example.
 
+## Dynamically Create
 For the same **javascript** code space, you can keep reference to component
 for manipulation later by using an example code below
 
