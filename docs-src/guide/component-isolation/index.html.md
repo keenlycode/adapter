@@ -82,11 +82,3 @@ This is the rendered DOM
 
 A **Closed Shadow DOM** can prevent manipulation from other JavaScript code spaces,
 such as within other `<script>` tags, for example.
-
-For the same **javascript** code space, you can keep reference to component
-for manipulation later by using an example code below
-
-```js
-let elementA = new ElementA();
-elementA = elementA.isolate('closed');
-```

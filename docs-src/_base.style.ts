@@ -63,6 +63,10 @@ function baseStyle(to_base_url: string) {
         ${Button.Style.css()}
     }
 
+    img {
+        max-width: 100%;
+    }
+
     .width-100 {
         width: 100%;
     }
