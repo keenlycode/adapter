@@ -1,4 +1,4 @@
-import { Adapter, stylis } from "../../adapter";
+import { Adapter, IsolatorMixin } from "../../adapter";
 
-class Style extends Adapter {};
-Style.define('el-style');
+class Style extends IsolatorMixin(Adapter) {};
+Style.define('el-div');

@@ -1,7 +1,6 @@
-## 🎉 Javascript UX/UI to the next level.
+## 🎉 CSS to the next level.
 
-Adapter focus on features which doesn't exist, to bring **CSS**
-into **OOP** with **CSS-in-JS** and **Web Component**
+Adapter make **CSS** programmable in **OOP** manner together with **Javascript** and **Web Component**
 
 ## 🎉 Easy to start & learn
 You can start using **Adapter** without **Node.js** or any
@@ -52,14 +51,13 @@ class Particle1 extends Particle {
 ## 🎉 Compact
 
 <div style="text-align: center;">
-<strong style="font-size: 1.5em;">~ 3kB</strong> minify<br>
-<strong style="font-size: 1.5em;">~ 1kB</strong> minify gzip
+<strong style="font-size: 1.5em;">~ 4kB</strong> minify<br>
+<strong style="font-size: 1.5em;">~ 2kB</strong> minify gzip
 </div>
 
-## 🎉 Extensible
+## 🎉 Integrate with other libraries
 
-You can extends your components with great libraries:
-- HTML:
+- HTML Render:
   [uhtml](https://github.com/WebReflection/uhtml),
   [lit-html](https://lit.dev/docs/libraries/standalone-templates/)
 - CSS Parser:
@@ -67,7 +65,9 @@ You can extends your components with great libraries:
   [stylis](https://stylis.js.org/),
   [ligntningcss](https://lightningcss.dev/)
 - Event/Signal: [mitt](https://www.npmjs.com/package/mitt),
-  [nanoevents](https://github.com/ai/nanoevents])
+  [nanoevents](https://github.com/ai/nanoevents]),
+  [@preact/signals]()
+- Reactive: [ArrowJS](https://www.arrow-js.com/)
 - Animation:
   [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API),
   [anime.js](https://animejs.com/),
@@ -145,7 +145,7 @@ Adapter.addStyle(css: string);
     </div>
 
 ```js
-import { Adapter } from '@devcapsule/adapter';
+import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
 
 /* Extends `Adapter` */
 class Card extends Adapter {
