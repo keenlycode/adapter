@@ -16,7 +16,7 @@ export function IsolatorMixin<TBase extends Constructor<_HTMLElement>>(
 
     constructor(...args: any[]) {
       super(...args);
-      this.isolation ? this.isolate(this.isolation) : null;
+      this.isolation ? this._isolate(this.isolation) : null;
     }
 
     get isolation(): ShadowRootMode {
@@ -29,6 +29,10 @@ export function IsolatorMixin<TBase extends Constructor<_HTMLElement>>(
 
     isolate(mode: ShadowRootMode = 'open') {
       this.setAttribute('isolation', mode);
+      this._isolate(mode);
+    }
+
+    _isolate(mode: ShadowRootMode) {
       const host = document.createElement('div');
       const shadowRoot = host.attachShadow({ mode: mode });
       this.insertAdjacentElement('beforebegin', host);
