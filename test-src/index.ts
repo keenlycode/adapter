@@ -156,25 +156,26 @@ describe.only("Adapter Object: Use Case", () => {
         assert(document.adoptedStyleSheets.includes(button2.adapter.cssStyleSheet));
     });
 
-    // it("Can set css for this instance", () => {
-    //     button1.css = `display: flex;`;
-    //     assert(button1.cssStyleSheet.cssRules[0].cssText.includes("display: flex;"));
-    // });
+    it("Can set css for this instance", () => {
+        button1.css = `display: flex;`;
+        assert(button1.adapter.cssStyleSheet.cssRules[0].cssText.includes("display: flex;"));
+    });
 
-    // it("Can get CSS for this instance", () => {
-    //     assert(button1.css.includes("display: flex;"));
-    // })
+    it("Can get CSS for this instance", () => {
+        assert(button1.css.includes("display: flex;"));
+    })
 
-    // it("Can add style for this instance", () => {
-    //     button1.addStyle(`background-color: red;`);
-    //     assert(button1.cssStyleSheet.cssRules[1].cssText.includes("background-color: red;"));
-    // });
+    it("Can add style for this instance", () => {
+        button1.addStyle(`background-color: red;`);
+        assert(button1.adapter.cssStyleSheet.cssRules[1].cssText.includes("background-color: red;"));
+    });
 
-    // it("Can be removed from document", () => {
-    //     button1.remove();
-    //     button2.remove();
-    //     assert(!document.adoptedStyleSheets.includes(button1.cssStyleSheet));
-    // });
+    it("Can be removed from document", () => {
+        button1.remove();
+        button2.remove();
+        assert(!document.adoptedStyleSheets.includes(button1.cssStyleSheet));
+        assert(!document.adoptedStyleSheets.includes(button2.cssStyleSheet));
+    });
 });
 
 describe("Adapter Mixin: Use Case", () => {

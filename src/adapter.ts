@@ -250,25 +250,24 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
      * It works like `<el style="">` but with CSS processor.
      */
     set css(css: string) {
-      this._styles = [css];
-      this.classList.add(this.uuid);
+      this.adapter.styles = [css];
+      this.classList.add(this.adapter.uuid);
 
       /** Init cssStyleSheet if it hasn't been inited yet.
        * This will make `this.objectClassSelector` works as expeced.
        */
-      this.cssStyleSheet;
       const processedCss = this._class.cssProcess(
         `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );
       
-      this.cssStyleSheet.replaceSync(processedCss);
+      this.adapter.cssStyleSheet.replaceSync(processedCss);
     }
 
     /** Get CSS for this element */
     get css(): string {
       let css = this.getAttribute("css") || "";
       if (css) { return css };
-      for (const rule of this.cssStyleSheet.cssRules) {
+      for (const rule of this.adapter.cssStyleSheet.cssRules) {
         css += rule.cssText + "\n";
       }
       return css;
