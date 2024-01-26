@@ -41,7 +41,6 @@ class AdapterClass {
     this.styles = [css];
 
     if (this.tagName) {
-      console.log('tagName')
       this.cssStyleSheet.replaceSync(
         this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`)
       );
@@ -136,7 +135,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       return this.adapter.css;
     }
 
-    static get tagName(): string|undefined {
+    static get tagName(): string | undefined {
       return this.adapter.tagName;
     }
 
@@ -252,7 +251,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       const processedCss = this._class.cssProcess(
         `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );
-      
+
       this.adapter.cssStyleSheet.replaceSync(processedCss);
     }
 
@@ -273,7 +272,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       const css = this.getAttribute('css');
       if (css) { this.css = css };
 
-      const rootNode = this.getRootNode() as Document|ShadowRoot;
+      const rootNode = this.getRootNode() as Document | ShadowRoot;
       if (rootNode.adoptedStyleSheets.indexOf(this.adapter.cssStyleSheet) === -1) {
         rootNode.adoptedStyleSheets.push(
           this._class.adapter.cssStyleSheet,
@@ -308,7 +307,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
     remove() {
-      const rootNode = this.getRootNode() as Document|ShadowRoot;
+      const rootNode = this.getRootNode() as Document | ShadowRoot;
       const i = rootNode.adoptedStyleSheets.indexOf(this.adapter.cssStyleSheet);
       rootNode.adoptedStyleSheets.splice(i, 1);
       super.remove();

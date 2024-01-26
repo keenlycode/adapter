@@ -25,15 +25,15 @@ const style = new CSSStyleSheet();
 
 document.adoptedStyleSheets.push(style);
 style.replaceSync(`
-    body {
-        padding-bottom: 10rem;
-    }
-    #render {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        align-items: center;
-    }
+  body {
+      padding-bottom: 10rem;
+  }
+  #render {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
+  }
 `);
 
 mocha.setup({
@@ -42,9 +42,9 @@ mocha.setup({
 });
 
 describe("Adapter Class: Use Case", function () {
-  class Card1 extends Adapter {}
-  class Card2 extends Adapter {}
-  class RedCard extends Card1 {}
+  class Card1 extends Adapter { }
+  class Card2 extends Adapter { }
+  class RedCard extends Card1 { }
 
   it("Should be extendable", () => {
     assert(Object.getPrototypeOf(Card1) === Adapter);
@@ -200,8 +200,8 @@ describe("Adapter Object: Use Case", () => {
 });
 
 describe("Adapter Mixin: Use Case", () => {
-  class Pin1 extends AdapterMixin(HTMLElement) {}
-  class Pin2 extends AdapterMixin(Pin1) {}
+  class Pin1 extends AdapterMixin(HTMLElement) { }
+  class Pin2 extends AdapterMixin(Pin1) { }
 
   Pin1.define("el-pin1");
   Pin2.define("el-pin2");
@@ -261,13 +261,13 @@ describe("CSS Processor", () => {
       }
 
       static css = `
-                display: flex;
-                min-height: 20vh;
-                background-color: #eee;
-                &.red {
-                    background-color: red;
-                }
-            `;
+        display: flex;
+        min-height: 20vh;
+        background-color: #eee;
+        &.red {
+            background-color: red;
+        }
+      `;
     }
 
     MyAdapter.define("el-adapter-lightningcss");
@@ -293,13 +293,13 @@ describe("Shadow DOM Support", () => {
 
   class Button extends Adapter {
     static css = `
-            display: flex;
-            justify-content: center;
-            color: white;
-            background-color: red;
-            width: 100px;
-            height: 2rem;
-        `;
+      display: flex;
+      justify-content: center;
+      color: white;
+      background-color: red;
+      width: 100px;
+      height: 2rem;
+    `;
   }
 
   Button.define("el-button");
