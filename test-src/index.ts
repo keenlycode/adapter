@@ -136,11 +136,11 @@ describe.only("Adapter Object: Use Case", () => {
     it("constructor() should be called and setup the instance", () => {
         assert(button1._class === Button1);
         assert(button1._class.tagName === "el-button1");
-        assert(document.adoptedStyleSheets.includes(button1._class.cssStyleSheet));
+        assert(document.adoptedStyleSheets.includes(button1._class.adapter.cssStyleSheet));
 
         assert(button2._class === Button2);
         assert(button2._class.tagName?.toLowerCase() === "el-button2");
-        assert(document.adoptedStyleSheets.includes(button2._class.cssStyleSheet));
+        assert(document.adoptedStyleSheets.includes(button2._class.adapter.cssStyleSheet));
     });
 
     // it("It's uuid should be unique", () => {

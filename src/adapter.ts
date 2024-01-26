@@ -143,6 +143,10 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       return this.adapter.css;
     }
 
+    static get tagName(): string|undefined {
+      return this.adapter.tagName;
+    }
+
     /** Add style to this component */
     static addStyle(css: string) {
       this.adapter.addStyle(css);
@@ -178,6 +182,20 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       this.adapter.adapterObject = this;
       if (!this._class) { this.initClass() };
       this.cssObserve(true);
+    }
+
+    initClass() {
+      this._class = this.constructor as unknown as typeof Adapter;
+
+      /**
+       * If class tagName has been defined from somewhere else.
+       * Then it shouldn't be initialized again.
+       */
+      if (this._class.adapter.tagName) {
+        return;
+      }
+      this._class.adapter.tagName = this.tagName;
+      this._class.adapter.initStyle();
     }
 
     /** Retreive styles for this object */
@@ -254,20 +272,6 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
         css += rule.cssText + "\n";
       }
       return css;
-    }
-
-    initClass() {
-      this._class = this.constructor as unknown as typeof Adapter;
-
-      /**
-       * If class tagName has been defined from somewhere else.
-       * Then it shouldn't be initialized again.
-       */
-      if (this._class.adapter.tagName) {
-        return;
-      }
-      this._class.adapter.tagName = this.tagName;
-      this._class.adapter.initStyle();
     }
 
     connectedCallback() {
