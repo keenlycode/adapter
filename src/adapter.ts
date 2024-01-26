@@ -18,7 +18,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
     static _cssStyleSheet: CSSStyleSheet;
 
     /** Tag name of this component */
-    static _tagName: string | null;
+    static _tagName: string | undefined;
 
     /** Styles which contain only css for this component */
     static _styles: string[] = [];
@@ -35,7 +35,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
      * also prevent inherit values from super class.
      */
     static get styles(): string[] {
-      if (this._styles === Object.getPrototypeOf(this).styles) {
+      if (this._styles === Object.getPrototypeOf(this)._styles) {
         this._styles = [];
       }
       return this._styles;
@@ -77,9 +77,9 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
     /** Get tagName for this class which will be defined after
      * the class has been registerd with CustomElementsRegistry.
      */
-    static get tagName(): string | null {
-      if (this._tagName === Object.getPrototypeOf(this).tagName) {
-        this._tagName = null;
+    static get tagName(): string | undefined {
+      if (this._tagName === Object.getPrototypeOf(this)._tagName) {
+        this._tagName = undefined;
       }
       return this._tagName;
     }
@@ -147,11 +147,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
 
     _styles: string[] = [];
 
-    _shadowRoot!: ShadowRoot|null;
-
     _cssObserver!: MutationObserver;
-
-    _isConnectedOnce = false;
 
     /**
      * In constructor, there any some if condition to check
