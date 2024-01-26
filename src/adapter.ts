@@ -217,7 +217,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
     constructor(...args: any[]) {
       super(...args);
       this.adapter.adapterObject = this;
-      if (!this._class) { this.initClass() };
+      if (!this.adapter._class) { this.adapter.initClass() };
       this.adapter.cssObserve(true);
     }
 
@@ -246,7 +246,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       /** Init cssStyleSheet if it hasn't been inited yet.
        * This will make `this.objectClassSelector` works as expeced.
        */
-      const processedCss = this._class.cssProcess(
+      const processedCss = this.adapter._class.cssProcess(
         `${this.tagName}.${this.adapter.objectClassSelector} { ${css} }`
       );
 
@@ -271,13 +271,17 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       if (css) { this.css = css };
 
       const rootNode = this.getRootNode() as Document | ShadowRoot;
-      if (rootNode.adoptedStyleSheets.indexOf(this._class.adapter.cssStyleSheet) === -1) {
-        rootNode.adoptedStyleSheets.push(this._class.adapter.cssStyleSheet);
-      }
-      if (rootNode.adoptedStyleSheets.indexOf(this.adapter.cssStyleSheet) === -1) {
+      if (rootNode.adoptedStyleSheets.indexOf(
+        this.adapter._class.adapter.cssStyleSheet) === -1) 
+      {
         rootNode.adoptedStyleSheets.push(
-          this.adapter.cssStyleSheet
-        );
+          this.adapter._class.adapter.cssStyleSheet);
+      }
+      if (rootNode.adoptedStyleSheets.indexOf(
+        this.adapter.cssStyleSheet) === -1)
+      {
+        rootNode.adoptedStyleSheets.push(
+          this.adapter.cssStyleSheet);
       }
     }
 
@@ -286,7 +290,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       this.adapter.styles.push(css);
       this.classList.add(this.adapter.uuid);
 
-      const processedCss = this._class.cssProcess(
+      const processedCss = this.adapter._class.cssProcess(
         `${this.tagName}.${this.adapter.objectClassSelector} { ${css} }`
       );
 

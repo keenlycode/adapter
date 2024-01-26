@@ -67,7 +67,7 @@ describe("Adapter Class: Use Case", function () {
     customElements.define("el-card2", Card2);
     const card2 = new Card2();
     assert(card2.tagName.toLowerCase() === "el-card2");
-    assert(card2._class.adapter.tagName?.toLowerCase() === "el-card2");
+    assert(card2.adapter._class.adapter.tagName?.toLowerCase() === "el-card2");
   });
 
   it("Should be able to create instance", () => {
@@ -142,16 +142,16 @@ describe("Adapter Object: Use Case", () => {
   });
 
   it("constructor() should be called and setup the instance", () => {
-    assert(button1._class === Button1);
-    assert(button1._class.tagName === "el-button1");
+    assert(button1.adapter._class === Button1);
+    assert(button1.adapter._class.tagName === "el-button1");
     assert(
-      document.adoptedStyleSheets.includes(button1._class.adapter.cssStyleSheet)
+      document.adoptedStyleSheets.includes(button1.adapter._class.adapter.cssStyleSheet)
     );
 
-    assert(button2._class === Button2);
-    assert(button2._class.tagName?.toLowerCase() === "el-button2");
+    assert(button2.adapter._class === Button2);
+    assert(button2.adapter._class.tagName?.toLowerCase() === "el-button2");
     assert(
-      document.adoptedStyleSheets.includes(button2._class.adapter.cssStyleSheet)
+      document.adoptedStyleSheets.includes(button2.adapter._class.adapter.cssStyleSheet)
     );
   });
 
@@ -192,9 +192,9 @@ describe("Adapter Object: Use Case", () => {
 
   it("Can be removed from document", () => {
     button1.remove();
-    // button2.remove();
-    // assert(!document.adoptedStyleSheets.includes(button1.adapter.cssStyleSheet));
-    // assert(!document.adoptedStyleSheets.includes(button2.adapter.cssStyleSheet));
+    button2.remove();
+    assert(!document.adoptedStyleSheets.includes(button1.adapter.cssStyleSheet));
+    assert(!document.adoptedStyleSheets.includes(button2.adapter.cssStyleSheet));
   });
 });
 
