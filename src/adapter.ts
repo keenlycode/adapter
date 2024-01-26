@@ -26,6 +26,7 @@ class AdapterClass {
     return css;
   }
 
+  /** Retreive styles including all super classes */
   get allStyles(): string[] {
     let superClass = Object.getPrototypeOf(this.adapterClass);
     const allStyles = [];
@@ -38,7 +39,7 @@ class AdapterClass {
     return allStyles;
   }
 
-  /** Retreive inherited styles for all super classes. */
+  /** Retreive inherited CSS including all super classes. */
   get allCSS(): string {
     return this.allStyles.join("\n");
   }

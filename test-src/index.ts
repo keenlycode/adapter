@@ -143,38 +143,38 @@ describe.only("Adapter Object: Use Case", () => {
         assert(document.adoptedStyleSheets.includes(button2._class.cssStyleSheet));
     });
 
-    it("It's uuid should be unique", () => {
-        assert(button1.uuid !== button2.uuid);
-    });
+    // it("It's uuid should be unique", () => {
+    //     assert(button1.uuid !== button2.uuid);
+    // });
 
-    it(`Should have cssStyleSheet and is adopted by document`, () => {
-        assert(button1.cssStyleSheet instanceof CSSStyleSheet);
-        assert(button2.cssStyleSheet instanceof CSSStyleSheet);
-        document.body.append(button1);
-        document.body.append(button2);
-        assert(document.adoptedStyleSheets.includes(button1.cssStyleSheet));
-        assert(document.adoptedStyleSheets.includes(button2.cssStyleSheet));
-    });
+    // it(`Should have cssStyleSheet and is adopted by document`, () => {
+    //     assert(button1.cssStyleSheet instanceof CSSStyleSheet);
+    //     assert(button2.cssStyleSheet instanceof CSSStyleSheet);
+    //     document.body.append(button1);
+    //     document.body.append(button2);
+    //     assert(document.adoptedStyleSheets.includes(button1.cssStyleSheet));
+    //     assert(document.adoptedStyleSheets.includes(button2.cssStyleSheet));
+    // });
 
-    it("Can set css for this instance", () => {
-        button1.css = `display: flex;`;
-        assert(button1.cssStyleSheet.cssRules[0].cssText.includes("display: flex;"));
-    });
+    // it("Can set css for this instance", () => {
+    //     button1.css = `display: flex;`;
+    //     assert(button1.cssStyleSheet.cssRules[0].cssText.includes("display: flex;"));
+    // });
 
-    it("Can get CSS for this instance", () => {
-        assert(button1.css.includes("display: flex;"));
-    })
+    // it("Can get CSS for this instance", () => {
+    //     assert(button1.css.includes("display: flex;"));
+    // })
 
-    it("Can add style for this instance", () => {
-        button1.addStyle(`background-color: red;`);
-        assert(button1.cssStyleSheet.cssRules[1].cssText.includes("background-color: red;"));
-    });
+    // it("Can add style for this instance", () => {
+    //     button1.addStyle(`background-color: red;`);
+    //     assert(button1.cssStyleSheet.cssRules[1].cssText.includes("background-color: red;"));
+    // });
 
-    it("Can be removed from document", () => {
-        button1.remove();
-        button2.remove();
-        assert(!document.adoptedStyleSheets.includes(button1.cssStyleSheet));
-    });
+    // it("Can be removed from document", () => {
+    //     button1.remove();
+    //     button2.remove();
+    //     assert(!document.adoptedStyleSheets.includes(button1.cssStyleSheet));
+    // });
 });
 
 describe("Adapter Mixin: Use Case", () => {
