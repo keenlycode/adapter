@@ -8,24 +8,25 @@ interface _HTMLElement extends HTMLElement {
   disconnectedCallback?(): void;
 }
 
-export class _Adapter {
-  static adapterClass?: any;
+export class AdapterClass {
 
-  static cssStyleSheet: CSSStyleSheet;
+  adapterClass?: any;
 
-  static tagName?: string;
+  cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
-  static styles: string[];
+  tagName?: string;
+
+  styles: string[] = [];
 
   /**
    * CSS Processing middleware, This function will be called
    * before applying CSS to CSSStyleSheet.
    */
-  static cssProcess(css: string): string {
+  cssProcess(css: string): string {
     return css;
   }
 
-  static get allStyles(): string[] {
+  get allStyles(): string[] {
     let superClass = Object.getPrototypeOf(this.adapterClass);
     const allStyles = [];
 
@@ -38,12 +39,12 @@ export class _Adapter {
   }
 
   /** Retreive inherited styles for all super classes. */
-  static get allCSS(): string {
+  get allCSS(): string {
     return this.allStyles.join("\n");
   }
 
   /** Set CSS for this component */
-  static set css(css: string) {
+  set css(css: string) {
     this.styles = [css];
 
     if (this.tagName) {
@@ -54,12 +55,12 @@ export class _Adapter {
   }
 
   /** Get CSS for this component, includes inherited styles */
-  static get css(): string {
+  get css(): string {
     return this.styles.join("\n");
   }
 
   /** Add style to this component */
-  static addStyle(css: string) {
+  addStyle(css: string) {
     this.styles.push(css);
 
     if (this.tagName) {
@@ -77,37 +78,24 @@ export class _Adapter {
      * To extends this function, sub-elements must be defined
      * before call this function as `super.define(tagName);`
      */
-  static define(tagName: string): void {
+  define(tagName: string): void {
     this.tagName = tagName;
     customElements.define(tagName, this.adapterClass);
     this.initStyle();
   }
 
   /** Init component style */
-  static initStyle() {
+  initStyle() {
     this.cssStyleSheet.replaceSync(
       this.cssProcess(`${this.tagName} { ${this.allCSS} }`)
     );
     document.adoptedStyleSheets.push(this.cssStyleSheet);
   }
 
-  _class: typeof _Adapter;
-
-  adapterObject: any;
-
-  cssStyleSheet?: CSSStyleSheet;
-
-  uuid?: string;
-
-  styles: string[] = [];
-
-  cssObserver!: MutationObserver;
-
   constructor() {
-    this._class = this.constructor as typeof _Adapter;
-    this._class.cssStyleSheet = new CSSStyleSheet();
-    this._class.tagName = undefined;
-    this._class.styles = [];
+    this.cssStyleSheet = new CSSStyleSheet();
+    this.tagName = undefined;
+    this.styles = [];
   }
 
 }
@@ -118,12 +106,12 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
   Base: TBase
 ) {
   return class Adapter extends Base {
-    static _adapter: _Adapter;
+    static _adapter: AdapterClass;
 
-    static get adapter(): _Adapter {
+    static get adapter(): AdapterClass {
       if (this._adapter === Object.getPrototypeOf(this)._adapter) {
-        this._adapter = new _Adapter();
-        this._adapter._class.adapterClass = this;
+        this._adapter = new AdapterClass();
+        this._adapter.adapterClass = this;
       }
       return this._adapter;
     }
@@ -132,12 +120,12 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
      * before applying CSS to CSSStyleSheet.
      */
     static cssProcess(css: string): string {
-      return this.adapter._class.cssProcess(css);
+      return this.adapter.cssProcess(css);
     }
 
     /** Add style to this component */
     static addStyle(css: string) {
-      this.adapter._class.addStyle(css);
+      this.adapter.addStyle(css);
     }
 
     /**
@@ -146,7 +134,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
      * before call this function as `super.define(tagName);`
      */
     static define(tagName: string): void {
-      this.adapter._class.define(tagName);
+      this.adapter.define(tagName);
     }
 
     _class!: typeof Adapter; // instance's class for using as shortcut
@@ -176,7 +164,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
 
     /** Retreive styles from class and object */
     get allStyles(): string[] {
-      return [...this.styles, ...this._class.allStyles];
+      return [...this.styles, ...this._class.adapter.allStyles];
     }
 
     get cssObserver() {
@@ -246,17 +234,18 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
     }
 
     initClass() {
+      console.log('init')
       this._class = this.constructor as unknown as typeof Adapter;
 
       /**
        * If class tagName has been defined from somewhere else.
        * Then it shouldn't be initialized again.
        */
-      if (this._class.adapter._class.tagName) {
+      if (this._class.adapter.tagName) {
         return;
       }
-      this._class._tagName = this.tagName;
-      this._class.initStyle();
+      this._class.adapter.tagName = this.tagName;
+      this._class.adapter.initStyle();
     }
 
     connectedCallback() {
@@ -268,7 +257,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       const rootNode = this.getRootNode() as Document|ShadowRoot;
       if (rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet) === -1) {
         rootNode.adoptedStyleSheets.push(
-          this._class.cssStyleSheet,
+          this._class.adapter.cssStyleSheet,
           this.cssStyleSheet
         );
       }
