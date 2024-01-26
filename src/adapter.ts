@@ -200,12 +200,12 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
 
     /** Retreive styles for this object */
     get styles(): string[] {
-      return this._styles;
+      return this.adapter.styles;
     }
 
     /** Retreive styles from class and object */
     get allStyles(): string[] {
-      return [...this.styles, ...this._class.adapter.allStyles];
+      return [...this.adapter.styles, ...this._class.adapter.allStyles];
     }
 
     get cssObserver() {
@@ -276,7 +276,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
 
     connectedCallback() {
       super.connectedCallback ? super.connectedCallback() : null;
-      
+
       /** Apply css if it's set in attributes */
       const css = this.getAttribute('css');
       if (css) { this.css = css };
@@ -301,25 +301,23 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
 
     /** Add style for this element */
     addStyle(css: string): void {
-      this._styles = this._styles.concat(css);
-      this.classList.add(this.uuid);
+      this.adapter.styles.push(css);
+      this.classList.add(this.adapter.uuid);
 
-      // Init cssStyleSheet if it hasn't been inited yet.
-      this.cssStyleSheet;
       const processedCss = this._class.cssProcess(
         `${this.tagName}.${this.objectClassSelector} { ${css} }`
       );
 
-      this.cssStyleSheet.insertRule(
+      this.adapter.cssStyleSheet.insertRule(
         processedCss,
-        this.cssStyleSheet.cssRules.length
+        this.adapter.cssStyleSheet.cssRules.length
       );
     }
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
     remove() {
       const rootNode = this.getRootNode() as Document|ShadowRoot;
-      const i = rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet);
+      const i = rootNode.adoptedStyleSheets.indexOf(this.adapter.cssStyleSheet);
       rootNode.adoptedStyleSheets.splice(i, 1);
       super.remove();
     }
