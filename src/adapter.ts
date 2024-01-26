@@ -8,7 +8,7 @@ interface _HTMLElement extends HTMLElement {
   disconnectedCallback?(): void;
 }
 
-export class AdapterClass {
+class AdapterClass {
 
   adapterClass?: any;
 
@@ -91,13 +91,24 @@ export class AdapterClass {
     );
     document.adoptedStyleSheets.push(this.cssStyleSheet);
   }
+}
 
-  constructor() {
-    this.cssStyleSheet = new CSSStyleSheet();
-    this.tagName = undefined;
-    this.styles = [];
+class AdapterObject {
+  adapterObject: any;
+
+  cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
+
+  _uuid?: string;
+
+  get uuid(): string {
+    if (this._uuid) { return this._uuid };
+    this._uuid = `${this.adapterObject.tagName}-${uuid()}`;
+    return this._uuid;
   }
 
+  styles: string[] = [];
+
+  cssObserver!: MutationObserver;
 }
 
 type Constructor<T = {}> = new (...args: any[]) => T;
@@ -147,6 +158,8 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
 
     _class!: typeof Adapter; // instance's class for using as shortcut
 
+    adapter: AdapterObject = new AdapterObject();
+
     _cssStyleSheet?: CSSStyleSheet;
 
     _uuid?: string;
@@ -161,6 +174,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
      */
     constructor(...args: any[]) {
       super(...args);
+      this.adapter.adapterObject = this;
       if (!this._class) { this.initClass() };
       this.cssObserve(true);
     }

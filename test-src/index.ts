@@ -38,7 +38,7 @@ mocha.setup({
     checkLeaks: true
 });
 
-describe.only("Adapter Class: Use Case", function () {
+describe("Adapter Class: Use Case", function () {
     class Card1 extends Adapter {};
     class Card2 extends Adapter {};
     class RedCard extends Card1 {};
@@ -116,7 +116,7 @@ describe.only("Adapter Class: Use Case", function () {
     });
 });
 
-describe("Adapter Object: Use Case", () => {
+describe.only("Adapter Object: Use Case", () => {
     class Button1 extends Adapter {
         static css = `visibility: hidden;`;
     };
