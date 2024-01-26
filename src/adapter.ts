@@ -101,7 +101,29 @@ class AdapterObject {
 
   styles: string[] = [];
 
-  cssObserver!: MutationObserver;
+  _cssObserver!: MutationObserver;
+
+  get cssObserver() {
+    if (this._cssObserver) { return this._cssObserver };
+
+    this._cssObserver = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.attributeName === 'css') {
+          this.adapterObject.css = this.adapterObject.getAttribute('css') || '';
+        };
+      };
+    });
+    return this._cssObserver;
+  }
+
+  /** Enable or disable CSS Observation */
+  cssObserve(enable: boolean) {
+    if (enable) {
+      this.cssObserver.observe(this.adapterObject, { attributes: true });
+    } else {
+      this.cssObserver.disconnect();
+    }
+  }
 }
 
 type Constructor<T = {}> = new (...args: any[]) => T;
@@ -173,7 +195,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       super(...args);
       this.adapter.adapterObject = this;
       if (!this._class) { this.initClass() };
-      this.cssObserve(true);
+      this.adapter.cssObserve(true);
     }
 
     initClass() {
@@ -198,19 +220,6 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
     /** Retreive styles from class and object */
     get allStyles(): string[] {
       return [...this.adapter.styles, ...this._class.adapter.allStyles];
-    }
-
-    get cssObserver() {
-      if (this._cssObserver) { return this._cssObserver };
-
-      this._cssObserver = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-          if (mutation.attributeName === 'css') {
-            this.css = this.getAttribute('css') || '';
-          };
-        };
-      });
-      return this._cssObserver;
     }
 
     /** Dynamically create and return uuid for the element */
@@ -278,15 +287,6 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
           this._class.adapter.cssStyleSheet,
           this.adapter.cssStyleSheet
         );
-      }
-    }
-
-    /** Enable or disable CSS Observation */
-    cssObserve(enable: boolean) {
-      if (enable) {
-        this.cssObserver.observe(this, { attributes: true });
-      } else {
-        this.cssObserver.disconnect();
       }
     }
 
