@@ -147,11 +147,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
 
     _styles: string[] = [];
 
-    _shadowRoot!: ShadowRoot|null;
-
     _cssObserver!: MutationObserver;
-
-    _isConnectedOnce = false;
 
     /**
      * In constructor, there any some if condition to check
