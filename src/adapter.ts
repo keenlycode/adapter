@@ -116,6 +116,13 @@ class AdapterObject {
     return this._cssObserver;
   }
 
+  /**
+   * Return a selector for the this element as a class chain.
+   */
+  get objectClassSelector(): string {
+    return this.adapterObject.classList.value.replace(/ /g, ".");
+  }
+
   /** Enable or disable CSS Observation */
   cssObserve(enable: boolean) {
     if (enable) {
@@ -222,30 +229,6 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       return [...this.adapter.styles, ...this._class.adapter.allStyles];
     }
 
-    /** Dynamically create and return uuid for the element */
-    get uuid(): string {
-      if (this._uuid) { return this._uuid };
-      this._uuid = `${this.tagName}-${uuid()}`;
-      return this._uuid;
-    }
-
-    /**
-     * Dynamically create a CSSStyleSheet() and keep track of the adopted
-     * stylesheet index for reference.
-     */
-    get cssStyleSheet() {
-      if (this._cssStyleSheet) { return this._cssStyleSheet };
-      this._cssStyleSheet = new CSSStyleSheet();
-      return this._cssStyleSheet;
-    }
-
-    /**
-     * Return a selector for the this element as a class chain.
-     */
-    get objectClassSelector(): string {
-      return this.classList.value.replace(/ /g, ".");
-    }
-
     /**
      * Set CSS for this element.
      * It works like `<el style="">` but with CSS processor.
@@ -258,7 +241,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
        * This will make `this.objectClassSelector` works as expeced.
        */
       const processedCss = this._class.cssProcess(
-        `${this.tagName}.${this.objectClassSelector} { ${css} }`
+        `${this.tagName}.${this.adapter.objectClassSelector} { ${css} }`
       );
 
       this.adapter.cssStyleSheet.replaceSync(processedCss);
@@ -274,7 +257,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       return css;
     }
 
-    connectedCallback() {
+    connectedCallback(): void {
       super.connectedCallback ? super.connectedCallback() : null;
 
       /** Apply css if it's set in attributes */
@@ -282,9 +265,11 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       if (css) { this.css = css };
 
       const rootNode = this.getRootNode() as Document | ShadowRoot;
+      if (rootNode.adoptedStyleSheets.indexOf(this._class.adapter.cssStyleSheet) === -1) {
+        rootNode.adoptedStyleSheets.push(this._class.adapter.cssStyleSheet);
+      }
       if (rootNode.adoptedStyleSheets.indexOf(this.adapter.cssStyleSheet) === -1) {
         rootNode.adoptedStyleSheets.push(
-          this._class.adapter.cssStyleSheet,
           this.adapter.cssStyleSheet
         );
       }
@@ -296,7 +281,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       this.classList.add(this.adapter.uuid);
 
       const processedCss = this._class.cssProcess(
-        `${this.tagName}.${this.objectClassSelector} { ${css} }`
+        `${this.tagName}.${this.adapter.objectClassSelector} { ${css} }`
       );
 
       this.adapter.cssStyleSheet.insertRule(
