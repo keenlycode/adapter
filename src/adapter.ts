@@ -93,15 +93,17 @@ class AdapterObject {
 
   _uuid?: string;
 
+  styles: string[] = [];
+
+  _cssObserver!: MutationObserver;
+
+  _class: typeof Adapter;
+
   get uuid(): string {
     if (this._uuid) { return this._uuid };
     this._uuid = `${this.adapterObject.tagName}-${uuid()}`;
     return this._uuid;
   }
-
-  styles: string[] = [];
-
-  _cssObserver!: MutationObserver;
 
   get cssObserver() {
     if (this._cssObserver) { return this._cssObserver };
@@ -121,6 +123,20 @@ class AdapterObject {
    */
   get objectClassSelector(): string {
     return this.adapterObject.classList.value.replace(/ /g, ".");
+  }
+  
+  initClass() {
+    this._class = this.adapterObject.constructor as unknown as typeof Adapter;
+
+    /**
+     * If class tagName has been defined from somewhere else.
+     * Then it shouldn't be initialized again.
+     */
+    if (this._class.adapter.tagName) {
+      return;
+    }
+    this._class.adapter.tagName = this.adapterObject.tagName;
+    this._class.adapter.initStyle();
   }
 
   /** Enable or disable CSS Observation */
