@@ -35,7 +35,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
      * also prevent inherit values from super class.
      */
     static get styles(): string[] {
-      if (this._styles === Object.getPrototypeOf(this).styles) {
+      if (this._styles === Object.getPrototypeOf(this)._styles) {
         this._styles = [];
       }
       return this._styles;
