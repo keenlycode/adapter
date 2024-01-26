@@ -219,16 +219,6 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       this._class.adapter.initStyle();
     }
 
-    /** Retreive styles for this object */
-    get styles(): string[] {
-      return this.adapter.styles;
-    }
-
-    /** Retreive styles from class and object */
-    get allStyles(): string[] {
-      return [...this.adapter.styles, ...this._class.adapter.allStyles];
-    }
-
     /**
      * Set CSS for this element.
      * It works like `<el style="">` but with CSS processor.
