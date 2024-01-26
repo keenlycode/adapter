@@ -18,14 +18,6 @@ class AdapterClass {
 
   styles: string[] = [];
 
-  /**
-   * CSS Processing middleware, This function will be called
-   * before applying CSS to CSSStyleSheet.
-   */
-  cssProcess(css: string): string {
-    return css;
-  }
-
   /** Retreive styles including all super classes */
   get allStyles(): string[] {
     let superClass = Object.getPrototypeOf(this.adapterClass);
@@ -49,8 +41,9 @@ class AdapterClass {
     this.styles = [css];
 
     if (this.tagName) {
+      console.log('tagName')
       this.cssStyleSheet.replaceSync(
-        this.cssProcess(`${this.tagName} { ${this.allCSS} }`)
+        this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`)
       );
     }
   }
@@ -66,7 +59,7 @@ class AdapterClass {
 
     if (this.tagName) {
       const rule = `${this.tagName} { ${css} }`;
-      const processedCss = this.cssProcess(rule);
+      const processedCss = this.adapterClass.cssProcess(rule);
       this.cssStyleSheet.insertRule(
         processedCss,
         this.cssStyleSheet.cssRules.length
@@ -88,7 +81,7 @@ class AdapterClass {
   /** Init component style */
   initStyle() {
     this.cssStyleSheet.replaceSync(
-      this.cssProcess(`${this.tagName} { ${this.allCSS} }`)
+      this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`)
     );
     document.adoptedStyleSheets.push(this.cssStyleSheet);
   }
@@ -132,7 +125,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
      * before applying CSS to CSSStyleSheet.
      */
     static cssProcess(css: string): string {
-      return this.adapter.cssProcess(css);
+      return css;
     }
 
     static set css(css: string) {
