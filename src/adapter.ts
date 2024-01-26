@@ -123,6 +123,14 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       return this.adapter.cssProcess(css);
     }
 
+    static set css(css: string) {
+      this.adapter.css = css;
+    }
+
+    static get css(): string {
+      return this.adapter.css;
+    }
+
     /** Add style to this component */
     static addStyle(css: string) {
       this.adapter.addStyle(css);
@@ -234,7 +242,6 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
     }
 
     initClass() {
-      console.log('init')
       this._class = this.constructor as unknown as typeof Adapter;
 
       /**

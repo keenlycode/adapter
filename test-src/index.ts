@@ -67,50 +67,53 @@ describe.only("Adapter Class: Use Case", function () {
     });
 
     it("Should be able to create instance", () => {
-        // const card1 = new Card1();
-        // assert(card1 instanceof Card1);
-        // assert(card1 instanceof Adapter);
+        const card1 = new Card1();
+        assert(card1 instanceof Card1);
+        assert(card1 instanceof Adapter);
     });
 
-    // it("Should be able to use API: addStyle()", () => {
-    //     Card1.addStyle(`display: flex;`);
-    //     Card2.addStyle(`display: block;`);
-    // });
+    it("Should be able to use API: addStyle()", () => {
+        Card1.addStyle(`display: flex;`);
+        assert(Card1.adapter.styles.includes(`display: flex;`));
+        Card2.addStyle(`display: block;`);
+        assert(Card2.adapter.styles.includes(`display: block;`));
+    });
 
-    // it("Should inherit style from super class", () => {
-    //     RedCard.addStyle(`background-color: red;`);
-    //     assert(RedCard.allStyles.includes("display: flex;"));
-    //     assert(RedCard.allCSS.includes("display: flex;"));
-    //     assert(RedCard.css.includes("background-color: red;"));
-    //     RedCard.define("el-red-card");
-    // });
+    it("Should inherit style from super class", () => {
+        RedCard.addStyle(`background-color: red;`);
+        assert(RedCard.adapter.allStyles.includes("display: flex;"));
+        assert(RedCard.adapter.allCSS.includes("display: flex;"));
+        assert(RedCard.adapter.css.includes("background-color: red;"));
+        RedCard.define("el-red-card");
+        assert(RedCard.adapter.cssStyleSheet.cssRules[0].cssText.includes("display: flex;"));
+    });
 
-    // it("Should be able to set css in class declaration", () => {
-    //     class Card3 extends Adapter {
-    //         static css = `display: grid;`;
-    //         constructor() {
-    //             super();
-    //             this.innerHTML = "Card3";
-    //         }
-    //     };
-    //     Card3.define("el-card3");
-    //     Card3.css = `${Card3.css} &.red {color: red}`;
-    //     assert(Card3.css.includes("display: grid;"));
-    //     assert(Card3.css.includes("&.red {color: red}"));
-    // });
+    it("Should be able to set css in class declaration", () => {
+        class Card3 extends Adapter {
+            static css = `display: grid;`;
+            constructor() {
+                super();
+                this.innerHTML = "Card3";
+            }
+        };
+        Card3.define("el-card3");
+        Card3.css = `${Card3.css} &.red {color: red}`;
+        assert(Card3.css.includes("display: grid;"));
+        assert(Card3.css.includes("&.red {color: red}"));
+    });
 
-    // it("Should be able to set css for component", () => {
-    //     const additionStyle = `background-color: red;`;
-    //     RedCard.css = additionStyle;
-    //     assert(RedCard.allCSS.includes(additionStyle));
-    //     assert(RedCard.allCSS.includes(Card1.css));
-    // });
+    it("Should be able to set css for component", () => {
+        const additionStyle = `background-color: red;`;
+        RedCard.css = additionStyle;
+        assert(RedCard.adapter.allCSS.includes(additionStyle));
+        assert(RedCard.adapter.allCSS.includes(Card1.css));
+    });
 
-    // it("Class' CSSStyleSheet() should be adopted by document", () => {
-    //     assert(document.adoptedStyleSheets.includes(Card1.cssStyleSheet));
-    //     assert(document.adoptedStyleSheets.includes(Card2.cssStyleSheet));
-    //     assert(document.adoptedStyleSheets.includes(RedCard.cssStyleSheet));
-    // });
+    it("Class' CSSStyleSheet() should be adopted by document", () => {
+        assert(document.adoptedStyleSheets.includes(Card1.adapter.cssStyleSheet));
+        assert(document.adoptedStyleSheets.includes(Card2.adapter.cssStyleSheet));
+        assert(document.adoptedStyleSheets.includes(RedCard.adapter.cssStyleSheet));
+    });
 });
 
 describe("Adapter Object: Use Case", () => {
