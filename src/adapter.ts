@@ -276,15 +276,16 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
 
     connectedCallback() {
       super.connectedCallback ? super.connectedCallback() : null;
+      
       /** Apply css if it's set in attributes */
       const css = this.getAttribute('css');
       if (css) { this.css = css };
 
       const rootNode = this.getRootNode() as Document|ShadowRoot;
-      if (rootNode.adoptedStyleSheets.indexOf(this.cssStyleSheet) === -1) {
+      if (rootNode.adoptedStyleSheets.indexOf(this.adapter.cssStyleSheet) === -1) {
         rootNode.adoptedStyleSheets.push(
           this._class.adapter.cssStyleSheet,
-          this.cssStyleSheet
+          this.adapter.cssStyleSheet
         );
       }
     }

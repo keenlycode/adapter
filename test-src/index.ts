@@ -143,18 +143,18 @@ describe.only("Adapter Object: Use Case", () => {
         assert(document.adoptedStyleSheets.includes(button2._class.adapter.cssStyleSheet));
     });
 
-    // it("It's uuid should be unique", () => {
-    //     assert(button1.uuid !== button2.uuid);
-    // });
+    it("It's uuid should be unique", () => {
+        assert(button1.adapter.uuid !== button2.adapter.uuid);
+    });
 
-    // it(`Should have cssStyleSheet and is adopted by document`, () => {
-    //     assert(button1.cssStyleSheet instanceof CSSStyleSheet);
-    //     assert(button2.cssStyleSheet instanceof CSSStyleSheet);
-    //     document.body.append(button1);
-    //     document.body.append(button2);
-    //     assert(document.adoptedStyleSheets.includes(button1.cssStyleSheet));
-    //     assert(document.adoptedStyleSheets.includes(button2.cssStyleSheet));
-    // });
+    it(`Should have cssStyleSheet and is adopted by document`, () => {
+        assert(button1.adapter.cssStyleSheet instanceof CSSStyleSheet);
+        assert(button2.adapter.cssStyleSheet instanceof CSSStyleSheet);
+        // document.body.append(button1);
+        // document.body.append(button2);
+        // assert(document.adoptedStyleSheets.includes(button1.adapter.cssStyleSheet));
+        // assert(document.adoptedStyleSheets.includes(button2.adapter.cssStyleSheet));
+    });
 
     // it("Can set css for this instance", () => {
     //     button1.css = `display: flex;`;
