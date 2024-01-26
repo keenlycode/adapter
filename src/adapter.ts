@@ -97,7 +97,7 @@ class AdapterObject {
 
   _cssObserver!: MutationObserver;
 
-  _class: typeof Adapter;
+  _class!: typeof Adapter;
 
   get uuid(): string {
     if (this._uuid) { return this._uuid };
@@ -198,17 +198,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       this.adapter.define(tagName);
     }
 
-    _class!: typeof Adapter; // instance's class for using as shortcut
-
     adapter: AdapterObject = new AdapterObject();
-
-    _cssStyleSheet?: CSSStyleSheet;
-
-    _uuid?: string;
-
-    _styles: string[] = [];
-
-    _cssObserver!: MutationObserver;
 
     /**
      * In constructor, there any some if condition to check
@@ -219,20 +209,6 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       this.adapter.adapterObject = this;
       if (!this.adapter._class) { this.adapter.initClass() };
       this.adapter.cssObserve(true);
-    }
-
-    initClass() {
-      this._class = this.constructor as unknown as typeof Adapter;
-
-      /**
-       * If class tagName has been defined from somewhere else.
-       * Then it shouldn't be initialized again.
-       */
-      if (this._class.adapter.tagName) {
-        return;
-      }
-      this._class.adapter.tagName = this.tagName;
-      this._class.adapter.initStyle();
     }
 
     /**
@@ -263,6 +239,21 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
       return css;
     }
 
+    /** Add style for this element */
+    addStyle(css: string): void {
+      this.adapter.styles.push(css);
+      this.classList.add(this.adapter.uuid);
+
+      const processedCss = this.adapter._class.cssProcess(
+        `${this.tagName}.${this.adapter.objectClassSelector} { ${css} }`
+      );
+
+      this.adapter.cssStyleSheet.insertRule(
+        processedCss,
+        this.adapter.cssStyleSheet.cssRules.length
+      );
+    }
+
     connectedCallback(): void {
       super.connectedCallback ? super.connectedCallback() : null;
 
@@ -283,21 +274,6 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
         rootNode.adoptedStyleSheets.push(
           this.adapter.cssStyleSheet);
       }
-    }
-
-    /** Add style for this element */
-    addStyle(css: string): void {
-      this.adapter.styles.push(css);
-      this.classList.add(this.adapter.uuid);
-
-      const processedCss = this.adapter._class.cssProcess(
-        `${this.tagName}.${this.adapter.objectClassSelector} { ${css} }`
-      );
-
-      this.adapter.cssStyleSheet.insertRule(
-        processedCss,
-        this.adapter.cssStyleSheet.cssRules.length
-      );
     }
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
