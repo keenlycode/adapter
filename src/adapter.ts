@@ -8,105 +8,136 @@ interface _HTMLElement extends HTMLElement {
   disconnectedCallback?(): void;
 }
 
+export class _Adapter {
+  static adapterClass?: any;
+
+  static cssStyleSheet: CSSStyleSheet;
+
+  static tagName?: string;
+
+  static styles: string[];
+
+  /**
+   * CSS Processing middleware, This function will be called
+   * before applying CSS to CSSStyleSheet.
+   */
+  static cssProcess(css: string): string {
+    return css;
+  }
+
+  static get allStyles(): string[] {
+    let superClass = Object.getPrototypeOf(this.adapterClass);
+    const allStyles = [];
+
+    while (superClass.adapter) {
+      allStyles.push(...superClass.adapter.styles);
+      superClass = Object.getPrototypeOf(superClass);
+    }
+    allStyles.push(...this.styles);
+    return allStyles;
+  }
+
+  /** Retreive inherited styles for all super classes. */
+  static get allCSS(): string {
+    return this.allStyles.join("\n");
+  }
+
+  /** Set CSS for this component */
+  static set css(css: string) {
+    this.styles = [css];
+
+    if (this.tagName) {
+      this.cssStyleSheet.replaceSync(
+        this.cssProcess(`${this.tagName} { ${this.allCSS} }`)
+      );
+    }
+  }
+
+  /** Get CSS for this component, includes inherited styles */
+  static get css(): string {
+    return this.styles.join("\n");
+  }
+
+  /** Add style to this component */
+  static addStyle(css: string) {
+    this.styles.push(css);
+
+    if (this.tagName) {
+      const rule = `${this.tagName} { ${css} }`;
+      const processedCss = this.cssProcess(rule);
+      this.cssStyleSheet.insertRule(
+        processedCss,
+        this.cssStyleSheet.cssRules.length
+      );
+    }
+  }
+
+  /**
+     * Define component to element tag and init component style.
+     * To extends this function, sub-elements must be defined
+     * before call this function as `super.define(tagName);`
+     */
+  static define(tagName: string): void {
+    this.tagName = tagName;
+    customElements.define(tagName, this.adapterClass);
+    this.initStyle();
+  }
+
+  /** Init component style */
+  static initStyle() {
+    this.cssStyleSheet.replaceSync(
+      this.cssProcess(`${this.tagName} { ${this.allCSS} }`)
+    );
+    document.adoptedStyleSheets.push(this.cssStyleSheet);
+  }
+
+  _class: typeof _Adapter;
+
+  adapterObject: any;
+
+  cssStyleSheet?: CSSStyleSheet;
+
+  uuid?: string;
+
+  styles: string[] = [];
+
+  cssObserver!: MutationObserver;
+
+  constructor() {
+    this._class = this.constructor as typeof _Adapter;
+    this._class.cssStyleSheet = new CSSStyleSheet();
+    this._class.tagName = undefined;
+    this._class.styles = [];
+  }
+
+}
+
 type Constructor<T = {}> = new (...args: any[]) => T;
 
 export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
   Base: TBase
 ) {
   return class Adapter extends Base {
-    /** CSSStyleSheet() for this component */
-    static _cssStyleSheet: CSSStyleSheet;
+    static _adapter: _Adapter;
 
-    /** Tag name of this component */
-    static _tagName: string | undefined;
-
-    /** Styles which contain only css for this component */
-    static _styles: string[] = [];
+    static get adapter(): _Adapter {
+      if (this._adapter === Object.getPrototypeOf(this)._adapter) {
+        this._adapter = new _Adapter();
+        this._adapter._class.adapterClass = this;
+      }
+      return this._adapter;
+    }
 
     /** CSS Process middleware, This function will be called
      * before applying CSS to CSSStyleSheet.
      */
     static cssProcess(css: string): string {
-      return css;
-    }
-
-    /**
-     * Retreive styles for this component,
-     * also prevent inherit values from super class.
-     */
-    static get styles(): string[] {
-      if (this._styles === Object.getPrototypeOf(this)._styles) {
-        this._styles = [];
-      }
-      return this._styles;
-    }
-
-    /** Retreive inherited styles for all super classes. */
-    static get allStyles(): string[] {
-      let superClass = Object.getPrototypeOf(this);
-      const allStyles = [];
-
-      while (superClass.styles !== undefined) {
-        allStyles.push(...superClass.styles);
-        superClass = Object.getPrototypeOf(superClass);
-      }
-      allStyles.push(...this.styles);
-      return allStyles;
-    }
-
-    /** Set CSS for this component */
-    static set css(css: string) {
-      this._styles = [css];
-
-      if (this.tagName) {
-        this.cssStyleSheet.replaceSync(
-          this.cssProcess(`${this.tagName} { ${this.allCSS} }`)
-        );
-      }
-    }
-
-    /** Get CSS for this component, includes inherited styles */
-    static get css(): string {
-      return this.styles.join("\n");
-    }
-
-    static get allCSS(): string {
-      return this.allStyles.join("\n");
-    }
-
-    /** Get tagName for this class which will be defined after
-     * the class has been registerd with CustomElementsRegistry.
-     */
-    static get tagName(): string | undefined {
-      if (this._tagName === Object.getPrototypeOf(this)._tagName) {
-        this._tagName = undefined;
-      }
-      return this._tagName;
-    }
-
-    /** Get CSSStyleSheet() for this component.
-     * Create a new one if haven't been created yet.
-     */
-    static get cssStyleSheet(): CSSStyleSheet {
-      const superCSSStyleSheet = Object.getPrototypeOf(this)._cssStyleSheet;
-      if (this._cssStyleSheet === superCSSStyleSheet) {
-        this._cssStyleSheet = new CSSStyleSheet();
-      }
-      return this._cssStyleSheet;
+      return this.adapter._class.cssProcess(css);
     }
 
     /** Add style to this component */
     static addStyle(css: string) {
-      this._styles = this._styles.concat(css);
-
-      if (this.tagName) {
-        const rule = `${this.tagName} { ${css} }`;
-        const processedCss = this.cssProcess(rule);
-        this.cssStyleSheet.insertRule(
-          processedCss,
-          this.cssStyleSheet.cssRules.length
-        );
-      }
+      this.adapter._class.addStyle(css);
     }
 
     /**
@@ -115,28 +146,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
      * before call this function as `super.define(tagName);`
      */
     static define(tagName: string): void {
-      this._tagName = tagName;
-      customElements.define(tagName, this);
-      this.initStyle();
-    }
-
-    /** Init component style */
-    static initStyle() {
-      this.cssStyleSheet.replaceSync(
-        this.cssProcess(`${this.tagName} { ${this.allCSS} }`)
-      );
-      document.adoptedStyleSheets.push(this.cssStyleSheet);
-    }
-    /** @deprecated, will be removed */
-    static tagStyle(css: string): void {
-      console.warn('tagStyle() is deprecated, use addStyle() instead');
-      this.addStyle(css);
-    }
-
-    /** @deprecated, will be removed */
-    static classStyle(class_: string, css: string) {
-      console.warn('classStyle() is deprecated, use addStyle() instead');
-      this.addStyle(`&.${class_} { ${css} }`);
+      this.adapter._class.define(tagName);
     }
 
     _class!: typeof Adapter; // instance's class for using as shortcut
@@ -242,7 +252,7 @@ export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
        * If class tagName has been defined from somewhere else.
        * Then it shouldn't be initialized again.
        */
-      if (this._class.tagName) {
+      if (this._class.adapter._class.tagName) {
         return;
       }
       this._class._tagName = this.tagName;
