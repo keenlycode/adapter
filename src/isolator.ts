@@ -1,7 +1,11 @@
 import { HTMLElementInterface } from "./util"
 
+export interface IsolatorInterface {
+  _isolator: Isolator;
+  isolate(mode: ShadowRootMode): HTMLElement;
+}
 
-class Isolator {
+export class Isolator {
 
   element!: HTMLElementInterface;
 
@@ -9,7 +13,7 @@ class Isolator {
 
   hostShadowRoot?: ShadowRoot;
 
-  constructor(element: HTMLElementInterface) {
+  constructor(element: HTMLElement) {
     this.element = element;
     this.isolation ? this._isolate(this.isolation) : null;
   }

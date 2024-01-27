@@ -1,7 +1,6 @@
-import { uuid } from './util.js';
+import { uuid, HTMLElementInterface } from './util.js';
 import { stylis } from './cssProcessor/stylis.bundle.js';
 import { IsolatorMixin } from './isolator.js';
-import { HTMLElementInterface } from './util.js';
 
 
 /**
@@ -11,7 +10,7 @@ import { HTMLElementInterface } from './util.js';
 class AdapterClass {
 
   /** Reference to `class Adapter` */
-  adapterClass!: typeof Adapter;
+  adapterClass!: typeof Adapter | any;
 
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
@@ -90,7 +89,7 @@ class AdapterClass {
 class AdapterObject {
 
   /** Reference to Adapter() object */
-  adapterObject!: Adapter;
+  adapterObject!: Adapter | any;
 
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
@@ -100,7 +99,7 @@ class AdapterObject {
 
   _cssObserver!: MutationObserver;
 
-  _class!: typeof Adapter;
+  _class!: typeof Adapter | any;
 
   get uuid(): string {
     if (this._uuid) { return this._uuid };
