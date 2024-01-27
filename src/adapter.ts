@@ -1,12 +1,8 @@
 import { uuid } from './util.js';
 import { stylis } from './cssProcessor/stylis.bundle.js';
 import { IsolatorMixin } from './isolator.js';
+import { HTMLElementInterface } from './util.js';
 
-
-interface _HTMLElement extends HTMLElement {
-  connectedCallback?(): void;
-  disconnectedCallback?(): void;
-}
 
 /**
  * AdapterClass is a class which manipulate `class Adapter`.
@@ -92,7 +88,9 @@ class AdapterClass {
 }
 
 class AdapterObject {
-  adapterObject: any;
+
+  /** Reference to Adapter() object */
+  adapterObject!: Adapter;
 
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
@@ -156,10 +154,11 @@ class AdapterObject {
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
-export function AdapterMixin<TBase extends Constructor<_HTMLElement>>(
+export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   Base: TBase
 ) {
   return class Adapter extends Base {
+    
     static _adapter: AdapterClass;
 
     static get adapter(): AdapterClass {

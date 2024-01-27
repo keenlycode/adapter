@@ -1,11 +1,9 @@
-interface _HTMLElement extends HTMLElement {
-  connectedCallback?(): void;
-  disconnectedCallback?(): void;
-}
+import { HTMLElementInterface } from "./util"
+
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
-export function IsolatorMixin<TBase extends Constructor<_HTMLElement>>(
+export function IsolatorMixin<TBase extends Constructor<HTMLElementInterface>>(
   Base: TBase
 ) {
   return class Isolator extends Base {
