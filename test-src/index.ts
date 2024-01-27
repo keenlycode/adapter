@@ -4,7 +4,7 @@ import "mocha/mocha.css";
 import { assert } from "chai";
 
 /** LigntningCSS */
-import init, {
+import lightningcssInit, {
   transform,
   browserslistToTargets,
 } from "https://esm.run/lightningcss-wasm";
@@ -20,6 +20,8 @@ if (["0.0.0.0", "127.0.0.1", "localhost"].includes(__base_url.hostname)) {
     location.reload()
   );
 }
+
+await lightningcssInit();
 
 const style = new CSSStyleSheet();
 
@@ -41,7 +43,9 @@ mocha.setup({
   checkLeaks: true,
 });
 
-describe("Adapter Class: Use Case", function () {
+const render = document.querySelector('#render') as HTMLElement;
+
+describe("Adapter Class: Use Case", () => {
   class Card1 extends Adapter { }
   class Card2 extends Adapter { }
   class RedCard extends Card1 { }
@@ -67,8 +71,7 @@ describe("Adapter Class: Use Case", function () {
     customElements.define("el-card2", Card2);
     const card2 = new Card2();
     assert(card2.tagName.toLowerCase() === "el-card2");
-    console.log(card2._class.adapter.tagName?.toLowerCase());
-    assert(card2._class.adapter.tagName?.toLowerCase() === "el-card2");
+    assert(card2.adapter._class.adapter.tagName?.toLowerCase() === "el-card2");
   });
 
   it("Should be able to create instance", () => {
@@ -143,16 +146,16 @@ describe("Adapter Object: Use Case", () => {
   });
 
   it("constructor() should be called and setup the instance", () => {
-    assert(button1._class === Button1);
-    assert(button1._class.tagName === "el-button1");
+    assert(button1.adapter._class === Button1);
+    assert(button1.adapter._class.tagName === "el-button1");
     assert(
-      document.adoptedStyleSheets.includes(button1._class.adapter.cssStyleSheet)
+      document.adoptedStyleSheets.includes(button1.adapter._class.adapter.cssStyleSheet)
     );
 
-    assert(button2._class === Button2);
-    assert(button2._class.tagName?.toLowerCase() === "el-button2");
+    assert(button2.adapter._class === Button2);
+    assert(button2.adapter._class.tagName?.toLowerCase() === "el-button2");
     assert(
-      document.adoptedStyleSheets.includes(button2._class.adapter.cssStyleSheet)
+      document.adoptedStyleSheets.includes(button2.adapter._class.adapter.cssStyleSheet)
     );
   });
 
@@ -194,8 +197,8 @@ describe("Adapter Object: Use Case", () => {
   it("Can be removed from document", () => {
     button1.remove();
     button2.remove();
-    assert(!document.adoptedStyleSheets.includes(button1.cssStyleSheet));
-    assert(!document.adoptedStyleSheets.includes(button2.cssStyleSheet));
+    assert(!document.adoptedStyleSheets.includes(button1.adapter.cssStyleSheet));
+    assert(!document.adoptedStyleSheets.includes(button2.adapter.cssStyleSheet));
   });
 });
 
@@ -216,8 +219,6 @@ describe("Adapter Mixin: Use Case", () => {
     assert(pin2 instanceof HTMLElement);
   });
 });
-
-await init();
 
 describe("CSS Processor", () => {
   it("Can use stylis processor", () => {
@@ -313,5 +314,38 @@ describe("Shadow DOM Support", () => {
     assert(getComputedStyle(button).backgroundColor === "rgb(255, 0, 0)");
   });
 });
+
+describe("Isolator", () => {
+
+  class Card extends Adapter {
+    static css = `
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100px;
+      height: 100px;
+      background-color: blue;
+    `;
+  }
+
+  Card.define("el-card");
+
+  it("Can isolate elements and move elements", () => {
+    const card = new Card();
+    render.append(card);
+    let host = card.isolate();
+    assert(host instanceof HTMLElement);
+    assert(host.shadowRoot !== null);
+    assert(host.shadowRoot!.mode === 'open');
+
+    card.remove();
+    host = card.isolate('closed');
+    render.append(card);
+    assert(host instanceof HTMLElement);
+    assert(host.shadowRoot === null);
+    assert(card._isolator.hostShadowRoot!.mode === 'closed');
+    card.remove();
+  });
+})
 
 mocha.run();
