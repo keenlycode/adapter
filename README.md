@@ -6,7 +6,7 @@
 
 <ul style="font-size: 1.25rem;">
    <li>Built with ❤️</li>
-   <li>Just <strong>1 kB</strong> (minified + gzip)</li>
+   <li>Just <strong>2 kB</strong> (minified + gzip)</li>
 </ul>
 
 ## Sample Usage
