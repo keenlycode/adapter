@@ -4,7 +4,7 @@ import "mocha/mocha.css";
 import { assert } from "chai";
 
 /** LigntningCSS */
-import init, {
+import lightningcssInit, {
   transform,
   browserslistToTargets,
 } from "https://esm.run/lightningcss-wasm";
@@ -20,6 +20,8 @@ if (["0.0.0.0", "127.0.0.1", "localhost"].includes(__base_url.hostname)) {
     location.reload()
   );
 }
+
+await lightningcssInit();
 
 const style = new CSSStyleSheet();
 
@@ -41,7 +43,9 @@ mocha.setup({
   checkLeaks: true,
 });
 
-describe("Adapter Class: Use Case", function () {
+const render = document.querySelector('#render') as HTMLElement;
+
+describe("Adapter Class: Use Case", () => {
   class Card1 extends Adapter { }
   class Card2 extends Adapter { }
   class RedCard extends Card1 { }
@@ -216,8 +220,6 @@ describe("Adapter Mixin: Use Case", () => {
   });
 });
 
-await init();
-
 describe("CSS Processor", () => {
   it("Can use stylis processor", () => {
     class MyAdapter extends Adapter {
@@ -312,5 +314,38 @@ describe("Shadow DOM Support", () => {
     assert(getComputedStyle(button).backgroundColor === "rgb(255, 0, 0)");
   });
 });
+
+describe("Isolator", () => {
+
+  class Card extends Adapter {
+    static css = `
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100px;
+      height: 100px;
+      background-color: blue;
+    `;
+  }
+
+  Card.define("el-card");
+
+  it("Can isolate elements and move elements", () => {
+    const card = new Card();
+    render.append(card);
+    let host = card.isolate();
+    assert(host instanceof HTMLElement);
+    assert(host.shadowRoot !== null);
+    assert(host.shadowRoot!.mode === 'open');
+
+    card.remove();
+    host = card.isolate('closed');
+    render.append(card);
+    assert(host instanceof HTMLElement);
+    assert(host.shadowRoot === null);
+    assert(card._isolator.hostShadowRoot!.mode === 'closed');
+    card.remove();
+  });
+})
 
 mocha.run();
