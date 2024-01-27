@@ -1,7 +1,7 @@
 {
   "name": "@devcapsule/adapter",
   "description": "CSS in Javascript Framework for Web Components",
-  "version": "2.5.0dev",
+  "version": "2.5.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/keenly-coding/adapter.git"
