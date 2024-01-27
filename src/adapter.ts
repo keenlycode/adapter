@@ -1,7 +1,6 @@
-import { uuid } from './util.js';
+import { uuid, HTMLElementInterface } from './util.js';
 import { stylis } from './cssProcessor/stylis.bundle.js';
 import { IsolatorMixin } from './isolator.js';
-import { HTMLElementInterface } from './util.js';
 
 
 /**
@@ -11,7 +10,7 @@ import { HTMLElementInterface } from './util.js';
 class AdapterClass {
 
   /** Reference to `class Adapter` */
-  adapterClass!: typeof Adapter;
+  adapterClass!: typeof Adapter | any;
 
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
@@ -90,7 +89,7 @@ class AdapterClass {
 class AdapterObject {
 
   /** Reference to Adapter() object */
-  adapterObject!: Adapter;
+  adapterObject!: Adapter | any;
 
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
@@ -100,7 +99,7 @@ class AdapterObject {
 
   _cssObserver!: MutationObserver;
 
-  _class!: typeof Adapter;
+  _class!: typeof Adapter | any;
 
   get uuid(): string {
     if (this._uuid) { return this._uuid };
@@ -202,7 +201,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
       this.adapter.define(tagName);
     }
 
-    adapter: AdapterObject = new AdapterObject();
+    _adapter: AdapterObject = new AdapterObject();
 
     /**
      * In constructor, there any some if condition to check
@@ -210,9 +209,9 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
      */
     constructor(...args: any[]) {
       super(...args);
-      this.adapter.adapterObject = this;
-      if (!this.adapter._class) { this.adapter.initClass() };
-      this.adapter.cssObserve(true);
+      this._adapter.adapterObject = this;
+      if (!this._adapter._class) { this._adapter.initClass() };
+      this._adapter.cssObserve(true);
     }
 
     /**
@@ -220,24 +219,24 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
      * It works like `<el style="">` but with CSS processor.
      */
     set css(css: string) {
-      this.adapter.styles = [css];
-      this.classList.add(this.adapter.uuid);
+      this._adapter.styles = [css];
+      this.classList.add(this._adapter.uuid);
 
       /** Init cssStyleSheet if it hasn't been inited yet.
        * This will make `this.objectClassSelector` works as expeced.
        */
-      const processedCss = this.adapter._class.cssProcess(
-        `${this.tagName}.${this.adapter.objectClassSelector} { ${css} }`
+      const processedCss = this._adapter._class.cssProcess(
+        `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`
       );
 
-      this.adapter.cssStyleSheet.replaceSync(processedCss);
+      this._adapter.cssStyleSheet.replaceSync(processedCss);
     }
 
     /** Get CSS for this element */
     get css(): string {
       let css = this.getAttribute("css") || "";
       if (css) { return css };
-      for (const rule of this.adapter.cssStyleSheet.cssRules) {
+      for (const rule of this._adapter.cssStyleSheet.cssRules) {
         css += rule.cssText + "\n";
       }
       return css;
@@ -245,16 +244,16 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
 
     /** Add style for this element */
     addStyle(css: string): void {
-      this.adapter.styles.push(css);
-      this.classList.add(this.adapter.uuid);
+      this._adapter.styles.push(css);
+      this.classList.add(this._adapter.uuid);
 
-      const processedCss = this.adapter._class.cssProcess(
-        `${this.tagName}.${this.adapter.objectClassSelector} { ${css} }`
+      const processedCss = this._adapter._class.cssProcess(
+        `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`
       );
 
-      this.adapter.cssStyleSheet.insertRule(
+      this._adapter.cssStyleSheet.insertRule(
         processedCss,
-        this.adapter.cssStyleSheet.cssRules.length
+        this._adapter.cssStyleSheet.cssRules.length
       );
     }
 
@@ -267,23 +266,23 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
 
       const rootNode = this.getRootNode() as Document | ShadowRoot;
       if (rootNode.adoptedStyleSheets.indexOf(
-        this.adapter._class.adapter.cssStyleSheet) === -1) 
+        this._adapter._class.adapter.cssStyleSheet) === -1) 
       {
         rootNode.adoptedStyleSheets.push(
-          this.adapter._class.adapter.cssStyleSheet);
+          this._adapter._class.adapter.cssStyleSheet);
       }
       if (rootNode.adoptedStyleSheets.indexOf(
-        this.adapter.cssStyleSheet) === -1)
+        this._adapter.cssStyleSheet) === -1)
       {
         rootNode.adoptedStyleSheets.push(
-          this.adapter.cssStyleSheet);
+          this._adapter.cssStyleSheet);
       }
     }
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
     remove() {
       const rootNode = this.getRootNode() as Document | ShadowRoot;
-      const i = rootNode.adoptedStyleSheets.indexOf(this.adapter.cssStyleSheet);
+      const i = rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet);
       rootNode.adoptedStyleSheets.splice(i, 1);
       super.remove();
     }
