@@ -1,6 +1,6 @@
 {
   "name": "@devcapsule/adapter",
-  "description": "Adaptive Style Web Component Framework",
+  "description": "CSS in Javascript Framework for Web Components",
   "version": "2.5.0dev",
   "repository": {
     "type": "git",
