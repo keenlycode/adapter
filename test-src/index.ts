@@ -71,7 +71,7 @@ describe("Adapter Class: Use Case", () => {
     customElements.define("el-card2", Card2);
     const card2 = new Card2();
     assert(card2.tagName.toLowerCase() === "el-card2");
-    assert(card2.adapter._class.adapter.tagName?.toLowerCase() === "el-card2");
+    assert(card2._adapter._class.adapter.tagName?.toLowerCase() === "el-card2");
   });
 
   it("Should be able to create instance", () => {
@@ -146,36 +146,36 @@ describe("Adapter Object: Use Case", () => {
   });
 
   it("constructor() should be called and setup the instance", () => {
-    assert(button1.adapter._class === Button1);
-    assert(button1.adapter._class.tagName === "el-button1");
+    assert(button1._adapter._class === Button1);
+    assert(button1._adapter._class.tagName === "el-button1");
     assert(
-      document.adoptedStyleSheets.includes(button1.adapter._class.adapter.cssStyleSheet)
+      document.adoptedStyleSheets.includes(button1._adapter._class.adapter.cssStyleSheet)
     );
 
-    assert(button2.adapter._class === Button2);
-    assert(button2.adapter._class.tagName?.toLowerCase() === "el-button2");
+    assert(button2._adapter._class === Button2);
+    assert(button2._adapter._class.tagName?.toLowerCase() === "el-button2");
     assert(
-      document.adoptedStyleSheets.includes(button2.adapter._class.adapter.cssStyleSheet)
+      document.adoptedStyleSheets.includes(button2._adapter._class.adapter.cssStyleSheet)
     );
   });
 
   it("It's uuid should be unique", () => {
-    assert(button1.adapter.uuid !== button2.adapter.uuid);
+    assert(button1._adapter.uuid !== button2._adapter.uuid);
   });
 
   it(`Should have cssStyleSheet and is adopted by document`, () => {
-    assert(button1.adapter.cssStyleSheet instanceof CSSStyleSheet);
-    assert(button2.adapter.cssStyleSheet instanceof CSSStyleSheet);
+    assert(button1._adapter.cssStyleSheet instanceof CSSStyleSheet);
+    assert(button2._adapter.cssStyleSheet instanceof CSSStyleSheet);
     document.body.append(button1);
     document.body.append(button2);
-    assert(document.adoptedStyleSheets.includes(button1.adapter.cssStyleSheet));
-    assert(document.adoptedStyleSheets.includes(button2.adapter.cssStyleSheet));
+    assert(document.adoptedStyleSheets.includes(button1._adapter.cssStyleSheet));
+    assert(document.adoptedStyleSheets.includes(button2._adapter.cssStyleSheet));
   });
 
   it("Can set css for this instance", () => {
     button1.css = `display: flex;`;
     assert(
-      button1.adapter.cssStyleSheet.cssRules[0].cssText.includes(
+      button1._adapter.cssStyleSheet.cssRules[0].cssText.includes(
         "display: flex;"
       )
     );
@@ -188,7 +188,7 @@ describe("Adapter Object: Use Case", () => {
   it("Can add style for this instance", () => {
     button1.addStyle(`background-color: red;`);
     assert(
-      button1.adapter.cssStyleSheet.cssRules[1].cssText.includes(
+      button1._adapter.cssStyleSheet.cssRules[1].cssText.includes(
         "background-color: red;"
       )
     );
@@ -197,8 +197,8 @@ describe("Adapter Object: Use Case", () => {
   it("Can be removed from document", () => {
     button1.remove();
     button2.remove();
-    assert(!document.adoptedStyleSheets.includes(button1.adapter.cssStyleSheet));
-    assert(!document.adoptedStyleSheets.includes(button2.adapter.cssStyleSheet));
+    assert(!document.adoptedStyleSheets.includes(button1._adapter.cssStyleSheet));
+    assert(!document.adoptedStyleSheets.includes(button2._adapter.cssStyleSheet));
   });
 });
 
