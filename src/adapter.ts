@@ -8,9 +8,14 @@ interface _HTMLElement extends HTMLElement {
   disconnectedCallback?(): void;
 }
 
+/**
+ * AdapterClass is a class which manipulate `class Adapter`.
+ * It also encapsulate private properties and methods.
+ */
 class AdapterClass {
 
-  adapterClass?: any;
+  /** Reference to `class Adapter` */
+  adapterClass!: typeof Adapter;
 
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
@@ -47,9 +52,28 @@ class AdapterClass {
     }
   }
 
-  /** Get CSS for this component, includes inherited styles */
+  /** Get CSS for this component including superclass styles */
   get css(): string {
     return this.styles.join("\n");
+  }
+
+  /**
+   * Define component to element tag and init component style.
+   * To extends this function, sub-elements must be defined
+   * before call this function as `super.define(tagName);`
+   */
+  define(tagName: string): void {
+    this.tagName = tagName;
+    customElements.define(tagName, this.adapterClass);
+    this.initStyle();
+  }
+
+  /** Init component style */
+  initStyle() {
+    this.cssStyleSheet.replaceSync(
+      this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`)
+    );
+    document.adoptedStyleSheets.push(this.cssStyleSheet);
   }
 
   /** Add style to this component */
@@ -64,25 +88,6 @@ class AdapterClass {
         this.cssStyleSheet.cssRules.length
       );
     }
-  }
-
-  /**
-     * Define component to element tag and init component style.
-     * To extends this function, sub-elements must be defined
-     * before call this function as `super.define(tagName);`
-     */
-  define(tagName: string): void {
-    this.tagName = tagName;
-    customElements.define(tagName, this.adapterClass);
-    this.initStyle();
-  }
-
-  /** Init component style */
-  initStyle() {
-    this.cssStyleSheet.replaceSync(
-      this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`)
-    );
-    document.adoptedStyleSheets.push(this.cssStyleSheet);
   }
 }
 
