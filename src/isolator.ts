@@ -6,7 +6,7 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 export function IsolatorMixin<TBase extends Constructor<HTMLElementInterface>>(
   Base: TBase
 ) {
-  return class Isolator extends Base {
+  return class _Isolator extends Base {
 
     _host?: HTMLElement;
 

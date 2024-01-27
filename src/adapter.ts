@@ -157,7 +157,7 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   Base: TBase
 ) {
-  return class Adapter extends Base {
+  return class _Adapter extends Base {
     
     static _adapter: AdapterClass;
 
