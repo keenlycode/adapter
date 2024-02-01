@@ -12,7 +12,8 @@ baseComponents('./');
 import { pageReload } from './_base.esbuild';
 pageReload('./');
 
-import './styleClass';
+import { styleClass } from './_base.styleClass';
+styleClass();
 
 window.addEventListener('load', () => {
     document.body.style.visibility = 'visible';
