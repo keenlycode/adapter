@@ -51,7 +51,6 @@ class Particle1 extends Particle {
 ## 🎉 Compact
 
 <div style="text-align: center;">
-<strong style="font-size: 1.5em;">~ 4kB</strong> minify<br>
 <strong style="font-size: 1.5em;">~ 2kB</strong> minify gzip
 </div>
 

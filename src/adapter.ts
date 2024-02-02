@@ -1,6 +1,6 @@
-import { uuid, HTMLElementInterface } from './util.js';
-import { stylis } from './cssProcessor/stylis.bundle.js';
-import { IsolatorMixin } from './isolator.js';
+import { uuid, HTMLElementInterface } from './util';
+import { stylis } from './cssProcessor/stylis';
+import { IsolatorMixin } from './isolator';
 
 
 /**

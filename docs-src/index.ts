@@ -1,6 +1,8 @@
-import { Adapter } from './adapter';
-import { buttonStyle } from './_ux/ui/button';
-import { color } from './_ux/designToken';
+import { Adapter } from './lib/lib.export.bundle.js';
+import {
+    buttonStyle,
+    color
+} from './ux.bundle.js';
 
 
 const css = String.raw;

@@ -1,4 +1,4 @@
-import { Adapter, AdapterMixin, IsolatorMixin } from '../../adapter';
+import { Adapter, AdapterMixin, IsolatorMixin } from '../../lib/lib.export.bundle.js';
 
 class ElementA extends Adapter {
   // ...

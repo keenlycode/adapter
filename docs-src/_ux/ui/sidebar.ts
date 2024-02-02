@@ -1,4 +1,4 @@
-import { Adapter } from "../../adapter.js";
+import { Adapter } from "../../lib/lib.export.bundle.js";
 
 const css = String.raw;
 
