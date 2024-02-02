@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Adapter brings CSS to the next level with Javascript & Web Component
+            which make it programmable with many features such as isolation,
+            inheritancs, shadow DOM style, etc.
+        ">
+    <title>Adapter : CSS in Javascript Framework for Web Components</title>
+    <link rel="stylesheet" href="../../base.css?v=25">
+    <script type="module" src="../../base.js?v=25"></script>
+    
+
+
+<script type="module" src="../../guide/base.js?v=25"></script>
+
+<script type="module" src="index.js?v=25"></script>
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNHSQQQLL2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HNHSQQQLL2');
+</script>
+</head>
+<body style="visibility: hidden;">
+
+
+
+<el-sidebar>
+    <div el="wrapper">
+        <el-menu>
+            <a href="../../"><h1>Adapter</h1></a>
+            <details>
+                <summary>
+                    <a href="../../guide/intro/#"><h2>Intro</h2></a>
+                </summary>
+            </details>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="../../guide/setup/#"><h2>Setup</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="../../guide/setup/#cdn">CDN</a></div>
+                    <div><a href="../../guide/setup/#npm">NPM</a></div>
+                </div>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="../../guide/css-like-oop/#"><h2>CSS like OOP 🔥</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="../../guide/css-like-oop/#component-style">Class Level</a></div>
+                    <div><a href="../../guide/css-like-oop/#element-style">Object Level</a></div>
+                    <div><a href="../../guide/css-like-oop/#shadow-dom">Style inside Shadow DOM</a></div>
+                </div>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/mixin/#"><h2>Mixin</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/scoped-style/#"><h2>Scoped Style</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/style-filtering/#"><h2>Style Filtering</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/isolation/#"><h2>Isolation</h2></a>
+                </summary>
+            </details>
+        </el-menu>
+    </div>
+    <el-button el="toggle"><span>»</span></el-button>
+</el-sidebar>
+
+<el-container>
+<h1>Scoped Style</h1>
+<p><strong>Scoped Style</strong> could be the easiest way to apply styles to 
+elements. Start with a bit of code and you can get magical elements with
+scoped style. Just set element style with <code>css</code> attributes.</p>
+<el-blockquote>
+<blockquote>
+<p>💁 <code>css</code> syntax here also support nesting by <a href="stylis.js.org">stylis</a>
+as the default css processor. You can read more how to set
+css processor in <a href="../mixin/#">Mixin</a> Section. Setting <code>css</code> here
+is the same as setting <code>css</code> property in the object
+<a href="../usage/#element-style">read more</a>.</p>
+</blockquote>
+</el-blockquote>
+<el-code-block>
+    <div el="bar-top-left">JS</div>
+<pre><code class="language-ts">import { Adapter }
+    from &quot;https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm&quot;;
+
+class Style extends Adapter {};
+Style.define('el-div');
+</code></pre>
+</el-code-block>
+<el-code-block>
+    <div el="bar-top-left">HTML</div>
+<pre><code class="language-html">&lt;el-div css=&quot;
+display: inline-flex;
+box-sizing: border-box;
+border: 1px solid;
+border-radius: 5px;
+padding: 1rem;
+button {
+    background-color: red
+};
+&quot;&gt;
+    &lt;button&gt;Button 1&lt;/button&gt;
+&lt;/el-div&gt;
+
+&lt;el-div css=&quot;button { background-color: blue };&quot;&gt;
+    &lt;button&gt;Button 2&lt;/button&gt;
+&lt;/el-div&gt;
+</code></pre>
+</el-code-block>
+<p><el-div css="
+display: inline-flex;
+box-sizing: border-box;
+border: 1px solid;
+border-radius: 5px;
+padding: 1rem;
+button { background-color: red };
+">
+    <button>Button 1</button></p>
+</el-div>
+<el-div css="button { background-color: blue };">
+    <button>Button 2</button>
+</el-div>
+
+</el-container>
+
+</body>
+</html>

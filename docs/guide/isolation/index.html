@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Adapter brings CSS to the next level with Javascript & Web Component
+            which make it programmable with many features such as isolation,
+            inheritancs, shadow DOM style, etc.
+        ">
+    <title>Adapter : CSS in Javascript Framework for Web Components</title>
+    <link rel="stylesheet" href="../../base.css?v=25">
+    <script type="module" src="../../base.js?v=25"></script>
+    
+
+
+<script type="module" src="../../guide/base.js?v=25"></script>
+
+<script defer type="module" src="index.js?v=25"></script>
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNHSQQQLL2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HNHSQQQLL2');
+</script>
+</head>
+<body style="visibility: hidden;">
+
+
+
+<el-sidebar>
+    <div el="wrapper">
+        <el-menu>
+            <a href="../../"><h1>Adapter</h1></a>
+            <details>
+                <summary>
+                    <a href="../../guide/intro/#"><h2>Intro</h2></a>
+                </summary>
+            </details>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="../../guide/setup/#"><h2>Setup</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="../../guide/setup/#cdn">CDN</a></div>
+                    <div><a href="../../guide/setup/#npm">NPM</a></div>
+                </div>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="../../guide/css-like-oop/#"><h2>CSS like OOP 🔥</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="../../guide/css-like-oop/#component-style">Class Level</a></div>
+                    <div><a href="../../guide/css-like-oop/#element-style">Object Level</a></div>
+                    <div><a href="../../guide/css-like-oop/#shadow-dom">Style inside Shadow DOM</a></div>
+                </div>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/mixin/#"><h2>Mixin</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/scoped-style/#"><h2>Scoped Style</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/style-filtering/#"><h2>Style Filtering</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/isolation/#"><h2>Isolation</h2></a>
+                </summary>
+            </details>
+        </el-menu>
+    </div>
+    <el-button el="toggle"><span>»</span></el-button>
+</el-sidebar>
+
+<el-container>
+<h1>Component Isolation</h1>
+<p><strong>Adapter</strong> provides an API to entirely isolate itself inside <strong>Shadow DOM</strong>.
+Different from other Web Component Frameworks, <strong>Adapter</strong> choose
+another approach to be fully contained within <strong>the Shadow DOM</strong>.
+This can simplifies CSS as there's no need to use <code>:host</code> selector
+and the DOM structure will be the same whether using Shadow DOM or not.</p>
+<el-blockquote>
+<blockquote>
+<p>💁‍♀️ <strong>Adapter</strong> allows you to decide whether to use Shadow DOM
+when you utilize components in the DOM, rather than during the design
+or creation of components.</p>
+</blockquote>
+</el-blockquote>
+<img src="isolation.png" style="display: block; margin: auto; margin-top: 3rem;">
+<h2>Example</h2>
+<el-code-block>
+    <div el="bar-top-left">JS</div>
+<pre><code class="language-js">class ElementA extends Adapter {};
+ElementA.define('el-a');
+</code></pre>
+</el-code-block>
+<el-code-block>
+    <div el="bar-top-left">HTML</div>
+<pre><code class="language-html">&lt;button&gt;Global Styled Button&lt;/button&gt;
+
+&lt;el-a isolation=&quot;open&quot;&gt;
+    &lt;button&gt;Isolated Button&lt;/button&gt;
+&lt;/el-a&gt;
+</code></pre>
+</el-code-block>
+<h3>Result</h3>
+<hr />
+<p><button>Global Styled Button</button></p>
+<el-a isolation="open">
+    <button>Isolated Button</button>
+</el-a>
+<hr />
+<p>And this is the rendered DOM for <code>&lt;el-a&gt;</code></p>
+<img src="shadowdom-open.png" style="width: auto;">
+<el-blockquote>
+<blockquote>
+<p>💁‍♀️ For someone who curious what will happen if components are moved or removed
+from the DOM, <strong>Adapter</strong> will handle it for you. <code>host</code> and <code>component</code>
+will always stick together even when you move for remove the component itself.</p>
+</blockquote>
+</el-blockquote>
+<h2>Closed Shadow DOM : <code>&lt;el-a isolation=&quot;closed&quot;&gt;</code></h2>
+<p>This option will create host isolator with <strong>Closed Shadow DOM</strong></p>
+<pre><code class="language-html">&lt;el-a isolation=&quot;closed&quot;&gt;
+    &lt;button&gt;Isolated Button&lt;/button&gt;
+&lt;/el-a&gt;
+</code></pre>
+<h3>Result</h3>
+<hr />
+<el-a isolation="closed">
+    <button>Isolated Button</button>
+</el-a>
+<hr />
+<p>This is the rendered DOM</p>
+<img src="shadowdom-closed.png" style="width: auto;">
+<p>A <strong>Closed Shadow DOM</strong> can prevent manipulation from other JavaScript code spaces,
+such as within other <code>&lt;script&gt;</code> tags, for example.</p>
+
+</el-container>
+
+</body>
+</html>

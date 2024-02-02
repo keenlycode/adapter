@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Adapter brings CSS to the next level with Javascript & Web Component
+            which make it programmable with many features such as isolation,
+            inheritancs, shadow DOM style, etc.
+        ">
+    <title>Adapter : CSS in Javascript Framework for Web Components</title>
+    <link rel="stylesheet" href="../../base.css?v=25">
+    <script type="module" src="../../base.js?v=25"></script>
+    
+
+
+<script type="module" src="../../guide/base.js?v=25"></script>
+
+<script type="module" src="index.js?v=25"></script>
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNHSQQQLL2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HNHSQQQLL2');
+</script>
+</head>
+<body style="visibility: hidden;">
+
+
+
+<el-sidebar>
+    <div el="wrapper">
+        <el-menu>
+            <a href="../../"><h1>Adapter</h1></a>
+            <details>
+                <summary>
+                    <a href="../../guide/intro/#"><h2>Intro</h2></a>
+                </summary>
+            </details>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="../../guide/setup/#"><h2>Setup</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="../../guide/setup/#cdn">CDN</a></div>
+                    <div><a href="../../guide/setup/#npm">NPM</a></div>
+                </div>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="../../guide/css-like-oop/#"><h2>CSS like OOP 🔥</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="../../guide/css-like-oop/#component-style">Class Level</a></div>
+                    <div><a href="../../guide/css-like-oop/#element-style">Object Level</a></div>
+                    <div><a href="../../guide/css-like-oop/#shadow-dom">Style inside Shadow DOM</a></div>
+                </div>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/mixin/#"><h2>Mixin</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/scoped-style/#"><h2>Scoped Style</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/style-filtering/#"><h2>Style Filtering</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/isolation/#"><h2>Isolation</h2></a>
+                </summary>
+            </details>
+        </el-menu>
+    </div>
+    <el-button el="toggle"><span>»</span></el-button>
+</el-sidebar>
+
+<el-container>
+<h1>CSS like OOP !</h1>
+<div id="component-style"></div>
+<h2>Componente Style (Class Level)</h2>
+<hr />
+<p>Class Level Styling will affect all elements
+created from class with a defined <strong>tagName</strong>.
+The result <strong>CSS</strong> will be rendered like..</p>
+<el-code-block>
+    <div el="bar-top-left"><strong>css</strong></div>
+<pre><code class="language-css">el-tagname {
+    /* styles */
+}
+</code></pre>
+</el-code-block>
+<p>There are 3 APIs to do this as following description.</p>
+<el-blockquote>
+<blockquote>
+<p>ℹ️ The reason to have many ways to style is to make it flexible
+to manage your components and styles in separated files or modules.</p>
+</blockquote>
+</el-blockquote>
+<h3>1. Class Declaration Styling</h3>
+<p>The component can be styled while declaring the component class
+by setting in <code>static css</code> property. This is the most common way
+to style your components.</p>
+<el-code-block>
+    <div el="bar-top-left"><strong>JS</strong></div>
+<pre><code class="language-js">import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
+
+class Card extends Adapter {
+    static css = `
+        display: inline-flex;
+        box-sizing: border-box;
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 1rem;
+    `;
+};
+
+Card.define('el-card');
+</code></pre>
+</el-code-block>
+<el-code-block>
+    <div el="bar-top-left"><strong>HTML</strong></div>
+<pre><code class="language-html">&lt;el-card&gt;This is a card&lt;/el-card&gt;
+</code></pre>
+</el-code-block>
+<h4>Result :</h4>
+<p><el-card>This is a card</el-card></p>
+<h3>2. Setting <code>static css</code> property</h3>
+<p>Component can be styled later by setting <code>static css</code>.
+This will replace all styles for this component (not affect inherit styles).</p>
+<p>This example also show how component can be extended and inherit
+parent class style.</p>
+<el-code-block>
+    <div el="bar-top-left"><strong>JS</strong></div>
+<pre><code class="language-js">/** BlueCard inherit CSS from Card */
+class BlueCard extends Card {};
+
+BlueCard.css = `
+    background-color: blue;
+    color: white;
+`;
+
+/** It also works with native customElement.define() */
+customElements.define('el-bluecard', BlueCard);
+</code></pre>
+<el-code-block>
+    <div el="bar-top-left"><strong>HTML</strong></div>
+<pre><code class="language-html">&lt;el-bluecard&gt;This is a blue card&lt;/el-bluecard&gt;
+</code></pre>
+</el-code-block>
+<h4>Result :</h4>
+<p><el-bluecard>This is a blue card</el-bluecard></p>
+<h3>3. Using function <code>static addStyle(css: string)</code></h3>
+<p>Using <code>addStyle()</code> will add more CSS style to the component
+(Not replacing it).</p>
+<el-code-block>
+    <div el="bar-top-left"><strong>JS</strong></div>
+<pre><code class="language-js">BlueCard.addStyle(`
+    &amp;.largeFont {
+        font-size: 2em;
+    }
+`);
+</code></pre>
+<el-code-block>
+    <div el="bar-top-left"><strong>HTML</strong></div>
+<pre><code class="language-html">&lt;el-bluecard class=&quot;largeFont&quot;&gt;This is a blue card with large font&lt;/el-bluecard&gt;
+</code></pre>
+</el-code-block>
+<h4>Result :</h4>
+<p><el-bluecard class="largeFont">This is a blue card with large font</el-bluecard></p>
+<div id="element-style"></div>
+<h2>Element Style (Object Level)</h2>
+<hr />
+<p><strong>Element Object Styling</strong> will render <strong>CSS</strong>
+with the auto-generated unique class selector, much like the following code.</p>
+<pre><code class="language-css">el-card.predefine.class.and.autogen { /* style */ }
+</code></pre>
+<p>This way, the style will be very specific to an element,
+but with a bit lower priority than inline style.
+There are 2 APIs to style component object (element)
+with the same manner as <strong>Class / Component Styling</strong></p>
+<h3>1. Setting <code>css</code> property</h3>
+<p>This will replace component object styles, but not affect
+<strong>Class / Component Styles</strong></p>
+<el-code-block>
+    <div el="bar-top-left"><strong>JS</strong></div>
+<pre><code class="language-js">document.querySelector('el-bluecard#blue-card-lift').css = `
+    filter: drop-shadow(10px 10px 10px #444);
+`;
+</code></pre>
+</el-code-block>
+<el-code-block>
+    <div el="bar-top-left"><strong>HTML</strong></div>
+<pre><code class="language-html">&lt;el-bluecard id=&quot;blue-card-lift&quot;&gt;Lift me up&lt;/el-bluecard&gt;
+</code></pre>
+</el-code-block>
+<h4>Result :</h4>
+<p><el-bluecard id="blue-card-lift">Lift me up</el-bluecard></p>
+<h3>2. Using <code>addStyle(css: string)</code></h3>
+<p>This will add more style to component object (element).</p>
+<el-code-block>
+    <div el="bar-top-left"><strong>JS</strong></div>
+<pre><code class="language-js">document.querySelector('#blue-card-rotate').addStyle(`
+    transform: rotate(45deg);
+`);
+</code></pre>
+</el-code-block>
+<el-code-block>
+    <div el="bar-top-left"><strong>HTML</strong></div>
+<pre><code class="language-html">&lt;el-bluecard id=&quot;blue-card-rotate&quot;&gt;Rotate me&lt;/el-bluecard&gt;
+</code></pre>
+</el-code-block>
+<h4>Result :</h4>
+<p><el-bluecard id="blue-card-rotate">Rotate me</el-bluecard></p>
+<div id="shadow-dom"></div>
+<h2>Style inside Shadow DOM just works !!</h2>
+<hr />
+<p>Most of the time, styling the DOM with <strong>Adapter</strong> will cover everything
+you need to program CSS in an object-oriented manner.
+However, if you are seeking complete control and isolation
+for your components, Shadow DOM is the way to go.</p>
+<p>Thanks to <code>adoptedStyleSheets</code>, <strong>Adapter</strong> can use it as the proper way
+to automatically style element when attached inside a Shadow DOM.</p>
+<el-code-block>
+    <div el="bar-top-left"><strong>JS</strong></div>
+<pre><code class="language-js">class ShadowHost extends Adapter {
+    constructor() {
+        super();
+        const innerHTML = this.innerHTML;
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = innerHTML;
+    }
+}
+
+customElements.define('el-shadow-host', ShadowHost);
+</code></pre>
+</el-code-block>
+<el-code-block>
+    <div el="bar-top-left"><strong>HTML</strong></div>
+<pre><code class="language-html">&lt;el-shadow-host&gt;
+    &lt;el-bluecard&gt;This card is in Shadow DOM&lt;/el-bluecard&gt;
+&lt;/el-shadow-host&gt;
+</code></pre>
+</el-code-block>
+<h4>Result :</h4>
+<el-shadow-host>
+    <el-bluecard>This card is in Shadow DOM</el-bluecard>
+</el-shadow-host>
+
+</el-container>
+
+</body>
+</html>

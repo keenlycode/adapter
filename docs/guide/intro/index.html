@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Adapter brings CSS to the next level with Javascript & Web Component
+            which make it programmable with many features such as isolation,
+            inheritancs, shadow DOM style, etc.
+        ">
+    <title>Adapter : CSS in Javascript Framework for Web Components</title>
+    <link rel="stylesheet" href="../../base.css?v=25">
+    <script type="module" src="../../base.js?v=25"></script>
+    
+
+<script type="module" src="../../guide/base.js?v=25"></script>
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNHSQQQLL2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HNHSQQQLL2');
+</script>
+</head>
+<body style="visibility: hidden;">
+
+
+
+<el-sidebar>
+    <div el="wrapper">
+        <el-menu>
+            <a href="../../"><h1>Adapter</h1></a>
+            <details>
+                <summary>
+                    <a href="../../guide/intro/#"><h2>Intro</h2></a>
+                </summary>
+            </details>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="../../guide/setup/#"><h2>Setup</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="../../guide/setup/#cdn">CDN</a></div>
+                    <div><a href="../../guide/setup/#npm">NPM</a></div>
+                </div>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="../../guide/css-like-oop/#"><h2>CSS like OOP 🔥</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="../../guide/css-like-oop/#component-style">Class Level</a></div>
+                    <div><a href="../../guide/css-like-oop/#element-style">Object Level</a></div>
+                    <div><a href="../../guide/css-like-oop/#shadow-dom">Style inside Shadow DOM</a></div>
+                </div>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/mixin/#"><h2>Mixin</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/scoped-style/#"><h2>Scoped Style</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/style-filtering/#"><h2>Style Filtering</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/isolation/#"><h2>Isolation</h2></a>
+                </summary>
+            </details>
+        </el-menu>
+    </div>
+    <el-button el="toggle"><span>»</span></el-button>
+</el-sidebar>
+
+<el-container>
+<h1>Introduction</h1>
+<h2>What is Adapter ?</h2>
+<hr />
+<div class="aspect-ratio-21-9">
+    <img src="./adapter.jpg">
+</div>
+<p><strong>Adapter</strong> is a JavaScript framework designed to seamlessly integrate
+<strong>CSS-in-JS</strong> with <strong>Web Components</strong>. Setting it apart from other
+<strong>CSS</strong> libraries, Adapter is framework which focus is on
+<strong>Web Component Styling</strong>.</p>
+<p>Despite its simplicity, <strong>Adapter</strong> unlocks endless possibilities
+for enhancing UX/UI in web applications. While traditional <strong>CSS</strong> frameworks
+have faced limitations, on the other hand, <strong>Adapter</strong> can implement features
+such as encapsulation, inheritance, composition, event-interaction,
+and other complex styling requirements which opens up new potential
+for creating dynamic and feature-rich user interfaces.</p>
+<h2>Examples</h2>
+<hr />
+<h3>OOP</h3>
+<pre><code class="language-ts">import { Adapter } from '@devcapsule/adapter';
+
+class FlexBox extends Adapter {
+    static css = `
+        display: flex;
+        justify-content: center;
+    `;
+}
+
+/** WrapFlexBox also inhertit styles from FlexBox */
+class WrapFlexBox extends Flexbox {
+    static css = `
+        flex-wrap: wrap;
+    `;
+}
+
+WrapFlexBox.define('el-wrap-flexbox');
+</code></pre>
+<p>This will produce CSS as</p>
+<pre><code class="language-css">el-wrap-flexbox {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+</code></pre>
+<p>Then, you can use them in html or create an instance by javascript</p>
+<el-code-block>
+<div el="bar-top-left">Javascript</div>
+<pre><code class="language-js">// Create &lt;el-flexbox&gt; in OOP manner.
+const flexBox = new FlexBox();
+document.body.append(flexBox);
+</code></pre>
+</el-code-block>
+<el-code-block>
+<div el="bar-top-left">HTML</div>
+<pre><code class="language-html">&lt;el-wrap-flexbox&gt;&lt;/el-wrap-flexbox&gt;
+</code></pre>
+</el-code-block>
+<div style="margin-top: 2rem;"></div>
+<h3>Variables and Functions</h3>
+<el-code-block>
+<div el="bar-top-left">Javascript</div>
+<pre><code class="language-ts">import Color from 'color';
+
+function bgColor(color) {
+    return `
+        background-color: ${color};
+        color: ${Color(color).isDark() ? 'white' : 'black'};
+    `.trim();
+}
+
+class RedFlexBox extends FlexBox {
+    static css = `${bgColor('red')}`;
+}
+
+export { bgColor, RedFlexBox };
+</code></pre>
+</el-code-block>
+<div style="margin-top: 2rem;"></div>
+<h3>Variables / Functions / OOP / Modules , That's it !</h3>
+<h3>CSS now is programmable with ES6 ! ... What else do we need ? 😉</h3>
+<h2>What problem is the adapter trying to solve ?</h2>
+<hr />
+<p>One of the most common problems for <strong>CSS</strong> which is hard to implement
+is <strong>Style Encapsulation and Inheritance</strong>, since we can't easily make sure that element styles
+won't <strong>unintentionally</strong> be inherited or overridden from somewhere else.</p>
+<p>Consider this situation where button style has been defined
+in one of <code>&lt;style&gt;</code> tag</p>
+<pre><code class="language-html">&lt;style&gt;
+    div &gt; button { background-color: red }
+&lt;/style&gt;
+</code></pre>
+<p>If we have a component somewhere which contains <code>&lt;button&gt;</code> without using
+<code>customElements</code></p>
+<pre><code class="language-html">&lt;div class=&quot;componentA&quot;&gt;
+    &lt;div&gt;&lt;button&gt;Button&lt;/button&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>In this situation, your components style <strong>might</strong> be overridden by
+global <code>&lt;style&gt;</code> from somewhere if you don't make <strong>CSS</strong> selector
+more specific like,</p>
+<pre><code class="language-html">&lt;style&gt;
+/* this won't work */
+.componentA {
+    div button { background-color: blue }
+}
+
+/* this work */
+.componentA {
+    div &gt; button { background-color: blue }
+}
+&lt;/style&gt;
+</code></pre>
+<p>This is just a simple example. Imagine when we have many elements
+and more style properties; this could be a headache
+and prone to causing errors in component styling,
+or at least it prevents us from achieving a composed style
+between elements/components or libraries.</p>
+<h3>Component Styling to save the world !</h3>
+<p><strong>Web Component Styling</strong> can solve this problems, because</p>
+<ol>
+<li>When you use <code>customElements.define()</code>, it will show errors
+if the custom element has already been defined somewhere else,
+allowing you to decide how to deal with it.</li>
+<li>Defined custom elements have their own unique tags,
+preventing global styles from <strong>unintentionally</strong> overriding components
+and their elements. However, you still have full control of a component
+from global styles if desired, making it ideal for theming
+which <strong>Shadow DOM lacks this features</strong>.</li>
+</ol>
+<p>Let's see how to implement CSS Styling in Adapter Component.</p>
+<el-code-block>
+<div el="bar-top-left">JS</div>
+<pre><code class="language-js">class ComponentA extends Adapter {
+    /** CSS will be isolated in ComponentA
+     * Moreover, we can write CSS for this component without worrying
+     * about this component tagName.
+     */
+    static css = `div button { background-color: blue }`;
+}
+
+ComponentA.define('el-component-a');
+</code></pre>
+</el-code-block>
+<el-code-block>
+<div el="bar-top-left">HTML</div>
+<pre><code class="language-html">&lt;el-component-a&gt;
+    &lt;div&gt;&lt;button&gt;Button&lt;/button&gt;&lt;/div&gt;
+&lt;/el-component-a&gt;
+</code></pre>
+</el-code-block>
+
+</el-container>
+
+</body>
+</html>
