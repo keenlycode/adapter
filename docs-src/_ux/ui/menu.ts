@@ -1,4 +1,5 @@
-import { Adapter } from "../../adapter.js";
+import { Adapter } from "../../lib/lib.export.bundle.js";
+
 import { bgColor, pxToRem } from '../style';
 import { color } from '../designToken';
 

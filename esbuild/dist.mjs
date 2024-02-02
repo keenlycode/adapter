@@ -37,7 +37,7 @@ console.log(
 files = await glob(path.join(__dirname, "../src/**/*.bundle.ts"));
 
 console.log(
-`📦️ Create library bundle files
+`📦️ Create adapter bundle files
 =======================================`);
 
 result = await esbuild.build({
