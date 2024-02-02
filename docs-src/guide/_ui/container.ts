@@ -1,4 +1,4 @@
-import { Adapter } from '../../adapter';
+import { Adapter } from '../../lib/lib.export.bundle.js';
 
 
 class Container extends Adapter {

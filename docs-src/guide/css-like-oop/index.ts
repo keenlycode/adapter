@@ -1,4 +1,4 @@
-import { Adapter, stylis } from '../../adapter';
+import { Adapter } from '../../lib/lib.export.bundle.js';
 
 class Card extends Adapter {
     static css = `

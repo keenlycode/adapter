@@ -35,7 +35,7 @@ const bundleContext = await esbuild.context({
   lineLimit: 80,
   minify: true,
   logLevel: "info",
-  external: ['*.bundle.js'],
+  external: ['*.bundle.js'], // Use this option for production.
 });
 
 await bundleContext.watch();

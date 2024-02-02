@@ -1,9 +1,12 @@
-import Color from "color";
+import { Color } from "../../lib/lib.export.bundle.js";
 
-import { aspectRatio, bgColor } from "../../_ux/style";
-import { buttonStyle } from "../../_ux/ui/button";
-import { color } from "../../_ux/designToken";
-import { Sidebar as _Sidebar } from "../../_ux/ui/sidebar";
+import {
+  aspectRatio,
+  bgColor,
+  buttonStyle,
+  color,
+  Sidebar as _Sidebar
+} from "../../ux.bundle.js";
 
 const css = String.raw;
 
