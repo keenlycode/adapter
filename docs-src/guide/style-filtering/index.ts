@@ -1,4 +1,4 @@
-import { Adapter } from '../../adapter';
+import { Adapter } from '../../lib/lib.export.bundle.js';
 
 
 const cssStyleSheet = new CSSStyleSheet();

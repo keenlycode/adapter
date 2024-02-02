@@ -5,7 +5,7 @@ import {
   BlockQuote,
   Button, buttonStyle,
   color,
-} from './ux.bundle.js';
+} from './ux.js';
 
 function baseComponents() {
   const __base_url = new URL(import.meta.url);

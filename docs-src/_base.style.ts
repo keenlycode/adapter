@@ -1,6 +1,6 @@
 import { stylis } from './lib/lib.export.bundle.js';
 
-import { buttonStyle, bgColor, fontFluid, color } from "./ux.bundle.js";
+import { buttonStyle, bgColor, fontFluid, color } from "./ux.js";
 
 
 function baseStyle() {
