@@ -1,4 +1,4 @@
-import { aspectRatio } from './ux/style.js';
+import { aspectRatio } from './_ux/style';
 
 function styleClass() {
     const cssStyleSheet = new CSSStyleSheet();
