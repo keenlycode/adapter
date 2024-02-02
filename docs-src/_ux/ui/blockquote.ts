@@ -1,6 +1,5 @@
-import { Adapter } from "../../adapter.js";
+import { Adapter, Color } from "../../lib/lib.export.bundle.js";
 import { color } from "../designToken.js";
-import Color from "color";
 
 const css = String.raw
 

@@ -1,19 +1,16 @@
-import 'highlight.js/styles/monokai.css';
-
-import { baseLib } from './_base.lib';
-baseLib();
+import './lib/lib.run.bundle.js';
 
 import { baseStyle } from './_base.style';
-baseStyle('./');
+baseStyle();
 
 import { baseComponents } from './_base.comp';
-baseComponents('./');
-
-import { pageReload } from './_base.esbuild';
-pageReload('./');
+baseComponents();
 
 import { styleClass } from './_base.styleClass';
 styleClass();
+
+import { pageReload } from './_base.esbuild';
+pageReload();
 
 window.addEventListener('load', () => {
     document.body.style.visibility = 'visible';
