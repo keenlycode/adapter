@@ -1,3 +1,3 @@
-export { Adapter, AdapterMixin } from './adapter';
-export { IsolatorMixin } from './isolator';
-export { stylis } from './cssProcessor/stylis';
+export { Adapter, AdapterMixin } from './adapter.js';
+export { IsolatorMixin } from './isolator.js';
+export { stylis } from './cssProcessor/stylis.bundle.js';

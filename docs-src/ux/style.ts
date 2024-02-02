@@ -1,4 +1,4 @@
-import Color from "color";
+import { Color } from "../lib/lib.export.bundle.js";
 
 const css = String.raw;
 

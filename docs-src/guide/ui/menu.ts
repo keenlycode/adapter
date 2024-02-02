@@ -1,4 +1,4 @@
-import { Menu as _Menu } from "../../_ux/ui/menu";
+import { Menu as _Menu } from "../../ux.js";
 
 const css = String.raw;
 class Menu extends _Menu {

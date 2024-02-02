@@ -1,6 +1,5 @@
-import { Adapter } from "../../adapter.js";
-import Color from 'color';
-import { bgColor, lift } from '../style';
+import { Adapter, Color } from "../../lib/lib.export.bundle.js";
+import { bgColor, lift } from '../style.js';
 
 const buttonStyle = (color) => {
     return /*css*/`

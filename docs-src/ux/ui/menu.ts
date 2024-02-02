@@ -1,6 +1,7 @@
-import { Adapter } from "../../adapter.js";
-import { bgColor, pxToRem } from '../style';
-import { color } from '../designToken';
+import { Adapter } from "../../lib/lib.export.bundle.js";
+
+import { bgColor, pxToRem } from '../style.js';
+import { color } from '../designToken.js';
 
 
 interface MenuStyleParam {

@@ -7,13 +7,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const docs_src_dir = path.join(__dirname, "../docs-src/");
-
-const outDir = path.join(__dirname, "../docs/");
-console.log(`Create docs at: ${outDir}`);
-
-
-const bundleFiles = await glob.sync(
-  path.join(docs_src_dir, "**/*.bundle.{ts,js}"),
+const entryFiles = await glob.sync(
+  path.join(docs_src_dir, "**/*.{ts,js,svg,png,jpg,ttf}"),
   {
     ignore: [
       path.join(docs_src_dir, "**/_*/**"),
@@ -22,37 +17,12 @@ const bundleFiles = await glob.sync(
   }
 );
 
-const bundleContext = await esbuild.context({
-  entryPoints: bundleFiles,
-  entryNames: "[dir]/[name]",
-  outdir: outDir,
-  outbase: "docs-src",
-  bundle: true,
-  format: "esm",
-  target: ["chrome100"],
-  sourcemap: true,
-  keepNames: true,
-  lineLimit: 80,
-  minify: true,
-  logLevel: "info",
-  external: ['*.bundle.js'], // Use this option for production.
-});
+// console.log(entryFiles);
 
-await bundleContext.watch();
-console.log("Watch bundle files: ", bundleFiles);
+const outDir = path.join(__dirname, "../docs/");
+console.log(`Create docs at: ${outDir}`);
 
-const entryFiles = await glob.sync(
-  path.join(docs_src_dir, "**/*.{ts,js,svg,png,jpg,ttf}"),
-  {
-    ignore: [
-      path.join(docs_src_dir, "**/_*/**"),
-      path.join(docs_src_dir, "**/_*"),
-      path.join(docs_src_dir, "**/*.bundle.{ts,js}"),
-    ],
-  }
-);
-
-const context = await esbuild.context({
+const result = await esbuild.context({
   entryPoints: entryFiles,
   entryNames: "[dir]/[name]",
   loader: {
@@ -63,7 +33,7 @@ const context = await esbuild.context({
   },
   outdir: outDir,
   outbase: "docs-src",
-  bundle: false,
+  bundle: true,
   format: "esm",
   target: ["chrome100"],
   sourcemap: true,
@@ -75,9 +45,9 @@ const context = await esbuild.context({
   logLevel: "info",
 });
 
-await context.watch();
+await result.watch();
 
-const { host, port } = await context.serve({
+const { host, port } = await result.serve({
   servedir: "docs",
 });
 console.log(`docs server => http://${host}:${port}`);
