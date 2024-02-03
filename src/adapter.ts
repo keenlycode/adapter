@@ -95,8 +95,6 @@ class AdapterObject {
 
   _uuid?: string;
 
-  styles: string[] = [];
-
   _cssObserver!: MutationObserver;
 
   _class!: typeof Adapter | any;
@@ -219,7 +217,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
      * It works like `<el style="">` but with CSS processor.
      */
     set css(css: string) {
-      this._adapter.styles = [css];
       this.classList.add(this._adapter.uuid);
 
       /** Init cssStyleSheet if it hasn't been inited yet.
@@ -244,17 +241,16 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
 
     /** Add style for this element */
     addStyle(css: string): void {
-      this._adapter.styles.push(css);
       this.classList.add(this._adapter.uuid);
 
       const processedCss = this._adapter._class.cssProcess(
         `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`
       );
 
-      this._adapter.cssStyleSheet.insertRule(
-        processedCss,
-        this._adapter.cssStyleSheet.cssRules.length
-      );
+      this._adapter.cssStyleSheet.replaceSync(`
+        ${this.css}
+        ${processedCss}
+      `);
     }
 
     connectedCallback(): void {
