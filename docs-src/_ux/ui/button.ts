@@ -26,23 +26,24 @@ const buttonStyle = (color) => {
       padding: 0.5rem 0.7rem;
       font-weight: bold;
       line-height: 1;
-        cursor: pointer;
-        ${lift(0.2, '#555')}
-        ${bgColor(color)}
-        &:hover {
-          background-color: ${Color(color)
-            .lighten(0.1)
-            .saturate(0.1)};
-          ${lift(1.2, '#555')}
-        }
-        &:active {
-          background-color: ${Color(color)
-            .darken(0.1)
-            .saturate(-0.1)};
-          ${lift(0, '#555')}
-        }
+      cursor: pointer;
+      min-height: 2em;
+      ${lift(1, '#555')}
+      ${bgColor(color)}
+      &:hover {
+        background-color: ${Color(color)
+          .lighten(0.1)
+          .saturate(0.1)};
+        ${lift(1.5, '#555')}
+      }
+      &:active {
+        background-color: ${Color(color)
+          .darken(0.1)
+          .saturate(-0.1)};
+        ${lift(0, '#555')}
+      }
     }
-    `
+  `
 }
 
 class Button extends Adapter {

@@ -34,9 +34,6 @@ function baseComponents() {
   Button.define('el-button');
 
   Button.addStyle(/*css*/`
-    button {
-      min-height: 2em;
-    }
     el-icon {
       margin-top: -0.17rem;
     }
