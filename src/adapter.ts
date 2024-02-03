@@ -78,10 +78,10 @@ class AdapterClass {
     if (this.tagName) {
       const rule = `${this.tagName} { ${css} }`;
       const processedCss = this.adapterClass.cssProcess(rule);
-      this.cssStyleSheet.insertRule(
-        processedCss,
-        this.cssStyleSheet.cssRules.length
-      );
+      this.cssStyleSheet.replaceSync(`
+        ${this.tagName} { ${this.allCSS} }
+        ${processedCss}
+      `);
     }
   }
 }
