@@ -602,7 +602,7 @@ this.css=css3`
         el-button[el="discord"] {
             ${buttonStyle(color.light)}
         }
-    `}};HeadingButtons.define("el-heading-buttons");Particle.define("el-particle");
-ParticleScene.define("el-particle-scene");window.Adapter=Adapter;window.Particle=
-Particle;
+    `}};Heading.define("el-heading");HeadingButtons.define("el-heading-buttons");
+Particle.define("el-particle");ParticleScene.define("el-particle-scene");window.
+Adapter=Adapter;window.Particle=Particle;
 //# sourceMappingURL=index.js.map
