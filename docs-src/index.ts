@@ -122,16 +122,16 @@ class Heading extends Adapter {
 class HeadingButtons extends Adapter {
   static css = css`
     el-button {
-        margin: 1rem 1rem;
-        & el-icon {
-            margin-right: 0.5rem;
-        }
+      margin: 1rem 1rem;
+      & el-icon {
+        margin-right: 0.5rem;
+      }
     }
     el-button[el="github"] {
-        ${buttonStyle(color.dark)}
+      ${buttonStyle(color.dark)}
     }
     el-button[el="discord"] {
-        ${buttonStyle(color.light)}
+      ${buttonStyle(color.light)}
     }
   `;
 };
