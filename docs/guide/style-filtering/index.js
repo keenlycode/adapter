@@ -109,8 +109,10 @@ styles.join(`
 this.initStyle()}initStyle(){this.cssStyleSheet.replaceSync(this.adapterClass.cssProcess(
 `${this.tagName} { ${this.allCSS} }`)),document.adoptedStyleSheets.push(this.cssStyleSheet)}addStyle(css){
 if(this.styles.push(css),this.tagName){let rule=`${this.tagName} { ${css} }`,processedCss=this.
-adapterClass.cssProcess(rule);this.cssStyleSheet.insertRule(processedCss,this.cssStyleSheet.
-cssRules.length)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet;
+adapterClass.cssProcess(rule);this.cssStyleSheet.replaceSync(`
+        ${this.tagName} { ${this.allCSS} }
+        ${processedCss}
+      `)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet;
 this.styles=[]}static{__name(this,"AdapterObject")}get uuid(){return this._uuid?
 this._uuid:(this._uuid=`${this.adapterObject.tagName}-${uuid()}`,this._uuid)}get cssObserver(){
 return this._cssObserver?this._cssObserver:(this._cssObserver=new MutationObserver(

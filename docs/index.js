@@ -432,7 +432,7 @@ return=element.return||element.value;case COMMENT:return"";case KEYFRAMES:return
 return=element.value+"{"+serialize(element.children,callback)+"}";case RULESET:if(!strlen(
 element.value=element.props.join(",")))return""}return strlen(children=serialize(
 element.children,callback))?element.return=element.value+"{"+children+"}":""}__name(
-stringify,"stringify");function stylis(css3){return serialize(compile(css3),stringify)}__name(stylis,"s\
+stringify,"stringify");function stylis(css4){return serialize(compile(css4),stringify)}__name(stylis,"s\
 tylis");var Isolator=class{static{__name(this,"Isolator")}constructor(element){this.element=
 element,this.isolation&&this._isolate(this.isolation)}get isolation(){let isolation=this.
 element.getAttribute("isolation");return isolation===""&&(isolation="open"),isolation}isolate(mode){
@@ -454,15 +454,17 @@ super.disconnectedCallback()}}}__name(IsolatorMixin,"IsolatorMixin");var Adapter
 this.adapterClass),allStyles=[];for(;superClass.adapter;)allStyles.push(...superClass.
 adapter.styles),superClass=Object.getPrototypeOf(superClass);return allStyles.push(
 ...this.styles),allStyles}get allCSS(){return this.allStyles.join(`
-`)}set css(css3){this.styles=[css3],this.tagName&&this.cssStyleSheet.replaceSync(
+`)}set css(css4){this.styles=[css4],this.tagName&&this.cssStyleSheet.replaceSync(
 this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`))}get css(){return this.
 styles.join(`
 `)}define(tagName){this.tagName=tagName,customElements.define(tagName,this.adapterClass),
 this.initStyle()}initStyle(){this.cssStyleSheet.replaceSync(this.adapterClass.cssProcess(
-`${this.tagName} { ${this.allCSS} }`)),document.adoptedStyleSheets.push(this.cssStyleSheet)}addStyle(css3){
-if(this.styles.push(css3),this.tagName){let rule=`${this.tagName} { ${css3} }`,processedCss=this.
-adapterClass.cssProcess(rule);this.cssStyleSheet.insertRule(processedCss,this.cssStyleSheet.
-cssRules.length)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet;
+`${this.tagName} { ${this.allCSS} }`)),document.adoptedStyleSheets.push(this.cssStyleSheet)}addStyle(css4){
+if(this.styles.push(css4),this.tagName){let rule=`${this.tagName} { ${css4} }`,processedCss=this.
+adapterClass.cssProcess(rule);this.cssStyleSheet.replaceSync(`
+        ${this.tagName} { ${this.allCSS} }
+        ${processedCss}
+      `)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet;
 this.styles=[]}static{__name(this,"AdapterObject")}get uuid(){return this._uuid?
 this._uuid:(this._uuid=`${this.adapterObject.tagName}-${uuid()}`,this._uuid)}get cssObserver(){
 return this._cssObserver?this._cssObserver:(this._cssObserver=new MutationObserver(
@@ -477,33 +479,35 @@ super(...args);this._adapter=new AdapterObject;this._adapter.adapterObject=this,
 this._adapter._class||this._adapter.initClass(),this._adapter.cssObserve(!0)}static{
 __name(this,"_Adapter")}static get adapter(){return this._adapter===Object.getPrototypeOf(
 this)._adapter&&(this._adapter=new AdapterClass,this._adapter.adapterClass=this),
-this._adapter}static cssProcess(css3){return css3}static set css(css3){this.adapter.
-css=css3}static get css(){return this.adapter.css}static get tagName(){return this.
-adapter.tagName}static addStyle(css3){this.adapter.addStyle(css3)}static define(tagName){
-this.adapter.define(tagName)}set css(css3){this._adapter.styles=[css3],this.classList.
+this._adapter}static cssProcess(css4){return css4}static set css(css4){this.adapter.
+css=css4}static get css(){return this.adapter.css}static get tagName(){return this.
+adapter.tagName}static addStyle(css4){this.adapter.addStyle(css4)}static define(tagName){
+this.adapter.define(tagName)}set css(css4){this._adapter.styles=[css4],this.classList.
 add(this._adapter.uuid);let processedCss=this._adapter._class.cssProcess(`${this.
-tagName}.${this._adapter.objectClassSelector} { ${css3} }`);this._adapter.cssStyleSheet.
-replaceSync(processedCss)}get css(){let css3=this.getAttribute("css")||"";if(css3)
-return css3;for(let rule of this._adapter.cssStyleSheet.cssRules)css3+=rule.cssText+
+tagName}.${this._adapter.objectClassSelector} { ${css4} }`);this._adapter.cssStyleSheet.
+replaceSync(processedCss)}get css(){let css4=this.getAttribute("css")||"";if(css4)
+return css4;for(let rule of this._adapter.cssStyleSheet.cssRules)css4+=rule.cssText+
 `
-`;return css3}addStyle(css3){this._adapter.styles.push(css3),this.classList.add(
+`;return css4}addStyle(css4){this._adapter.styles.push(css4),this.classList.add(
 this._adapter.uuid);let processedCss=this._adapter._class.cssProcess(`${this.tagName}\
-.${this._adapter.objectClassSelector} { ${css3} }`);this._adapter.cssStyleSheet.
+.${this._adapter.objectClassSelector} { ${css4} }`);this._adapter.cssStyleSheet.
 insertRule(processedCss,this._adapter.cssStyleSheet.cssRules.length)}connectedCallback(){
-super.connectedCallback&&super.connectedCallback();let css3=this.getAttribute("c\
-ss");css3&&(this.css=css3);let rootNode=this.getRootNode();rootNode.adoptedStyleSheets.
+super.connectedCallback&&super.connectedCallback();let css4=this.getAttribute("c\
+ss");css4&&(this.css=css4);let rootNode=this.getRootNode();rootNode.adoptedStyleSheets.
 indexOf(this._adapter._class.adapter.cssStyleSheet)===-1&&rootNode.adoptedStyleSheets.
 push(this._adapter._class.adapter.cssStyleSheet),rootNode.adoptedStyleSheets.indexOf(
 this._adapter.cssStyleSheet)===-1&&rootNode.adoptedStyleSheets.push(this._adapter.
 cssStyleSheet)}remove(){let rootNode=this.getRootNode(),i=rootNode.adoptedStyleSheets.
 indexOf(this._adapter.cssStyleSheet);rootNode.adoptedStyleSheets.splice(i,1),super.
 remove()}}}__name(AdapterMixin,"AdapterMixin");var Adapter=class extends IsolatorMixin(
-AdapterMixin(HTMLElement)){static{__name(this,"Adapter")}static cssProcess(css3){
-return stylis(css3)}};var import_color2=__toESM(require_color(),1);var import_color=__toESM(require_color(),1);var css=String.raw;function bgColor(color2){return css`
+AdapterMixin(HTMLElement)){static{__name(this,"Adapter")}static cssProcess(css4){
+return stylis(css4)}};var import_color2=__toESM(require_color(),1);var import_color=__toESM(require_color(),1);var css=String.raw;function bgColor(color2){return css`
         background-color: ${color2};
         color: ${(0,import_color.default)(color2).isDark()?"white":"black"};
     `.trim()}__name(bgColor,"bgColor");function lift(level,color2="black"){return`\
-filter: drop-shadow(0 0 ${level*2}px ${color2});`}__name(lift,"lift");var buttonStyle=__name(color2=>`
+filter: drop-shadow(0 0 ${level*2}px ${color2});`}__name(lift,"lift");var color={blue:"#3584e4",green:"#33d17a",yellow:"#f6d32d",orange:"#ff7800",red:"\
+#e01b24",purple:"#9141ac",violet:"#9141ac",brown:"#986a44",light:"#deddda",dark:"\
+#3d3846"};var css2=String.raw,buttonStyle=__name(color2=>css2`
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -511,34 +515,35 @@ filter: drop-shadow(0 0 ${level*2}px ${color2});`}__name(lift,"lift");var button
     box-sizing: border-box;
 
     button {
-        display: inline-flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-        border: 0;
-        border-radius: 0.25rem;
-        padding: 0.5rem 0.7rem;
-        font-weight: bold;
-        line-height: 1;
-        cursor: pointer;
-        ${lift(.2,"#555")}
-        ${bgColor(color2)}
-        &:hover {
-            background-color: ${(0,import_color2.default)(color2).lighten(.1).saturate(
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      border: 0;
+      border-radius: 0.25rem;
+      padding: 0.5rem 0.7rem;
+      font-weight: bold;
+      line-height: 1;
+      cursor: pointer;
+      min-height: 2em;
+      ${lift(1,"#555")}
+      ${bgColor(color2)}
+      &:hover {
+        background-color: ${(0,import_color2.default)(color2).lighten(.1).saturate(
 .1)};
-            ${lift(1.2,"#555")}
-        }
-        &:active {
-            background-color: ${(0,import_color2.default)(color2).darken(.1).saturate(
+        ${lift(1.5,"#555")}
+      }
+      &:active {
+        background-color: ${(0,import_color2.default)(color2).darken(.1).saturate(
 -.1)};
-            ${lift(0,"#555")}
-        }
+        ${lift(0,"#555")}
+      }
     }
-    `,"buttonStyle");var color={blue:"#3584e4",green:"#33d17a",yellow:"#f6d32d",orange:"#ff7800",red:"\
-#e01b24",purple:"#9141ac",violet:"#9141ac",brown:"#986a44",light:"#deddda",dark:"\
-#3d3846"};var css2=String.raw,Particle=class extends Adapter{static{__name(this,"Particle")}static{
-this.css=css2`
+  `,"buttonStyle"),Button=class extends Adapter{constructor(){super();this.initialHTML=
+this.innerHTML;this.render()}static{__name(this,"Button")}static{this.css=buttonStyle(
+color.blue)}render(){this.innerHTML=`<button>${this.initialHTML}</button>`}};var css3=String.raw,Particle=class extends Adapter{static{__name(this,"Particle")}static{
+this.css=css3`
         display: inline-flex;
         box-sizing: border-box;
         margin: 3.5%;
@@ -559,7 +564,7 @@ sqrt(Math.pow(clientPoint[0]-centerPoint[0],2)+Math.pow(clientPoint[1]-centerPoi
 abs(distance/100-1)*3+1;this.style.scale=scale.toString()}getCenterPoint(){let rect=this.
 getBoundingClientRect();return[(rect.left+rect.right)/2,(rect.top+rect.bottom)/2]}},
 ParticleScene=class extends Adapter{static{__name(this,"ParticleScene")}static{this.
-css=css2`
+css=css3`
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -572,7 +577,7 @@ css=css2`
 super.connectedCallback();for(let i=0;i<100;i++){let particle=document.createElement(
 "el-particle");this.append(particle)}}resetScene(){let particles=this.querySelectorAll(
 "el-particle");for(let particle of particles)particle.style.scale="1"}},Heading=class extends Adapter{static{
-__name(this,"Heading")}static{this.css=css2`
+__name(this,"Heading")}static{this.css=css3`
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -584,7 +589,7 @@ __name(this,"Heading")}static{this.css=css2`
             margin-top: 1.5rem;
         }
     `}},HeadingButtons=class extends Adapter{static{__name(this,"HeadingButtons")}static{
-this.css=css2`
+this.css=css3`
         el-button {
             margin: 1rem 1rem;
             & el-icon {
@@ -597,7 +602,7 @@ this.css=css2`
         el-button[el="discord"] {
             ${buttonStyle(color.light)}
         }
-    `}};Heading.define("el-heading");HeadingButtons.define("el-heading-buttons");
-Particle.define("el-particle");ParticleScene.define("el-particle-scene");window.
-Adapter=Adapter;window.Particle=Particle;
+    `}};HeadingButtons.define("el-heading-buttons");Particle.define("el-particle");
+ParticleScene.define("el-particle-scene");window.Adapter=Adapter;window.Particle=
+Particle;
 //# sourceMappingURL=index.js.map

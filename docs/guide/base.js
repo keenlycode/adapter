@@ -432,7 +432,7 @@ return=element.return||element.value;case COMMENT:return"";case KEYFRAMES:return
 return=element.value+"{"+serialize(element.children,callback)+"}";case RULESET:if(!strlen(
 element.value=element.props.join(",")))return""}return strlen(children=serialize(
 element.children,callback))?element.return=element.value+"{"+children+"}":""}__name(
-stringify,"stringify");function stylis(css5){return serialize(compile(css5),stringify)}__name(stylis,"s\
+stringify,"stringify");function stylis(css6){return serialize(compile(css6),stringify)}__name(stylis,"s\
 tylis");var Isolator=class{static{__name(this,"Isolator")}constructor(element){this.element=
 element,this.isolation&&this._isolate(this.isolation)}get isolation(){let isolation=this.
 element.getAttribute("isolation");return isolation===""&&(isolation="open"),isolation}isolate(mode){
@@ -454,15 +454,17 @@ super.disconnectedCallback()}}}__name(IsolatorMixin,"IsolatorMixin");var Adapter
 this.adapterClass),allStyles=[];for(;superClass.adapter;)allStyles.push(...superClass.
 adapter.styles),superClass=Object.getPrototypeOf(superClass);return allStyles.push(
 ...this.styles),allStyles}get allCSS(){return this.allStyles.join(`
-`)}set css(css5){this.styles=[css5],this.tagName&&this.cssStyleSheet.replaceSync(
+`)}set css(css6){this.styles=[css6],this.tagName&&this.cssStyleSheet.replaceSync(
 this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`))}get css(){return this.
 styles.join(`
 `)}define(tagName){this.tagName=tagName,customElements.define(tagName,this.adapterClass),
 this.initStyle()}initStyle(){this.cssStyleSheet.replaceSync(this.adapterClass.cssProcess(
-`${this.tagName} { ${this.allCSS} }`)),document.adoptedStyleSheets.push(this.cssStyleSheet)}addStyle(css5){
-if(this.styles.push(css5),this.tagName){let rule=`${this.tagName} { ${css5} }`,processedCss=this.
-adapterClass.cssProcess(rule);this.cssStyleSheet.insertRule(processedCss,this.cssStyleSheet.
-cssRules.length)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet;
+`${this.tagName} { ${this.allCSS} }`)),document.adoptedStyleSheets.push(this.cssStyleSheet)}addStyle(css6){
+if(this.styles.push(css6),this.tagName){let rule=`${this.tagName} { ${css6} }`,processedCss=this.
+adapterClass.cssProcess(rule);this.cssStyleSheet.replaceSync(`
+        ${this.tagName} { ${this.allCSS} }
+        ${processedCss}
+      `)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet;
 this.styles=[]}static{__name(this,"AdapterObject")}get uuid(){return this._uuid?
 this._uuid:(this._uuid=`${this.adapterObject.tagName}-${uuid()}`,this._uuid)}get cssObserver(){
 return this._cssObserver?this._cssObserver:(this._cssObserver=new MutationObserver(
@@ -477,29 +479,29 @@ super(...args);this._adapter=new AdapterObject;this._adapter.adapterObject=this,
 this._adapter._class||this._adapter.initClass(),this._adapter.cssObserve(!0)}static{
 __name(this,"_Adapter")}static get adapter(){return this._adapter===Object.getPrototypeOf(
 this)._adapter&&(this._adapter=new AdapterClass,this._adapter.adapterClass=this),
-this._adapter}static cssProcess(css5){return css5}static set css(css5){this.adapter.
-css=css5}static get css(){return this.adapter.css}static get tagName(){return this.
-adapter.tagName}static addStyle(css5){this.adapter.addStyle(css5)}static define(tagName){
-this.adapter.define(tagName)}set css(css5){this._adapter.styles=[css5],this.classList.
+this._adapter}static cssProcess(css6){return css6}static set css(css6){this.adapter.
+css=css6}static get css(){return this.adapter.css}static get tagName(){return this.
+adapter.tagName}static addStyle(css6){this.adapter.addStyle(css6)}static define(tagName){
+this.adapter.define(tagName)}set css(css6){this._adapter.styles=[css6],this.classList.
 add(this._adapter.uuid);let processedCss=this._adapter._class.cssProcess(`${this.
-tagName}.${this._adapter.objectClassSelector} { ${css5} }`);this._adapter.cssStyleSheet.
-replaceSync(processedCss)}get css(){let css5=this.getAttribute("css")||"";if(css5)
-return css5;for(let rule of this._adapter.cssStyleSheet.cssRules)css5+=rule.cssText+
+tagName}.${this._adapter.objectClassSelector} { ${css6} }`);this._adapter.cssStyleSheet.
+replaceSync(processedCss)}get css(){let css6=this.getAttribute("css")||"";if(css6)
+return css6;for(let rule of this._adapter.cssStyleSheet.cssRules)css6+=rule.cssText+
 `
-`;return css5}addStyle(css5){this._adapter.styles.push(css5),this.classList.add(
+`;return css6}addStyle(css6){this._adapter.styles.push(css6),this.classList.add(
 this._adapter.uuid);let processedCss=this._adapter._class.cssProcess(`${this.tagName}\
-.${this._adapter.objectClassSelector} { ${css5} }`);this._adapter.cssStyleSheet.
+.${this._adapter.objectClassSelector} { ${css6} }`);this._adapter.cssStyleSheet.
 insertRule(processedCss,this._adapter.cssStyleSheet.cssRules.length)}connectedCallback(){
-super.connectedCallback&&super.connectedCallback();let css5=this.getAttribute("c\
-ss");css5&&(this.css=css5);let rootNode=this.getRootNode();rootNode.adoptedStyleSheets.
+super.connectedCallback&&super.connectedCallback();let css6=this.getAttribute("c\
+ss");css6&&(this.css=css6);let rootNode=this.getRootNode();rootNode.adoptedStyleSheets.
 indexOf(this._adapter._class.adapter.cssStyleSheet)===-1&&rootNode.adoptedStyleSheets.
 push(this._adapter._class.adapter.cssStyleSheet),rootNode.adoptedStyleSheets.indexOf(
 this._adapter.cssStyleSheet)===-1&&rootNode.adoptedStyleSheets.push(this._adapter.
 cssStyleSheet)}remove(){let rootNode=this.getRootNode(),i=rootNode.adoptedStyleSheets.
 indexOf(this._adapter.cssStyleSheet);rootNode.adoptedStyleSheets.splice(i,1),super.
 remove()}}}__name(AdapterMixin,"AdapterMixin");var Adapter=class extends IsolatorMixin(
-AdapterMixin(HTMLElement)){static{__name(this,"Adapter")}static cssProcess(css5){
-return stylis(css5)}};var import_color=__toESM(require_color(),1);var css=String.raw;function bgColor(color2){return css`
+AdapterMixin(HTMLElement)){static{__name(this,"Adapter")}static cssProcess(css6){
+return stylis(css6)}};var import_color=__toESM(require_color(),1);var css=String.raw;function bgColor(color2){return css`
         background-color: ${color2};
         color: ${(0,import_color.default)(color2).isDark()?"white":"black"};
     `.trim()}__name(bgColor,"bgColor");function lift(level,color2="black"){return`\
@@ -640,33 +642,7 @@ css=css2`
         padding-left: 0.5rem;
       }
     }
-  `}};function baseStyle(){let cssStyleSheet=new CSSStyleSheet;cssStyleSheet.replaceSync(
-`
-        body {
-            display: flex;
-            justify-content: center;
-            > el-container:first-of-type {
-                margin-top: 2rem;
-            }
-        }
-        h1, h2, h3 {
-            margin: auto;
-            max-width: 80ch;
-        }
-        h1 {
-            text-align: center
-        }
-        h2{
-            margin-top: 2.5rem;
-        }
-        h3 {
-            margin-top: 1.5rem;
-        }
-        p {
-            margin: 1rem auto;
-        }
-    `),document.adoptedStyleSheets.push(cssStyleSheet)}__name(baseStyle,"baseSty\
-le");var import_color3=__toESM(require_color(),1);var import_color2=__toESM(require_color(),1);var buttonStyle=__name(color2=>`
+  `}};var import_color3=__toESM(require_color(),1);var import_color2=__toESM(require_color(),1);var css3=String.raw,buttonStyle=__name(color2=>css3`
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -674,31 +650,34 @@ le");var import_color3=__toESM(require_color(),1);var import_color2=__toESM(requ
     box-sizing: border-box;
 
     button {
-        display: inline-flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-        border: 0;
-        border-radius: 0.25rem;
-        padding: 0.5rem 0.7rem;
-        font-weight: bold;
-        line-height: 1;
-        cursor: pointer;
-        ${lift(.2,"#555")}
-        ${bgColor(color2)}
-        &:hover {
-            background-color: ${(0,import_color2.default)(color2).lighten(.1).saturate(
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      border: 0;
+      border-radius: 0.25rem;
+      padding: 0.5rem 0.7rem;
+      font-weight: bold;
+      line-height: 1;
+      cursor: pointer;
+      min-height: 2em;
+      ${lift(1,"#555")}
+      ${bgColor(color2)}
+      &:hover {
+        background-color: ${(0,import_color2.default)(color2).lighten(.1).saturate(
 .1)};
-            ${lift(1.2,"#555")}
-        }
-        &:active {
-            background-color: ${(0,import_color2.default)(color2).darken(.1).saturate(
+        ${lift(1.5,"#555")}
+      }
+      &:active {
+        background-color: ${(0,import_color2.default)(color2).darken(.1).saturate(
 -.1)};
-            ${lift(0,"#555")}
-        }
+        ${lift(0,"#555")}
+      }
     }
-    `,"buttonStyle");var css3=String.raw,sidebarStyle=__name(()=>css3`
+  `,"buttonStyle"),Button=class extends Adapter{constructor(){super();this.initialHTML=
+this.innerHTML;this.render()}static{__name(this,"Button")}static{this.css=buttonStyle(
+color.blue)}render(){this.innerHTML=`<button>${this.initialHTML}</button>`}};var css4=String.raw,sidebarStyle=__name(()=>css4`
     all: unset;
     display: flex;
     flex-wrap: wrap;
@@ -721,7 +700,7 @@ le");var import_color3=__toESM(require_color(),1);var import_color2=__toESM(requ
 ebar")}static{this.css=`${sidebarStyle()}`}constructor(){super()}show(){this.classList.
 remove("hide"),this.classList.add("show")}hide(){this.classList.remove("show"),this.
 classList.add("hide")}toggle(){this.classList.contains("show")?this.hide():this.
-show()}};var css4=String.raw,sideBarStyle=css4`
+show()}};var css5=String.raw,sideBarStyle=css5`
   height: 110dvh;
   padding-bottom: 15dvh;
   ${bgColor(color.dark)}
@@ -792,7 +771,7 @@ show()}};var css4=String.raw,sideBarStyle=css4`
       transform: rotate(0deg);
     }
   }
-`,Sidebar2=class extends Sidebar{static{__name(this,"Sidebar")}static{this.css=css4`
+`,Sidebar2=class extends Sidebar{static{__name(this,"Sidebar")}static{this.css=css5`
     ${sideBarStyle}
   `}constructor(){super(),this.querySelector('[el="toggle"]')?.addEventListener(
 "click",()=>{this.toggle()}),this.addEventListener("click",event=>{let target=event.
@@ -819,6 +798,32 @@ this.css=this.defaultStyle()})}defaultStyle(){let el_sidebar=document.querySelec
                 width: 68%;
                 margin-left: calc(${getComputedStyle(el_sidebar).width});
             }
-        }`}};baseStyle();Menu2.define("el-menu");Sidebar2.define("el-sidebar");Container.define(
-"el-container");
+        }`}};function baseStyle(){let cssStyleSheet=new CSSStyleSheet;cssStyleSheet.replaceSync(
+`
+        body {
+            display: flex;
+            justify-content: center;
+            > el-container:first-of-type {
+                margin-top: 2rem;
+            }
+        }
+        h1, h2, h3 {
+            margin: auto;
+            max-width: 80ch;
+        }
+        h1 {
+            text-align: center
+        }
+        h2{
+            margin-top: 2.5rem;
+        }
+        h3 {
+            margin-top: 1.5rem;
+        }
+        p {
+            margin: 1rem auto;
+        }
+    `),document.adoptedStyleSheets.push(cssStyleSheet)}__name(baseStyle,"baseSty\
+le");baseStyle();Menu2.define("el-menu");Sidebar2.define("el-sidebar");Container.define("el-conta\
+iner");
 //# sourceMappingURL=base.js.map
