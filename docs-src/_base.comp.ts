@@ -3,9 +3,7 @@ import { AdapterMixin, stylis } from './adapter';
 
 import { CodeBlock } from './_ux/ui/code-block';
 import { BlockQuote } from './_ux/ui/blockquote';
-import { Button, buttonStyle } from './_ux/ui/button';
-import { color } from './_ux/designToken';
-
+import { Button } from './_ux/ui/button';
 
 const css = String.raw;
 
@@ -35,14 +33,6 @@ function baseComponents() {
   CodeBlock.define('el-code-block');
   Button.define('el-button');
 
-  // Button.addStyle(/*css*/`
-  //   button {
-  //     min-height: 2em;
-  //   }
-  //   el-icon {
-  //     margin-top: -0.17rem;
-  //   }
-  // `);
   Button.addStyle(/*css*/`
     button {
       min-height: 2em;
