@@ -464,12 +464,12 @@ if(this.styles.push(css4),this.tagName){let rule=`${this.tagName} { ${css4} }`,p
 adapterClass.cssProcess(rule);this.cssStyleSheet.replaceSync(`
         ${this.tagName} { ${this.allCSS} }
         ${processedCss}
-      `)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet;
-this.styles=[]}static{__name(this,"AdapterObject")}get uuid(){return this._uuid?
-this._uuid:(this._uuid=`${this.adapterObject.tagName}-${uuid()}`,this._uuid)}get cssObserver(){
-return this._cssObserver?this._cssObserver:(this._cssObserver=new MutationObserver(
-mutations=>{for(let mutation of mutations)mutation.attributeName==="css"&&(this.
-adapterObject.css=this.adapterObject.getAttribute("css")||"")}),this._cssObserver)}get objectClassSelector(){
+      `)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet}static{
+__name(this,"AdapterObject")}get uuid(){return this._uuid?this._uuid:(this._uuid=
+`${this.adapterObject.tagName}-${uuid()}`,this._uuid)}get cssObserver(){return this.
+_cssObserver?this._cssObserver:(this._cssObserver=new MutationObserver(mutations=>{
+for(let mutation of mutations)mutation.attributeName==="css"&&(this.adapterObject.
+css=this.adapterObject.getAttribute("css")||"")}),this._cssObserver)}get objectClassSelector(){
 return this.adapterObject.classList.value.replace(/ /g,".")}initClass(){this._class=
 this.adapterObject.constructor,!this._class.adapter.tagName&&(this._class.adapter.
 tagName=this.adapterObject.tagName,this._class.adapter.initStyle())}cssObserve(enable){
@@ -482,26 +482,26 @@ this)._adapter&&(this._adapter=new AdapterClass,this._adapter.adapterClass=this)
 this._adapter}static cssProcess(css4){return css4}static set css(css4){this.adapter.
 css=css4}static get css(){return this.adapter.css}static get tagName(){return this.
 adapter.tagName}static addStyle(css4){this.adapter.addStyle(css4)}static define(tagName){
-this.adapter.define(tagName)}set css(css4){this._adapter.styles=[css4],this.classList.
-add(this._adapter.uuid);let processedCss=this._adapter._class.cssProcess(`${this.
-tagName}.${this._adapter.objectClassSelector} { ${css4} }`);this._adapter.cssStyleSheet.
-replaceSync(processedCss)}get css(){let css4=this.getAttribute("css")||"";if(css4)
-return css4;for(let rule of this._adapter.cssStyleSheet.cssRules)css4+=rule.cssText+
-`
-`;return css4}addStyle(css4){this._adapter.styles.push(css4),this.classList.add(
-this._adapter.uuid);let processedCss=this._adapter._class.cssProcess(`${this.tagName}\
-.${this._adapter.objectClassSelector} { ${css4} }`);this._adapter.cssStyleSheet.
-insertRule(processedCss,this._adapter.cssStyleSheet.cssRules.length)}connectedCallback(){
-super.connectedCallback&&super.connectedCallback();let css4=this.getAttribute("c\
-ss");css4&&(this.css=css4);let rootNode=this.getRootNode();rootNode.adoptedStyleSheets.
-indexOf(this._adapter._class.adapter.cssStyleSheet)===-1&&rootNode.adoptedStyleSheets.
-push(this._adapter._class.adapter.cssStyleSheet),rootNode.adoptedStyleSheets.indexOf(
-this._adapter.cssStyleSheet)===-1&&rootNode.adoptedStyleSheets.push(this._adapter.
-cssStyleSheet)}remove(){let rootNode=this.getRootNode(),i=rootNode.adoptedStyleSheets.
-indexOf(this._adapter.cssStyleSheet);rootNode.adoptedStyleSheets.splice(i,1),super.
-remove()}}}__name(AdapterMixin,"AdapterMixin");var Adapter=class extends IsolatorMixin(
-AdapterMixin(HTMLElement)){static{__name(this,"Adapter")}static cssProcess(css4){
-return stylis(css4)}};var import_color2=__toESM(require_color(),1);var import_color=__toESM(require_color(),1);var css=String.raw;function bgColor(color2){return css`
+this.adapter.define(tagName)}set css(css4){this.classList.add(this._adapter.uuid);
+let processedCss=this._adapter._class.cssProcess(`${this.tagName}.${this._adapter.
+objectClassSelector} { ${css4} }`);this._adapter.cssStyleSheet.replaceSync(processedCss)}get css(){
+let css4=this.getAttribute("css")||"";if(css4)return css4;for(let rule of this._adapter.
+cssStyleSheet.cssRules)css4+=rule.cssText+`
+`;return css4}addStyle(css4){this.classList.add(this._adapter.uuid);let processedCss=this.
+_adapter._class.cssProcess(`${this.tagName}.${this._adapter.objectClassSelector}\
+ { ${css4} }`);this._adapter.cssStyleSheet.replaceSync(`
+        ${this.css}
+        ${processedCss}
+      `)}connectedCallback(){super.connectedCallback&&super.connectedCallback();
+let css4=this.getAttribute("css");css4&&(this.css=css4);let rootNode=this.getRootNode();
+rootNode.adoptedStyleSheets.indexOf(this._adapter._class.adapter.cssStyleSheet)===
+-1&&rootNode.adoptedStyleSheets.push(this._adapter._class.adapter.cssStyleSheet),
+rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet)===-1&&rootNode.
+adoptedStyleSheets.push(this._adapter.cssStyleSheet)}remove(){let rootNode=this.
+getRootNode(),i=rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet);
+rootNode.adoptedStyleSheets.splice(i,1),super.remove()}}}__name(AdapterMixin,"Ad\
+apterMixin");var Adapter=class extends IsolatorMixin(AdapterMixin(HTMLElement)){static{
+__name(this,"Adapter")}static cssProcess(css4){return stylis(css4)}};var import_color2=__toESM(require_color(),1);var import_color=__toESM(require_color(),1);var css=String.raw;function bgColor(color2){return css`
         background-color: ${color2};
         color: ${(0,import_color.default)(color2).isDark()?"white":"black"};
     `.trim()}__name(bgColor,"bgColor");function lift(level,color2="black"){return`\
@@ -544,15 +544,15 @@ filter: drop-shadow(0 0 ${level*2}px ${color2});`}__name(lift,"lift");var color=
 this.innerHTML;this.render()}static{__name(this,"Button")}static{this.css=buttonStyle(
 color.blue)}render(){this.innerHTML=`<button>${this.initialHTML}</button>`}};var css3=String.raw,Particle=class extends Adapter{static{__name(this,"Particle")}static{
 this.css=css3`
-        display: inline-flex;
-        box-sizing: border-box;
-        margin: 3.5%;
-        width: 3%;
-        height: auto;
-        aspect-ratio: 1;
-        background-color: orange;
-        border-radius: 100%;
-        border: 0.2em solid red;
+    display: inline-flex;
+    box-sizing: border-box;
+    margin: 3.5%;
+    width: 3%;
+    height: auto;
+    aspect-ratio: 1;
+    background-color: orange;
+    border-radius: 100%;
+    border: 0.2em solid red;
     `}constructor(){super()}connectedCallback(){super.connectedCallback(),this.parentElement.
 addEventListener("mousemove",event=>{this.onMouseMove(event)}),this.parentElement.
 addEventListener("touchmove",event=>{this.onTouchMove(event)})}onMouseMove(event){
@@ -565,44 +565,44 @@ abs(distance/100-1)*3+1;this.style.scale=scale.toString()}getCenterPoint(){let r
 getBoundingClientRect();return[(rect.left+rect.right)/2,(rect.top+rect.bottom)/2]}},
 ParticleScene=class extends Adapter{static{__name(this,"ParticleScene")}static{this.
 css=css3`
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        margin: auto;
-        margin-top: 2rem;
-        max-width: 400px;
-        min-width: 300px;
-    `}constructor(){super(),this.addEventListener("mouseout",()=>{this.resetScene()})}connectedCallback(){
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 2rem;
+    max-width: 400px;
+    min-width: 300px;
+  `}constructor(){super(),this.addEventListener("mouseout",()=>{this.resetScene()})}connectedCallback(){
 super.connectedCallback();for(let i=0;i<100;i++){let particle=document.createElement(
 "el-particle");this.append(particle)}}resetScene(){let particles=this.querySelectorAll(
 "el-particle");for(let particle of particles)particle.style.scale="1"}},Heading=class extends Adapter{static{
 __name(this,"Heading")}static{this.css=css3`
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
-        & h1 {
-            margin-top: 2rem;
-        }
-        & h2, h3 {
-            margin-top: 1.5rem;
-        }
-    `}},HeadingButtons=class extends Adapter{static{__name(this,"HeadingButtons")}static{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    & h1 {
+        margin-top: 2rem;
+    }
+    & h2, h3 {
+        margin-top: 1.5rem;
+    }
+  `}},HeadingButtons=class extends Adapter{static{__name(this,"HeadingButtons")}static{
 this.css=css3`
-        el-button {
-            margin: 1rem 1rem;
-            & el-icon {
-                margin-right: 0.5rem;
-            }
-        }
-        el-button[el="github"] {
-            ${buttonStyle(color.dark)}
-        }
-        el-button[el="discord"] {
-            ${buttonStyle(color.light)}
-        }
-    `}};Heading.define("el-heading");HeadingButtons.define("el-heading-buttons");
-Particle.define("el-particle");ParticleScene.define("el-particle-scene");window.
-Adapter=Adapter;window.Particle=Particle;
+    el-button {
+      margin: 1rem 1rem;
+      & el-icon {
+        margin-right: 0.5rem;
+      }
+    }
+    el-button[el="github"] {
+      ${buttonStyle(color.dark)}
+    }
+    el-button[el="discord"] {
+      ${buttonStyle(color.light)}
+    }
+  `}};Heading.define("el-heading");HeadingButtons.define("el-heading-buttons");Particle.
+define("el-particle");ParticleScene.define("el-particle-scene");window.Adapter=Adapter;
+window.Particle=Particle;
 //# sourceMappingURL=index.js.map

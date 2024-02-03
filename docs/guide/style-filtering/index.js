@@ -112,12 +112,12 @@ if(this.styles.push(css),this.tagName){let rule=`${this.tagName} { ${css} }`,pro
 adapterClass.cssProcess(rule);this.cssStyleSheet.replaceSync(`
         ${this.tagName} { ${this.allCSS} }
         ${processedCss}
-      `)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet;
-this.styles=[]}static{__name(this,"AdapterObject")}get uuid(){return this._uuid?
-this._uuid:(this._uuid=`${this.adapterObject.tagName}-${uuid()}`,this._uuid)}get cssObserver(){
-return this._cssObserver?this._cssObserver:(this._cssObserver=new MutationObserver(
-mutations=>{for(let mutation of mutations)mutation.attributeName==="css"&&(this.
-adapterObject.css=this.adapterObject.getAttribute("css")||"")}),this._cssObserver)}get objectClassSelector(){
+      `)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet}static{
+__name(this,"AdapterObject")}get uuid(){return this._uuid?this._uuid:(this._uuid=
+`${this.adapterObject.tagName}-${uuid()}`,this._uuid)}get cssObserver(){return this.
+_cssObserver?this._cssObserver:(this._cssObserver=new MutationObserver(mutations=>{
+for(let mutation of mutations)mutation.attributeName==="css"&&(this.adapterObject.
+css=this.adapterObject.getAttribute("css")||"")}),this._cssObserver)}get objectClassSelector(){
 return this.adapterObject.classList.value.replace(/ /g,".")}initClass(){this._class=
 this.adapterObject.constructor,!this._class.adapter.tagName&&(this._class.adapter.
 tagName=this.adapterObject.tagName,this._class.adapter.initStyle())}cssObserve(enable){
@@ -130,26 +130,26 @@ this)._adapter&&(this._adapter=new AdapterClass,this._adapter.adapterClass=this)
 this._adapter}static cssProcess(css){return css}static set css(css){this.adapter.
 css=css}static get css(){return this.adapter.css}static get tagName(){return this.
 adapter.tagName}static addStyle(css){this.adapter.addStyle(css)}static define(tagName){
-this.adapter.define(tagName)}set css(css){this._adapter.styles=[css],this.classList.
-add(this._adapter.uuid);let processedCss=this._adapter._class.cssProcess(`${this.
-tagName}.${this._adapter.objectClassSelector} { ${css} }`);this._adapter.cssStyleSheet.
-replaceSync(processedCss)}get css(){let css=this.getAttribute("css")||"";if(css)
-return css;for(let rule of this._adapter.cssStyleSheet.cssRules)css+=rule.cssText+
-`
-`;return css}addStyle(css){this._adapter.styles.push(css),this.classList.add(this.
-_adapter.uuid);let processedCss=this._adapter._class.cssProcess(`${this.tagName}\
-.${this._adapter.objectClassSelector} { ${css} }`);this._adapter.cssStyleSheet.insertRule(
-processedCss,this._adapter.cssStyleSheet.cssRules.length)}connectedCallback(){super.
-connectedCallback&&super.connectedCallback();let css=this.getAttribute("css");css&&
-(this.css=css);let rootNode=this.getRootNode();rootNode.adoptedStyleSheets.indexOf(
-this._adapter._class.adapter.cssStyleSheet)===-1&&rootNode.adoptedStyleSheets.push(
-this._adapter._class.adapter.cssStyleSheet),rootNode.adoptedStyleSheets.indexOf(
-this._adapter.cssStyleSheet)===-1&&rootNode.adoptedStyleSheets.push(this._adapter.
-cssStyleSheet)}remove(){let rootNode=this.getRootNode(),i=rootNode.adoptedStyleSheets.
-indexOf(this._adapter.cssStyleSheet);rootNode.adoptedStyleSheets.splice(i,1),super.
-remove()}}}__name(AdapterMixin,"AdapterMixin");var Adapter=class extends IsolatorMixin(
-AdapterMixin(HTMLElement)){static{__name(this,"Adapter")}static cssProcess(css){
-return stylis(css)}};var cssStyleSheet=new CSSStyleSheet;cssStyleSheet.replaceSync(`
+this.adapter.define(tagName)}set css(css){this.classList.add(this._adapter.uuid);
+let processedCss=this._adapter._class.cssProcess(`${this.tagName}.${this._adapter.
+objectClassSelector} { ${css} }`);this._adapter.cssStyleSheet.replaceSync(processedCss)}get css(){
+let css=this.getAttribute("css")||"";if(css)return css;for(let rule of this._adapter.
+cssStyleSheet.cssRules)css+=rule.cssText+`
+`;return css}addStyle(css){this.classList.add(this._adapter.uuid);let processedCss=this.
+_adapter._class.cssProcess(`${this.tagName}.${this._adapter.objectClassSelector}\
+ { ${css} }`);this._adapter.cssStyleSheet.replaceSync(`
+        ${this.css}
+        ${processedCss}
+      `)}connectedCallback(){super.connectedCallback&&super.connectedCallback();
+let css=this.getAttribute("css");css&&(this.css=css);let rootNode=this.getRootNode();
+rootNode.adoptedStyleSheets.indexOf(this._adapter._class.adapter.cssStyleSheet)===
+-1&&rootNode.adoptedStyleSheets.push(this._adapter._class.adapter.cssStyleSheet),
+rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet)===-1&&rootNode.
+adoptedStyleSheets.push(this._adapter.cssStyleSheet)}remove(){let rootNode=this.
+getRootNode(),i=rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet);
+rootNode.adoptedStyleSheets.splice(i,1),super.remove()}}}__name(AdapterMixin,"Ad\
+apterMixin");var Adapter=class extends IsolatorMixin(AdapterMixin(HTMLElement)){static{
+__name(this,"Adapter")}static cssProcess(css){return stylis(css)}};var cssStyleSheet=new CSSStyleSheet;cssStyleSheet.replaceSync(`
 button {
     background-color: blue;
     color: white;

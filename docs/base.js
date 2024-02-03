@@ -1212,12 +1212,12 @@ if(this.styles.push(css6),this.tagName){let rule=`${this.tagName} { ${css6} }`,p
 adapterClass.cssProcess(rule);this.cssStyleSheet.replaceSync(`
         ${this.tagName} { ${this.allCSS} }
         ${processedCss}
-      `)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet;
-this.styles=[]}static{__name(this,"AdapterObject")}get uuid(){return this._uuid?
-this._uuid:(this._uuid=`${this.adapterObject.tagName}-${uuid()}`,this._uuid)}get cssObserver(){
-return this._cssObserver?this._cssObserver:(this._cssObserver=new MutationObserver(
-mutations=>{for(let mutation of mutations)mutation.attributeName==="css"&&(this.
-adapterObject.css=this.adapterObject.getAttribute("css")||"")}),this._cssObserver)}get objectClassSelector(){
+      `)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet}static{
+__name(this,"AdapterObject")}get uuid(){return this._uuid?this._uuid:(this._uuid=
+`${this.adapterObject.tagName}-${uuid()}`,this._uuid)}get cssObserver(){return this.
+_cssObserver?this._cssObserver:(this._cssObserver=new MutationObserver(mutations=>{
+for(let mutation of mutations)mutation.attributeName==="css"&&(this.adapterObject.
+css=this.adapterObject.getAttribute("css")||"")}),this._cssObserver)}get objectClassSelector(){
 return this.adapterObject.classList.value.replace(/ /g,".")}initClass(){this._class=
 this.adapterObject.constructor,!this._class.adapter.tagName&&(this._class.adapter.
 tagName=this.adapterObject.tagName,this._class.adapter.initStyle())}cssObserve(enable){
@@ -1230,26 +1230,26 @@ this)._adapter&&(this._adapter=new AdapterClass,this._adapter.adapterClass=this)
 this._adapter}static cssProcess(css6){return css6}static set css(css6){this.adapter.
 css=css6}static get css(){return this.adapter.css}static get tagName(){return this.
 adapter.tagName}static addStyle(css6){this.adapter.addStyle(css6)}static define(tagName){
-this.adapter.define(tagName)}set css(css6){this._adapter.styles=[css6],this.classList.
-add(this._adapter.uuid);let processedCss=this._adapter._class.cssProcess(`${this.
-tagName}.${this._adapter.objectClassSelector} { ${css6} }`);this._adapter.cssStyleSheet.
-replaceSync(processedCss)}get css(){let css6=this.getAttribute("css")||"";if(css6)
-return css6;for(let rule of this._adapter.cssStyleSheet.cssRules)css6+=rule.cssText+
-`
-`;return css6}addStyle(css6){this._adapter.styles.push(css6),this.classList.add(
-this._adapter.uuid);let processedCss=this._adapter._class.cssProcess(`${this.tagName}\
-.${this._adapter.objectClassSelector} { ${css6} }`);this._adapter.cssStyleSheet.
-insertRule(processedCss,this._adapter.cssStyleSheet.cssRules.length)}connectedCallback(){
-super.connectedCallback&&super.connectedCallback();let css6=this.getAttribute("c\
-ss");css6&&(this.css=css6);let rootNode=this.getRootNode();rootNode.adoptedStyleSheets.
-indexOf(this._adapter._class.adapter.cssStyleSheet)===-1&&rootNode.adoptedStyleSheets.
-push(this._adapter._class.adapter.cssStyleSheet),rootNode.adoptedStyleSheets.indexOf(
-this._adapter.cssStyleSheet)===-1&&rootNode.adoptedStyleSheets.push(this._adapter.
-cssStyleSheet)}remove(){let rootNode=this.getRootNode(),i=rootNode.adoptedStyleSheets.
-indexOf(this._adapter.cssStyleSheet);rootNode.adoptedStyleSheets.splice(i,1),super.
-remove()}}}__name(AdapterMixin,"AdapterMixin");var Adapter=class extends IsolatorMixin(
-AdapterMixin(HTMLElement)){static{__name(this,"Adapter")}static cssProcess(css6){
-return stylis(css6)}};var import_color=__toESM(require_color(),1);var css2=String.raw;function bgColor(color2){return css2`
+this.adapter.define(tagName)}set css(css6){this.classList.add(this._adapter.uuid);
+let processedCss=this._adapter._class.cssProcess(`${this.tagName}.${this._adapter.
+objectClassSelector} { ${css6} }`);this._adapter.cssStyleSheet.replaceSync(processedCss)}get css(){
+let css6=this.getAttribute("css")||"";if(css6)return css6;for(let rule of this._adapter.
+cssStyleSheet.cssRules)css6+=rule.cssText+`
+`;return css6}addStyle(css6){this.classList.add(this._adapter.uuid);let processedCss=this.
+_adapter._class.cssProcess(`${this.tagName}.${this._adapter.objectClassSelector}\
+ { ${css6} }`);this._adapter.cssStyleSheet.replaceSync(`
+        ${this.css}
+        ${processedCss}
+      `)}connectedCallback(){super.connectedCallback&&super.connectedCallback();
+let css6=this.getAttribute("css");css6&&(this.css=css6);let rootNode=this.getRootNode();
+rootNode.adoptedStyleSheets.indexOf(this._adapter._class.adapter.cssStyleSheet)===
+-1&&rootNode.adoptedStyleSheets.push(this._adapter._class.adapter.cssStyleSheet),
+rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet)===-1&&rootNode.
+adoptedStyleSheets.push(this._adapter.cssStyleSheet)}remove(){let rootNode=this.
+getRootNode(),i=rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet);
+rootNode.adoptedStyleSheets.splice(i,1),super.remove()}}}__name(AdapterMixin,"Ad\
+apterMixin");var Adapter=class extends IsolatorMixin(AdapterMixin(HTMLElement)){static{
+__name(this,"Adapter")}static cssProcess(css6){return stylis(css6)}};var import_color=__toESM(require_color(),1);var css2=String.raw;function bgColor(color2){return css2`
         background-color: ${color2};
         color: ${(0,import_color.default)(color2).isDark()?"white":"black"};
     `.trim()}__name(bgColor,"bgColor");function lift(level,color2="black"){return`\
