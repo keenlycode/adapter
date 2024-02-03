@@ -2,8 +2,11 @@ import { Adapter } from "../../adapter.js";
 import Color from 'color';
 import { bgColor, lift } from '../style';
 
+
+const css = String.raw;
+
 const buttonStyle = (color) => {
-    return /*css*/`
+    return css`
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -41,6 +44,8 @@ const buttonStyle = (color) => {
 }
 
 class Button extends Adapter {
+    static css = buttonStyle;
+
     initialHTML = this.innerHTML;
 
     constructor() {

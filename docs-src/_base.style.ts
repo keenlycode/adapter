@@ -1,12 +1,13 @@
-import { Button, bgColor, fontFluid } from "gadjet/src/gadjet";
-import { color } from "./_ux/designToken";
 import { stylis } from './adapter';
+import { bgColor, fontFluid } from "./_ux/style";
+import { color } from "./_ux/designToken";
+import { buttonStyle } from './_ux/ui/button';
 
 
-function baseStyle(to_base_url: string) {
+function baseStyle() {
     const __base_url = new URL(import.meta.url);
-    const __fira_sans_url = new URL(`${to_base_url}asset/font/FiraSans-Regular.ttf`, __base_url.href);
-    const __fira_code_url = new URL(`${to_base_url}asset/font/FiraCode-Variable.ttf`, __base_url.href);
+    const __fira_sans_url = new URL(`asset/font/FiraSans-Regular.ttf`, __base_url.href);
+    const __fira_code_url = new URL(`asset/font/FiraCode-Variable.ttf`, __base_url.href);
 
     const style = new CSSStyleSheet();
     document.adoptedStyleSheets.push(style);
@@ -60,7 +61,7 @@ function baseStyle(to_base_url: string) {
     }
 
     button {
-        ${Button.Style.css()}
+        ${buttonStyle}
     }
 
     img {
@@ -116,4 +117,4 @@ function baseStyle(to_base_url: string) {
     `));
 }
 
-export { baseStyle };
+baseStyle();
