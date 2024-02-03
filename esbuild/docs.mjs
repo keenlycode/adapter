@@ -17,8 +17,6 @@ const entryFiles = await glob.sync(
   }
 );
 
-// console.log(entryFiles);
-
 const outDir = path.join(__dirname, "../docs/");
 console.log(`Create docs at: ${outDir}`);
 

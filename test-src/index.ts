@@ -81,17 +81,22 @@ describe("Adapter Class: Use Case", () => {
   });
 
   it("Should be able to use API: addStyle()", () => {
-    Card1.addStyle(`display: flex;`);
-    assert(Card1.adapter.styles.includes(`display: flex;`));
+    Card1.addStyle(`
+      display: flex;
+      button {
+        color: red;
+      }
+    `);
+    assert(Card1.adapter.allCSS.includes(`display: flex;`));
     Card2.addStyle(`display: block;`);
-    assert(Card2.adapter.styles.includes(`display: block;`));
+    assert(Card2.adapter.allCSS.includes(`display: block;`));
   });
 
   it("Should inherit style from super class", () => {
     RedCard.addStyle(`background-color: red;`);
-    assert(RedCard.adapter.allStyles.includes("display: flex;"));
+    assert(RedCard.adapter.allCSS.includes(`display: flex;`));
     assert(RedCard.adapter.allCSS.includes("display: flex;"));
-    assert(RedCard.adapter.css.includes("background-color: red;"));
+    assert(RedCard.adapter.allCSS.includes("background-color: red;"));
     RedCard.define("el-red-card");
     assert(
       RedCard.adapter.cssStyleSheet.cssRules[0].cssText.includes(

@@ -1,9 +1,14 @@
-import { Adapter } from "../../adapter.js";
+import { Adapter } from "../../adapter";
 import Color from 'color';
+
 import { bgColor, lift } from '../style';
+import { color } from '../designToken'
+
+
+const css = String.raw;
 
 const buttonStyle = (color) => {
-    return /*css*/`
+  return css`
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -11,46 +16,49 @@ const buttonStyle = (color) => {
     box-sizing: border-box;
 
     button {
-        display: inline-flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-        border: 0;
-        border-radius: 0.25rem;
-        padding: 0.5rem 0.7rem;
-        font-weight: bold;
-        line-height: 1;
-        cursor: pointer;
-        ${lift(0.2, '#555')}
-        ${bgColor(color)}
-        &:hover {
-            background-color: ${Color(color)
-                .lighten(0.1)
-                .saturate(0.1)};
-            ${lift(1.2, '#555')}
-        }
-        &:active {
-            background-color: ${Color(color)
-                .darken(0.1)
-                .saturate(-0.1)};
-            ${lift(0, '#555')}
-        }
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      border: 0;
+      border-radius: 0.25rem;
+      padding: 0.5rem 0.7rem;
+      font-weight: bold;
+      line-height: 1;
+      cursor: pointer;
+      min-height: 2em;
+      ${lift(1, '#555')}
+      ${bgColor(color)}
+      &:hover {
+        background-color: ${Color(color)
+          .lighten(0.1)
+          .saturate(0.1)};
+        ${lift(1.5, '#555')}
+      }
+      &:active {
+        background-color: ${Color(color)
+          .darken(0.1)
+          .saturate(-0.1)};
+        ${lift(0, '#555')}
+      }
     }
-    `
+  `
 }
 
 class Button extends Adapter {
-    initialHTML = this.innerHTML;
+  static css = buttonStyle(color.blue);
 
-    constructor() {
-        super();
-        this.render();
-    }
+  initialHTML = this.innerHTML;
 
-    render() {
-        this.innerHTML = `<button>${this.initialHTML}</button>`;
-    }
+  constructor() {
+    super();
+    this.render();
+  }
+
+  render() {
+    this.innerHTML = `<button>${this.initialHTML}</button>`;
+  }
 };
 
 export { buttonStyle, Button };

@@ -137,7 +137,7 @@ class HeadingButtons extends Adapter {
 };
 
 
-Heading.define('el-heading');
+// Heading.define('el-heading');
 HeadingButtons.define('el-heading-buttons');
 Particle.define('el-particle');
 ParticleScene.define('el-particle-scene');

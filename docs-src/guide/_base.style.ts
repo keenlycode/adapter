@@ -28,4 +28,4 @@ function baseStyle() {
     document.adoptedStyleSheets.push(cssStyleSheet);
 };
 
-export { baseStyle };
+baseStyle();

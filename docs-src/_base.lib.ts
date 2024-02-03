@@ -5,6 +5,7 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import xml from 'highlight.js/lib/languages/xml';
 import shell from 'highlight.js/lib/languages/shell';
 import css from 'highlight.js/lib/languages/css';
+import 'highlight.js/styles/monokai.css';
 /** end highlight.js */
 
 /** normalize.css */
@@ -20,4 +21,4 @@ function baseLib() {
     hljs.highlightAll();
 }
 
-export { baseLib };
+baseLib();

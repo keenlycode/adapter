@@ -15,4 +15,4 @@ function styleClass() {
     `);
 };
 
-export { styleClass };
+styleClass();
