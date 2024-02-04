@@ -14,10 +14,7 @@
   <script type="module" src="../../base.js?v=27"></script>
   
 
-
 <script type="module" src="../../guide/base.js?v=27"></script>
-
-<script type="module" src="index.js?v=27"></script>
 
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNHSQQQLL2"></script>
@@ -91,61 +88,44 @@
 </el-sidebar>
 
 <el-container>
-<h1>Scoped Style</h1>
-<p><strong>Scoped Style</strong> could be the easiest way to apply styles to 
-elements. Start with a bit of code and you can get magical elements with
-scoped style. Just set element style with <code>css</code> attributes.</p>
+<h1>Mixins and APIs</h1>
+<p>In JavaScript, a mixin is a way to reuse a set of functionalities
+across multiple objects or classes. It allows you to compose objects
+or classes with behavior from multiple sources, enhancing modularity
+and code reuse. Read more at <a href="https://www.typescriptlang.org/docs/handbook/mixins.html">Typescript Mixin</a></p>
+<p><strong>Adapter</strong> carefully designed component functionalities and put them into
+separate classes which can be mixed and matched together based on use case.
+This can reduced javascript code size in production by using
+javascript build tools.</p>
+<h2><code>AdapterMixin(class_: typeof HTMLElement)</code></h2>
+<p>This mixin provides APIs to style HTMLElement</p>
 <el-blockquote>
 <blockquote>
-<p>💁 <code>css</code> syntax here also support nesting by <a href="stylis.js.org">stylis</a>
-as the default css processor. You can read more how to set
-css processor in <a href="../mixin/#">Mixin</a> Section. Setting <code>css</code> here
-is the same as setting <code>css</code> property in the object
-<a href="../usage/#element-style">read more</a>.</p>
+<p>📍 <code>AdapterMixin</code> doesn't include CSS processor like <code>Adapter</code>,
+It has to be manually set by <code>cssProcess()</code> function.</p>
 </blockquote>
 </el-blockquote>
 <el-code-block>
-    <div el="bar-top-left">JS</div>
-<pre><code class="language-ts">import { Adapter }
-    from &quot;https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm&quot;;
+<div el="bar-top-left">Javascript</div>
+<pre><code class="language-ts">import { AdapterMixin, stylis } from &quot;@devcapsule/adapter&quot;;
 
-class Style extends Adapter {};
-Style.define('el-div');
+class SimpleGreeting extends IsolatorMixin(AdapterMixin(HTMLElement)) {
+    /** Manually set CSS Processor */
+    static cssProcess(css) { return stylis(css) };
+
+    static css = `p { color: blue }`;
+
+    name = &quot;Somebody&quot;;
+
+    constructor() {
+        super();
+        this.innerHTML = `&lt;p&gt;Hello, ${this.name}&lt;/p&gt;`;
+    }
+}
+
+SimpleGreeting.define('simple-greeting');
 </code></pre>
 </el-code-block>
-<el-code-block>
-    <div el="bar-top-left">HTML</div>
-<pre><code class="language-html">&lt;el-div css=&quot;
-display: inline-flex;
-box-sizing: border-box;
-border: 1px solid;
-border-radius: 5px;
-padding: 1rem;
-button {
-    background-color: red
-};
-&quot;&gt;
-    &lt;button&gt;Button 1&lt;/button&gt;
-&lt;/el-div&gt;
-
-&lt;el-div css=&quot;button { background-color: blue };&quot;&gt;
-    &lt;button&gt;Button 2&lt;/button&gt;
-&lt;/el-div&gt;
-</code></pre>
-</el-code-block>
-<p><el-div css="
-display: inline-flex;
-box-sizing: border-box;
-border: 1px solid;
-border-radius: 5px;
-padding: 1rem;
-button { background-color: red };
-">
-    <button>Button 1</button></p>
-</el-div>
-<el-div css="button { background-color: blue };">
-    <button>Button 2</button>
-</el-div>
 
 </el-container>
 

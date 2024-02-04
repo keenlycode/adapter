@@ -648,36 +648,36 @@ css=css2`
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-
-    button {
-      display: inline-flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
-      border: 0;
-      border-radius: 0.25rem;
-      padding: 0.5rem 0.7rem;
-      font-weight: bold;
-      line-height: 1;
-      cursor: pointer;
-      min-height: 2em;
-      ${lift(1,"#555")}
-      ${bgColor(color2)}
-      &:hover {
-        background-color: ${(0,import_color2.default)(color2).lighten(.1).saturate(
+    border: 0;
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.7rem;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    min-height: 2em;
+    ${lift(1,"#555")}
+    ${bgColor(color2)}
+    &:hover {
+      background-color: ${(0,import_color2.default)(color2).lighten(.1).saturate(
 .1)};
-        ${lift(1.5,"#555")}
-      }
-      &:active {
-        background-color: ${(0,import_color2.default)(color2).darken(.1).saturate(
+      ${lift(1.5,"#555")}
+    }
+    &:active {
+      background-color: ${(0,import_color2.default)(color2).darken(.1).saturate(
 -.1)};
-        ${lift(0,"#555")}
-      }
+      ${lift(0,"#555")}
     }
   `,"buttonStyle"),Button=class extends Adapter{constructor(){super();this.initialHTML=
-this.innerHTML;this.render()}static{__name(this,"Button")}static{this.css=buttonStyle(
-color.blue)}render(){this.innerHTML=`<button>${this.initialHTML}</button>`}};var css4=String.raw,sidebarStyle=__name(()=>css4`
+this.innerHTML;this.render()}static{__name(this,"Button")}static{this.css=css3`
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    button {
+      ${buttonStyle(color.blue)}
+    }
+  `}render(){this.innerHTML=`<button>${this.initialHTML}</button>`}};var css4=String.raw,sidebarStyle=__name(()=>css4`
     all: unset;
     display: flex;
     flex-wrap: wrap;
@@ -743,27 +743,24 @@ show()}};var css5=String.raw,sideBarStyle=css5`
     }
   }
 
-  el-button[el="toggle"] {
+  button[el="toggle"] {
     ${buttonStyle("blue")}
     display: flex;
     justify-content: center;
     align-items: stretch;
+    align-content: center;
     position: fixed;
     top: 70dvh;
     right: 0;
     width: 3em;
     transform: translateX(100%);
     opacity: 0.7;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
     &:hover {
       opacity: 1;
     }
     ${aspectRatio("1")}
-    button {
-      width: 100%;
-      height: 100%;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
     span {
       line-height: 1;
       font-size: 1.5em;
@@ -800,30 +797,30 @@ this.css=this.defaultStyle()})}defaultStyle(){let el_sidebar=document.querySelec
             }
         }`}};function baseStyle(){let cssStyleSheet=new CSSStyleSheet;cssStyleSheet.replaceSync(
 `
-        body {
-            display: flex;
-            justify-content: center;
-            > el-container:first-of-type {
-                margin-top: 2rem;
-            }
+    body {
+        display: flex;
+        justify-content: center;
+        > el-container:first-of-type {
+            margin-top: 2rem;
         }
-        h1, h2, h3 {
-            margin: auto;
-            max-width: 80ch;
-        }
-        h1 {
-            text-align: center
-        }
-        h2{
-            margin-top: 2.5rem;
-        }
-        h3 {
-            margin-top: 1.5rem;
-        }
-        p {
-            margin: 1rem auto;
-        }
-    `),document.adoptedStyleSheets.push(cssStyleSheet)}__name(baseStyle,"baseSty\
-le");baseStyle();Menu2.define("el-menu");Sidebar2.define("el-sidebar");Container.define("el-conta\
+    }
+    h1, h2, h3 {
+        margin: auto;
+        max-width: 80ch;
+    }
+    h1 {
+        text-align: center
+    }
+    h2{
+        margin-top: 2.5rem;
+    }
+    h3 {
+        margin-top: 1.5rem;
+    }
+    p {
+        margin: 1rem auto;
+    }
+  `),document.adoptedStyleSheets.push(cssStyleSheet)}__name(baseStyle,"baseStyle");
+baseStyle();Menu2.define("el-menu");Sidebar2.define("el-sidebar");Container.define("el-conta\
 iner");
 //# sourceMappingURL=base.js.map

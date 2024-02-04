@@ -1180,7 +1180,7 @@ return=element.return||element.value;case COMMENT:return"";case KEYFRAMES:return
 return=element.value+"{"+serialize(element.children,callback)+"}";case RULESET:if(!strlen(
 element.value=element.props.join(",")))return""}return strlen(children=serialize(
 element.children,callback))?element.return=element.value+"{"+children+"}":""}__name(
-stringify,"stringify");function stylis(css6){return serialize(compile(css6),stringify)}__name(stylis,"s\
+stringify,"stringify");function stylis(css5){return serialize(compile(css5),stringify)}__name(stylis,"s\
 tylis");var Isolator=class{static{__name(this,"Isolator")}constructor(element){this.element=
 element,this.isolation&&this._isolate(this.isolation)}get isolation(){let isolation=this.
 element.getAttribute("isolation");return isolation===""&&(isolation="open"),isolation}isolate(mode){
@@ -1202,13 +1202,13 @@ super.disconnectedCallback()}}}__name(IsolatorMixin,"IsolatorMixin");var Adapter
 this.adapterClass),allStyles=[];for(;superClass.adapter;)allStyles.push(...superClass.
 adapter.styles),superClass=Object.getPrototypeOf(superClass);return allStyles.push(
 ...this.styles),allStyles}get allCSS(){return this.allStyles.join(`
-`)}set css(css6){this.styles=[css6],this.tagName&&this.cssStyleSheet.replaceSync(
+`)}set css(css5){this.styles=[css5],this.tagName&&this.cssStyleSheet.replaceSync(
 this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`))}get css(){return this.
 styles.join(`
 `)}define(tagName){this.tagName=tagName,customElements.define(tagName,this.adapterClass),
 this.initStyle()}initStyle(){this.cssStyleSheet.replaceSync(this.adapterClass.cssProcess(
-`${this.tagName} { ${this.allCSS} }`)),document.adoptedStyleSheets.push(this.cssStyleSheet)}addStyle(css6){
-if(this.styles.push(css6),this.tagName){let rule=`${this.tagName} { ${css6} }`,processedCss=this.
+`${this.tagName} { ${this.allCSS} }`)),document.adoptedStyleSheets.push(this.cssStyleSheet)}addStyle(css5){
+if(this.styles.push(css5),this.tagName){let rule=`${this.tagName} { ${css5} }`,processedCss=this.
 adapterClass.cssProcess(rule);this.cssStyleSheet.replaceSync(`
         ${this.tagName} { ${this.allCSS} }
         ${processedCss}
@@ -1227,21 +1227,21 @@ super(...args);this._adapter=new AdapterObject;this._adapter.adapterObject=this,
 this._adapter._class||this._adapter.initClass(),this._adapter.cssObserve(!0)}static{
 __name(this,"_Adapter")}static get adapter(){return this._adapter===Object.getPrototypeOf(
 this)._adapter&&(this._adapter=new AdapterClass,this._adapter.adapterClass=this),
-this._adapter}static cssProcess(css6){return css6}static set css(css6){this.adapter.
-css=css6}static get css(){return this.adapter.css}static get tagName(){return this.
-adapter.tagName}static addStyle(css6){this.adapter.addStyle(css6)}static define(tagName){
-this.adapter.define(tagName)}set css(css6){this.classList.add(this._adapter.uuid);
+this._adapter}static cssProcess(css5){return css5}static set css(css5){this.adapter.
+css=css5}static get css(){return this.adapter.css}static get tagName(){return this.
+adapter.tagName}static addStyle(css5){this.adapter.addStyle(css5)}static define(tagName){
+this.adapter.define(tagName)}set css(css5){this.classList.add(this._adapter.uuid);
 let processedCss=this._adapter._class.cssProcess(`${this.tagName}.${this._adapter.
-objectClassSelector} { ${css6} }`);this._adapter.cssStyleSheet.replaceSync(processedCss)}get css(){
-let css6=this.getAttribute("css")||"";if(css6)return css6;for(let rule of this._adapter.
-cssStyleSheet.cssRules)css6+=rule.cssText+`
-`;return css6}addStyle(css6){this.classList.add(this._adapter.uuid);let processedCss=this.
+objectClassSelector} { ${css5} }`);this._adapter.cssStyleSheet.replaceSync(processedCss)}get css(){
+let css5=this.getAttribute("css")||"";if(css5)return css5;for(let rule of this._adapter.
+cssStyleSheet.cssRules)css5+=rule.cssText+`
+`;return css5}addStyle(css5){this.classList.add(this._adapter.uuid);let processedCss=this.
 _adapter._class.cssProcess(`${this.tagName}.${this._adapter.objectClassSelector}\
- { ${css6} }`);this._adapter.cssStyleSheet.replaceSync(`
+ { ${css5} }`);this._adapter.cssStyleSheet.replaceSync(`
         ${this.css}
         ${processedCss}
       `)}connectedCallback(){super.connectedCallback&&super.connectedCallback();
-let css6=this.getAttribute("css");css6&&(this.css=css6);let rootNode=this.getRootNode();
+let css5=this.getAttribute("css");css5&&(this.css=css5);let rootNode=this.getRootNode();
 rootNode.adoptedStyleSheets.indexOf(this._adapter._class.adapter.cssStyleSheet)===
 -1&&rootNode.adoptedStyleSheets.push(this._adapter._class.adapter.cssStyleSheet),
 rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet)===-1&&rootNode.
@@ -1249,7 +1249,7 @@ adoptedStyleSheets.push(this._adapter.cssStyleSheet)}remove(){let rootNode=this.
 getRootNode(),i=rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet);
 rootNode.adoptedStyleSheets.splice(i,1),super.remove()}}}__name(AdapterMixin,"Ad\
 apterMixin");var Adapter=class extends IsolatorMixin(AdapterMixin(HTMLElement)){static{
-__name(this,"Adapter")}static cssProcess(css6){return stylis(css6)}};var import_color=__toESM(require_color(),1);var css2=String.raw;function bgColor(color2){return css2`
+__name(this,"Adapter")}static cssProcess(css5){return stylis(css5)}};var import_color=__toESM(require_color(),1);var css2=String.raw;function bgColor(color2){return css2`
         background-color: ${color2};
         color: ${(0,import_color.default)(color2).isDark()?"white":"black"};
     `.trim()}__name(bgColor,"bgColor");function lift(level,color2="black"){return`\
@@ -1283,9 +1283,44 @@ fontSizeMax=18}={}){let viewportRatio=`(100vw - ${vwMin}px) / (${vwMax} - ${vwMi
         }
     `.trim()}__name(fontFluid,"fontFluid");var color={blue:"#3584e4",green:"#33d17a",yellow:"#f6d32d",orange:"#ff7800",red:"\
 #e01b24",purple:"#9141ac",violet:"#9141ac",brown:"#986a44",light:"#deddda",dark:"\
-#3d3846"};function baseStyle(){let __base_url=new URL(import.meta.url),__fira_sans_url=new URL(
-"asset/font/FiraSans-Regular.ttf",__base_url.href),__fira_code_url=new URL("asse\
-t/font/FiraCode-Variable.ttf",__base_url.href),style=new CSSStyleSheet;document.
+#3d3846"};var import_color2=__toESM(require_color(),1);var css3=String.raw,buttonStyle=__name(color2=>css3`
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.7rem;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    min-height: 2em;
+    ${lift(1,"#555")}
+    ${bgColor(color2)}
+    &:hover {
+      background-color: ${(0,import_color2.default)(color2).lighten(.1).saturate(
+.1)};
+      ${lift(1.5,"#555")}
+    }
+    &:active {
+      background-color: ${(0,import_color2.default)(color2).darken(.1).saturate(
+-.1)};
+      ${lift(0,"#555")}
+    }
+  `,"buttonStyle"),Button=class extends Adapter{constructor(){super();this.initialHTML=
+this.innerHTML;this.render()}static{__name(this,"Button")}static{this.css=css3`
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    button {
+      ${buttonStyle(color.blue)}
+    }
+  `}render(){this.innerHTML=`<button>${this.initialHTML}</button>`}};function baseStyle(){let __base_url2=new URL(import.meta.url),__fira_sans_url=new URL(
+"asset/font/FiraSans-Regular.ttf",__base_url2.href),__fira_code_url=new URL("ass\
+et/font/FiraCode-Variable.ttf",__base_url2.href),style=new CSSStyleSheet;document.
 adoptedStyleSheets.push(style),style.replaceSync(stylis(`
     @font-face {
       font-family: sans;
@@ -1315,6 +1350,10 @@ adoptedStyleSheets.push(style),style.replaceSync(stylis(`
       border-radius: 0.25em;
       font-family: monospace;
       font-size: 0.85em;
+    }
+
+    button {
+      ${buttonStyle(color.blue)}
     }
 
     p, h1, h2, h3, h4, ul, li {
@@ -1380,21 +1419,7 @@ adoptedStyleSheets.push(style),style.replaceSync(stylis(`
       display: flex;
       flex-wrap: wrap;
     }
-  `))}__name(baseStyle,"baseStyle");baseStyle();var _Icon=class{static{__name(this,"_Icon")}set name(name){this.element.setAttribute(
-"name",name),this.render()}get name(){return this.element.getAttribute("name")}constructor(element){
-this._class=this.constructor,this.element=element,this.render(),new MutationObserver(
-(mutationRecords,observer2)=>{this.observerCallback(mutationRecords,observer2)}).
-observe(this.element,{attributes:!0})}observerCallback(mutationRecords,observer){
-for(let mutation of mutationRecords)mutation.type==="attributes"&&mutation.attributeName===
-"name"&&this.render()}render(){if(!this._class.url)return;let svg=document.createElementNS(
-"http://www.w3.org/2000/svg","svg"),use=document.createElementNS("http://www.w3.\
-org/2000/svg","use");this.element.innerHTML="",svg.style.width="1em",svg.style.height=
-"1em",this.element.appendChild(svg),use.setAttributeNS("http://www.w3.org/1999/x\
-link","xlink:href",`${this._class.url}#${this.name}`),svg.appendChild(use)}};function DefIconMixin({
-url,objectField="deficon"},Base){class __Icon extends _Icon{static{__name(this,"\
-__Icon")}}return __Icon.url=url,class extends Base{constructor(...args){super(...args),
-this[objectField]=new __Icon(this)}}}__name(DefIconMixin,"DefIconMixin");function DefIcon(param){
-return class extends DefIconMixin(param,HTMLElement){}}__name(DefIcon,"DefIcon");var CodeBlock=class extends Adapter{static{__name(this,"CodeBlock")}static{this.
+  `))}__name(baseStyle,"baseStyle");baseStyle();var CodeBlock=class extends Adapter{static{__name(this,"CodeBlock")}static{this.
 css=`
     & {
         display: block;
@@ -1423,8 +1448,8 @@ css=`
             border-top-right-radius: 0.4em;
         }
     }
-    `}};var import_color2=__toESM(require_color(),1);var css3=String.raw,BlockQuote=class extends Adapter{static{__name(this,"BlockQu\
-ote")}static{this.css=css3`
+    `}};var import_color3=__toESM(require_color(),1);var css4=String.raw,BlockQuote=class extends Adapter{static{__name(this,"BlockQu\
+ote")}static{this.css=css4`
     display: flex;
     flex-wrap: wrap;
 
@@ -1432,56 +1457,35 @@ ote")}static{this.css=css3`
       margin: 0;
       margin-top: 1rem;
       padding: 0rem 1rem;
-      background-color: ${(0,import_color2.default)(color.yellow).alpha(.2)};
+      background-color: ${(0,import_color3.default)(color.yellow).alpha(.2)};
       border-left: 0.25em solid ${color.yellow};
       border-bottom-left-radius: 0.5rem;
     }
-  `}};var import_color3=__toESM(require_color(),1);var css4=String.raw,buttonStyle=__name(color2=>css4`
-    display: inline-flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-
-    button {
-      display: inline-flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
-      border: 0;
-      border-radius: 0.25rem;
-      padding: 0.5rem 0.7rem;
-      font-weight: bold;
-      line-height: 1;
-      cursor: pointer;
-      min-height: 2em;
-      ${lift(1,"#555")}
-      ${bgColor(color2)}
-      &:hover {
-        background-color: ${(0,import_color3.default)(color2).lighten(.1).saturate(
-.1)};
-        ${lift(1.5,"#555")}
-      }
-      &:active {
-        background-color: ${(0,import_color3.default)(color2).darken(.1).saturate(
--.1)};
-        ${lift(0,"#555")}
-      }
-    }
-  `,"buttonStyle"),Button=class extends Adapter{constructor(){super();this.initialHTML=
-this.innerHTML;this.render()}static{__name(this,"Button")}static{this.css=buttonStyle(
-color.blue)}render(){this.innerHTML=`<button>${this.initialHTML}</button>`}};var css5=String.raw;function baseComponents(){let __base_url=new URL(import.meta.
-url),icomoon_url=new URL("asset/icon/icomoon/symbol-defs.svg",__base_url).toString();
-class Icon extends AdapterMixin(DefIcon({url:icomoon_url})){static{__name(this,"\
-Icon")}static cssProcess(css6){return stylis(css6)}static{this.css=css5`
+  `}};var _Icon=class{static{__name(this,"_Icon")}set name(name){this.element.setAttribute(
+"name",name),this.render()}get name(){return this.element.getAttribute("name")}constructor(element){
+this._class=this.constructor,this.element=element,this.render(),new MutationObserver(
+(mutationRecords,observer2)=>{this.observerCallback(mutationRecords,observer2)}).
+observe(this.element,{attributes:!0})}observerCallback(mutationRecords,observer){
+for(let mutation of mutationRecords)mutation.type==="attributes"&&mutation.attributeName===
+"name"&&this.render()}render(){if(!this._class.url)return;let svg=document.createElementNS(
+"http://www.w3.org/2000/svg","svg"),use=document.createElementNS("http://www.w3.\
+org/2000/svg","use");this.element.innerHTML="",svg.style.width="1em",svg.style.height=
+"1em",this.element.appendChild(svg),use.setAttributeNS("http://www.w3.org/1999/x\
+link","xlink:href",`${this._class.url}#${this.name}`),svg.appendChild(use)}};function DefIconMixin({
+url,objectField="deficon"},Base){class __Icon extends _Icon{static{__name(this,"\
+__Icon")}}return __Icon.url=url,class extends Base{constructor(...args){super(...args),
+this[objectField]=new __Icon(this)}}}__name(DefIconMixin,"DefIconMixin");function DefIcon(param){
+return class extends DefIconMixin(param,HTMLElement){}}__name(DefIcon,"DefIcon");function Icon(icomoon_url){return class extends AdapterMixin(DefIcon({url:icomoon_url})){static cssProcess(css5){
+return stylis(css5)}static{this.css=`
       & {
         display: inline-flex;
         justify-content: center;
         align-items: center;
       }
-    `}}Icon.define("el-icon"),CodeBlock.define("el-code-block"),Button.define("e\
-l-button"),Button.addStyle(`
+    `}}}__name(Icon,"Icon");var __base_url=new URL(import.meta.url);function baseComponents(){let icomoon_url=new URL(
+"asset/icon/icomoon/symbol-defs.svg",__base_url).toString();Icon(icomoon_url).define(
+"el-icon"),CodeBlock.define("el-code-block"),Button.define("el-button"),Button.addStyle(
+`
     el-icon {
       margin-top: -0.17rem;
     }
@@ -1489,14 +1493,14 @@ l-button"),Button.addStyle(`
 baseComponents();function styleClass(){let cssStyleSheet=new CSSStyleSheet;document.adoptedStyleSheets.
 push(cssStyleSheet),cssStyleSheet.replaceSync(`
     .aspect-ratio-21-9 {
-        display: flex;
-        ${aspectRatio("21/9")}
-        img {
-            width: 100%;
-            object-fit: cover;
-        }
+      display: flex;
+      ${aspectRatio("21/9")}
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
     }
-    `)}__name(styleClass,"styleClass");styleClass();function pageReload(to_base_url){let __file_url=new URL(import.meta.url),__event_source=new URL(
+  `)}__name(styleClass,"styleClass");styleClass();function pageReload(to_base_url){let __file_url=new URL(import.meta.url),__event_source=new URL(
 `${to_base_url}esbuild`,__file_url.href);["0.0.0.0","127.0.0.1","localhost"].includes(
 __file_url.hostname)&&new EventSource(__event_source).addEventListener("change",
 ()=>location.reload())}__name(pageReload,"pageReload");pageReload("./");window.addEventListener("load",()=>{document.body.style.visibility=

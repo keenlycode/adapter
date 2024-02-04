@@ -513,96 +513,75 @@ filter: drop-shadow(0 0 ${level*2}px ${color2});`}__name(lift,"lift");var color=
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-
-    button {
-      display: inline-flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
-      border: 0;
-      border-radius: 0.25rem;
-      padding: 0.5rem 0.7rem;
-      font-weight: bold;
-      line-height: 1;
-      cursor: pointer;
-      min-height: 2em;
-      ${lift(1,"#555")}
-      ${bgColor(color2)}
-      &:hover {
-        background-color: ${(0,import_color2.default)(color2).lighten(.1).saturate(
+    border: 0;
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.7rem;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    min-height: 2em;
+    ${lift(1,"#555")}
+    ${bgColor(color2)}
+    &:hover {
+      background-color: ${(0,import_color2.default)(color2).lighten(.1).saturate(
 .1)};
-        ${lift(1.5,"#555")}
-      }
-      &:active {
-        background-color: ${(0,import_color2.default)(color2).darken(.1).saturate(
+      ${lift(1.5,"#555")}
+    }
+    &:active {
+      background-color: ${(0,import_color2.default)(color2).darken(.1).saturate(
 -.1)};
-        ${lift(0,"#555")}
-      }
+      ${lift(0,"#555")}
     }
   `,"buttonStyle"),Button=class extends Adapter{constructor(){super();this.initialHTML=
-this.innerHTML;this.render()}static{__name(this,"Button")}static{this.css=buttonStyle(
-color.blue)}render(){this.innerHTML=`<button>${this.initialHTML}</button>`}};var css3=String.raw,Particle=class extends Adapter{static{__name(this,"Particle")}static{
-this.css=css3`
+this.innerHTML;this.render()}static{__name(this,"Button")}static{this.css=css2`
     display: inline-flex;
-    box-sizing: border-box;
-    margin: 3.5%;
-    width: 3%;
-    height: auto;
-    aspect-ratio: 1;
-    background-color: orange;
-    border-radius: 100%;
-    border: 0.2em solid red;
-    `}constructor(){super()}connectedCallback(){super.connectedCallback(),this.parentElement.
-addEventListener("mousemove",event=>{this.onMouseMove(event)}),this.parentElement.
-addEventListener("touchmove",event=>{this.onTouchMove(event)})}onMouseMove(event){
-let mousePoint=[event.clientX,event.clientY];this.onClientMove(mousePoint)}onTouchMove(event){
-let touchPoint=[event.touches[0].clientX,event.touches[0].clientY];this.onClientMove(
-touchPoint)}onClientMove(clientPoint){let centerPoint=this.getCenterPoint(),distance=Math.
-sqrt(Math.pow(clientPoint[0]-centerPoint[0],2)+Math.pow(clientPoint[1]-centerPoint[1],
-2));if(distance>400)return;if(distance>100){this.style.scale="1";return}let scale=Math.
-abs(distance/100-1)*3+1;this.style.scale=scale.toString()}getCenterPoint(){let rect=this.
-getBoundingClientRect();return[(rect.left+rect.right)/2,(rect.top+rect.bottom)/2]}},
-ParticleScene=class extends Adapter{static{__name(this,"ParticleScene")}static{this.
-css=css3`
-    display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin: auto;
-    margin-top: 2rem;
-    max-width: 400px;
-    min-width: 300px;
-  `}constructor(){super(),this.addEventListener("mouseout",()=>{this.resetScene()})}connectedCallback(){
-super.connectedCallback();for(let i=0;i<100;i++){let particle=document.createElement(
-"el-particle");this.append(particle)}}resetScene(){let particles=this.querySelectorAll(
-"el-particle");for(let particle of particles)particle.style.scale="1"}},Heading=class extends Adapter{static{
-__name(this,"Heading")}static{this.css=css3`
+    box-sizing: border-box;
+    button {
+      ${buttonStyle(color.blue)}
+    }
+  `}render(){this.innerHTML=`<button>${this.initialHTML}</button>`}};var css3=String.raw,Heading=class extends Adapter{static{__name(this,"Heading")}static{
+this.css=css3`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
+    padding-bottom: 2.5rem;
+    ${bgColor(color.dark)}
     & h1 {
-        margin-top: 2rem;
+      display: inline-flex;
+      font-size: 5rem;
+      line-height: 1.5;
+      margin-top: 2rem;
+      background: rgb(49,153,154);
+      background: linear-gradient(90deg, rgba(49,153,154,1) 0%, rgba(194,125,255,1) 50%, rgba(255,127,0,1) 100%);
+      mask-image: url('asset/adapter.svg');
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: contain;
+      span {
+        opacity: 0;
+      }
     }
     & h2, h3 {
         margin-top: 1.5rem;
     }
   `}},HeadingButtons=class extends Adapter{static{__name(this,"HeadingButtons")}static{
 this.css=css3`
-    el-button {
+    button {
       margin: 1rem 1rem;
       & el-icon {
         margin-right: 0.5rem;
       }
     }
-    el-button[el="github"] {
+    button[el="github"] {
       ${buttonStyle(color.dark)}
     }
-    el-button[el="discord"] {
+    button[el="discord"] {
       ${buttonStyle(color.light)}
     }
-  `}};Heading.define("el-heading");HeadingButtons.define("el-heading-buttons");Particle.
-define("el-particle");ParticleScene.define("el-particle-scene");window.Adapter=Adapter;
-window.Particle=Particle;
+  `}};Heading.define("el-heading");HeadingButtons.define("el-heading-buttons");window.
+Adapter=Adapter;
 //# sourceMappingURL=index.js.map

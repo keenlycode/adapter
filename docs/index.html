@@ -31,12 +31,14 @@
   
 <el-heading>
     <div class="width-100" style="text-align: center;">
-        <h1 class="width-100">Adapter</h1>
-        <h2 class="width-100">2.5.2</h2>
+        <h1>
+            <span>Adapter</span>
+        </h1>
+        <h2 style="margin-top: -1rem;">2.5.2</h2>
     </div>
     <div class="width-100">
         <h2 class="width-100">
-            CSS in Javascript Framework for Web Components
+            CSS-in-JS Toolkit for Web Components
         </h2>
     </div>
     <div class="width-100 flex">
@@ -44,66 +46,43 @@
             <pre><code class="language-shell">$ npm i @devcapsule/adapter</code></pre>
         </el-code-block>
     </div>
-    <el-particle-scene></el-particle-scene>
 </el-heading>
 <el-heading-buttons class="container flex" style="justify-content: center; margin-top: 2rem;">
     <a href="./guide/intro/">
-        <el-button el="guide" style="font-size: 1.25em;">
+        <button el="guide" style="font-size: 1.25em;">
             <el-icon name="open-book" style="fill: white;"></el-icon>
             <span>Guide</span>
-        </el-button>
+        </button>
     </a>
     <a href="https://github.com/keenlycode/adapter">
-        <el-button el="github" style="font-size: 1.25em;">
+        <button el="github" style="font-size: 1.25em;">
             <el-icon name="github" style="fill: white;"></el-icon>
             Github
-        </el-button>
+        </button>
     </a>
     <a href="https://discord.gg/Z69dB6zxwC">
-        <el-button el="discord" style="font-size: 1.25em;">
+        <button el="discord" style="font-size: 1.25em;">
             <el-icon name="discord"></el-icon>
             Discord
-        </el-button>
+        </button>
     </a>
 </el-heading-buttons>
 <div class="container">
     <h2>🎉 CSS to the next level.</h2>
-<p>Adapter make <strong>CSS</strong> programmable in <strong>OOP</strong> manner together with <strong>Javascript</strong> and <strong>Web Component</strong></p>
+<p>Adapter make <strong>CSS</strong> programmable in <strong>OOP</strong> manner
+with <strong>Javascript</strong> and <strong>Web Components</strong>. It's packed with
+well designed features to help developers create styling system
+for web components such as <strong>style inheritance</strong>, <strong>scoped style</strong> and
+<strong>style isolation</strong>.</p>
 <h2>🎉 Easy to start &amp; learn</h2>
 <p>You can start using <strong>Adapter</strong> without <strong>Node.js</strong> or any
-<strong>JS Build Tools</strong>. Just use plain Javascript, right away in your browser.
-You can even try it now by open browser console <strong><code>Ctrl+Shift+I</code></strong> and try
-styling particles above with the codes below.</p>
+<strong>JS Build Tools</strong>. Just use plain Javascript, right away in your browser.</p>
 <el-code-block>
-    <div el="bar-top-left">
-        <b>Javascript</b>
-    </div>
-<pre><code class="language-js">/* this code will style &lt;el-particle&gt; */
-Particle.addStyle(`
-    border-radius: 0;
-    transform: rotate(45deg);
-`);
-</code></pre>
-</el-code-block>
-<h2>🎉 CSS ❤️ OOP ❤️ Web Component</h2>
-<p>Because <strong>Adapter</strong> extends from <strong>HTMLElement</strong>, it's a pure <strong>Web Component</strong>
-which bring all good features to <strong>CSS</strong> : Module, Inheritance, Encapsulation,
-Object and much more...</p>
-<el-code-block>
-    <div el="bar-top-left"><b>javascript</b></div>
-<pre><code class="language-js">/* Particle1 also inherit style defined from Particle */
-class Particle1 extends Particle {
-    /** Initial CSS */
-    static css = `display: inline-flex`;
-
-    constructor() {
-        super();
-    }
-    connectedCallback() {
-        // Do something when instance is attached to DOM
-    }
-};
-
+<div el="bar-top-left"><b>HTML</b></div>
+<pre><code class="language-html">&lt;!-- import from CDN --&gt;
+&lt;script type=&quot;module&quot;&gt;
+import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm'
+&lt;/script&gt;
 </code></pre>
 </el-code-block>
 <h2>🎉 Compact</h2>
@@ -125,95 +104,8 @@ class Particle1 extends Particle {
 <li>Reactive: <a href="https://www.arrow-js.com/">ArrowJS</a></li>
 <li>Animation:
 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API">Web Animation API</a>,
-<a href="https://animejs.com/">anime.js</a>,
-<a href="https://animate.style/">animate.css</a></li>
+<a href="https://animejs.com/">anime.js</a>,</li>
 </ul>
-<h2>🎉 Setup</h2>
-<h3>CDN (Content Delivery Network)</h3>
-<p>This way is super easy !! <strong>Adapter</strong> was born for <strong>ES Modules</strong> and
-nothing else. Just import module right away in your browser.</p>
-<el-code-block>
-    <div el="bar-top-left">
-        <b>html</b>
-    </div>
-<pre><code class="language-html">&lt;head&gt;
-&lt;script defer type=&quot;module&quot;&gt;
-import { Adapter } from &quot;https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm&quot;;
-&lt;/script&gt;
-&lt;/head&gt;
-</code></pre>
-</el-code-block>
-<h3>Javascript Bundle Tools</h3>
-<p>If you're familiar with <strong>NodeJS</strong>, you can install <strong>Adapter</strong>
-with <code>npm</code> and use it with javascript bundle tools.</p>
-<el-code-block>
-    <div el="bar-top-left">
-        <b>shell</b>
-    </div>
-<pre><code class="language-shell">$ npm install @devcapsule/adapter
-</code></pre>
-</el-code-block>
-<el-code-block>
-    <div el="bar-top-left">
-        <b>javascript</b>
-    </div>
-<pre><code class="language-js">import { Adapter } from '@devcapsule/adapter';
-</code></pre>
-</el-code-block>
-<h3>The APIs</h3>
-<p><strong>Adapter</strong> Provide simple APIs to style components.</p>
-<el-code-block>
-    <div el="bar-top-left">
-        <b>APIs</b>
-        <span style="margin-left: 0.5rem;">(described in typescript)</span>
-    </div>
-<pre><code class="language-ts">Adapter.css: string // CSS string
-Adapter.addStyle(css: string);
-&lt;Adapter Object&gt;.addStyle(css: string);
-</code></pre>
-</el-code-block>
-<h3>Sample Usage</h3>
-<el-code-block>
-    <div el="bar-top-left">
-        <b>javascript</b>
-    </div>
-<pre><code class="language-js">import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
-
-/* Extends `Adapter` */
-class Card extends Adapter {
-    static css =`
-        display: flex;
-        justify-content: center;
-        &amp;.blue {
-            color: blue;
-        }
-    `
-};
-
-/* Define your component to custome element name `el-card` */
-Card.define('el-card');
-
-
-/* Style created element */
-const card = new Card();
-card.css = `background-color: red;`;
-document.body.append(card);
-
-</code></pre>
-</el-code-block>
-<el-code-block>
-    <div el="bar-top-left">
-        <b>html</b>
-    </div>
-<pre><code class="language-html">&lt;el-card&gt;
-    Hello... Card Style Web Component
-&lt;/el-card&gt;
-
-&lt;el-card class=&quot;blue&quot;&gt;
-    This text is blue.
-&lt;/el-card&gt;
-</code></pre>
-</el-code-block>
 
 </div>
 
