@@ -8,12 +8,14 @@
 {% block body %}
 <el-heading>
     <div class="width-100" style="text-align: center;">
-        <h1 class="width-100">Adapter</h1>
-        <h2 class="width-100">{{adapter_version}}</h2>
+        <h1>
+            <span>Adapter</span>
+        </h1>
+        <h2 style="margin-top: -1rem;">{{adapter_version}}</h2>
     </div>
     <div class="width-100">
         <h2 class="width-100">
-            CSS in Javascript Framework for Web Components
+            CSS-in-JS Toolkit for Web Components
         </h2>
     </div>
     <div class="width-100 flex">
@@ -21,26 +23,25 @@
             <pre><code class="language-shell">$ npm i @devcapsule/adapter</code></pre>
         </el-code-block>
     </div>
-    <el-particle-scene></el-particle-scene>
 </el-heading>
 <el-heading-buttons class="container flex" style="justify-content: center; margin-top: 2rem;">
     <a href="./guide/intro/">
-        <el-button el="guide" style="font-size: 1.25em;">
+        <button el="guide" style="font-size: 1.25em;">
             <el-icon name="open-book" style="fill: white;"></el-icon>
             <span>Guide</span>
-        </el-button>
+        </button>
     </a>
     <a href="https://github.com/keenlycode/adapter">
-        <el-button el="github" style="font-size: 1.25em;">
+        <button el="github" style="font-size: 1.25em;">
             <el-icon name="github" style="fill: white;"></el-icon>
             Github
-        </el-button>
+        </button>
     </a>
     <a href="https://discord.gg/Z69dB6zxwC">
-        <el-button el="discord" style="font-size: 1.25em;">
+        <button el="discord" style="font-size: 1.25em;">
             <el-icon name="discord"></el-icon>
             Discord
-        </el-button>
+        </button>
     </a>
 </el-heading-buttons>
 <div class="container">

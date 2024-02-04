@@ -56,7 +56,7 @@ And this is the rendered DOM for `<el-a>`
 
 > 💁‍♀️ For someone who curious what will happen if components are moved or removed
 > from the DOM, **Adapter** will handle it for you. `host` and `component`
-> will always stick together even when you move for remove the component itself.
+> will always stick together even when you move or remove the component itself.
 </el-blockquote>
 
 ## Closed Shadow DOM : `<el-a isolation="closed">`

@@ -49,27 +49,24 @@ const sideBarStyle = css`
     }
   }
 
-  el-button[el="toggle"] {
+  button[el="toggle"] {
     ${buttonStyle("blue")}
     display: flex;
     justify-content: center;
     align-items: stretch;
+    align-content: center;
     position: fixed;
     top: 70dvh;
     right: 0;
     width: 3em;
     transform: translateX(100%);
     opacity: 0.7;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
     &:hover {
       opacity: 1;
     }
     ${aspectRatio("1")}
-    button {
-      width: 100%;
-      height: 100%;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
     span {
       line-height: 1;
       font-size: 1.5em;
