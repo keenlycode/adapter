@@ -1,6 +1,7 @@
 import { stylis } from './adapter';
 import { bgColor, fontFluid } from "./_ux/style";
 import { color } from "./_ux/designToken";
+import { buttonStyle } from './_ux/ui/button';
 
 
 function baseStyle() {
@@ -44,6 +45,10 @@ function baseStyle() {
       border-radius: 0.25em;
       font-family: monospace;
       font-size: 0.85em;
+    }
+
+    button {
+      ${buttonStyle(color.blue)}
     }
 
     p, h1, h2, h3, h4, ul, li {
