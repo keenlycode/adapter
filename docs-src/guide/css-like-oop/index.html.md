@@ -2,7 +2,7 @@
 
 <div id="component-style"></div>
 
-## Componente Style (Class Level)
+## Componente Style (Class Style)
 ---
 
 Class Level Styling will affect all elements
@@ -128,7 +128,7 @@ BlueCard.addStyle(`
 
 <div id="element-style"></div>
 
-## Element Style (Object Level)
+## Element Style (Object Style)
 ---
 **Element Object Styling** will render **CSS**
 with the auto-generated unique class selector, much like the following code.
