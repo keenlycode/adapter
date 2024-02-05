@@ -1,7 +1,7 @@
 <h1 style="text-align: center">✨ Adapter 🎉</h1>
 
 > <h2 style="margin-top: 0; padding: 1rem;">
-> Adaptive Style Web Component Framework
+> CSS-in-JS Toolkit for Web Components
 > </h2>
 
 <ul style="font-size: 1.25rem;">

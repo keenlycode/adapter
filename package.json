@@ -1,6 +1,6 @@
 {
   "name": "@devcapsule/adapter",
-  "description": "CSS in Javascript Framework for Web Components",
+  "description": "CSS-in-JS Toolkit for Web Components",
   "version": "2.5.3dev",
   "repository": {
     "type": "git",
