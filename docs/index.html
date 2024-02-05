@@ -74,6 +74,32 @@ with <strong>Javascript</strong> and <strong>Web Components</strong>. It's packe
 well designed features to help developers create styling system
 for web components such as <strong>style inheritance</strong>, <strong>scoped style</strong> and
 <strong>style isolation</strong>.</p>
+<el-code-block>
+<div el="bar-top-left"><b>Javasacript</b></div>
+<pre><code class="language-js">import { Adapter } from '@devcapsule/adapter';
+
+class Card extends Adapter {
+  static css = /*css*/`
+    display: flex;
+    flex-wrap: wrap;
+    background-color: blue;
+    border: 1px solid;
+    border-radius: 5px;
+    &amp; h1 {
+      margin: 0;
+    }
+  `;
+}
+
+Card.define('el-card')
+</code></pre>
+</el-code-block>
+<el-code-block>
+<div el="bar-top-left"><b>HTML</b></div>
+<pre><code class="language-html">&lt;el-card&gt;
+  &lt;h1&gt;This is a card&lt;/h1&gt;
+&lt;/el-card&gt;
+</code></pre>
 <h2>🎉 Easy to start &amp; learn</h2>
 <p>You can start using <strong>Adapter</strong> without <strong>Node.js</strong> or any
 <strong>JS Build Tools</strong>. Just use plain Javascript, right away in your browser.</p>
@@ -82,6 +108,15 @@ for web components such as <strong>style inheritance</strong>, <strong>scoped st
 <pre><code class="language-html">&lt;!-- import from CDN --&gt;
 &lt;script type=&quot;module&quot;&gt;
 import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm'
+
+class Container extends Adapter {
+  static css = `
+    margin: auto;
+    max-width: 1000px;
+    min-width: 300px;
+    width: 90%;
+  `;
+}
 &lt;/script&gt;
 </code></pre>
 </el-code-block>
