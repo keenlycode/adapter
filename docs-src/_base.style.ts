@@ -83,7 +83,9 @@ function baseStyle() {
       min-width: 300px;
       width: 90%;
       margin: auto;
+    }
 
+    .content {
       h1, h2, h3 {
         max-width: 45rem;
       }
