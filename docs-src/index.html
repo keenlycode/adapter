@@ -7,21 +7,23 @@
 
 {% block body %}
 <el-heading>
-    <div class="width-100" style="text-align: center;">
-        <h1>
-            <span>Adapter</span>
-        </h1>
-        <h2 style="margin-top: -1rem;">{{adapter_version}}</h2>
-    </div>
-    <div class="width-100">
-        <h2 class="width-100">
-            CSS-in-JS Toolkit for Web Components
-        </h2>
-    </div>
-    <div class="width-100 flex">
-        <el-code-block style="display: inline-flex;">
-            <pre><code class="language-shell">$ npm i @devcapsule/adapter</code></pre>
-        </el-code-block>
+    <div class="container">
+        <div class="width-100" style="text-align: center;">
+            <h1>
+                <span>Adapter</span>
+            </h1>
+            <h2 style="margin-top: -1rem;">{{adapter_version}}</h2>
+        </div>
+        <div class="width-100">
+            <h2 class="width-100">
+                CSS-in-JS Toolkit for Web Components
+            </h2>
+        </div>
+        <div class="width-100 flex">
+            <el-code-block style="display: inline-flex;">
+                <pre><code class="language-shell">$ npm i @devcapsule/adapter</code></pre>
+            </el-code-block>
+        </div>
     </div>
 </el-heading>
 <el-heading-buttons class="container flex" style="justify-content: center; margin-top: 2rem;">
@@ -44,7 +46,7 @@
         </button>
     </a>
 </el-heading-buttons>
-<div class="container">
+<div class="container content">
     {{markdown('index.html.content.md')}}
 </div>
 {% endblock body %}
