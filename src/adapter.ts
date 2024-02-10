@@ -4,8 +4,8 @@ import { IsolatorMixin } from './isolator.js';
 
 
 /**
- * AdapterClass is a class which manipulate `class Adapter`.
- * It also encapsulate private properties and methods.
+ * AdapterClass manipulate `class Adapter`
+ * and help to encapsulate private properties and methods.
  */
 class AdapterClass {
 
@@ -14,11 +14,16 @@ class AdapterClass {
 
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
+  /** Tag name of this component */
   tagName?: string;
 
+  /** Style portions for this component
+   * They are kept in array based on the order of adding by `addStyle()`,
+   * ready to be defined in `cssStyleSheet` with components query selector.
+   */
   styles: string[] = [];
 
-  /** Retreive styles including all super classes */
+  /** Retreive styles including styles from super class */
   get allStyles(): string[] {
     let superClass = Object.getPrototypeOf(this.adapterClass);
     const allStyles = [];
@@ -31,7 +36,7 @@ class AdapterClass {
     return allStyles;
   }
 
-  /** Retreive inherited CSS including all super classes. */
+  /** Retreive CSS including all CSS super classes. */
   get allCSS(): string {
     return this.allStyles.join("\n");
   }
@@ -195,7 +200,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
      * To extends this function, sub-elements must be defined
      * before call this function as `super.define(tagName);`
      */
-    static define(tagName: string): void {
+    static define(tagName: string) {
       this.adapter.define(tagName);
     }
 
@@ -253,7 +258,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
       `);
     }
 
-    connectedCallback(): void {
+    connectedCallback() {
       super.connectedCallback ? super.connectedCallback() : null;
 
       /** Apply css if it's set in attributes */
