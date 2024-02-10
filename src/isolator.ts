@@ -65,12 +65,10 @@ export function IsolatorMixin<TBase extends Constructor<HTMLElementInterface>>(
       super.connectedCallback ? super.connectedCallback() : null;
       if (!this._isolator.host) {
         /** Not isolated */
-
         return;
       };
       if ( (this.getRootNode() as ShadowRoot).host !== this._isolator.host ) {
         /** On move without host */
-
         const host = this._isolator.host;
         this._isolator.host = undefined;
         this.insertAdjacentElement('beforebegin', host);
