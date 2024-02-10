@@ -10,7 +10,8 @@ separate classes which can be mixed and matched together based on use case.
 This can reduced javascript code size in production by using
 javascript build tools.
 
-## `AdapterMixin(class_: typeof HTMLElement)`
+## AdapterMixin
+---
 
 This mixin provides APIs to style HTMLElement
 
@@ -18,30 +19,98 @@ This mixin provides APIs to style HTMLElement
 
 > 📍 `AdapterMixin` doesn't include CSS processor like `Adapter`,
 > It has to be manually set by `cssProcess()` function.
+> Adapter use [Stylis](https://stylis.js.org/) as the default CSS processor.
 
 </el-blockquote>
 
+### APIs
+
 <el-code-block>
-<div el="bar-top-left">Javascript</div>
+<div el="bar-top-left"><b>APIs in Typescript</b></div>
 
-```ts
-import { AdapterMixin, stylis } from "@devcapsule/adapter";
+```js
+function AdapterMixin(HTMLElement) {
+  return class _Adapter extends HTMLElement {
+    /** APIs for Component class */
 
-class SimpleGreeting extends IsolatorMixin(AdapterMixin(HTMLElement)) {
-    /** Manually set CSS Processor */
-    static cssProcess(css) { return stylis(css) };
+    static cssProcess(css: string): string;
 
-    static css = `p { color: blue }`;
+    static set css(string);
+    static get css(): string;
 
-    name = "Somebody";
+    static get tagName(): string | undefined;
 
-    constructor() {
-        super();
-        this.innerHTML = `<p>Hello, ${this.name}</p>`;
-    }
+    static addStyle(css: string);
+
+    static define(string);
+
+    /** APIs for element (Component object) */
+
+    set css(string);
+    get css(): string;
+
+    addStyle(css: string);
+
+    connectedCallback();
+
+    remove();
+  }
 }
-
-SimpleGreeting.define('simple-greeting');
 ```
-
 </el-code-block>
+
+### Usage
+
+<el-code-block>
+<div el="bar-top-left"><b>Javascript</b></div>
+
+```js
+import {
+  AdapterMixin,
+  stylis
+} from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
+
+class Card extends AdapterMixin(HTMLElement) {
+  static cssProcess(css) {
+    return stylis(css);
+  }
+
+  static css = `
+    background-color: grey;
+    border: 1px solid;
+    border-radius: 10px;
+  `;
+
+  /** Override if needed */
+  connectedCallback() {
+    super.connectedCallback();
+    /** Your codes */
+  }
+
+  /** Override if needed */
+  remove() {
+    /** Your codes */
+    super.remove();
+  }
+};
+
+/** Same as setting static css */
+Card.css = `
+  background-color: grey;
+  border: 1px solid;
+  border-radius: 10px;
+`;
+
+/** Additional CSS, last style win */
+Card.addStyle(`color: black;`);
+
+/** Register defined CSS with a tagName and Component. */
+Card.define('el-card')
+
+const card = new Card();
+/** Element CSS which always win Class CSS. */
+card.css = `color: blue;`
+
+/** Additional element CSS, last style win. */
+cadd.addStyle(`color: yellow;`)
+```
