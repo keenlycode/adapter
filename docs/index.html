@@ -78,10 +78,10 @@ for web components such as <strong>style inheritance</strong>, <strong>scoped st
 <strong>style isolation</strong>.</p>
 <el-code-block>
 <div el="bar-top-left"><b>Javasacript</b></div>
-<pre><code class="language-js">import { Adapter } from '@devcapsule/adapter';
+<pre><code class="language-js">import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
 
 class Card extends Adapter {
-  static css = /*css*/`
+  static css = `
     display: flex;
     flex-wrap: wrap;
     background-color: blue;
