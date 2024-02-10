@@ -11,6 +11,7 @@ This can reduced javascript code size in production by using
 javascript build tools.
 
 ## AdapterMixin
+---
 
 This mixin provides APIs to style HTMLElement
 
@@ -18,9 +19,11 @@ This mixin provides APIs to style HTMLElement
 
 > 📍 `AdapterMixin` doesn't include CSS processor like `Adapter`,
 > It has to be manually set by `cssProcess()` function.
-> [Stylis](https://stylis.js.org/) is recommended.
+> Adapter use [Stylis](https://stylis.js.org/) as the default CSS processor.
 
 </el-blockquote>
+
+### APIs
 
 <el-code-block>
 <div el="bar-top-left"><b>APIs in Typescript</b></div>
@@ -28,6 +31,8 @@ This mixin provides APIs to style HTMLElement
 ```js
 function AdapterMixin(HTMLElement) {
   return class _Adapter extends HTMLElement {
+    /** APIs for Component class */
+
     static cssProcess(css: string): string;
 
     static set css(string);
@@ -38,6 +43,8 @@ function AdapterMixin(HTMLElement) {
     static addStyle(css: string);
 
     static define(string);
+
+    /** APIs for element (Component object) */
 
     set css(string);
     get css(): string;
@@ -50,5 +57,60 @@ function AdapterMixin(HTMLElement) {
   }
 }
 ```
-
 </el-code-block>
+
+### Usage
+
+<el-code-block>
+<div el="bar-top-left"><b>Javascript</b></div>
+
+```js
+import {
+  AdapterMixin,
+  stylis
+} from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
+
+class Card extends AdapterMixin(HTMLElement) {
+  static cssProcess(css) {
+    return stylis(css);
+  }
+
+  static css = `
+    background-color: grey;
+    border: 1px solid;
+    border-radius: 10px;
+  `;
+
+  /** Override if needed */
+  connectedCallback() {
+    super.connectedCallback();
+    /** Your codes */
+  }
+
+  /** Override if needed */
+  remove() {
+    /** Your codes */
+    super.remove();
+  }
+};
+
+/** Same as setting static css */
+Card.css = `
+  background-color: grey;
+  border: 1px solid;
+  border-radius: 10px;
+`;
+
+/** Additional CSS, last style win */
+Card.addStyle(`color: black;`);
+
+/** Register defined CSS with a tagName and Component. */
+Card.define('el-card')
+
+const card = new Card();
+/** Element CSS which always win Class CSS. */
+card.css = `color: blue;`
+
+/** Additional element CSS, last style win. */
+cadd.addStyle(`color: yellow;`)
+```

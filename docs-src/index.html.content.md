@@ -10,10 +10,10 @@ for web components such as **style inheritance**, **scoped style** and
 <div el="bar-top-left"><b>Javasacript</b></div>
 
 ```js
-import { Adapter } from '@devcapsule/adapter';
+import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
 
 class Card extends Adapter {
-  static css = /*css*/`
+  static css = `
     display: flex;
     flex-wrap: wrap;
     background-color: blue;

@@ -98,18 +98,24 @@ class AdapterObject {
 
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
+  /** Generated UUID for the element.
+   * Will be used to create css selector for the element.
+   */
   _uuid?: string;
 
   _cssObserver!: MutationObserver;
 
+  /** Stored component class for the element */
   _class!: typeof Adapter | any;
 
+  /** get uuid or generate a new one */
   get uuid(): string {
     if (this._uuid) { return this._uuid };
     this._uuid = `${this.adapterObject.tagName}-${uuid()}`;
     return this._uuid;
   }
 
+  /** get cssObserver or generate a new one */
   get cssObserver() {
     if (this._cssObserver) { return this._cssObserver };
 
@@ -123,13 +129,12 @@ class AdapterObject {
     return this._cssObserver;
   }
 
-  /**
-   * Return a selector for the this element as a class chain.
-   */
+  /** Return a selector for the this element as a class chain. */
   get objectClassSelector(): string {
     return this.adapterObject.classList.value.replace(/ /g, ".");
   }
   
+  /** Init class and styles for this element */
   initClass() {
     this._class = this.adapterObject.constructor as unknown as typeof Adapter;
 
