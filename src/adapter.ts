@@ -52,7 +52,7 @@ class AdapterClass {
     }
   }
 
-  /** Get CSS for this component */
+  /** Get CSS defined by this component */
   get css(): string {
     return this.styles.join("\n");
   }
