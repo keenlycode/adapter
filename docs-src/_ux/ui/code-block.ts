@@ -9,6 +9,7 @@ class CodeBlock extends Adapter {
         margin: auto;
         margin-top: 1.5rem;
         max-width: 80ch;
+        width: 100%;
         line-height: 1.5;
     }
     [el="bar-top-left"] {

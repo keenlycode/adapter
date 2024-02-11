@@ -2,6 +2,11 @@
 
 {% set to_base = '../../' %}
 
+{% block head %}
+{{ super() }}
+<script defer type="module" src="index.js?v={{_v}}"></script>
+{% endblock %}
+
 {% block body %}
 {{ super() }}
 <el-container>
