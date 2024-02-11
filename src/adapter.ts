@@ -70,10 +70,10 @@ class AdapterClass {
 
   /** Init component style */
   initStyle() {
+    document.adoptedStyleSheets.push(this.cssStyleSheet);
     this.cssStyleSheet.replaceSync(
       this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`)
     );
-    document.adoptedStyleSheets.push(this.cssStyleSheet);
   }
 
   /** Add style to this component */
