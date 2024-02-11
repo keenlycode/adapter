@@ -153,16 +153,42 @@ Component.css = `background-color: red;`;
 </code></pre>
 </el-code-block>
 <h4><code>static addStyle(css: string)</code> [method]</h4>
+<p>Add style to the component. <strong>CSS</strong> string will be processed by <code>static cssProcess()</code>.</p>
 <h4><code>static define(tagName: string)</code> [method]</h4>
+<p>Regist <code>tagName</code> and component's styles to <strong>DOM</strong>. Defined styles will be renderd
+and take effect after calling this function.</p>
 </el-api>
 <h2>Isolator Mixin</h2>
 <hr />
-<p>Isolate web component with Shadow DOM</p>
+<p>This mixin provide Shadow DOM Isolation APIs and attribute observation for the component.
+Read more in <a href="../isolation/#">Component Isolation</a>.</p>
+<el-code-block>
+<div el="bar-top-left">Javascript</div>
 <pre><code class="language-js">import { IsolatorMixin } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
 
-class Adapter extends IsolatorMixin(HTMLElement) {};
+class Component extends IsolatorMixin(HTMLElement) {};
+Component.define('el-component')
+
+const component = new Component();
+component.isolate('open');
+document.body.append(component);
 </code></pre>
-<h3><code>isolate(mode: ShadowRootMode = 'open'): HTMLElement</code></h3>
+<p>You can also isolate the component by setting <code>isolation</code> attribute
+in html element.</p>
+<el-code-block>
+<div el="bar-top-left">HTML</div>
+<pre><code class="language-html">&lt;el-component isolation=&quot;closed&quot;&gt;&lt;/el-component&gt;
+</code></pre>
+<h3>APIs</h3>
+<el-api>
+<h4><code>isolate(mode: ShadowRootMode = 'open'): HTMLElement</code></h4>
+</el-api>
+<h3>Component Observation</h3>
+<el-api>
+<h4>[attribute] <code>isolation</code></h4>
+<p><code>IsolatorMixin</code> will observe and create Shadow DOM isolation based on
+<code>isolation</code> attribute.</p>
+</el-api>
 
 </el-container>
 

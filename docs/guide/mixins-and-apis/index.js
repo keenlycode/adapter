@@ -156,7 +156,6 @@ __name(this,"Adapter")}static cssProcess(css){return stylis(css)}};var color={bl
 return stylis(css)}static{this.css=`
     display: block;
     border-left: 5px solid ${color.green};
-    border-top-left-radius: 0.4em;
     border-bottom-left-radius: 0.4em;
     padding: 1rem 0 1rem 1rem;
     h4 {
