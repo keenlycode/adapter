@@ -131,7 +131,7 @@ in html element.
 <el-api>
 
 #### [attribute] `isolation`
-IsolatorMixin will observe and create Shadow DOM isolation based on
+`IsolatorMixin` will observe and create Shadow DOM isolation based on
 `isolation` attribute.
 
 </el-api>
