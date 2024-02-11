@@ -1206,10 +1206,11 @@ adapter.styles),superClass=Object.getPrototypeOf(superClass);return allStyles.pu
 this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`))}get css(){return this.
 styles.join(`
 `)}define(tagName){this.tagName=tagName,customElements.define(tagName,this.adapterClass),
-this.initStyle()}initStyle(){this.cssStyleSheet.replaceSync(this.adapterClass.cssProcess(
-`${this.tagName} { ${this.allCSS} }`)),document.adoptedStyleSheets.push(this.cssStyleSheet)}addStyle(css5){
-if(this.styles.push(css5),this.tagName){let rule=`${this.tagName} { ${css5} }`,processedCss=this.
-adapterClass.cssProcess(rule);this.cssStyleSheet.replaceSync(`
+this.initStyle()}initStyle(){document.adoptedStyleSheets.push(this.cssStyleSheet),
+this.cssStyleSheet.replaceSync(this.adapterClass.cssProcess(`${this.tagName} { ${this.
+allCSS} }`))}addStyle(css5){if(this.styles.push(css5),this.tagName){let rule=`${this.
+tagName} { ${css5} }`,processedCss=this.adapterClass.cssProcess(rule);this.cssStyleSheet.
+replaceSync(`
         ${this.tagName} { ${this.allCSS} }
         ${processedCss}
       `)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet}static{
@@ -1428,6 +1429,7 @@ css=`
         margin: auto;
         margin-top: 1.5rem;
         max-width: 80ch;
+        width: 100%;
         line-height: 1.5;
     }
     [el="bar-top-left"] {

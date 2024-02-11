@@ -14,7 +14,10 @@
   <script type="module" src="../../base.js?v=28"></script>
   
 
+
 <script type="module" src="../../guide/base.js?v=28"></script>
+
+<script defer type="module" src="index.js?v=28"></script>
 
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNHSQQQLL2"></script>
@@ -99,98 +102,67 @@ This can reduced javascript code size in production by using
 javascript build tools.</p>
 <h2>AdapterMixin</h2>
 <hr />
-<p>This mixin provides APIs to style HTMLElement</p>
+<p>This mixin provides APIs to style HTMLElement.
+A component class can be created by extending class
+from <code>AdapterMixin()</code> using codes below.</p>
 <el-blockquote>
 <blockquote>
 <p>📍 <code>AdapterMixin</code> doesn't include CSS processor like <code>Adapter</code>,
-It has to be manually set by <code>cssProcess()</code> function.
-Adapter use <a href="https://stylis.js.org/">Stylis</a> as the default CSS processor.</p>
+It has to be set by <code>cssProcess()</code> function.
+Adapter use <a href="https://stylis.js.org/">Stylis</a>
+as the default CSS processor.</p>
 </blockquote>
 </el-blockquote>
-<h3>APIs</h3>
 <el-code-block>
-<div el="bar-top-left"><b>APIs in Typescript</b></div>
-<pre><code class="language-js">function AdapterMixin(HTMLElement) {
-  return class _Adapter extends HTMLElement {
-    /** APIs for Component class */
+<div el="bar-top-left"><b>Javascript</b></div>
+<pre><code class="language-js">import { AdapterMixin } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
 
-    static cssProcess(css: string): string;
-
-    static set css(string);
-    static get css(): string;
-
-    static get tagName(): string | undefined;
-
-    static addStyle(css: string);
-
-    static define(string);
-
-    /** APIs for element (Component object) */
-
-    set css(string);
-    get css(): string;
-
-    addStyle(css: string);
-
-    connectedCallback();
-
-    remove();
-  }
+class Component extends AdapterMixin(HTMLElement) {}
+</code></pre>
+</el-code-block>
+<h3>APIs</h3>
+<el-api>
+<h4><code>static cssProcess(css): string</code> [middleware]</h4>
+<p>This static function act like a middleware to process all CSS
+defined by Adapter APIs such as setting in <code>css</code> [property]
+or using <code>addStyle(css)</code>. The codes below is the default implementation
+in <code>Adapter class</code>.</p>
+<el-code-block>
+<div el="bar-top-left"><b>Javascript</b></div>
+<pre><code class="language-js">class Adapter extends AdapterMixin(HTMLElement) {
+  static cssProcess(css) { return stylis(css) }
 }
 </code></pre>
 </el-code-block>
-<h3>Usage</h3>
+<hr />
+<h4><code>static css: string</code> [property]</h4>
+<ul>
+<li>Set CSS for the component.</li>
+<li>Clear all styles which have been defined from <code>addStyle()</code>.</li>
+<li>Last style wins.</li>
+</ul>
 <el-code-block>
 <div el="bar-top-left"><b>Javascript</b></div>
-<pre><code class="language-js">import {
-  AdapterMixin,
-  stylis
-} from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
+<pre><code class="language-js">/** Usage 1 : In class definition */
+class Component extends AdapterMixin(HTMLElement) {
+  static css = `background-color: blue;`;
+}
 
-class Card extends AdapterMixin(HTMLElement) {
-  static cssProcess(css) {
-    return stylis(css);
-  }
-
-  static css = `
-    background-color: grey;
-    border: 1px solid;
-    border-radius: 10px;
-  `;
-
-  /** Override if needed */
-  connectedCallback() {
-    super.connectedCallback();
-    /** Your codes */
-  }
-
-  /** Override if needed */
-  remove() {
-    /** Your codes */
-    super.remove();
-  }
-};
-
-/** Same as setting static css */
-Card.css = `
-  background-color: grey;
-  border: 1px solid;
-  border-radius: 10px;
-`;
-
-/** Additional CSS, last style win */
-Card.addStyle(`color: black;`);
-
-/** Register defined CSS with a tagName and Component. */
-Card.define('el-card')
-
-const card = new Card();
-/** Element CSS which always win Class CSS. */
-card.css = `color: blue;`
-
-/** Additional element CSS, last style win. */
-cadd.addStyle(`color: yellow;`)
+/** Usage 2 : Set class property */
+Component.css = `background-color: red;`;
 </code></pre>
+</el-code-block>
+<h4><code>static addStyle(css: string)</code> [method]</h4>
+<h4><code>static define(tagName: string)</code> [method]</h4>
+</el-api>
+<h2>Isolator Mixin</h2>
+<hr />
+<p>Isolate web component with Shadow DOM</p>
+<pre><code class="language-js">import { IsolatorMixin } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
+
+class Adapter extends IsolatorMixin(HTMLElement) {};
+</code></pre>
+<h3><code>isolate(mode: ShadowRootMode = 'open'): HTMLElement</code></h3>
 
 </el-container>
 

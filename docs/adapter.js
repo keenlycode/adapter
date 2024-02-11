@@ -106,10 +106,11 @@ adapter.styles),superClass=Object.getPrototypeOf(superClass);return allStyles.pu
 adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`))}get css(){return this.
 styles.join(`
 `)}define(tagName){this.tagName=tagName,customElements.define(tagName,this.adapterClass),
-this.initStyle()}initStyle(){this.cssStyleSheet.replaceSync(this.adapterClass.cssProcess(
-`${this.tagName} { ${this.allCSS} }`)),document.adoptedStyleSheets.push(this.cssStyleSheet)}addStyle(css){
-if(this.styles.push(css),this.tagName){let rule=`${this.tagName} { ${css} }`,processedCss=this.
-adapterClass.cssProcess(rule);this.cssStyleSheet.replaceSync(`
+this.initStyle()}initStyle(){document.adoptedStyleSheets.push(this.cssStyleSheet),
+this.cssStyleSheet.replaceSync(this.adapterClass.cssProcess(`${this.tagName} { ${this.
+allCSS} }`))}addStyle(css){if(this.styles.push(css),this.tagName){let rule=`${this.
+tagName} { ${css} }`,processedCss=this.adapterClass.cssProcess(rule);this.cssStyleSheet.
+replaceSync(`
         ${this.tagName} { ${this.allCSS} }
         ${processedCss}
       `)}}},AdapterObject=class{constructor(){this.cssStyleSheet=new CSSStyleSheet}static{

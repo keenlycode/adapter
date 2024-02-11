@@ -150,6 +150,20 @@ adoptedStyleSheets.push(this._adapter.cssStyleSheet)}remove(){let rootNode=this.
 getRootNode(),i=rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet);
 rootNode.adoptedStyleSheets.splice(i,1),super.remove()}}}__name(AdapterMixin,"Ad\
 apterMixin");var Adapter=class extends IsolatorMixin(AdapterMixin(HTMLElement)){static{
-__name(this,"Adapter")}static cssProcess(css){return stylis(css)}};var Style=class extends IsolatorMixin(Adapter){static{__name(this,"Style")}};Style.
-define("el-div");
+__name(this,"Adapter")}static cssProcess(css){return stylis(css)}};var color={blue:"#3584e4",green:"#33d17a",yellow:"#f6d32d",orange:"#ff7800",red:"\
+#e01b24",purple:"#9141ac",violet:"#9141ac",brown:"#986a44",light:"#deddda",dark:"\
+#3d3846"};var API=class extends AdapterMixin(HTMLElement){static{__name(this,"API")}static cssProcess(css){
+return stylis(css)}static{this.css=`
+    display: block;
+    border-left: 5px solid ${color.green};
+    border-top-left-radius: 0.4em;
+    border-bottom-left-radius: 0.4em;
+    padding: 1rem 0 1rem 1rem;
+    h4 {
+      margin-bottom: 1rem;
+    }
+    hr {
+      margin: 1.5rem 0 1.5rem 0;
+    }
+  `}};API.define("el-api");
 //# sourceMappingURL=index.js.map
