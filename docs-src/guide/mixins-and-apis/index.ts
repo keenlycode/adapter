@@ -7,7 +7,6 @@ class API extends AdapterMixin(HTMLElement) {
   static css = `
     display: block;
     border-left: 5px solid ${color.green};
-    border-top-left-radius: 0.4em;
     border-bottom-left-radius: 0.4em;
     padding: 1rem 0 1rem 1rem;
     h4 {
