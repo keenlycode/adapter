@@ -81,4 +81,4 @@ This is the rendered DOM
 <img src="shadowdom-closed.png" style="width: auto;">
 
 A **Closed Shadow DOM** can prevent manipulation from other JavaScript code spaces,
-such as within other `<script>` tags, for example.
+such as within other `<script>` tags.

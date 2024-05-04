@@ -4,8 +4,8 @@ import { IsolatorMixin } from './isolator.js';
 
 
 /**
- * AdapterClass is a class which manipulate `class Adapter`.
- * It also encapsulate private properties and methods.
+ * AdapterClass manipulate `class Adapter`
+ * and help to encapsulate private properties and methods.
  */
 class AdapterClass {
 
@@ -14,11 +14,16 @@ class AdapterClass {
 
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
+  /** Tag name of this component */
   tagName?: string;
 
+  /** Style portions for this component
+   * They are kept in array based on the order of adding by `addStyle()`,
+   * ready to be defined in `cssStyleSheet` with components query selector.
+   */
   styles: string[] = [];
 
-  /** Retreive styles including all super classes */
+  /** Retreive styles including styles from super class */
   get allStyles(): string[] {
     let superClass = Object.getPrototypeOf(this.adapterClass);
     const allStyles = [];
@@ -31,7 +36,7 @@ class AdapterClass {
     return allStyles;
   }
 
-  /** Retreive inherited CSS including all super classes. */
+  /** Retreive CSS including all CSS super classes. */
   get allCSS(): string {
     return this.allStyles.join("\n");
   }
@@ -47,7 +52,7 @@ class AdapterClass {
     }
   }
 
-  /** Get CSS for this component including superclass styles */
+  /** Get CSS defined by this component */
   get css(): string {
     return this.styles.join("\n");
   }
@@ -65,10 +70,10 @@ class AdapterClass {
 
   /** Init component style */
   initStyle() {
+    document.adoptedStyleSheets.push(this.cssStyleSheet);
     this.cssStyleSheet.replaceSync(
       this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`)
     );
-    document.adoptedStyleSheets.push(this.cssStyleSheet);
   }
 
   /** Add style to this component */
@@ -93,18 +98,24 @@ class AdapterObject {
 
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
+  /** Generated UUID for the element.
+   * Will be used to create css selector for the element.
+   */
   _uuid?: string;
 
   _cssObserver!: MutationObserver;
 
+  /** Stored component class for the element */
   _class!: typeof Adapter | any;
 
+  /** get uuid or generate a new one */
   get uuid(): string {
     if (this._uuid) { return this._uuid };
     this._uuid = `${this.adapterObject.tagName}-${uuid()}`;
     return this._uuid;
   }
 
+  /** get cssObserver or generate a new one */
   get cssObserver() {
     if (this._cssObserver) { return this._cssObserver };
 
@@ -118,13 +129,12 @@ class AdapterObject {
     return this._cssObserver;
   }
 
-  /**
-   * Return a selector for the this element as a class chain.
-   */
+  /** Return a selector for the this element as a class chain. */
   get objectClassSelector(): string {
     return this.adapterObject.classList.value.replace(/ /g, ".");
   }
   
+  /** Init class and styles for this element */
   initClass() {
     this._class = this.adapterObject.constructor as unknown as typeof Adapter;
 
@@ -195,7 +205,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
      * To extends this function, sub-elements must be defined
      * before call this function as `super.define(tagName);`
      */
-    static define(tagName: string): void {
+    static define(tagName: string) {
       this.adapter.define(tagName);
     }
 
@@ -253,7 +263,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
       `);
     }
 
-    connectedCallback(): void {
+    connectedCallback() {
       super.connectedCallback ? super.connectedCallback() : null;
 
       /** Apply css if it's set in attributes */

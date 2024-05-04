@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Adapter brings CSS to the next level
+      with Javascript & Web Component which make it programmable
+      with many features such as isolation, inheritancs, shadow DOM style, etc.">
+  <title>Adapter : CSS in Javascript Framework for Web Components</title>
+  <link rel="stylesheet" href="../../base.css?v=28">
+  <script type="module" src="../../base.js?v=28"></script>
+  
+
+
+<script type="module" src="../../guide/base.js?v=28"></script>
+
+<script defer type="module" src="index.js?v=28"></script>
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNHSQQQLL2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HNHSQQQLL2');
+</script>
+</head>
+
+<body style="visibility: hidden;">
+  
+
+
+<el-sidebar>
+    <div el="wrapper">
+        <el-menu>
+            <a href="../../"><h1>Adapter</h1></a>
+            <details>
+                <summary>
+                    <a href="../../guide/intro/#"><h2>Intro</h2></a>
+                </summary>
+            </details>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="../../guide/setup/#"><h2>Setup</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="../../guide/setup/#cdn">CDN</a></div>
+                    <div><a href="../../guide/setup/#npm">NPM</a></div>
+                </div>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="../../guide/css-like-oop/#"><h2>CSS like OOP 🔥</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="../../guide/css-like-oop/#component-style">Class Style</a></div>
+                    <div><a href="../../guide/css-like-oop/#element-style">Object Style</a></div>
+                    <div><a href="../../guide/css-like-oop/#shadow-dom">Style inside Shadow DOM</a></div>
+                </div>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/isolation/#"><h2>Component Isolation</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/mixins-and-apis/#"><h2>Mixins & APIs</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/scoped-style/#"><h2>Scoped Style</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="../../guide/style-filtering/#"><h2>Style Filtering</h2></a>
+                </summary>
+            </details>
+        </el-menu>
+    </div>
+    <button el="toggle"><span>»</span></button>
+</el-sidebar>
+
+<el-container>
+<h1>Mixins and APIs</h1>
+<p>In JavaScript, a mixin is a way to reuse a set of functionalities
+across multiple objects or classes. It allows you to compose objects
+or classes with behavior from multiple sources, enhancing modularity
+and code reuse. Read more at <a href="https://www.typescriptlang.org/docs/handbook/mixins.html">Typescript Mixin</a></p>
+<p><strong>Adapter</strong> carefully designed component functionalities and put them into
+separate classes which can be mixed and matched together based on use case.
+This can reduced javascript code size in production by using
+javascript build tools.</p>
+<h2>AdapterMixin</h2>
+<hr />
+<p>This mixin provides APIs to style HTMLElement.
+A component class can be created by extending class
+from <code>AdapterMixin()</code> using codes below.</p>
+<el-blockquote>
+<blockquote>
+<p>📍 <code>AdapterMixin</code> doesn't include CSS processor like <code>Adapter</code>,
+It has to be set by <code>cssProcess()</code> function.
+Adapter use <a href="https://stylis.js.org/">Stylis</a>
+as the default CSS processor.</p>
+</blockquote>
+</el-blockquote>
+<el-code-block>
+<div el="bar-top-left"><b>Javascript</b></div>
+<pre><code class="language-js">import { AdapterMixin } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
+
+class Component extends AdapterMixin(HTMLElement) {}
+</code></pre>
+</el-code-block>
+<h3>APIs</h3>
+<el-api>
+<h4><code>static cssProcess(css): string</code> [middleware]</h4>
+<p>This static function act like a middleware to process all CSS
+defined by Adapter APIs such as setting in <code>css</code> [property]
+or using <code>addStyle(css)</code>. The codes below is the default implementation
+in <code>Adapter class</code>.</p>
+<el-code-block>
+<div el="bar-top-left"><b>Javascript</b></div>
+<pre><code class="language-js">class Adapter extends AdapterMixin(HTMLElement) {
+  static cssProcess(css) { return stylis(css) }
+}
+</code></pre>
+</el-code-block>
+<hr />
+<h4><code>static css: string</code> [property]</h4>
+<ul>
+<li>Set CSS for the component.</li>
+<li>Clear all styles which have been defined from <code>addStyle()</code>.</li>
+<li>Last style wins.</li>
+</ul>
+<el-code-block>
+<div el="bar-top-left"><b>Javascript</b></div>
+<pre><code class="language-js">/** Usage 1 : In class definition */
+class Component extends AdapterMixin(HTMLElement) {
+  static css = `background-color: blue;`;
+}
+
+/** Usage 2 : Set class property */
+Component.css = `background-color: red;`;
+</code></pre>
+</el-code-block>
+<h4><code>static addStyle(css: string)</code> [method]</h4>
+<p>Add style to the component. <strong>CSS</strong> string will be processed by <code>static cssProcess()</code>.</p>
+<h4><code>static define(tagName: string)</code> [method]</h4>
+<p>Regist <code>tagName</code> and component's styles to <strong>DOM</strong>. Defined styles will be renderd
+and take effect after calling this function.</p>
+</el-api>
+<h2>Isolator Mixin</h2>
+<hr />
+<p>This mixin provide Shadow DOM Isolation APIs and attribute observation for the component.
+Read more in <a href="../isolation/#">Component Isolation</a>.</p>
+<el-code-block>
+<div el="bar-top-left">Javascript</div>
+<pre><code class="language-js">import { IsolatorMixin } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
+
+class Component extends IsolatorMixin(HTMLElement) {};
+Component.define('el-component')
+
+const component = new Component();
+component.isolate('open');
+document.body.append(component);
+</code></pre>
+<p>You can also isolate the component by setting <code>isolation</code> attribute
+in html element.</p>
+<el-code-block>
+<div el="bar-top-left">HTML</div>
+<pre><code class="language-html">&lt;el-component isolation=&quot;closed&quot;&gt;&lt;/el-component&gt;
+</code></pre>
+<h3>APIs</h3>
+<el-api>
+<h4><code>isolate(mode: ShadowRootMode = 'open'): HTMLElement</code></h4>
+</el-api>
+<h3>Component Observation</h3>
+<el-api>
+<h4>[attribute] <code>isolation</code></h4>
+<p><code>IsolatorMixin</code> will observe and create Shadow DOM isolation based on
+<code>isolation</code> attribute.</p>
+</el-api>
+
+</el-container>
+
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Adapter brings CSS to the next level
+      with Javascript & Web Component which make it programmable
+      with many features such as isolation, inheritancs, shadow DOM style, etc.">
+  <title>Adapter : CSS in Javascript Framework for Web Components</title>
+  <link rel="stylesheet" href="./base.css?v=28">
+  <script type="module" src="./base.js?v=28"></script>
+  
+
+<script defer type="module" src="index.js?v=28"></script>
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNHSQQQLL2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HNHSQQQLL2');
+</script>
+</head>
+
+<body style="visibility: hidden;">
+  
+<el-heading>
+    <div class="container">
+        <div class="width-100" style="text-align: center;">
+            <h1>
+                <span>Adapter</span>
+            </h1>
+            <h2 style="margin-top: -1rem;">2.5.2</h2>
+        </div>
+        <div class="width-100">
+            <h2 class="width-100">
+                CSS-in-JS Toolkit for Web Components
+            </h2>
+        </div>
+        <div class="width-100 flex">
+            <el-code-block css="display: inline-flex;justify-content: center;">
+                <pre><code class="language-shell">$ npm i @devcapsule/adapter</code></pre>
+            </el-code-block>
+        </div>
+    </div>
+</el-heading>
+<el-heading-buttons class="container flex" style="justify-content: center; margin-top: 2rem;">
+    <a href="./guide/intro/">
+        <button el="guide" style="font-size: 1.25em;">
+            <el-icon name="open-book" style="fill: white;"></el-icon>
+            <span>Guide</span>
+        </button>
+    </a>
+    <a href="https://github.com/keenlycode/adapter">
+        <button el="github" style="font-size: 1.25em;">
+            <el-icon name="github" style="fill: white;"></el-icon>
+            Github
+        </button>
+    </a>
+    <a href="https://discord.gg/Z69dB6zxwC">
+        <button el="discord" style="font-size: 1.25em;">
+            <el-icon name="discord"></el-icon>
+            Discord
+        </button>
+    </a>
+</el-heading-buttons>
+<div class="container content">
+    <h2>🎉 CSS to the next level.</h2>
+<p>Adapter make <strong>CSS</strong> programmable in <strong>OOP</strong> manner
+with <strong>Javascript</strong> and <strong>Web Components</strong>. It's packed with
+well designed features to help developers create styling system
+for web components such as <strong>style inheritance</strong>, <strong>scoped style</strong> and
+<strong>style isolation</strong>.</p>
+<el-code-block>
+<div el="bar-top-left"><b>Javasacript</b></div>
+<pre><code class="language-js">import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
+
+class Card extends Adapter {
+  static css = `
+    display: flex;
+    flex-wrap: wrap;
+    background-color: blue;
+    border: 1px solid;
+    border-radius: 5px;
+    &amp; h1 {
+      margin: 0;
+    }
+  `;
+}
+
+Card.define('el-card')
+</code></pre>
+</el-code-block>
+<el-code-block>
+<div el="bar-top-left"><b>HTML</b></div>
+<pre><code class="language-html">&lt;el-card&gt;
+  &lt;h1&gt;This is a card&lt;/h1&gt;
+&lt;/el-card&gt;
+</code></pre>
+<h2>🎉 Easy to start &amp; learn</h2>
+<p>You can start using <strong>Adapter</strong> without <strong>Node.js</strong> or any
+<strong>JS Build Tools</strong>. Just use plain Javascript, right away in your browser.</p>
+<el-code-block>
+<div el="bar-top-left"><b>HTML</b></div>
+<pre><code class="language-html">&lt;!-- import from CDN --&gt;
+&lt;script type=&quot;module&quot;&gt;
+import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm'
+
+class Container extends Adapter {
+  static css = `
+    margin: auto;
+    max-width: 1000px;
+    min-width: 300px;
+    width: 90%;
+  `;
+}
+&lt;/script&gt;
+</code></pre>
+</el-code-block>
+<h2>🎉 Compact</h2>
+<div style="text-align: center;">
+<strong style="font-size: 1.5em;">~ 2kB</strong> minify gzip
+</div>
+<h2>🎉 Integrate with other libraries</h2>
+<ul>
+<li>HTML Render:
+<a href="https://github.com/WebReflection/uhtml">uhtml</a>,
+<a href="https://lit.dev/docs/libraries/standalone-templates/">lit-html</a></li>
+<li>CSS Parser:
+<a href="https://github.com/csstree/csstree">csstree</a>,
+<a href="https://stylis.js.org/">stylis</a>,
+<a href="https://lightningcss.dev/">ligntningcss</a></li>
+<li>Event/Signal: <a href="https://www.npmjs.com/package/mitt">mitt</a>,
+<a href="https://github.com/ai/nanoevents%5D">nanoevents</a>,
+<a href="">@preact/signals</a></li>
+<li>Reactive: <a href="https://www.arrow-js.com/">ArrowJS</a></li>
+<li>Animation:
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API">Web Animation API</a>,
+<a href="https://animejs.com/">anime.js</a>,</li>
+</ul>
+
+</div>
+
+</body>
+
+</html>
