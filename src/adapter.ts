@@ -4,10 +4,9 @@ import { IsolatorMixin } from './isolator.js';
 
 
 /**
- * AdapterClass manipulate `class Adapter`
- * and help to encapsulate private properties and methods.
+ * A class to encapsulate `Adapter` class properties and methods.
  */
-class AdapterClass {
+class AdapterClassController {
 
   /** Reference to `class Adapter` */
   adapterClass!: typeof Adapter | any;
@@ -17,11 +16,24 @@ class AdapterClass {
   /** Tag name of this component */
   tagName?: string;
 
-  /** Style portions for this component
+  /** Styles with no query selector for this component
    * They are kept in array based on the order of adding by `addStyle()`,
    * ready to be defined in `cssStyleSheet` with components query selector.
    */
   styles: string[] = [];
+
+  get style(): string {
+    return this.styles.join("\n");
+  }
+
+  set style(style: string) {
+    this.styles = [style];
+    if (this.tagName) {
+      this.cssStyleSheet.replaceSync(
+        this.adapterClass.cssProcess(`${this.tagName} { ${this.allStyle} }`)
+      );
+    }
+  }
 
   /** Retreive styles including styles from super class */
   get allStyles(): string[] {
@@ -37,24 +49,8 @@ class AdapterClass {
   }
 
   /** Retreive CSS including all CSS super classes. */
-  get allCSS(): string {
+  get allStyle(): string {
     return this.allStyles.join("\n");
-  }
-
-  /** Set CSS for this component */
-  set css(css: string) {
-    this.styles = [css];
-
-    if (this.tagName) {
-      this.cssStyleSheet.replaceSync(
-        this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`)
-      );
-    }
-  }
-
-  /** Get CSS defined by this component */
-  get css(): string {
-    return this.styles.join("\n");
   }
 
   /**
@@ -72,26 +68,30 @@ class AdapterClass {
   initStyle() {
     document.adoptedStyleSheets.push(this.cssStyleSheet);
     this.cssStyleSheet.replaceSync(
-      this.adapterClass.cssProcess(`${this.tagName} { ${this.allCSS} }`)
+      this.adapterClass.cssProcess(`${this.tagName} { ${this.allStyle} }`)
     );
   }
 
   /** Add style to this component */
-  addStyle(css: string) {
-    this.styles.push(css);
+  addStyle(style: string) {
+    this.styles.push(style);
 
     if (this.tagName) {
-      const rule = `${this.tagName} { ${css} }`;
+      const rule = `${this.tagName} { ${style} }`;
       const processedCss = this.adapterClass.cssProcess(rule);
       this.cssStyleSheet.replaceSync(`
-        ${this.tagName} { ${this.allCSS} }
+        ${this.tagName} { ${this.allStyle} }
         ${processedCss}
       `);
     }
   }
 }
 
-class AdapterObject {
+/**
+ * A class to encapsulate `Adapter` object properties and methods.
+ */
+
+class AdapterObjectController {
 
   /** Reference to Adapter() object */
   adapterObject!: Adapter | any;
@@ -166,11 +166,11 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
 ) {
   return class _Adapter extends Base {
     
-    static _adapter: AdapterClass;
+    static _adapter: AdapterClassController;
 
-    static get adapter(): AdapterClass {
+    static get adapter(): AdapterClassController {
       if (this._adapter === Object.getPrototypeOf(this)._adapter) {
-        this._adapter = new AdapterClass();
+        this._adapter = new AdapterClassController();
         this._adapter.adapterClass = this;
       }
       return this._adapter;
@@ -184,11 +184,13 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
     }
 
     static set css(css: string) {
-      this.adapter.css = css;
+      console.log('set css');
+      this.adapter.style = css;
     }
 
     static get css(): string {
-      return this.adapter.css;
+      console.log('get css');
+      return this.adapter.style;
     }
 
     static get tagName(): string | undefined {
@@ -209,7 +211,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
       this.adapter.define(tagName);
     }
 
-    _adapter: AdapterObject = new AdapterObject();
+    _adapter: AdapterObjectController = new AdapterObjectController();
 
     /**
      * In constructor, there any some if condition to check
