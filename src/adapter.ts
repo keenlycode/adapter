@@ -184,12 +184,10 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
     }
 
     static set css(css: string) {
-      console.log('set css');
       this.adapter.style = css;
     }
 
     static get css(): string {
-      console.log('get css');
       return this.adapter.style;
     }
 
