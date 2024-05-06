@@ -41,7 +41,7 @@ class Component extends AdapterMixin(HTMLElement) {}
 
 <el-api>
 
-#### `static cssProcess(css): string` [middleware]
+#### `override static cssProcess(css): string` [middleware]
 This static function act like a middleware to process all CSS
 defined by Adapter APIs such as setting in `css` [property]
 or using `addStyle(css)`. The codes below is the default implementation
@@ -71,10 +71,11 @@ class Adapter extends AdapterMixin(HTMLElement) {
 ```js
 /** Usage 1 : In class definition */
 class Component extends AdapterMixin(HTMLElement) {
-  static css = `background-color: blue;`;
+  // ES2022 : class static initilization blocks
+  static { this.css = `background-color: blue;` };
 }
 
-/** Usage 2 : Set class property */
+/** ES Ver < 2022 : Set class property after the class definition */
 Component.css = `background-color: red;`;
 ```
 </el-code-block>

@@ -18,7 +18,7 @@ document.adoptedStyleSheets.push(cssStyleSheet);
 
 
 class FilterButton extends Adapter {
-    static css = /*css*/`
+    static { this.css = /*css*/`
         display: inline-flex;
         flex-wrap: wrap;
         box-sizing: border-box;
@@ -27,7 +27,7 @@ class FilterButton extends Adapter {
 
         & button { all: revert };
         & button:hover { all: revert };
-    `;
-}
+    `};
+};
 
 FilterButton.define('el-filter-button');

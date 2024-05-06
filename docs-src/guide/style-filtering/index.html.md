@@ -14,8 +14,8 @@ As a result, we can effortlessly mix and match or isolate styles between compone
 This component filter out (revert) `<button>` style
 
 <div class="width-100">
-    <button>Button</button>
-    <a href="#">Link</a>
+  <button>Button</button>
+  <a href="#">Link</a>
 </div>
 </el-filter-button>
 
@@ -26,10 +26,11 @@ This component filter out (revert) `<button>` style
 import { Adapter } from '@devcapsule/adapter';
 
 class FilterButton extends Adapter {
-    static css = `
-        & button { all: revert }
-        & button:hover { all: revert };
-    `;
+  // Use ES2022 static block syntax
+  static { this.css = `
+    & button { all: revert }
+    & button:hover { all: revert };
+  `};
 }
 
 FilterButton.define('el-filter-button');
@@ -43,12 +44,12 @@ FilterButton.define('el-filter-button');
 <button>Button</button> <a href="#">Link</a>
 
 <el-filter-button>
-    This component filter out (revert) `<button>` style
+  This component filter out (revert) `<button>` style
 
-    <div class="width-100">
-        <button>Button</button>
-        <a href="#">Link</a>
-    </div>
+  <div class="width-100">
+    <button>Button</button>
+    <a href="#">Link</a>
+  </div>
 </el-filter-button>
 ```
 </el-code-block>

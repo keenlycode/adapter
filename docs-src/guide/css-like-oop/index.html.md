@@ -10,11 +10,11 @@ created from class with a defined **tagName**.
 The result **CSS** will be rendered like..
 
 <el-code-block>
-    <div el="bar-top-left"><strong>css</strong></div>
+  <div el="bar-top-left"><strong>css</strong></div>
 
 ```css
 el-tagname {
-    /* styles */
+  /* styles */
 }
 ```
 </el-code-block>
@@ -39,22 +39,20 @@ to style your components.
 ```js
 import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
 
-class Card extends Adapter {
-    static css = `
-        display: inline-flex;
-        box-sizing: border-box;
-        border: 1px solid;
-        border-radius: 5px;
-        padding: 1rem;
-    `;
-};
-
+class Card extends Adapter {};
+Adapter.css = `
+  display: inline-flex;
+  box-sizing: border-box;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 1rem;
+`;
 Card.define('el-card');
 ```
 </el-code-block>
 
 <el-code-block>
-    <div el="bar-top-left"><strong>HTML</strong></div>
+  <div el="bar-top-left"><strong>HTML</strong></div>
 
 ```html
 <el-card>This is a card</el-card>
@@ -81,8 +79,8 @@ parent class style.
 class BlueCard extends Card {};
 
 BlueCard.css = `
-    background-color: blue;
-    color: white;
+  background-color: blue;
+  color: white;
 `;
 
 /** It also works with native customElement.define() */
@@ -90,7 +88,7 @@ customElements.define('el-bluecard', BlueCard);
 ```
 
 <el-code-block>
-    <div el="bar-top-left"><strong>HTML</strong></div>
+  <div el="bar-top-left"><strong>HTML</strong></div>
 
 ```html
 <el-bluecard>This is a blue card</el-bluecard>
@@ -105,18 +103,18 @@ Using `addStyle()` will add more CSS style to the component
 (Not replacing it).
 
 <el-code-block>
-    <div el="bar-top-left"><strong>JS</strong></div>
+  <div el="bar-top-left"><strong>JS</strong></div>
 
 ```js
 BlueCard.addStyle(`
-    &.largeFont {
-        font-size: 2em;
-    }
+  &.largeFont {
+      font-size: 2em;
+  }
 `);
 ```
 
 <el-code-block>
-    <div el="bar-top-left"><strong>HTML</strong></div>
+  <div el="bar-top-left"><strong>HTML</strong></div>
 
 ```html
 <el-bluecard class="largeFont">This is a blue card with large font</el-bluecard>
@@ -145,7 +143,7 @@ This will replace component object styles, but not affect
 **Class / Component Styles**
 
 <el-code-block>
-    <div el="bar-top-left"><strong>JS</strong></div>
+  <div el="bar-top-left"><strong>JS</strong></div>
 
 ```js
 document.querySelector('el-bluecard#blue-card-lift').css = `
@@ -155,7 +153,7 @@ document.querySelector('el-bluecard#blue-card-lift').css = `
 </el-code-block>
 
 <el-code-block>
-    <div el="bar-top-left"><strong>HTML</strong></div>
+  <div el="bar-top-left"><strong>HTML</strong></div>
 
 ```html
 <el-bluecard id="blue-card-lift">Lift me up</el-bluecard>
@@ -169,7 +167,7 @@ document.querySelector('el-bluecard#blue-card-lift').css = `
 This will add more style to component object (element).
 
 <el-code-block>
-    <div el="bar-top-left"><strong>JS</strong></div>
+  <div el="bar-top-left"><strong>JS</strong></div>
 
 ```js
 document.querySelector('#blue-card-rotate').addStyle(`
@@ -179,7 +177,7 @@ document.querySelector('#blue-card-rotate').addStyle(`
 </el-code-block>
 
 <el-code-block>
-    <div el="bar-top-left"><strong>HTML</strong></div>
+  <div el="bar-top-left"><strong>HTML</strong></div>
 
 ```html
 <el-bluecard id="blue-card-rotate">Rotate me</el-bluecard>
@@ -207,12 +205,12 @@ to automatically style element when attached inside a Shadow DOM.
 
 ```js
 class ShadowHost extends Adapter {
-    constructor() {
-        super();
-        const innerHTML = this.innerHTML;
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = innerHTML;
-    }
+  constructor() {
+    super();
+    const innerHTML = this.innerHTML;
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = innerHTML;
+  }
 }
 
 customElements.define('el-shadow-host', ShadowHost);

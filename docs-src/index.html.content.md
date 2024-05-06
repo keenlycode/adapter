@@ -12,20 +12,20 @@ for web components such as **style inheritance**, **scoped style** and
 ```js
 import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
 
-class Card extends Adapter {
-  static css = `
-    display: flex;
-    flex-wrap: wrap;
-    background-color: blue;
-    border: 1px solid;
-    border-radius: 5px;
-    & h1 {
-      margin: 0;
-    }
-  `;
-}
+class Card extends Adapter {};
 
-Card.define('el-card')
+Card.css = `
+  display: flex;
+  flex-wrap: wrap;
+  background-color: blue;
+  border: 1px solid;
+  border-radius: 5px;
+  & h1 {
+    margin: 0;
+  }
+`;
+
+Card.define('el-card');
 ```
 </el-code-block>
 
@@ -48,16 +48,16 @@ You can start using **Adapter** without **Node.js** or any
 ```html
 <!-- import from CDN -->
 <script type="module">
-import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm'
+import { Adapter } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
 
-class Container extends Adapter {
-  static css = `
-    margin: auto;
-    max-width: 1000px;
-    min-width: 300px;
-    width: 90%;
-  `;
-}
+class Container extends Adapter {};
+
+Container.css = `
+  margin: auto;
+  max-width: 1000px;
+  min-width: 300px;
+  width: 90%;
+`;
 </script>
 ```
 </el-code-block>
@@ -67,20 +67,3 @@ class Container extends Adapter {
 <div style="text-align: center;">
 <strong style="font-size: 1.5em;">~ 2kB</strong> minify gzip
 </div>
-
-## 🎉 Integrate with other libraries
-
-- HTML Render:
-  [uhtml](https://github.com/WebReflection/uhtml),
-  [lit-html](https://lit.dev/docs/libraries/standalone-templates/)
-- CSS Parser:
-  [csstree](https://github.com/csstree/csstree),
-  [stylis](https://stylis.js.org/),
-  [ligntningcss](https://lightningcss.dev/)
-- Event/Signal: [mitt](https://www.npmjs.com/package/mitt),
-  [nanoevents](https://github.com/ai/nanoevents]),
-  [@preact/signals]()
-- Reactive: [ArrowJS](https://www.arrow-js.com/)
-- Animation:
-  [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API),
-  [anime.js](https://animejs.com/),

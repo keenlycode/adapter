@@ -19,7 +19,7 @@ scoped style. Just set element style with `css` attributes.
 
 ```ts
 import { Adapter }
-    from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
+  from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
 
 class Style extends Adapter {};
 Style.define('el-div');
@@ -27,7 +27,7 @@ Style.define('el-div');
 </el-code-block>
 
 <el-code-block>
-    <div el="bar-top-left">HTML</div>
+  <div el="bar-top-left">HTML</div>
 
 ```html
 <el-div css="
@@ -40,7 +40,7 @@ button {
     background-color: red
 };
 ">
-    <button>Button 1</button>
+  <button>Button 1</button>
 </el-div>
 
 <el-div css="button { background-color: blue };">
@@ -57,9 +57,9 @@ border-radius: 5px;
 padding: 1rem;
 button { background-color: red };
 ">
-    <button>Button 1</button>
+  <button>Button 1</button>
 </el-div>
 
 <el-div css="button { background-color: blue };">
-    <button>Button 2</button>
+  <button>Button 2</button>
 </el-div>
