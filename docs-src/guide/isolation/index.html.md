@@ -18,7 +18,7 @@ and the DOM structure will be the same whether using Shadow DOM or not.
 ## Example
 
 <el-code-block>
-    <div el="bar-top-left">JS</div>
+  <div el="bar-top-left">JS</div>
 
 ```js
 class ElementA extends Adapter {};
@@ -27,13 +27,13 @@ ElementA.define('el-a');
 </el-code-block>
 
 <el-code-block>
-    <div el="bar-top-left">HTML</div>
+  <div el="bar-top-left">HTML</div>
 
 ```html
 <button>Global Styled Button</button>
 
 <el-a isolation="open">
-    <button>Isolated Button</button>
+  <button>Isolated Button</button>
 </el-a>
 ```
 </el-code-block>
@@ -43,7 +43,7 @@ ElementA.define('el-a');
 <button>Global Styled Button</button>
 
 <el-a isolation="open">
-    <button>Isolated Button</button>
+  <button>Isolated Button</button>
 </el-a>
 
 ---
@@ -64,14 +64,14 @@ This option will create host isolator with **Closed Shadow DOM**
 
 ```html
 <el-a isolation="closed">
-    <button>Isolated Button</button>
+  <button>Isolated Button</button>
 </el-a>
 ```
 
 ### Result
 ---
 <el-a isolation="closed">
-    <button>Isolated Button</button>
+  <button>Isolated Button</button>
 </el-a>
 
 ---

@@ -4,7 +4,7 @@ import { color } from '../../_ux/designToken';
 
 class API extends AdapterMixin(HTMLElement) {
   static cssProcess(css) { return stylis(css) }
-  static css = `
+  static { this.css = `
     display: block;
     border-left: 5px solid ${color.green};
     border-bottom-left-radius: 0.4em;
@@ -15,7 +15,7 @@ class API extends AdapterMixin(HTMLElement) {
     hr {
       margin: 1.5rem 0 1.5rem 0;
     }
-  `;
+  `};
 }
 
 API.define('el-api');

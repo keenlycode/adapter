@@ -27,19 +27,15 @@ for creating dynamic and feature-rich user interfaces.
 ```ts
 import { Adapter } from '@devcapsule/adapter';
 
-class FlexBox extends Adapter {
-    static css = `
-        display: flex;
-        justify-content: center;
-    `;
-}
+class FlexBox extends Adapter {};
+FlexBox.css = `
+  display: flex;
+  justify-content: center;
+`;
 
 /** WrapFlexBox also inhertit styles from FlexBox */
 class WrapFlexBox extends Flexbox {
-    static css = `
-        flex-wrap: wrap;
-    `;
-}
+WrapFlexBox.css = `flex-wrap: wrap;`;
 
 WrapFlexBox.define('el-wrap-flexbox');
 ```
@@ -48,9 +44,9 @@ This will produce CSS as
 
 ```css
 el-wrap-flexbox {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 ```
@@ -61,9 +57,9 @@ Then, you can use them in html or create an instance by javascript
 <div el="bar-top-left">Javascript</div>
 
 ```js
-// Create <el-flexbox> in OOP manner.
-const flexBox = new FlexBox();
-document.body.append(flexBox);
+// Create <el-wrap-flexbox> in OOP manner.
+const wrapFlexBox = new WrapFlexBox();
+document.body.append(wrapFlexBox);
 ```
 </el-code-block>
 
@@ -86,15 +82,14 @@ document.body.append(flexBox);
 import Color from 'color';
 
 function bgColor(color) {
-    return `
-        background-color: ${color};
-        color: ${Color(color).isDark() ? 'white' : 'black'};
-    `.trim();
+  return `
+    background-color: ${color};
+    color: ${Color(color).isDark() ? 'white' : 'black'};
+  `.trim();
 }
 
-class RedFlexBox extends FlexBox {
-    static css = `${bgColor('red')}`;
-}
+class RedFlexBox extends FlexBox {};
+RedFlexBox.css = `${bgColor('red')}`;
 
 export { bgColor, RedFlexBox };
 ```
@@ -118,7 +113,7 @@ in one of `<style>` tag
 
 ```html
 <style>
-    div > button { background-color: red }
+  div > button { background-color: red }
 </style>
 ```
 
@@ -127,7 +122,7 @@ If we have a component somewhere which contains `<button>` without using
 
 ```html
 <div class="componentA">
-    <div><button>Button</button></div>
+  <div><button>Button</button></div>
 </div>
 ```
 
@@ -139,12 +134,12 @@ more specific like,
 <style>
 /* this won't work */
 .componentA {
-    div button { background-color: blue }
+  div button { background-color: blue }
 }
 
 /* this work */
 .componentA {
-    div > button { background-color: blue }
+  div > button { background-color: blue }
 }
 </style>
 ```
@@ -173,14 +168,13 @@ Let's see how to implement CSS Styling in Adapter Component.
 <div el="bar-top-left">JS</div>
 
 ```js
-class ComponentA extends Adapter {
-    /** CSS will be isolated in ComponentA
-     * Moreover, we can write CSS for this component without worrying
-     * about this component tagName.
-     */
-    static css = `div button { background-color: blue }`;
-}
+class ComponentA extends Adapter {};
 
+/** CSS will be isolated in ComponentA
+ * Moreover, we can write CSS for this component without worrying
+ * about this component tagName.
+ */
+ComponentA.css = `div button { background-color: blue }`;
 ComponentA.define('el-component-a');
 ```
 </el-code-block>
@@ -190,7 +184,7 @@ ComponentA.define('el-component-a');
 
 ```html
 <el-component-a>
-    <div><button>Button</button></div>
+  <div><button>Button</button></div>
 </el-component-a>
 ```
 
