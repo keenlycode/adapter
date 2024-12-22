@@ -87,16 +87,16 @@ describe("Adapter Class: Use Case", () => {
         color: red;
       }
     `);
-    assert(Card1.adapter.allCSS.includes(`display: flex;`));
+    assert(Card1.adapter.allStyle.includes(`display: flex;`));
     Card2.addStyle(`display: block;`);
-    assert(Card2.adapter.allCSS.includes(`display: block;`));
+    assert(Card2.adapter.allStyle.includes(`display: block;`));
   });
 
   it("Should inherit style from super class", () => {
     RedCard.addStyle(`background-color: red;`);
-    assert(RedCard.adapter.allCSS.includes(`display: flex;`));
-    assert(RedCard.adapter.allCSS.includes("display: flex;"));
-    assert(RedCard.adapter.allCSS.includes("background-color: red;"));
+    assert(RedCard.adapter.allStyle.includes(`display: flex;`));
+    assert(RedCard.adapter.allStyle.includes("display: flex;"));
+    assert(RedCard.adapter.allStyle.includes("background-color: red;"));
     RedCard.define("el-red-card");
     assert(
       RedCard.adapter.cssStyleSheet.cssRules[0].cssText.includes(
@@ -122,8 +122,8 @@ describe("Adapter Class: Use Case", () => {
   it("Should be able to set css for component", () => {
     const additionStyle = `background-color: red;`;
     RedCard.css = additionStyle;
-    assert(RedCard.adapter.allCSS.includes(additionStyle));
-    assert(RedCard.adapter.allCSS.includes(Card1.css));
+    assert(RedCard.adapter.allStyle.includes(additionStyle));
+    assert(RedCard.adapter.allStyle.includes(Card1.css));
   });
 
   it("Class' CSSStyleSheet() should be adopted by document", () => {
@@ -319,38 +319,5 @@ describe("Shadow DOM Support", () => {
     assert(getComputedStyle(button).backgroundColor === "rgb(255, 0, 0)");
   });
 });
-
-describe("Isolator", () => {
-
-  class Card extends Adapter {
-    static css = `
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100px;
-      height: 100px;
-      background-color: blue;
-    `;
-  }
-
-  Card.define("el-card");
-
-  it("Can isolate elements and move elements", () => {
-    const card = new Card();
-    render.append(card);
-    let host = card.isolate();
-    assert(host instanceof HTMLElement);
-    assert(host.shadowRoot !== null);
-    assert(host.shadowRoot!.mode === 'open');
-
-    card.remove();
-    host = card.isolate('closed');
-    render.append(card);
-    assert(host instanceof HTMLElement);
-    assert(host.shadowRoot === null);
-    assert(card._isolator.hostShadowRoot!.mode === 'closed');
-    card.remove();
-  });
-})
 
 mocha.run();

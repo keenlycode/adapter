@@ -1,6 +1,5 @@
 import { uuid, HTMLElementInterface } from './util.js';
 import { stylis } from './cssProcessor/stylis.bundle.js';
-import { IsolatorMixin } from './isolator.js';
 
 
 /**
@@ -133,7 +132,7 @@ class AdapterObjectController {
   get objectClassSelector(): string {
     return this.adapterObject.classList.value.replace(/ /g, ".");
   }
-  
+
   /** Init class and styles for this element */
   initClass() {
     this._class = this.adapterObject.constructor as unknown as typeof Adapter;
@@ -165,7 +164,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   Base: TBase
 ) {
   return class _Adapter extends Base {
-    
+
     static _adapter: AdapterClassController;
 
     static get adapter(): AdapterClassController {
@@ -180,7 +179,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
      * before applying CSS to CSSStyleSheet.
      */
     static cssProcess(css: string): string {
-      return css;
+      return stylis(css);
     }
 
     static set css(css: string) {
@@ -263,8 +262,12 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
       `);
     }
 
-    connectedCallback() {
-      super.connectedCallback ? super.connectedCallback() : null;
+    /**
+     * Register CSSStyleSheet() object to `rootNode.adaptedStyleSheets`
+     * This function will check the existing CSSStyleSheet() before apply
+     * to make sure that it won't create duplicates.
+     */
+    _registCSSStyleSheet() {
 
       /** Apply css if it's set in attributes */
       const css = this.getAttribute('css');
@@ -272,17 +275,20 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
 
       const rootNode = this.getRootNode() as Document | ShadowRoot;
       if (rootNode.adoptedStyleSheets.indexOf(
-        this._adapter._class.adapter.cssStyleSheet) === -1) 
-      {
+        this._adapter._class.adapter.cssStyleSheet) === -1) {
         rootNode.adoptedStyleSheets.push(
           this._adapter._class.adapter.cssStyleSheet);
       }
       if (rootNode.adoptedStyleSheets.indexOf(
-        this._adapter.cssStyleSheet) === -1)
-      {
+        this._adapter.cssStyleSheet) === -1) {
         rootNode.adoptedStyleSheets.push(
           this._adapter.cssStyleSheet);
       }
+    }
+
+    connectedCallback() {
+      super.connectedCallback ? super.connectedCallback() : null;
+      this._registCSSStyleSheet();
     }
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
@@ -295,7 +301,7 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   };
 }
 
-export class Adapter extends IsolatorMixin(AdapterMixin(HTMLElement)) {
+export class Adapter extends AdapterMixin(HTMLElement) {
   static cssProcess(css: string): string {
     return stylis(css);
   }
