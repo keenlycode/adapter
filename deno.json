@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "dev": "deno run --watch main.ts",
+    "test": "deno run --allow-env --allow-read --allow-run ./esbuild/test.mjs"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1"
+  }
+}
