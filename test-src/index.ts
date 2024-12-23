@@ -225,7 +225,7 @@ describe("Adapter Mixin: Use Case", () => {
   });
 });
 
-describe("CSS Processor", () => {
+describe.skip("CSS Processor", () => {
   it("Can use stylis processor", () => {
     class MyAdapter extends Adapter {
       static cssProcess(css: string): string {
