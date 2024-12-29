@@ -4,7 +4,7 @@ import "mocha/mocha.css";
 import { assert } from "chai";
 
 /** Adapter */
-import { Adapter, AdapterMixin } from "@devcapsule/adapter/src/export";
+import { Adapter, AdapterMixin } from "@devcapsule/adapter/src/adapter";
 
 const __base_url = new URL(import.meta.url);
 

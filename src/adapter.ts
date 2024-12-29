@@ -180,7 +180,7 @@ type Constructor<T = {}> = new (...args: any[]) => T;
  * A mixin function to add Adapter functionality to a base class.
  * @template TBase - The base class type.
  */
-export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
+function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   Base: TBase
 ): TBase {
   return class _Adapter extends Base {
@@ -330,4 +330,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   };
 }
 
-export class Adapter extends AdapterMixin(HTMLElement) { };
+class Adapter extends AdapterMixin(HTMLElement) { };
+
+export { Adapter, AdapterMixin };
