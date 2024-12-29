@@ -3,15 +3,8 @@ import mocha from "mocha/mocha";
 import "mocha/mocha.css";
 import { assert } from "chai";
 
-/** LigntningCSS */
-import lightningcssInit, {
-  transform,
-  browserslistToTargets,
-} from "https://esm.run/lightningcss-wasm";
-import browserslist from "browserslist";
-
 /** Adapter */
-import { Adapter, AdapterMixin, stylis } from "@devcapsule/adapter/src/export";
+import { Adapter, AdapterMixin } from "@devcapsule/adapter/src/export";
 
 const __base_url = new URL(import.meta.url);
 
@@ -20,8 +13,6 @@ if (["0.0.0.0", "127.0.0.1", "localhost"].includes(__base_url.hostname)) {
     location.reload()
   );
 }
-
-await lightningcssInit();
 
 const style = new CSSStyleSheet();
 
@@ -107,16 +98,22 @@ describe("Adapter Class: Use Case", () => {
 
   it("Should be able to set css in class declaration", () => {
     class Card3 extends Adapter {
-      static css = `display: grid;`;
+      static {
+        this.css = `
+          display: grid;
+          &.red {
+            color: red;
+          }
+        `
+      }
       constructor() {
         super();
         this.innerHTML = "Card3";
       }
     }
     Card3.define("el-card3");
-    Card3.css = `${Card3.css} &.red {color: red}`;
     assert(Card3.css.includes("display: grid;"));
-    assert(Card3.css.includes("&.red {color: red}"));
+    assert(Card3.css.includes("&.red"));
   });
 
   it("Should be able to set css for component", () => {
@@ -134,14 +131,14 @@ describe("Adapter Class: Use Case", () => {
 });
 
 describe("Adapter Object: Use Case", () => {
-  class Button1 extends Adapter {
-    static css = `visibility: hidden;`;
-  }
-  class Button2 extends Adapter {
-    static css = `visibility: hidden;`;
-  }
+  class Button1 extends Adapter { }
+  Button1.css = `visibility: hidden;`;
+  class Button2 extends Adapter { }
+  Button2.css = `visibility: hidden`;
+
   Button1.define("el-button1");
   customElements.define("el-button2", Button2);
+
   const button1 = new Button1();
   const button2 = new Button2();
 
@@ -225,88 +222,24 @@ describe("Adapter Mixin: Use Case", () => {
   });
 });
 
-describe.skip("CSS Processor", () => {
-  it("Can use stylis processor", () => {
-    class MyAdapter extends Adapter {
-      static cssProcess(css: string): string {
-        return stylis(css);
-      }
-
-      static css = `
-        display: flex;
-        min-height: 20vh;
-        background-color: #eee;
-        &.red {
-            background-color: red;
-        }
-      `;
-    }
-    MyAdapter.define("el-adapter-stylis");
-
-    /**
-     * This will prove that stylis works as expected
-     * because it will create `<element>.red` rule from `&.red`
-     */
-    assert(
-      MyAdapter.adapter.cssStyleSheet.cssRules[1].cssText.includes(
-        "el-adapter-stylis.red"
-      )
-    );
-  });
-
-  it("Can use lightningcss-wasm processor (beta)", async () => {
-    class MyAdapter extends Adapter {
-      static cssProcess(css: string): string {
-        let { code } = transform({
-          code: new TextEncoder().encode(css),
-          sourceMap: false,
-          targets: browserslistToTargets(browserslist(">= 0.25%")),
-        });
-        code = new TextDecoder().decode(code);
-        return code;
-      }
-
-      static css = `
-        display: flex;
-        min-height: 20vh;
-        background-color: #eee;
-        &.red {
-            background-color: red;
-        }
-      `;
-    }
-
-    MyAdapter.define("el-adapter-lightningcss");
-    /** This will prove that stylis works as expected
-     * because it will create `<element>.red` rule from `&.red`
-     */
-    assert(
-      MyAdapter.adapter.cssStyleSheet.cssRules[1].cssText.includes(
-        "el-adapter-lightningcss.red"
-      )
-    );
-  });
-});
-
 describe("Shadow DOM Support", () => {
   class ShadowHost extends Adapter {
-    static css = `visibility: hidden;`;
     constructor() {
       super();
       this.attachShadow({ mode: "open" });
     }
   }
+  ShadowHost.css = `visibility: hidden`;
 
-  class Button extends Adapter {
-    static css = `
-      display: flex;
-      justify-content: center;
-      color: white;
-      background-color: red;
-      width: 100px;
-      height: 2rem;
-    `;
-  }
+  class Button extends Adapter { }
+  Button.css = `
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-color: red;
+    width: 100px;
+    height: 2rem;
+  `;
 
   Button.define("el-button");
   ShadowHost.define("el-shadow-host");

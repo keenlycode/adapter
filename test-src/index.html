@@ -1,17 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends '_base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adapter Test</title>
-    <link rel="stylesheet" href="./index.css?v={{_v}}">
-    <script defer type="module" src="./index.js?v={{_v}}"></script>
-</head>
+{% block title %}
+<title>Adapter Test</title>
+{% endblock %}
 
+{% block head %}
+<title>Adapter Test</title>
+<link rel="stylesheet" href="./index.css?v={{_v}}">
+<script defer type="module" src="./index.js?v={{_v}}"></script>
+{% endblock %}
+
+{% block body %}
 <body>
     <div id="mocha"></div>
     <div id="render"></div>
 </body>
-
-</html>
+{% endblock %}

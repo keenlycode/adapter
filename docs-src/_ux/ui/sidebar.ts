@@ -4,16 +4,18 @@ const css = String.raw;
 
 const sidebarStyle = (): string => {
   const style = css`
-    all: unset;
-    display: flex;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-    position: fixed;
-    left: 0;
-    z-index: 100;
-    width: 28ch;
-    min-height: 50dvh;
-    background-color: white;
+    & {
+        all: unset;
+        display: flex;
+        flex-wrap: wrap;
+        box-sizing: border-box;
+        position: fixed;
+        left: 0;
+        z-index: 100;
+        width: 28ch;
+        min-height: 50dvh;
+        background-color: white;
+    }
 
     &.show {
       transform: translateX(0);

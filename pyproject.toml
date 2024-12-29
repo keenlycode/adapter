@@ -1,0 +1,4 @@
+[dependency-groups]
+dev = [
+    "engrave>=2.1.3",
+]

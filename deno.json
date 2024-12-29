@@ -1,9 +1,16 @@
 {
   "tasks": {
-    "dev": "deno run --watch main.ts",
-    "test": "deno run --allow-env --allow-read --allow-run ./esbuild/test.mjs"
+    "test:esbuild": "deno run --allow-env --allow-read --allow-run ./esbuild/test.mjs",
+    "test:html": "engrave dev test-src/ docs/test/",
+    "test": "deno task test:esbuild & deno task test:html",
+    "docs:esbuild": "deno run --allow-env --allow-read --allow-run ./esbuild/docs.mjs",
+    "docs:html": "engrave dev docs-src/ docs/",
+    "docs": "deno task docs:esbuild & deno task docs:html"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1"
+  },
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "dom.asynciterable", "deno.ns"]
   }
 }

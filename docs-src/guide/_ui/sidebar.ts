@@ -8,10 +8,12 @@ import { Sidebar as _Sidebar } from "../../_ux/ui/sidebar";
 const css = String.raw;
 
 const sideBarStyle = css`
-  height: 110dvh;
-  padding-bottom: 15dvh;
-  ${bgColor(color.dark)}
-  transition: transform 0.4s ease;
+  & {
+    height: 110dvh;
+    padding-bottom: 15dvh;
+    ${bgColor(color.dark)}
+    transition: transform 0.4s ease;
+  }
 
   [el="wrapper"] {
     width: 100%;

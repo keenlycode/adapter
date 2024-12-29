@@ -1,4 +1,3 @@
-import { stylis } from './adapter';
 import { bgColor, fontFluid } from "./_ux/style";
 import { color } from "./_ux/designToken";
 import { buttonStyle } from './_ux/ui/button';
@@ -11,7 +10,7 @@ function baseStyle() {
 
   const style = new CSSStyleSheet();
   document.adoptedStyleSheets.push(style);
-  style.replaceSync(stylis(/*css*/`
+  style.replaceSync(/*css*/`
     @font-face {
       font-family: sans;
       src: url(${__fira_sans_url});
@@ -116,7 +115,7 @@ function baseStyle() {
       display: flex;
       flex-wrap: wrap;
     }
-  `));
+  `);
 }
 
 baseStyle();

@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 const test_src_dir = path.join(__dirname, "../test-src");
 
 async function test() {
-  const entryFiles = await glob(path.join(test_src_dir, "**/*.{ts,html}"), {
+  const entryFiles = await glob(path.join(test_src_dir, "**/*.ts"), {
     ignore: path.join(test_src_dir, "**/_*"),
   });
 
@@ -25,10 +25,7 @@ async function test() {
     format: "esm",
     sourcemap: true,
     keepNames: true,
-    color: true,
-    loader: {
-      ".html": "copy",
-    },
+    color: true
   });
   await result.watch();
   const { host, port } = await result.serve({

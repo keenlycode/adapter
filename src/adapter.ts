@@ -1,6 +1,4 @@
 import { uuid, HTMLElementInterface } from './util.js';
-import { stylis } from './cssProcessor/stylis.bundle.js';
-
 
 /**
  * A class to encapsulate `Adapter` class properties and methods.
@@ -28,9 +26,7 @@ class AdapterClassController {
   set style(style: string) {
     this.styles = [style];
     if (this.tagName) {
-      this.cssStyleSheet.replaceSync(
-        this.adapterClass.cssProcess(`${this.tagName} { ${this.allStyle} }`)
-      );
+      this.cssStyleSheet.replaceSync(`${this.tagName} { ${this.allStyle} }`);
     }
   }
 
@@ -66,9 +62,7 @@ class AdapterClassController {
   /** Init component style */
   initStyle() {
     document.adoptedStyleSheets.push(this.cssStyleSheet);
-    this.cssStyleSheet.replaceSync(
-      this.adapterClass.cssProcess(`${this.tagName} { ${this.allStyle} }`)
-    );
+    this.cssStyleSheet.replaceSync(`${this.tagName} { ${this.allStyle} }`);
   }
 
   /** Add style to this component */
@@ -76,11 +70,10 @@ class AdapterClassController {
     this.styles.push(style);
 
     if (this.tagName) {
-      const rule = `${this.tagName} { ${style} }`;
-      const processedCss = this.adapterClass.cssProcess(rule);
+      const cssRule = `${this.tagName} { ${style} }`;
       this.cssStyleSheet.replaceSync(`
         ${this.tagName} { ${this.allStyle} }
-        ${processedCss}
+        ${cssRule}
       `);
     }
   }
@@ -175,13 +168,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
       return this._adapter;
     }
 
-    /** CSS Process middleware, This function will be called
-     * before applying CSS to CSSStyleSheet.
-     */
-    static cssProcess(css: string): string {
-      return stylis(css);
-    }
-
     static set css(css: string) {
       this.adapter.style = css;
     }
@@ -222,20 +208,18 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
     }
 
     /**
-     * Set CSS for this element.
-     * It works like `<el style="">` but with CSS processor.
+     * Set CSS for this element with tag name.
      */
     set css(css: string) {
+
+      // Make sure classList contain object uuid
       this.classList.add(this._adapter.uuid);
 
       /** Init cssStyleSheet if it hasn't been inited yet.
        * This will make `this.objectClassSelector` works as expeced.
        */
-      const processedCss = this._adapter._class.cssProcess(
-        `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`
-      );
-
-      this._adapter.cssStyleSheet.replaceSync(processedCss);
+      const cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
+      this._adapter.cssStyleSheet.replaceSync(cssRule);
     }
 
     /** Get CSS for this element */
@@ -252,13 +236,11 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
     addStyle(css: string): void {
       this.classList.add(this._adapter.uuid);
 
-      const processedCss = this._adapter._class.cssProcess(
-        `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`
-      );
+      const cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
 
       this._adapter.cssStyleSheet.replaceSync(`
         ${this.css}
-        ${processedCss}
+        ${cssRule}
       `);
     }
 
@@ -301,8 +283,4 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   };
 }
 
-export class Adapter extends AdapterMixin(HTMLElement) {
-  static cssProcess(css: string): string {
-    return stylis(css);
-  }
-}
+export class Adapter extends AdapterMixin(HTMLElement) { };
