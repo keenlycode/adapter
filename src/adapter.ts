@@ -19,7 +19,7 @@ class AdapterClassController {
    * Styles are stored in the order they are added via `addStyle()`.
    * These styles are then applied to `cssStyleSheet` with the appropriate query selector.
    */
-  styles: string[] = [];
+  private styles: string[] = [];
 
   /**
    * Get the combined styles as a single string.
@@ -33,15 +33,13 @@ class AdapterClassController {
    */
   set style(style: string) {
     this.styles = [style];
-    if (this.tagName) {
-      this.cssStyleSheet.replaceSync(`${this.tagName} { ${this.allStyle} }`);
-    }
+    this.updateStyleSheet();
   }
 
   /**
    * Retrieve styles including styles from super class.
    */
-  get allStyles(): string[] {
+  private get allStyles(): string[] {
     let superClass = Object.getPrototypeOf(this.adapterClass);
     const allStyles: string[] = [];
 
@@ -56,7 +54,7 @@ class AdapterClassController {
   /**
    * Retrieve CSS including all CSS super classes.
    */
-  get allStyle(): string {
+  private get allStyle(): string {
     return this.allStyles.join("\n");
   }
 
@@ -72,9 +70,9 @@ class AdapterClassController {
   }
 
   /** Initialize component style */
-  initStyle() {
+  private initStyle() {
     document.adoptedStyleSheets.push(this.cssStyleSheet);
-    this.cssStyleSheet.replaceSync(`${this.tagName} { ${this.allStyle} }`);
+    this.updateStyleSheet();
   }
 
   /**
@@ -82,13 +80,15 @@ class AdapterClassController {
    */
   addStyle(style: string) {
     this.styles.push(style);
+    this.updateStyleSheet();
+  }
 
+  /**
+   * Update the CSSStyleSheet with the current styles.
+   */
+  private updateStyleSheet() {
     if (this.tagName) {
-      const cssRule = `${this.tagName} { ${style} }`;
-      this.cssStyleSheet.replaceSync(`
-        ${this.tagName} { ${this.allStyle} }
-        ${cssRule}
-      `);
+      this.cssStyleSheet.replaceSync(`${this.tagName} { ${this.allStyle} }`);
     }
   }
 }
@@ -105,12 +105,12 @@ class AdapterObjectController {
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
   /** Generated UUID for the element.
-   * Will be used to create CSS selector for the element.
+   * Used to create CSS selector for the element.
    */
-  _uuid?: string;
+  private _uuid?: string;
 
   /** MutationObserver for observing CSS changes */
-  _cssObserver!: MutationObserver;
+  private _cssObserver!: MutationObserver;
 
   /** Stored component class for the element */
   _class!: typeof Adapter | any;
