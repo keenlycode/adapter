@@ -1,4 +1,4 @@
-import { uuid, HTMLElementInterface } from './util.js';
+import { uuid, HTMLElementInterface } from './util';
 
 /**
  * A class to encapsulate `Adapter` class properties and methods.
@@ -6,7 +6,7 @@ import { uuid, HTMLElementInterface } from './util.js';
 class AdapterClassController {
 
   /** Reference to `class Adapter` */
-  adapterClass!: typeof Adapter | any;
+  adapterClass!: typeof Adapter;
 
   /** CSSStyleSheet instance for managing styles */
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
@@ -70,7 +70,7 @@ class AdapterClassController {
   }
 
   /** Initialize component style */
-  private initStyle() {
+  initStyle() {
     document.adoptedStyleSheets.push(this.cssStyleSheet);
     this.updateStyleSheet();
   }
@@ -99,7 +99,7 @@ class AdapterClassController {
 class AdapterObjectController {
 
   /** Reference to Adapter() object */
-  adapterObject!: Adapter | any;
+  adapterObject!: Adapter;
 
   /** CSSStyleSheet instance for managing styles */
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
@@ -113,7 +113,7 @@ class AdapterObjectController {
   private _cssObserver!: MutationObserver;
 
   /** Stored component class for the element */
-  _class!: typeof Adapter | any;
+  _class!: typeof Adapter;
 
   /**
    * Get UUID or generate a new one.
@@ -182,7 +182,7 @@ type Constructor<T = {}> = new (...args: any[]) => T;
  */
 function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   Base: TBase
-): TBase {
+) {
   return class _Adapter extends Base {
 
     /** Static instance of AdapterClassController */
@@ -315,13 +315,13 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
     }
 
     /** Callback when the element is connected to the DOM */
-    connectedCallback() {
+    override connectedCallback() {
       super.connectedCallback ? super.connectedCallback() : null;
       this._registCSSStyleSheet();
     }
 
     /** Remove the element from DOM and remove adoptedStyleSheet */
-    remove() {
+    override remove() {
       const rootNode = this.getRootNode() as Document | ShadowRoot;
       const i = rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet);
       rootNode.adoptedStyleSheets.splice(i, 1);

@@ -1,6 +1,6 @@
 import * as esbuild from "esbuild";
-import { fileURLToPath } from "url";
-import path from "path";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 import { glob } from "glob";
 
 
