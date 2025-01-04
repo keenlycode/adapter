@@ -1,4 +1,4 @@
-import * as esbuild from "esbuild";
+import * as esbuild from "https://deno.land/x/esbuild@v0.24.2/mod.js";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { glob } from "glob";
@@ -7,7 +7,7 @@ import { glob } from "glob";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-let files = await glob(path.join(__dirname, "../src/dist/**/*.ts"), {
+let files = await glob(path.join(__dirname, "../src/**/*.ts"), {
   // ignore: path.join(__dirname, "../src/dist/**/*.bundle.ts"),
 });
 
@@ -17,13 +17,13 @@ console.log(
 
 let result = await esbuild.build({
   entryPoints: files,
-  bundle: true,
+  bundle: false,
   outdir: "dist",
-  outbase: path.join(__dirname, "../src/dist/"),
+  outbase: path.join(__dirname, "../src/"),
   format: "esm",
   lineLimit: 80,
   keepNames: false,
-  minify: true,
+  minify: false,
   sourcemap: true,
   metafile: true,
   logLevel: "info",
@@ -34,6 +34,8 @@ console.log(
     verbose: true,
   })
 );
+
+await esbuild.stop()
 
 // files = await glob(path.join(__dirname, "../src/dist/**/*.bundle.ts"));
 

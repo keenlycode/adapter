@@ -1,4 +1,7 @@
 {
+  "name": "@devcapsule/adapter",
+  "version": "3.0.0dev",
+  "license": "ISC",
   "tasks": {
     "test:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/test.mjs",
     "test:html": "engrave dev test-src/ docs/test/",
@@ -6,9 +9,33 @@
     "docs:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/docs.mjs",
     "docs:html": "engrave dev docs-src/ docs/",
     "docs": "deno task docs:esbuild & deno task docs:html",
-    "dist": "deno run --allow-env --allow-read --allow-run esbuild/dist.mjs"
+    "dist": "deno run --allow-env --allow-read --allow-run --allow-net --allow-write esbuild/dist.js"
   },
   "imports": {
-    "@std/assert": "jsr:@std/assert@1"
+    "@std/assert": "jsr:@std/assert@1",
+    "@types/chai": "npm:@types/chai@^5.0.1",
+    "@types/mocha": "npm:@types/mocha@^10.0.10",
+    "@types/stylis": "npm:@types/stylis@^4.2.7",
+    "chai": "npm:chai@^5.1.2",
+    "glob": "npm:glob@^11.0.0",
+    "mocha": "npm:mocha@^11.0.1",
+    "postcss": "npm:postcss@^8.4.49",
+    "stylis": "npm:stylis@^4.3.4"
+  },
+  "exports": "./src/mod.ts",
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable",
+      "deno.ns",
+      "deno.unstable"
+    ]
+  },
+  "publish": {
+    "include": [
+      "src/**/*.ts",
+      "dist/**/*.js"
+    ]
   }
 }

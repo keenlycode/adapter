@@ -1,4 +1,4 @@
-import { uuid, HTMLElementInterface } from './util';
+import { uuid, HTMLElementInterface } from './util.js';
 
 /**
  * A class to encapsulate `Adapter` class properties and methods.
