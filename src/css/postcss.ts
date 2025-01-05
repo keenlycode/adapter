@@ -1,5 +1,5 @@
 // @ts-nocheck
-import _postcss, { AcceptedPlugin, ProcessOptions, Result } from "postcss";
+import _postcss, { AcceptedPlugin, ProcessOptions, Result } from "./bundle/postcss.bundle.js";
 
 // @ts-check
 function postcss(plugins: AcceptedPlugin[] = []) {

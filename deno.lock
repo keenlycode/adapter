@@ -592,15 +592,21 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@std/assert@1",
-      "npm:@types/chai@^5.0.1",
-      "npm:@types/mocha@^10.0.10",
-      "npm:@types/stylis@^4.2.7",
-      "npm:chai@^5.1.2",
-      "npm:glob@11",
-      "npm:mocha@^11.0.1",
-      "npm:postcss@^8.4.49",
-      "npm:stylis@^4.3.4"
-    ]
+      "jsr:@std/assert@1"
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:@types/chai@^5.0.1",
+        "npm:@types/mocha@^10.0.10",
+        "npm:@types/stylis@^4.2.7",
+        "npm:chai@^5.1.2",
+        "npm:esbuild@~0.24.2",
+        "npm:glob@11",
+        "npm:mocha@^11.0.1",
+        "npm:postcss@^8.4.49",
+        "npm:stylis@^4.3.4",
+        "npm:typescript@^5.7.2"
+      ]
+    }
   }
 }

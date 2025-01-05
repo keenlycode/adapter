@@ -3,24 +3,18 @@
   "version": "3.0.0dev",
   "license": "ISC",
   "tasks": {
-    "test:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/test.mjs",
+    "test:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/test.js",
     "test:html": "engrave dev test-src/ docs/test/",
     "test": "deno task test:esbuild & deno task test:html",
-    "docs:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/docs.mjs",
+    "docs:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/docs.js",
     "docs:html": "engrave dev docs-src/ docs/",
     "docs": "deno task docs:esbuild & deno task docs:html",
-    "dist": "deno run --allow-env --allow-read --allow-run --allow-net --allow-write esbuild/dist.js"
+    "dist:type": "npx tsc --project tsconfig.json",
+    "dist:esbuild": "deno run --allow-env --allow-read --allow-run --allow-net --allow-write esbuild/dist.js",
+    "dist": "deno task dist:esbuild & deno task dist:type"
   },
   "imports": {
-    "@std/assert": "jsr:@std/assert@1",
-    "@types/chai": "npm:@types/chai@^5.0.1",
-    "@types/mocha": "npm:@types/mocha@^10.0.10",
-    "@types/stylis": "npm:@types/stylis@^4.2.7",
-    "chai": "npm:chai@^5.1.2",
-    "glob": "npm:glob@^11.0.0",
-    "mocha": "npm:mocha@^11.0.1",
-    "postcss": "npm:postcss@^8.4.49",
-    "stylis": "npm:stylis@^4.3.4"
+    "@std/assert": "jsr:@std/assert@1"
   },
   "exports": "./src/mod.ts",
   "compilerOptions": {
@@ -34,8 +28,8 @@
   },
   "publish": {
     "include": [
-      "src/**/*.ts",
-      "dist/**/*.js"
+      "src/",
+      "dist/"
     ]
   }
 }

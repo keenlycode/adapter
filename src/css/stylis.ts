@@ -1,5 +1,5 @@
 // @ts-nocheck
-import {compile, serialize, stringify, middleware} from 'stylis';
+import {compile, serialize, stringify, middleware} from './bundle/stylis.bundle.js';
 
 // @ts-check
 function stylis(middlewares=[]): string {

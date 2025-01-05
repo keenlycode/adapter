@@ -1,0 +1,48 @@
+{
+  "name": "@devcapsule/adapter",
+  "description": "CSS-in-JS Toolkit for Web Components",
+  "version": "3.0.0dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keenly-coding/adapter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/keenly-coding/adapter/issues"
+  },
+  "keywords": [
+    "javascript",
+    "web-component",
+    "html",
+    "ui",
+    "css"
+  ],
+  "author": "Nitipit Nontasuwan",
+  "homepage": "https://keenlycode.github.io/adapter/",
+  "license": "MIT",
+  "files": [
+    "src/**/*",
+    "dist/**/*"
+  ],
+  "scripts": {
+    "dist": "node esbuild/dist.mjs",
+    "docs-js": "node esbuild/docs.mjs",
+    "docs-html": "source venv/bin/activate && engrave dev docs-src docs",
+    "docs": "concurrently -kr 'npm run docs-js' 'npm run docs-html'",
+    "test": "node esbuild/test.mjs"
+  },
+  "devDependencies": {
+    "@devcapsule/adapter": "file:./",
+    "@types/chai": "^5.0.1",
+    "@types/mocha": "^10.0.10",
+    "@types/stylis": "^4.2.7",
+    "chai": "^5.1.2",
+    "esbuild": "^0.24.2",
+    "glob": "^11.0.0",
+    "mocha": "^11.0.1",
+    "postcss": "^8.4.49",
+    "stylis": "^4.3.4",
+    "typescript": "^5.7.2"
+  },
+  "type": "module",
+  "main": "dist/adapter.js"
+}
