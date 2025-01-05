@@ -7,8 +7,7 @@
     "npm:chai@^5.1.2": "5.1.2",
     "npm:glob@11": "11.0.0",
     "npm:mocha@^11.0.1": "11.0.1",
-    "npm:postcss@^8.4.49": "8.4.49",
-    "npm:stylis@^4.3.4": "4.3.4"
+    "npm:postcss@^8.4.49": "8.4.49"
   },
   "npm": {
     "@isaacs/cliui@8.0.2": {
@@ -494,9 +493,6 @@
     "strip-json-comments@3.1.1": {
       "integrity": "sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig=="
     },
-    "stylis@4.3.4": {
-      "integrity": "sha512-osIBl6BGUmSfDkyH2mB7EFvCJntXDrLhKjHTRj/rK6xLH0yuPrHULDRQzKokSOD4VoorhtKpfcfW1GAntu8now=="
-    },
     "supports-color@7.2.0": {
       "integrity": "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==",
       "dependencies": [
@@ -588,7 +584,7 @@
         "npm:glob@11",
         "npm:mocha@^11.0.1",
         "npm:postcss@^8.4.49",
-        "npm:stylis@^4.3.4",
+        "npm:sass@^1.83.1",
         "npm:typescript@^5.7.2"
       ]
     }

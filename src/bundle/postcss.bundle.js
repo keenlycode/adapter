@@ -1,1 +1,3 @@
-export * as _postcss from "postcss";
+import _postcss from "postcss";
+
+export default _postcss ;
