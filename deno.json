@@ -1,6 +1,6 @@
 {
   "name": "@devcapsule/adapter",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "license": "ISC",
   "tasks": {
     "test:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/test.js",
