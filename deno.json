@@ -11,7 +11,7 @@
     "docs": "deno task docs:esbuild & deno task docs:html",
     "dist:typescript": "npx tsc --project tsconfig.json",
     "dist:esbuild": "deno run --allow-env --allow-read --allow-run --allow-net --allow-write esbuild/dist.js",
-    "dist": "deno task dist:esbuild & deno task dist:typescript"
+    "dist": "deno task dist:typescript && deno task dist:esbuild"
   },
   "exports": "./src/mod.ts",
   "compilerOptions": {
