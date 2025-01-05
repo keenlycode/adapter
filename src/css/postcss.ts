@@ -1,8 +1,8 @@
 // @ts-nocheck
-import _postcss, { AcceptedPlugin, ProcessOptions, Result } from "./bundle/postcss.bundle.js";
+import _postcss from "../bundle/postcss.bundle.js";
 
-// @ts-check
-function postcss(plugins: AcceptedPlugin[] = []) {
+
+function postcss(plugins=[]) {
   return function css(strings: TemplateStringsArray, ...values: any[]): string {
     // Combine strings and values
     const css = String.raw({ raw: strings }, ...values);

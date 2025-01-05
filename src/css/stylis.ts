@@ -1,7 +1,7 @@
 // @ts-nocheck
-import {compile, serialize, stringify, middleware} from './bundle/stylis.bundle.js';
+import {compile, serialize, stringify, middleware} from '../bundle/stylis.bundle.js';
 
-// @ts-check
+
 function stylis(middlewares=[]): string {
   return function css(strings: TemplateStringsArray, ...values: any[]): string {
     middlewares = [...middlewares, stringify];

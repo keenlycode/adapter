@@ -7,8 +7,9 @@
         "noImplicitAny": true,
         "esModuleInterop": true,
         "declaration": true,
-        "emitDeclarationOnly": true,
         "declarationMap": true,
+        "allowImportingTsExtensions": true,
+        "rewriteRelativeImportExtensions": true,
         "outDir": "dist/browser/"
     },
     "include": ["src/**/*"],
