@@ -1,5 +1,5 @@
 // @ts-nocheck
-import {compile, serialize, stringify, middleware, prefixer} from '../bundle/stylis.bundle.js';
+import {compile, serialize, stringify, middleware, prefixer} from './bundle/stylis.bundle.js';
 
 
 function stylis(middlewares=[]): string {
@@ -13,4 +13,6 @@ function stylis(middlewares=[]): string {
   }
 }
 
-export { stylis, prefixer };
+const css = stylis([prefixer]);
+
+export { css };
