@@ -39,8 +39,6 @@
     "esbuild": "^0.24.2",
     "glob": "^11.0.0",
     "mocha": "^11.0.1",
-    "postcss": "^8.4.49",
-    "sass": "^1.83.1",
     "stylis": "github:keenlycode/stylis",
     "typescript": "^5.7.2"
   },
