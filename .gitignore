@@ -5,4 +5,3 @@ pnpm-lock.yaml
 .parcel-cache/
 dist
 docs
-.python-version
