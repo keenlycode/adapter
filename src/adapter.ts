@@ -1,4 +1,5 @@
-import { uuid, HTMLElementInterface } from './util.ts';
+import { uuid, HTMLElementInterface } from './util';
+import { css } from './css';
 
 /**
  * A class to encapsulate `Adapter` class properties and methods.
@@ -13,6 +14,8 @@ class AdapterClassController {
 
   /** Tag name of this component */
   tagName?: string;
+
+  cssProcessor = css;
 
   /**
    * An array to store CSS styles without query selectors.
@@ -37,7 +40,7 @@ class AdapterClassController {
   }
 
   /**
-   * Retrieve styles including styles from super class.
+   * Retrieve `styles: Array<string>` including styles from super class.
    */
   private get allStyles(): string[] {
     let superClass = Object.getPrototypeOf(this.adapterClass);
@@ -52,7 +55,7 @@ class AdapterClassController {
   }
 
   /**
-   * Retrieve CSS including all CSS super classes.
+   * Retrieve `style: string` including all CSS super classes.
    */
   private get allStyle(): string {
     return this.allStyles.join("\n");
@@ -87,9 +90,9 @@ class AdapterClassController {
    * Update the CSSStyleSheet with the current styles.
    */
   private updateStyleSheet() {
-    if (this.tagName) {
-      this.cssStyleSheet.replaceSync(`${this.tagName} { ${this.allStyle} }`);
-    }
+    if (!this.tagName) { return }
+    const css = this.cssProcessor`${this.tagName} { ${this.allStyle} }`;
+    this.cssStyleSheet.replaceSync(css);
   }
 }
 
@@ -260,7 +263,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
       /** Init cssStyleSheet if it hasn't been inited yet.
        * This will make `this.objectClassSelector` work as expected.
        */
-      const cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
+      let cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
+      cssRule = this._adapter._class.adapter.cssProcessor`${cssRule}`;
       this._adapter.cssStyleSheet.replaceSync(cssRule);
     }
 
@@ -282,8 +286,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
     addStyle(css: string): void {
       this.classList.add(this._adapter.uuid);
 
-      const cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
-
+      let cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
+      cssRule = this._adapter._class.adapter.cssProcessor`${cssRule}`;
       this._adapter.cssStyleSheet.replaceSync(`
         ${this.css}
         ${cssRule}

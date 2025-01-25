@@ -1,15 +1,15 @@
 // @ts-nocheck
 import {compile, serialize, stringify, middleware, prefixer} from './bundle/stylis.bundle.js';
 
-
-function stylis(middlewares=[]): string {
+function stylis(middlewares=[]):
+    (strings: TemplateStringsArray, ...values: any[]) => string {
   return function css(strings: TemplateStringsArray, ...values: any[]): string {
-    middlewares = [...middlewares, stringify];
+    const _middlewares = [...middlewares, stringify];
 
     // Combine strings and values
-    const css = String.raw({ raw: strings }, ...values);
-
-    return serialize(compile(css), middleware(middlewares))
+    let css = String.raw({ raw: strings }, ...values);
+    css = serialize(compile(css), middleware(_middlewares));
+    return css;
   }
 }
 

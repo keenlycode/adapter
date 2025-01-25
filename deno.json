@@ -13,11 +13,7 @@
     "dist:esbuild": "deno run --allow-env --allow-read --allow-run --allow-net --allow-write esbuild/dist.js",
     "dist": "deno task dist:typescript && deno task dist:esbuild"
   },
-  "imports": {
-    "stylis": "npm:stylis@4.3.4"
-  },
   "exports": "./src/mod.ts",
-  "nodeModulesDir": "auto",
   "compilerOptions": {
     "lib": [
       "dom",

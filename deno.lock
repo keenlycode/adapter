@@ -8,7 +8,6 @@
     "npm:esbuild@~0.24.2": "0.24.2",
     "npm:glob@11": "11.0.0",
     "npm:mocha@^11.0.1": "11.0.1",
-    "npm:stylis@4.3.4": "4.3.4",
     "npm:typescript@5.7.2": "5.7.2",
     "npm:typescript@^5.7.2": "5.7.2"
   },
@@ -584,9 +583,6 @@
     "strip-json-comments@3.1.1": {
       "integrity": "sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig=="
     },
-    "stylis@4.3.4": {
-      "integrity": "sha512-osIBl6BGUmSfDkyH2mB7EFvCJntXDrLhKjHTRj/rK6xLH0yuPrHULDRQzKokSOD4VoorhtKpfcfW1GAntu8now=="
-    },
     "supports-color@7.2.0": {
       "integrity": "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==",
       "dependencies": [
@@ -671,9 +667,6 @@
     "https://deno.land/x/esbuild@v0.24.2/mod.js": "8d1e46a6494585235b0514d37743ee48a4f6f0b8e00fca9d0a2e371914b1df0e"
   },
   "workspace": {
-    "dependencies": [
-      "npm:stylis@4.3.4"
-    ],
     "packageJson": {
       "dependencies": [
         "npm:@types/chai@^5.0.1",
