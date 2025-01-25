@@ -664,7 +664,15 @@
     "https://deno.land/x/denoflate@1.2.1/mod.ts": "f5628e44b80b3d80ed525afa2ba0f12408e3849db817d47a883b801f9ce69dd6",
     "https://deno.land/x/denoflate@1.2.1/pkg/denoflate.js": "b9f9ad9457d3f12f28b1fb35c555f57443427f74decb403113d67364e4f2caf4",
     "https://deno.land/x/denoflate@1.2.1/pkg/denoflate_bg.wasm.js": "d581956245407a2115a3d7e8d85a9641c032940a8e810acbd59ca86afd34d44d",
-    "https://deno.land/x/esbuild@v0.24.2/mod.js": "8d1e46a6494585235b0514d37743ee48a4f6f0b8e00fca9d0a2e371914b1df0e"
+    "https://deno.land/x/esbuild@v0.24.2/mod.js": "8d1e46a6494585235b0514d37743ee48a4f6f0b8e00fca9d0a2e371914b1df0e",
+    "https://raw.githubusercontent.com/keenlycode/stylis/refs/heads/master/index.js": "0208ae0a4e8a393c6c8d391075bd6b4aaa55ce53640ba16729296171d070b12a",
+    "https://raw.githubusercontent.com/keenlycode/stylis/refs/heads/master/src/Enum.js": "3ae600445e6402e3e42c8456fd6bac63ffce00f9a59f7e41d870e84e61e98488",
+    "https://raw.githubusercontent.com/keenlycode/stylis/refs/heads/master/src/Middleware.js": "82b6642c2718337b9be58a396e1b745e340a7400f208ebfb884609c49d96ab8e",
+    "https://raw.githubusercontent.com/keenlycode/stylis/refs/heads/master/src/Parser.js": "c93a042c95cd1a5f880ae749a4a7e8e4a0e272202731a1a8681e7845676ad7a4",
+    "https://raw.githubusercontent.com/keenlycode/stylis/refs/heads/master/src/Prefixer.js": "15c1a880f1129fe67c574e1ba7213ce5cc7092c63f9c161419d265f0bc111dd0",
+    "https://raw.githubusercontent.com/keenlycode/stylis/refs/heads/master/src/Serializer.js": "c367e8334cc3b433269adc138ae7c203a89ab1dd3644c08dcc9c3540263938c6",
+    "https://raw.githubusercontent.com/keenlycode/stylis/refs/heads/master/src/Tokenizer.js": "5f52e7e40f3d905d2121b50fc9d6897f6019fece001e549cdb1bd053b5ff55b0",
+    "https://raw.githubusercontent.com/keenlycode/stylis/refs/heads/master/src/Utility.js": "729ac3436b9812fcf59c0c4e1bf690aaf2fc631d5ab0b0b1c8fe8c5d066badef"
   },
   "workspace": {
     "packageJson": {

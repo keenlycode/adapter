@@ -14,6 +14,9 @@
     "dist": "deno task dist:typescript && deno task dist:esbuild"
   },
   "exports": "./src/mod.ts",
+  "imports": {
+    "stylis": "./node_modules/stylis/index.js"
+  },
   "compilerOptions": {
     "lib": [
       "dom",
