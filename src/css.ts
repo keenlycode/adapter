@@ -15,4 +15,4 @@ function stylis(middlewares=[]):
 
 const css = stylis([prefixer]);
 
-export { css };
+export { css, stylis };

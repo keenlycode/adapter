@@ -1,5 +1,5 @@
-import { uuid, HTMLElementInterface } from './util';
-import { css } from './css';
+import { uuid, HTMLElementInterface } from './util.ts';
+import { css } from './css.ts';
 
 /**
  * A class to encapsulate `Adapter` class properties and methods.
