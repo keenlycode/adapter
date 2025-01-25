@@ -1,7 +1,7 @@
 <h1 style="text-align: center">✨ Adapter 🎉</h1>
 
 > <h2 style="margin-top: 0; padding: 1rem;">
-> Empowering Next-Generation UI Style with Speed and Simplicity
+> Empowering Next-Generation UI Style with ES6 and Web Components
 > </h2>
 
 <ul style="font-size: 1.25rem;">
