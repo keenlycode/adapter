@@ -1,20 +1,20 @@
 import * as esbuild from "esbuild";
-import { fileURLToPath } from "url";
-import path from "path";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 import { glob } from "glob";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const docs_src_dir = path.join(__dirname, "../docs-src/");
-const entryFiles = await glob.sync(
+const entryFiles = glob.sync(
   path.join(docs_src_dir, "**/*.{ts,js,svg,png,jpg,ttf}"),
   {
     ignore: [
       path.join(docs_src_dir, "**/_*/**"),
-      path.join(docs_src_dir, "**/_*")
+      path.join(docs_src_dir, "**/_*"),
     ],
-  }
+  },
 );
 
 const outDir = path.join(__dirname, "../docs/");

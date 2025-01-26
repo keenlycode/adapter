@@ -1,12 +1,12 @@
 <h1 style="text-align: center">✨ Adapter 🎉</h1>
 
 > <h2 style="margin-top: 0; padding: 1rem;">
-> CSS-in-JS Toolkit for Web Components
+> Empowering Next-Generation UI Style with ES6 and Web Components
 > </h2>
 
 <ul style="font-size: 1.25rem;">
    <li>Built with ❤️</li>
-   <li>Just <strong>2 kB</strong> (minified + gzip)</li>
+   <li>Just <strong>3 kB</strong> (minified + gzip)</li>
 </ul>
 
 ## Sample Usage

@@ -3,15 +3,9 @@ import mocha from "mocha/mocha";
 import "mocha/mocha.css";
 import { assert } from "chai";
 
-/** LigntningCSS */
-import lightningcssInit, {
-  transform,
-  browserslistToTargets,
-} from "https://esm.run/lightningcss-wasm";
-import browserslist from "browserslist";
-
 /** Adapter */
-import { Adapter, AdapterMixin, stylis } from "@devcapsule/adapter/src/export";
+import { Adapter, AdapterMixin } from "../src/adapter";
+import { css } from "../src/css";
 
 const __base_url = new URL(import.meta.url);
 
@@ -20,8 +14,6 @@ if (["0.0.0.0", "127.0.0.1", "localhost"].includes(__base_url.hostname)) {
     location.reload()
   );
 }
-
-await lightningcssInit();
 
 const style = new CSSStyleSheet();
 
@@ -87,16 +79,16 @@ describe("Adapter Class: Use Case", () => {
         color: red;
       }
     `);
-    assert(Card1.adapter.allCSS.includes(`display: flex;`));
+    assert(Card1.adapter.allStyle.includes(`display: flex;`));
     Card2.addStyle(`display: block;`);
-    assert(Card2.adapter.allCSS.includes(`display: block;`));
+    assert(Card2.adapter.allStyle.includes(`display: block;`));
   });
 
   it("Should inherit style from super class", () => {
     RedCard.addStyle(`background-color: red;`);
-    assert(RedCard.adapter.allCSS.includes(`display: flex;`));
-    assert(RedCard.adapter.allCSS.includes("display: flex;"));
-    assert(RedCard.adapter.allCSS.includes("background-color: red;"));
+    assert(RedCard.adapter.allStyle.includes(`display: flex;`));
+    assert(RedCard.adapter.allStyle.includes("display: flex;"));
+    assert(RedCard.adapter.allStyle.includes("background-color: red;"));
     RedCard.define("el-red-card");
     assert(
       RedCard.adapter.cssStyleSheet.cssRules[0].cssText.includes(
@@ -107,23 +99,29 @@ describe("Adapter Class: Use Case", () => {
 
   it("Should be able to set css in class declaration", () => {
     class Card3 extends Adapter {
-      static css = `display: grid;`;
+      static {
+        this.css = `
+          display: grid;
+          &.red {
+            color: red;
+          }
+        `
+      }
       constructor() {
         super();
         this.innerHTML = "Card3";
       }
     }
     Card3.define("el-card3");
-    Card3.css = `${Card3.css} &.red {color: red}`;
     assert(Card3.css.includes("display: grid;"));
-    assert(Card3.css.includes("&.red {color: red}"));
+    assert(Card3.css.includes("&.red"));
   });
 
   it("Should be able to set css for component", () => {
     const additionStyle = `background-color: red;`;
     RedCard.css = additionStyle;
-    assert(RedCard.adapter.allCSS.includes(additionStyle));
-    assert(RedCard.adapter.allCSS.includes(Card1.css));
+    assert(RedCard.adapter.allStyle.includes(additionStyle));
+    assert(RedCard.adapter.allStyle.includes(Card1.css));
   });
 
   it("Class' CSSStyleSheet() should be adopted by document", () => {
@@ -134,14 +132,14 @@ describe("Adapter Class: Use Case", () => {
 });
 
 describe("Adapter Object: Use Case", () => {
-  class Button1 extends Adapter {
-    static css = `visibility: hidden;`;
-  }
-  class Button2 extends Adapter {
-    static css = `visibility: hidden;`;
-  }
+  class Button1 extends Adapter { }
+  Button1.css = `visibility: hidden;`;
+  class Button2 extends Adapter { }
+  Button2.css = `visibility: hidden`;
+
   Button1.define("el-button1");
   customElements.define("el-button2", Button2);
+
   const button1 = new Button1();
   const button2 = new Button2();
 
@@ -226,87 +224,42 @@ describe("Adapter Mixin: Use Case", () => {
 });
 
 describe("CSS Processor", () => {
-  it("Can use stylis processor", () => {
-    class MyAdapter extends Adapter {
-      static cssProcess(css: string): string {
-        return stylis(css);
-      }
-
-      static css = `
-        display: flex;
-        min-height: 20vh;
-        background-color: #eee;
-        &.red {
-            background-color: red;
-        }
-      `;
-    }
-    MyAdapter.define("el-adapter-stylis");
-
-    /**
-     * This will prove that stylis works as expected
-     * because it will create `<element>.red` rule from `&.red`
-     */
-    assert(
-      MyAdapter.adapter.cssStyleSheet.cssRules[1].cssText.includes(
-        "el-adapter-stylis.red"
-      )
-    );
-  });
-
-  it("Can use lightningcss-wasm processor (beta)", async () => {
-    class MyAdapter extends Adapter {
-      static cssProcess(css: string): string {
-        let { code } = transform({
-          code: new TextEncoder().encode(css),
-          sourceMap: false,
-          targets: browserslistToTargets(browserslist(">= 0.25%")),
-        });
-        code = new TextDecoder().decode(code);
-        return code;
-      }
-
-      static css = `
-        display: flex;
-        min-height: 20vh;
-        background-color: #eee;
-        &.red {
-            background-color: red;
-        }
-      `;
-    }
-
-    MyAdapter.define("el-adapter-lightningcss");
-    /** This will prove that stylis works as expected
-     * because it will create `<element>.red` rule from `&.red`
-     */
-    assert(
-      MyAdapter.adapter.cssStyleSheet.cssRules[1].cssText.includes(
-        "el-adapter-lightningcss.red"
-      )
-    );
-  });
-});
+  class Card extends Adapter { };
+  it(`Can parse css with '&' correctly`, () => {
+    let cssText = css`
+      color: blue;
+      &:hover &.bold {color: red};
+    `
+    Card.css = cssText;
+    Card.define('el-card');
+    console.log(Card.adapter.cssStyleSheet.cssRules[1].cssText);
+    assert(Card.adapter.cssStyleSheet.cssRules[0].cssText.match(
+      'el-card.*{.*color.*:.*blue.*}.*'
+    ))
+    assert(Card.adapter.cssStyleSheet.cssRules[1].cssText.match(
+      'el-card:hover.*el-card.bold.*{.*color:.*red.*}'
+    ))
+  })
+})
 
 describe("Shadow DOM Support", () => {
   class ShadowHost extends Adapter {
-    static css = `visibility: hidden;`;
     constructor() {
       super();
       this.attachShadow({ mode: "open" });
     }
   }
+  ShadowHost.css = `visibility: hidden`;
 
-  class Button extends Adapter {
-    static css = `
-      display: flex;
-      justify-content: center;
-      color: white;
-      background-color: red;
-      width: 100px;
-      height: 2rem;
-    `;
-  }
+  class Button extends Adapter { }
+  Button.css = `
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-color: red;
+    width: 100px;
+    height: 2rem;
+  `;
 
   Button.define("el-button");
   ShadowHost.define("el-shadow-host");
@@ -319,38 +272,5 @@ describe("Shadow DOM Support", () => {
     assert(getComputedStyle(button).backgroundColor === "rgb(255, 0, 0)");
   });
 });
-
-describe("Isolator", () => {
-
-  class Card extends Adapter {
-    static css = `
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100px;
-      height: 100px;
-      background-color: blue;
-    `;
-  }
-
-  Card.define("el-card");
-
-  it("Can isolate elements and move elements", () => {
-    const card = new Card();
-    render.append(card);
-    let host = card.isolate();
-    assert(host instanceof HTMLElement);
-    assert(host.shadowRoot !== null);
-    assert(host.shadowRoot!.mode === 'open');
-
-    card.remove();
-    host = card.isolate('closed');
-    render.append(card);
-    assert(host instanceof HTMLElement);
-    assert(host.shadowRoot === null);
-    assert(card._isolator.hostShadowRoot!.mode === 'closed');
-    card.remove();
-  });
-})
 
 mocha.run();

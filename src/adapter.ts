@@ -1,7 +1,5 @@
-import { uuid, HTMLElementInterface } from './util.js';
-import { stylis } from './cssProcessor/stylis.bundle.js';
-import { IsolatorMixin } from './isolator.js';
-
+import { uuid, HTMLElementInterface } from './util.ts';
+import { css } from './css.ts';
 
 /**
  * A class to encapsulate `Adapter` class properties and methods.
@@ -9,36 +7,44 @@ import { IsolatorMixin } from './isolator.js';
 class AdapterClassController {
 
   /** Reference to `class Adapter` */
-  adapterClass!: typeof Adapter | any;
+  adapterClass!: typeof Adapter;
 
+  /** CSSStyleSheet instance for managing styles */
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
   /** Tag name of this component */
   tagName?: string;
 
-  /** Styles with no query selector for this component
-   * They are kept in array based on the order of adding by `addStyle()`,
-   * ready to be defined in `cssStyleSheet` with components query selector.
-   */
-  styles: string[] = [];
+  cssProcessor = css;
 
+  /**
+   * An array to store CSS styles without query selectors.
+   * Styles are stored in the order they are added via `addStyle()`.
+   * These styles are then applied to `cssStyleSheet` with the appropriate query selector.
+   */
+  private styles: string[] = [];
+
+  /**
+   * Get the combined styles as a single string.
+   */
   get style(): string {
     return this.styles.join("\n");
   }
 
+  /**
+   * Set the style for the component.
+   */
   set style(style: string) {
     this.styles = [style];
-    if (this.tagName) {
-      this.cssStyleSheet.replaceSync(
-        this.adapterClass.cssProcess(`${this.tagName} { ${this.allStyle} }`)
-      );
-    }
+    this.updateStyleSheet();
   }
 
-  /** Retreive styles including styles from super class */
-  get allStyles(): string[] {
+  /**
+   * Retrieve `styles: Array<string>` including styles from super class.
+   */
+  private get allStyles(): string[] {
     let superClass = Object.getPrototypeOf(this.adapterClass);
-    const allStyles = [];
+    const allStyles: string[] = [];
 
     while (superClass.adapter) {
       allStyles.push(...superClass.adapter.styles);
@@ -48,15 +54,17 @@ class AdapterClassController {
     return allStyles;
   }
 
-  /** Retreive CSS including all CSS super classes. */
-  get allStyle(): string {
+  /**
+   * Retrieve `style: string` including all CSS super classes.
+   */
+  private get allStyle(): string {
     return this.allStyles.join("\n");
   }
 
   /**
    * Define component to element tag and init component style.
-   * To extends this function, sub-elements must be defined
-   * before call this function as `super.define(tagName);`
+   * To extend this function, sub-elements must be defined
+   * before calling this function as `super.define(tagName);`
    */
   define(tagName: string): void {
     this.tagName = tagName;
@@ -64,59 +72,65 @@ class AdapterClassController {
     this.initStyle();
   }
 
-  /** Init component style */
+  /** Initialize component style */
   initStyle() {
     document.adoptedStyleSheets.push(this.cssStyleSheet);
-    this.cssStyleSheet.replaceSync(
-      this.adapterClass.cssProcess(`${this.tagName} { ${this.allStyle} }`)
-    );
+    this.updateStyleSheet();
   }
 
-  /** Add style to this component */
+  /**
+   * Add style to this component.
+   */
   addStyle(style: string) {
     this.styles.push(style);
+    this.updateStyleSheet();
+  }
 
-    if (this.tagName) {
-      const rule = `${this.tagName} { ${style} }`;
-      const processedCss = this.adapterClass.cssProcess(rule);
-      this.cssStyleSheet.replaceSync(`
-        ${this.tagName} { ${this.allStyle} }
-        ${processedCss}
-      `);
-    }
+  /**
+   * Update the CSSStyleSheet with the current styles.
+   */
+  private updateStyleSheet() {
+    if (!this.tagName) { return }
+    const css = this.cssProcessor`${this.tagName} { ${this.allStyle} }`;
+    this.cssStyleSheet.replaceSync(css);
   }
 }
 
 /**
  * A class to encapsulate `Adapter` object properties and methods.
  */
-
 class AdapterObjectController {
 
   /** Reference to Adapter() object */
-  adapterObject!: Adapter | any;
+  adapterObject!: Adapter;
 
+  /** CSSStyleSheet instance for managing styles */
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
   /** Generated UUID for the element.
-   * Will be used to create css selector for the element.
+   * Used to create CSS selector for the element.
    */
-  _uuid?: string;
+  private _uuid?: string;
 
-  _cssObserver!: MutationObserver;
+  /** MutationObserver for observing CSS changes */
+  private _cssObserver!: MutationObserver;
 
   /** Stored component class for the element */
-  _class!: typeof Adapter | any;
+  _class!: typeof Adapter;
 
-  /** get uuid or generate a new one */
+  /**
+   * Get UUID or generate a new one.
+   */
   get uuid(): string {
     if (this._uuid) { return this._uuid };
     this._uuid = `${this.adapterObject.tagName}-${uuid()}`;
     return this._uuid;
   }
 
-  /** get cssObserver or generate a new one */
-  get cssObserver() {
+  /**
+   * Get cssObserver or generate a new one.
+   */
+  get cssObserver(): MutationObserver {
     if (this._cssObserver) { return this._cssObserver };
 
     this._cssObserver = new MutationObserver((mutations) => {
@@ -129,18 +143,20 @@ class AdapterObjectController {
     return this._cssObserver;
   }
 
-  /** Return a selector for the this element as a class chain. */
+  /**
+   * Return a selector for this element as a class chain.
+   */
   get objectClassSelector(): string {
     return this.adapterObject.classList.value.replace(/ /g, ".");
   }
-  
-  /** Init class and styles for this element */
+
+  /** Initialize class and styles for this element */
   initClass() {
     this._class = this.adapterObject.constructor as unknown as typeof Adapter;
 
     /**
-     * If class tagName has been defined from somewhere else.
-     * Then it shouldn't be initialized again.
+     * If class tagName has been defined from somewhere else,
+     * then it shouldn't be initialized again.
      */
     if (this._class.adapter.tagName) {
       return;
@@ -149,7 +165,9 @@ class AdapterObjectController {
     this._class.adapter.initStyle();
   }
 
-  /** Enable or disable CSS Observation */
+  /**
+   * Enable or disable CSS Observation.
+   */
   cssObserve(enable: boolean) {
     if (enable) {
       this.cssObserver.observe(this.adapterObject, { attributes: true });
@@ -161,13 +179,21 @@ class AdapterObjectController {
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
-export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
+/**
+ * A mixin function to add Adapter functionality to a base class.
+ * @template TBase - The base class type.
+ */
+function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   Base: TBase
 ) {
   return class _Adapter extends Base {
-    
+
+    /** Static instance of AdapterClassController */
     static _adapter: AdapterClassController;
 
+    /**
+     * Get the AdapterClassController instance.
+     */
     static get adapter(): AdapterClassController {
       if (this._adapter === Object.getPrototypeOf(this)._adapter) {
         this._adapter = new AdapterClassController();
@@ -176,44 +202,48 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
       return this._adapter;
     }
 
-    /** CSS Process middleware, This function will be called
-     * before applying CSS to CSSStyleSheet.
+    /**
+     * Set the CSS for the component.
      */
-    static cssProcess(css: string): string {
-      return css;
-    }
-
     static set css(css: string) {
       this.adapter.style = css;
     }
 
+    /**
+     * Get the CSS for the component.
+     */
     static get css(): string {
       return this.adapter.style;
     }
 
+    /**
+     * Get the tag name of the component.
+     */
     static get tagName(): string | undefined {
       return this.adapter.tagName;
     }
 
-    /** Add style to this component */
+    /**
+     * Add style to this component.
+     */
     static addStyle(css: string) {
       this.adapter.addStyle(css);
     }
 
     /**
      * Define component to element tag and init component style.
-     * To extends this function, sub-elements must be defined
-     * before call this function as `super.define(tagName);`
+     * To extend this function, sub-elements must be defined
+     * before calling this function as `super.define(tagName);`
      */
     static define(tagName: string) {
       this.adapter.define(tagName);
     }
 
+    /** Instance of AdapterObjectController */
     _adapter: AdapterObjectController = new AdapterObjectController();
 
     /**
-     * In constructor, there any some if condition to check
-     * if it has been inited or not to prevent recursive call in Mixin
+     * Constructor to initialize the AdapterObjectController.
      */
     constructor(...args: any[]) {
       super(...args);
@@ -223,23 +253,24 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
     }
 
     /**
-     * Set CSS for this element.
-     * It works like `<el style="">` but with CSS processor.
+     * Set CSS for this element with tag name.
      */
     set css(css: string) {
+
+      // Make sure classList contains object uuid
       this.classList.add(this._adapter.uuid);
 
       /** Init cssStyleSheet if it hasn't been inited yet.
-       * This will make `this.objectClassSelector` works as expeced.
+       * This will make `this.objectClassSelector` work as expected.
        */
-      const processedCss = this._adapter._class.cssProcess(
-        `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`
-      );
-
-      this._adapter.cssStyleSheet.replaceSync(processedCss);
+      let cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
+      cssRule = this._adapter._class.adapter.cssProcessor`${cssRule}`;
+      this._adapter.cssStyleSheet.replaceSync(cssRule);
     }
 
-    /** Get CSS for this element */
+    /**
+     * Get CSS for this element.
+     */
     get css(): string {
       let css = this.getAttribute("css") || "";
       if (css) { return css };
@@ -249,22 +280,26 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
       return css;
     }
 
-    /** Add style for this element */
+    /**
+     * Add style for this element.
+     */
     addStyle(css: string): void {
       this.classList.add(this._adapter.uuid);
 
-      const processedCss = this._adapter._class.cssProcess(
-        `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`
-      );
-
+      let cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
+      cssRule = this._adapter._class.adapter.cssProcessor`${cssRule}`;
       this._adapter.cssStyleSheet.replaceSync(`
         ${this.css}
-        ${processedCss}
+        ${cssRule}
       `);
     }
 
-    connectedCallback() {
-      super.connectedCallback ? super.connectedCallback() : null;
+    /**
+     * Register CSSStyleSheet() object to `rootNode.adoptedStyleSheets`.
+     * This function will check the existing CSSStyleSheet() before applying
+     * to make sure that it won't create duplicates.
+     */
+    _registCSSStyleSheet() {
 
       /** Apply css if it's set in attributes */
       const css = this.getAttribute('css');
@@ -272,21 +307,25 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
 
       const rootNode = this.getRootNode() as Document | ShadowRoot;
       if (rootNode.adoptedStyleSheets.indexOf(
-        this._adapter._class.adapter.cssStyleSheet) === -1) 
-      {
+        this._adapter._class.adapter.cssStyleSheet) === -1) {
         rootNode.adoptedStyleSheets.push(
           this._adapter._class.adapter.cssStyleSheet);
       }
       if (rootNode.adoptedStyleSheets.indexOf(
-        this._adapter.cssStyleSheet) === -1)
-      {
+        this._adapter.cssStyleSheet) === -1) {
         rootNode.adoptedStyleSheets.push(
           this._adapter.cssStyleSheet);
       }
     }
 
+    /** Callback when the element is connected to the DOM */
+    override connectedCallback() {
+      super.connectedCallback ? super.connectedCallback() : null;
+      this._registCSSStyleSheet();
+    }
+
     /** Remove the element from DOM and remove adoptedStyleSheet */
-    remove() {
+    override remove() {
       const rootNode = this.getRootNode() as Document | ShadowRoot;
       const i = rootNode.adoptedStyleSheets.indexOf(this._adapter.cssStyleSheet);
       rootNode.adoptedStyleSheets.splice(i, 1);
@@ -295,8 +334,6 @@ export function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   };
 }
 
-export class Adapter extends IsolatorMixin(AdapterMixin(HTMLElement)) {
-  static cssProcess(css: string): string {
-    return stylis(css);
-  }
-}
+class Adapter extends AdapterMixin(HTMLElement) { };
+
+export { Adapter, AdapterMixin };

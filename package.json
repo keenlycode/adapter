@@ -1,7 +1,7 @@
 {
   "name": "@devcapsule/adapter",
   "description": "CSS-in-JS Toolkit for Web Components",
-  "version": "2.5.3",
+  "version": "3.0.3",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/keenly-coding/adapter.git"
@@ -24,7 +24,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "dist": "tsc --build --verbose tsconfig.json && node esbuild/dist.mjs",
+    "dist": "node esbuild/dist.mjs",
     "docs-js": "node esbuild/docs.mjs",
     "docs-html": "source venv/bin/activate && engrave dev docs-src docs",
     "docs": "concurrently -kr 'npm run docs-js' 'npm run docs-html'",
@@ -32,23 +32,16 @@
   },
   "devDependencies": {
     "@devcapsule/adapter": "file:./",
-    "@devcapsule/deficon": "^2.0.2",
-    "@types/mocha": "^10.0.6",
-    "@types/stylis": "^4.2.5",
-    "browserslist": "^4.22.2",
-    "chai": "^4.3.10",
-    "color": "^4.2.3",
-    "concurrently": "^8.2.2",
-    "esbuild": "^0.19.5",
-    "gadjet": "^1.0.4",
-    "glob": "^10.3.10",
-    "highlight.js": "^11.9.0",
-    "lightningcss": "^1.22.1",
-    "mocha": "^10.2.0",
-    "normalize.css": "^8.0.1",
-    "stylis": "^4.3.0",
-    "typescript": "^5.2.2"
+    "@devcapsule/stylis": "npm:@jsr/devcapsule__stylis@^0.1.0",
+    "@types/chai": "^5.0.1",
+    "@types/mocha": "^10.0.10",
+    "@types/stylis": "^4.2.7",
+    "chai": "^5.1.2",
+    "esbuild": "^0.24.2",
+    "glob": "^11.0.0",
+    "mocha": "^11.0.1",
+    "typescript": "^5.7.2"
   },
   "type": "module",
-  "main": "dist/export.js"
+  "main": "dist/adapter.js"
 }

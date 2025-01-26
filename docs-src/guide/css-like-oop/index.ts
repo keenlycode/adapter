@@ -1,4 +1,4 @@
-import { Adapter, stylis } from '../../adapter';
+import { Adapter } from '../../adapter';
 
 class Card extends Adapter {};
 Card.css = `
@@ -39,3 +39,4 @@ class ShadowHost extends Adapter {
 }
 
 customElements.define('el-shadow-host', ShadowHost);
+document.body.append(new BlueCard())

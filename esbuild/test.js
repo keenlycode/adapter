@@ -1,6 +1,6 @@
 import * as esbuild from "esbuild";
-import { fileURLToPath } from "url";
-import path from "path";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 import { glob } from "glob";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -8,12 +8,9 @@ const __dirname = path.dirname(__filename);
 const test_src_dir = path.join(__dirname, "../test-src");
 
 async function test() {
-  const entryFiles = await glob(
-    path.join(test_src_dir, "**/*.{ts,html}"),
-    {
-      ignore: path.join(test_src_dir, "**/_*"),
-    }
-  );
+  const entryFiles = await glob(path.join(test_src_dir, "**/*.ts"), {
+    ignore: path.join(test_src_dir, "**/_*"),
+  });
 
   const outDir = path.join(__dirname, "../docs/test");
   console.log(`Create test at: ${outDir}`);
@@ -28,10 +25,7 @@ async function test() {
     format: "esm",
     sourcemap: true,
     keepNames: true,
-    color: true,
-    loader: {
-      ".html": "copy",
-    }
+    color: true
   });
   await result.watch();
   const { host, port } = await result.serve({

@@ -1,9 +1,9 @@
-export interface HTMLElementInterface extends HTMLElement {
+interface HTMLElementInterface extends HTMLElement {
   connectedCallback?(): void;
   disconnectedCallback?(): void;
 }
 
-export function sleepSync(ms: number) {
+function sleepSync(ms: number) {
   const end = new Date().getTime() + ms;
   let time = new Date().getTime();
   while (time < end) {
@@ -12,6 +12,13 @@ export function sleepSync(ms: number) {
   return time;
 }
 
-export function uuid() {
+function uuid() {
   return sleepSync(1).toString(36);
+}
+
+
+export {
+  type HTMLElementInterface,
+  sleepSync,
+  uuid
 }

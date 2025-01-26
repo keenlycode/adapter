@@ -1,15 +1,17 @@
 {
     "compilerOptions": {
-        "target": "ES6", // Set the target ECMAScript version to ES6 (ES2015)
-        "module": "ES6", // Set the module format to ES2015 modules
-        "moduleResolution": "node", // Set the module resolution strategy to Node.js-style
-        "strict": true, // Enable strict mode for type checking
-        "noImplicitAny": true, // Enable strict type checking for any types
-        "esModuleInterop": true, // Enable compatibility with CommonJS modules
+        "target": "ES6",
+        "module": "ES6",
+        "moduleResolution": "node",
+        "strict": true,
+        "noImplicitAny": true,
+        "esModuleInterop": true,
         "declaration": true,
-        "emitDeclarationOnly": true,
         "declarationMap": true,
-        "outDir": "dist/",
+        "allowImportingTsExtensions": true,
+        "rewriteRelativeImportExtensions": true,
+        "outDir": "dist/browser/"
     },
-    "include": ["src/**/*.ts"]
+    "include": ["src/**/*"],
+    "exclude": ["src/**/*.bundle.ts"]
 }

@@ -1,6 +1,6 @@
 ISC License
 
-Copyright 2022 Nitipit Nontasuwan
+Copyright 2025 Nitipit Nontasuwan
 
 Permission to use, copy, modify, and/or distribute this software
 for any purpose with or without fee is hereby granted, provided that 

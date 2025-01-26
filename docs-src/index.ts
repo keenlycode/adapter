@@ -6,7 +6,9 @@ import { bgColor } from './_ux/style';
 
 class Heading extends Adapter {};
 
-Heading.css = `
+const css = String.raw;
+
+Heading.css = css`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -25,7 +27,7 @@ Heading.css = `
         mask-position: center;
         mask-size: contain;
         span {
-        opacity: 0;
+            opacity: 0;
         }
     }
     & h2, h3 {
