@@ -2,6 +2,7 @@
   "name": "@devcapsule/adapter",
   "version": "3.0.3",
   "license": "ISC",
+  "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
   "tasks": {
     "test:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/test.js",
     "test:html": "engrave dev test-src/ docs/test/",
