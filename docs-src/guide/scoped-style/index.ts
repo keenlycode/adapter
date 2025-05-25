@@ -1,4 +1,4 @@
-import { Adapter, IsolatorMixin } from "../../adapter";
+import { Adapter } from '../../lib/adapter.bundle.js';
 
-class Style extends IsolatorMixin(Adapter) {};
-Style.define('el-div');
+class Div extends Adapter {};
+Div.define('el-div');

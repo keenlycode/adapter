@@ -1,12 +1,12 @@
-import './_base.lib';
+import './_base.lib.js';
 
-import'./_base.style';
+import'./_base.style.js';
 
-import './_base.comp';
+import './_base.comp.js';
 
-import './_base.styleClass';
+import './_base.styleClass.js';
 
-import { pageReload } from './_base.esbuild';
+import { pageReload } from './_base.esbuild.js';
 
 pageReload('./');
 

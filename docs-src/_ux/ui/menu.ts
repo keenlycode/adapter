@@ -1,4 +1,4 @@
-import { Adapter } from "../../adapter.js";
+import { Adapter } from "../../lib/adapter.bundle.js";
 import { bgColor, pxToRem } from '../style';
 import { color } from '../designToken';
 
@@ -101,7 +101,7 @@ class Menu extends Adapter {
                 e.preventDefault();
                 return
             };
-            if (!target.classList.contains('toggle')) { 
+            if (!target.classList.contains('toggle')) {
                 return;
             };
             e.preventDefault();

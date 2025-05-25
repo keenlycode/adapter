@@ -1,10 +1,9 @@
-import { AdapterMixin, stylis } from '../../adapter';
+import { AdapterMixin, css } from '../../lib/adapter.bundle.js';
 
 import { color } from '../../_ux/designToken';
 
 class API extends AdapterMixin(HTMLElement) {
-  static cssProcess(css) { return stylis(css) }
-  static { this.css = `
+  static { this.css = css`
     display: block;
     border-left: 5px solid ${color.green};
     border-bottom-left-radius: 0.4em;

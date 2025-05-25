@@ -1,4 +1,4 @@
-import { Adapter } from "../../adapter.js";
+import { Adapter } from "../../lib/adapter.bundle.js";
 import { color } from "../designToken.js";
 import Color from "color";
 

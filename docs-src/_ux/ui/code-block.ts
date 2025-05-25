@@ -1,6 +1,6 @@
-import { Adapter } from "../../adapter.js";
+import { Adapter } from "../../lib/adapter.bundle.js";
 import { bgColor } from '../style.js';
-import { color } from '../designToken'; 
+import { color } from '../designToken';
 
 class CodeBlock extends Adapter {
     static css = /*css*/`

@@ -1,4 +1,4 @@
-import { Adapter } from "../../adapter";
+import { Adapter } from "../../lib/adapter.bundle.js";
 import Color from 'color';
 
 import { bgColor, lift } from '../style';

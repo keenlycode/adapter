@@ -1,4 +1,4 @@
-import { Adapter } from './adapter';
+import { Adapter } from './lib/adapter.bundle.js';
 import { buttonStyle } from './_ux/ui/button';
 import { color } from './_ux/designToken';
 import { bgColor } from './_ux/style';
