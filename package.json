@@ -35,5 +35,6 @@
     "typescript": "^5.7.2"
   },
   "type": "module",
-  "main": "dist/browser/adapter.js"
+  "main": "dist/browser/mod.js",
+  "module": "dist/browser/mod.js"
 }

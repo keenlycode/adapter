@@ -13,7 +13,6 @@
     "dist:esbuild": "deno run --allow-env --allow-read --allow-run --allow-net --allow-write esbuild/dist.js",
     "dist": "deno task dist:typescript && deno task dist:esbuild"
   },
-  "exports": "./src/mod.ts",
   "compilerOptions": {
     "lib": [
       "dom",
@@ -32,6 +31,7 @@
       "LICENSE.md"
     ]
   },
+  "exports": "./src/mod.ts",
   "imports": {
     "@devcapsule/stylis": "jsr:@devcapsule/stylis@^0.1.0"
   }
