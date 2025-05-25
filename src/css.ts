@@ -1,5 +1,5 @@
 // @ts-nocheck
-import {compile, serialize, stringify, middleware, prefixer} from './bundle/stylis.bundle.js';
+import {compile, serialize, stringify, middleware, prefixer} from "./bundle/stylis.bundle.js";
 
 function stylis(middlewares=[]):
     (strings: TemplateStringsArray, ...values: any[]) => string {

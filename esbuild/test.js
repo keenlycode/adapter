@@ -15,7 +15,7 @@ async function test() {
   const outDir = path.join(__dirname, "../docs/test");
   console.log(`Create test at: ${outDir}`);
 
-  const result = await esbuild.context({
+  const ctx = await esbuild.context({
     entryPoints: entryFiles,
     entryNames: "[dir]/[name]",
     assetNames: "[dir]/[name]",
@@ -27,11 +27,7 @@ async function test() {
     keepNames: true,
     color: true
   });
-  await result.watch();
-  const { host, port } = await result.serve({
-    servedir: "docs/test",
-  });
-  console.log(`\n> Test server => http://${host}:${port}/\n`);
+  await ctx.watch();
 }
 
 await test();

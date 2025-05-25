@@ -37,8 +37,8 @@ console.log(
   })
 );
 
-files = await glob("dist/browser/**/*.js", {
-  ignore: "dist/**/*.bundle.js"
+files = await glob("src/**/*.{ts,js}", {
+  ignore: "src/**/*.bundle.{ts,js}"
 });
 
 console.log(
@@ -49,13 +49,12 @@ result = await esbuild.build({
   entryPoints: files,
   bundle: false,
   outdir: "dist/browser/",
-  outbase: "dist/browser/",
+  outbase: "src/",
   format: "esm",
   platform: "browser",
   lineLimit: 80,
   keepNames: false,
   minify: true,
-  allowOverwrite: true,
   sourcemap: true,
   metafile: true,
   logLevel: "info",

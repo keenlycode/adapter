@@ -23,15 +23,7 @@
     "src/**/*",
     "dist/**/*"
   ],
-  "scripts": {
-    "dist": "node esbuild/dist.mjs",
-    "docs-js": "node esbuild/docs.mjs",
-    "docs-html": "source venv/bin/activate && engrave dev docs-src docs",
-    "docs": "concurrently -kr 'npm run docs-js' 'npm run docs-html'",
-    "test": "node esbuild/test.mjs"
-  },
   "devDependencies": {
-    "@devcapsule/adapter": "file:./",
     "@devcapsule/stylis": "npm:@jsr/devcapsule__stylis@^0.1.0",
     "@types/chai": "^5.0.1",
     "@types/mocha": "^10.0.10",
@@ -43,5 +35,6 @@
     "typescript": "^5.7.2"
   },
   "type": "module",
-  "main": "dist/browser/adapter.js"
+  "main": "dist/browser/mod.js",
+  "module": "dist/browser/mod.js"
 }
