@@ -1,28 +1,4 @@
 {
-  "name": "@devcapsule/adapter",
-  "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
-  "version": "3.0.3",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/keenly-coding/adapter.git"
-  },
-  "bugs": {
-    "url": "https://github.com/keenly-coding/adapter/issues"
-  },
-  "keywords": [
-    "javascript",
-    "web-component",
-    "html",
-    "ui",
-    "css"
-  ],
-  "author": "Nitipit Nontasuwan",
-  "homepage": "https://keenlycode.github.io/adapter/",
-  "license": "MIT",
-  "files": [
-    "src/**/*",
-    "dist/**/*"
-  ],
   "devDependencies": {
     "@devcapsule/stylis": "npm:@jsr/devcapsule__stylis@^0.1.0",
     "@types/chai": "^5.0.1",
