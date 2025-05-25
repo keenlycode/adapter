@@ -10,7 +10,7 @@ import { css } from "../src/css";
 const __base_url = new URL(import.meta.url);
 
 if (["0.0.0.0", "127.0.0.1", "localhost"].includes(__base_url.hostname)) {
-  new EventSource("/esbuild").addEventListener("change", () =>
+  new EventSource("/__event/watch").addEventListener("change", () =>
     location.reload()
   );
 }

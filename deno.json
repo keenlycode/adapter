@@ -4,10 +4,10 @@
   "license": "ISC",
   "tasks": {
     "test:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/test.js",
-    "test:html": "engrave dev test-src/ docs/test/",
+    "test:html": "engrave server test-src/ docs/test/",
     "test": "deno task test:esbuild & deno task test:html",
     "docs:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/docs.js",
-    "docs:html": "engrave dev docs-src/ docs/",
+    "docs:html": "engrave server docs-src/ docs/",
     "docs": "deno task docs:esbuild & deno task docs:html",
     "dist:typescript": "npx tsc --project tsconfig.json",
     "dist:esbuild": "deno run --allow-env --allow-read --allow-run --allow-net --allow-write esbuild/dist.js",
@@ -31,5 +31,8 @@
       "CHANGELOG.md",
       "LICENSE.md"
     ]
+  },
+  "imports": {
+    "@devcapsule/stylis": "jsr:@devcapsule/stylis@^0.1.0"
   }
 }
