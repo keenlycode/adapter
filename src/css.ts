@@ -7,7 +7,7 @@ function stylis(middlewares=[]):
     const _middlewares = [...middlewares, stringify];
 
     // Combine strings and values
-    let css = String.raw({ raw: strings }, ...values);
+    let css: string = String.raw({ raw: strings }, ...values).trim();
     css = serialize(compile(css), middleware(_middlewares));
     return css;
   }

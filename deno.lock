@@ -2,13 +2,16 @@
   "version": "5",
   "specifiers": {
     "jsr:@devcapsule/stylis@0.1": "0.1.0",
+    "npm:@devcapsule/deficon@^2.0.2": "2.0.2",
     "npm:@jsr/devcapsule__stylis@0.1": "0.1.0",
     "npm:@types/chai@^5.0.1": "5.2.2",
     "npm:@types/mocha@^10.0.10": "10.0.10",
     "npm:@types/stylis@^4.2.7": "4.2.7",
     "npm:chai@^5.1.2": "5.2.0",
+    "npm:color@5": "5.0.0",
     "npm:esbuild@~0.24.2": "0.24.2",
     "npm:glob@11": "11.0.2",
+    "npm:highlight.js@^11.11.1": "11.11.1",
     "npm:mocha@^11.0.1": "11.5.0",
     "npm:typescript@^5.7.2": "5.8.3"
   },
@@ -18,6 +21,9 @@
     }
   },
   "npm": {
+    "@devcapsule/deficon@2.0.2": {
+      "integrity": "sha512-lNsqPzS8oxh143qMzubZ3i/53g9txvzOp0x2c/YZcHJzYCygik/4HtvGmf3axN9WuKLIKNCpEETeATXr7JoMYg=="
+    },
     "@esbuild/aix-ppc64@0.24.2": {
       "integrity": "sha512-thpVCb/rhxE/BnMLQ7GReQLLN8q9qbHmI55F4489/ByVg2aQaQ6kbcLb6FHkocZzQhxc4gx0sCk0tJkKBFzDhA==",
       "os": ["aix"],
@@ -185,7 +191,7 @@
     "ansi-styles@4.3.0": {
       "integrity": "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==",
       "dependencies": [
-        "color-convert"
+        "color-convert@2.0.1"
       ]
     },
     "ansi-styles@6.2.1": {
@@ -249,11 +255,33 @@
     "color-convert@2.0.1": {
       "integrity": "sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==",
       "dependencies": [
-        "color-name"
+        "color-name@1.1.4"
+      ]
+    },
+    "color-convert@3.1.0": {
+      "integrity": "sha512-TVoqAq8ZDIpK5lsQY874DDnu65CSsc9vzq0wLpNQ6UMBq81GSZocVazPiBbYGzngzBOIRahpkTzCLVe2at4MfA==",
+      "dependencies": [
+        "color-name@2.0.0"
       ]
     },
     "color-name@1.1.4": {
       "integrity": "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA=="
+    },
+    "color-name@2.0.0": {
+      "integrity": "sha512-SbtvAMWvASO5TE2QP07jHBMXKafgdZz8Vrsrn96fiL+O92/FN/PLARzUW5sKt013fjAprK2d2iCn2hk2Xb5oow=="
+    },
+    "color-string@2.0.1": {
+      "integrity": "sha512-5z9FbYTZPAo8iKsNEqRNv+OlpBbDcoE+SY9GjLfDUHEfcNNV7tS9eSAlFHEaub/r5tBL9LtskAeq1l9SaoZ5tQ==",
+      "dependencies": [
+        "color-name@2.0.0"
+      ]
+    },
+    "color@5.0.0": {
+      "integrity": "sha512-16BlyiuyLq3MLxpRWyOTiWsO3ii/eLQLJUQXBSNcxMBBSnyt1ee9YUdaozQp03ifwm5woztEZGDbk9RGVuCsdw==",
+      "dependencies": [
+        "color-convert@3.1.0",
+        "color-string"
+      ]
     },
     "cross-spawn@7.0.6": {
       "integrity": "sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==",
@@ -376,6 +404,9 @@
     "he@1.2.0": {
       "integrity": "sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==",
       "bin": true
+    },
+    "highlight.js@11.11.1": {
+      "integrity": "sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w=="
     },
     "is-fullwidth-code-point@3.0.0": {
       "integrity": "sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg=="
@@ -661,13 +692,16 @@
     ],
     "packageJson": {
       "dependencies": [
+        "npm:@devcapsule/deficon@^2.0.2",
         "npm:@jsr/devcapsule__stylis@0.1",
         "npm:@types/chai@^5.0.1",
         "npm:@types/mocha@^10.0.10",
         "npm:@types/stylis@^4.2.7",
         "npm:chai@^5.1.2",
+        "npm:color@5",
         "npm:esbuild@~0.24.2",
         "npm:glob@11",
+        "npm:highlight.js@^11.11.1",
         "npm:mocha@^11.0.1",
         "npm:typescript@^5.7.2"
       ]

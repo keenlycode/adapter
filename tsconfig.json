@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "target": "ES6",
-        "module": "ES6",
+        "target": "esnext",
+        "module": "esnext",
         "moduleResolution": "node",
         "strict": true,
         "noImplicitAny": true,
@@ -12,6 +12,6 @@
         "rewriteRelativeImportExtensions": true,
         "outDir": "dist/browser/"
     },
-    "include": ["src/**/*"],
+    "include": ["src"],
     "exclude": ["src/**/*.bundle.ts"]
 }
