@@ -2,7 +2,6 @@
   "version": "5",
   "specifiers": {
     "jsr:@devcapsule/stylis@0.1": "0.1.0",
-    "npm:@devcapsule/deficon@^2.0.2": "2.0.2",
     "npm:@jsr/devcapsule__stylis@0.1": "0.1.0",
     "npm:@types/chai@^5.0.1": "5.2.2",
     "npm:@types/mocha@^10.0.10": "10.0.10",
@@ -11,7 +10,6 @@
     "npm:color@5": "5.0.0",
     "npm:esbuild@~0.24.2": "0.24.2",
     "npm:glob@11": "11.0.2",
-    "npm:highlight.js@^11.11.1": "11.11.1",
     "npm:mocha@^11.0.1": "11.5.0",
     "npm:typescript@^5.7.2": "5.8.3"
   },
@@ -21,9 +19,6 @@
     }
   },
   "npm": {
-    "@devcapsule/deficon@2.0.2": {
-      "integrity": "sha512-lNsqPzS8oxh143qMzubZ3i/53g9txvzOp0x2c/YZcHJzYCygik/4HtvGmf3axN9WuKLIKNCpEETeATXr7JoMYg=="
-    },
     "@esbuild/aix-ppc64@0.24.2": {
       "integrity": "sha512-thpVCb/rhxE/BnMLQ7GReQLLN8q9qbHmI55F4489/ByVg2aQaQ6kbcLb6FHkocZzQhxc4gx0sCk0tJkKBFzDhA==",
       "os": ["aix"],
@@ -405,9 +400,6 @@
       "integrity": "sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==",
       "bin": true
     },
-    "highlight.js@11.11.1": {
-      "integrity": "sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w=="
-    },
     "is-fullwidth-code-point@3.0.0": {
       "integrity": "sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg=="
     },
@@ -692,7 +684,6 @@
     ],
     "packageJson": {
       "dependencies": [
-        "npm:@devcapsule/deficon@^2.0.2",
         "npm:@jsr/devcapsule__stylis@0.1",
         "npm:@types/chai@^5.0.1",
         "npm:@types/mocha@^10.0.10",
@@ -701,7 +692,6 @@
         "npm:color@5",
         "npm:esbuild@~0.24.2",
         "npm:glob@11",
-        "npm:highlight.js@^11.11.1",
         "npm:mocha@^11.0.1",
         "npm:typescript@^5.7.2"
       ]
