@@ -52,6 +52,5 @@ function uuid(): string {
 
 export {
   type HTMLElementInterface,
-  // sleepSync,
   uuid
 }
