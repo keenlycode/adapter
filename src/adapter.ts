@@ -2,37 +2,82 @@ import { uuid, HTMLElementInterface } from './util.ts';
 import { css } from './css.ts';
 
 /**
- * A class to encapsulate `Adapter` class properties and methods.
+ * Controller for Adapter class-level behavior (registration and shared CSS).
+ *
+ * Notes
+ * -----
+ * One controller instance is associated with each Adapter subclass and is
+ * responsible for:
+ *
+ * - Defining the custom element tag.
+ * - Managing a constructable CSSStyleSheet shared by all instances.
+ * - Aggregating CSS from the class and its superclasses.
  */
 class AdapterClassController {
 
-  /** Reference to `class Adapter` */
+  /**
+   * Reference to the Adapter constructor that owns this controller.
+   *
+   * Notes
+   * -----
+   * Set internally by AdapterMixin when the subclass is first accessed.
+   */
   adapterClass!: typeof Adapter;
 
-  /** CSSStyleSheet instance for managing styles */
+  /**
+   * Constructable stylesheet that holds class-level CSS rules.
+   *
+   * Notes
+   * -----
+   * Added to `document.adoptedStyleSheets` in `initStyle()`.
+   */
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
-  /** Tag name of this component */
+  /**
+   * Custom element tag name for this component (once defined).
+   */
   tagName?: string;
 
+  /**
+   * Tagged template processor applied to generated CSS rules.
+   *
+   * Notes
+   * -----
+   * Defaults to the project's `css` function and can handle tasks like
+   * minification or scoping if configured to do so.
+   */
   cssProcessor = css;
 
   /**
-   * An array to store CSS styles without query selectors.
-   * Styles are stored in the order they are added via `addStyle()`.
-   * These styles are then applied to `cssStyleSheet` with the appropriate query selector.
+   * Accumulated CSS blocks without selectors.
+   *
+   * Notes
+   * -----
+   * - Preserves insertion order (via `addStyle()`).
+   * - These snippets are wrapped with the component selector before being
+   *   committed to `cssStyleSheet`.
    */
   private styles: string[] = [];
 
   /**
-   * Get the combined styles as a single string.
+   * Concatenated class-level CSS.
+   *
+   * Returns
+   * -------
+   * string
+   *     The joined stylesheet text for this class only (no superclasses).
    */
   get style(): string {
     return this.styles.join("\n");
   }
 
   /**
-   * Set the style for the component.
+   * Replace existing class-level CSS and update the stylesheet.
+   *
+   * Parameters
+   * ----------
+   * style : string
+   *     Entire CSS text to set for this class.
    */
   set style(style: string) {
     this.styles = [style];
@@ -40,7 +85,16 @@ class AdapterClassController {
   }
 
   /**
-   * Retrieve `styles: Array<string>` including styles from super class.
+   * Collect CSS from the inheritance chain.
+   *
+   * Returns
+   * -------
+   * string[]
+   *     Array of CSS blocks from superclasses followed by this class.
+   *
+   * Notes
+   * -----
+   * Superclass styles are added first to preserve expected cascade order.
    */
   private get allStyles(): string[] {
     let superClass = Object.getPrototypeOf(this.adapterClass);
@@ -55,16 +109,40 @@ class AdapterClassController {
   }
 
   /**
-   * Retrieve `style: string` including all CSS super classes.
+   * Joined CSS string across the entire inheritance chain.
+   *
+   * Returns
+   * -------
+   * string
+   *     Combined stylesheet text including superclasses and this class.
    */
   private get allStyle(): string {
     return this.allStyles.join("\n");
   }
 
   /**
-   * Define component to element tag and init component style.
-   * To extend this function, sub-elements must be defined
-   * before calling this function as `super.define(tagName);`
+   * Define the custom element and initialize its shared stylesheet.
+   *
+   * Parameters
+   * ----------
+   * tagName : string
+   *     The custom element tag to register.
+   *
+   * Raises
+   * ------
+   * DOMException
+   *     If the tag name is invalid or already defined.
+   *
+   * Examples
+   * --------
+   * ```ts
+   * class Card extends Adapter {}
+   * Card.define("el-card");
+   * ```
+   *
+   * Notes
+   * -----
+   * When extending, call `super.define(tagName)` before subclass-specific work.
    */
   define(tagName: string): void {
     this.tagName = tagName;
@@ -72,14 +150,26 @@ class AdapterClassController {
     this.initStyle();
   }
 
-  /** Initialize component style */
+  /**
+   * Attach the shared stylesheet and synchronize its rules.
+   *
+   * Notes
+   * -----
+   * Pushes `cssStyleSheet` to `document.adoptedStyleSheets` and compiles the
+   * current CSS into it.
+   */
   initStyle() {
     document.adoptedStyleSheets.push(this.cssStyleSheet);
     this.updateStyleSheet();
   }
 
   /**
-   * Add style to this component.
+   * Append a CSS block to this class and update the stylesheet.
+   *
+   * Parameters
+   * ----------
+   * style : string
+   *     CSS text without a selector (it will be wrapped automatically).
    */
   addStyle(style: string) {
     this.styles.push(style);
@@ -87,7 +177,11 @@ class AdapterClassController {
   }
 
   /**
-   * Update the CSSStyleSheet with the current styles.
+   * Compile and replace the constructable stylesheet with current rules.
+   *
+   * Notes
+   * -----
+   * No-op until `tagName` is set (i.e., after `define()`).
    */
   private updateStyleSheet() {
     if (!this.tagName) { return }
