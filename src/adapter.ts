@@ -191,29 +191,78 @@ class AdapterClassController {
 }
 
 /**
- * A class to encapsulate `Adapter` object properties and methods.
+ * Per-instance controller for Adapter elements (instance CSS and observation).
+ *
+ * Notes
+ * -----
+ * One controller instance is created for each Adapter element and is responsible for:
+ *
+ * - Managing an instance-scoped CSSStyleSheet for inline/attribute-driven styles.
+ * - Generating and tracking a stable UUID used as a class-based selector hook.
+ * - Observing the element's `css` attribute and syncing it to the instance stylesheet.
+ * - Linking back to the owning Adapter class for shared processors and settings.
+ *
+ * This complements AdapterClassController, which manages class-level CSS and registration.
  */
 class AdapterObjectController {
 
-  /** Reference to Adapter() object */
+  /**
+   * The owning Adapter element instance.
+   *
+   * Notes
+   * -----
+   * Set by the Adapter mixin constructor immediately after instantiation.
+   */
   adapterObject!: Adapter;
 
-  /** CSSStyleSheet instance for managing styles */
+  /**
+   * Constructable stylesheet used for instance-scoped CSS rules.
+   *
+   * Notes
+   * -----
+   * Registered with the element's root node via adoptedStyleSheets when connected.
+   */
   cssStyleSheet: CSSStyleSheet = new CSSStyleSheet();
 
-  /** Generated UUID for the element.
-   * Used to create CSS selector for the element.
+  /**
+   * Lazily generated UUID for the element.
+   *
+   * Notes
+   * -----
+   * - Used to create a unique class selector on the element.
+   * - Stable for the lifetime of this controller once generated.
    */
   private _uuid?: string;
 
-  /** MutationObserver for observing CSS changes */
+  /**
+   * MutationObserver for tracking `css` attribute changes on the element.
+   *
+   * Notes
+   * -----
+   * Automatically updates `adapterObject.css` when the `css` attribute changes.
+   */
   private _cssObserver!: MutationObserver;
 
-  /** Stored component class for the element */
+  /**
+   * Cached Adapter class (constructor) for the owning element.
+   *
+   * Notes
+   * -----
+   * Populated in `initClass()` and used to access class-level controller state.
+   */
   _class!: typeof Adapter;
 
   /**
-   * Get UUID or generate a new one.
+   * Unique identifier for this element used in generated selectors.
+   *
+   * Returns
+   * -------
+   * string
+   *     The UUID in the form `${tagName}-${random}`.
+   *
+   * Notes
+   * -----
+   * Generated on first access and then cached.
    */
   get uuid(): string {
     if (this._uuid) { return this._uuid };
@@ -222,7 +271,16 @@ class AdapterObjectController {
   }
 
   /**
-   * Get cssObserver or generate a new one.
+   * A MutationObserver instance that mirrors `css` attribute changes to styles.
+   *
+   * Returns
+   * -------
+   * MutationObserver
+   *     The observer configured to watch attribute mutations on the element.
+   *
+   * Notes
+   * -----
+   * Created lazily and reused for subsequent observations.
    */
   get cssObserver(): MutationObserver {
     if (this._cssObserver) { return this._cssObserver };
@@ -238,13 +296,26 @@ class AdapterObjectController {
   }
 
   /**
-   * Return a selector for this element as a class chain.
+   * Selector for this element represented as a dot-joined class chain.
+   *
+   * Returns
+   * -------
+   * string
+   *     The element's classList joined with '.' (e.g., "a.b.c").
    */
   get objectClassSelector(): string {
     return this.adapterObject.classList.value.replace(/ /g, ".");
   }
 
-  /** Initialize class and styles for this element */
+  /**
+   * Initialize class-level links and ensure the class stylesheet is ready.
+   *
+   * Notes
+   * -----
+   * - Captures the Adapter constructor from the instance.
+   * - If the class tagName is not set, initializes it and attaches the shared stylesheet.
+   * - No-op if the class tagName is already defined.
+   */
   initClass() {
     this._class = this.adapterObject.constructor as unknown as typeof Adapter;
 
@@ -260,7 +331,16 @@ class AdapterObjectController {
   }
 
   /**
-   * Enable or disable CSS Observation.
+   * Enable or disable observation of the element's `css` attribute.
+   *
+   * Parameters
+   * ----------
+   * enable : boolean
+   *     True to start observing, false to disconnect.
+   *
+   * Notes
+   * -----
+   * Observation is limited to attribute mutations on the host element.
    */
   cssObserve(enable: boolean) {
     if (enable) {

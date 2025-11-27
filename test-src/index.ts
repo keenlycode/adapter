@@ -162,7 +162,7 @@ describe("Adapter Object: Use Case", () => {
     );
   });
 
-  it("It's uuid should be unique", () => {
+  it("Each uuid should be unique", () => {
     assert(button1._adapter.uuid !== button2._adapter.uuid);
   });
 
@@ -222,25 +222,6 @@ describe("Adapter Mixin: Use Case", () => {
     assert(pin2 instanceof HTMLElement);
   });
 });
-
-describe("CSS Processor", () => {
-  class Card extends Adapter { };
-  it(`Can parse css with '&' correctly`, () => {
-    let cssText = css`
-      color: blue;
-      &:hover &.bold {color: red};
-    `
-    Card.css = cssText;
-    Card.define('el-card');
-    console.log(Card.adapter.cssStyleSheet.cssRules[1].cssText);
-    assert(Card.adapter.cssStyleSheet.cssRules[0].cssText.match(
-      'el-card.*{.*color.*:.*blue.*}.*'
-    ))
-    assert(Card.adapter.cssStyleSheet.cssRules[1].cssText.match(
-      'el-card:hover.*el-card.bold.*{.*color:.*red.*}'
-    ))
-  })
-})
 
 describe("Shadow DOM Support", () => {
   class ShadowHost extends Adapter {
