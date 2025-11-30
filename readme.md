@@ -182,67 +182,7 @@ Core base class for all stylable elements.
 
 ## Development
 
-### Prerequisites
-
-* Deno (recommended for build and tests)
-* Git
-* (Optional) Node.js + npm – for legacy or browser build workflows
-* (Optional) Python – for documentation pipeline
-
-### Clone & setup
-
-```bash
-git clone https://github.com/keenlycode/adapter.git
-cd adapter
-
-# Optional, for Node-based workflows
-npm install
-```
-
-### Build
-
-```bash
-# Browser/Node bundle
-deno task dist
-```
-
-Artifacts will be emitted to `dist/`.
-
-### Test
-
-```bash
-deno task test
-# or npm run test (if configured)
-```
-
-### Docs
-
-```bash
-# Example: generate documentation (if configured)
-deno task docs
-```
-
----
-
-## Contributing
-
-Contributions, ideas, and feedback are welcome.
-
-* Open an issue for bugs, feature requests, or design discussions.
-* Use clear examples when reporting styling or Web Components issues.
-* For PRs, please include tests or examples when possible.
-
-(You can expand this section with detailed guidelines and coding style as the project grows.)
-
----
-
-## Roadmap (Ideas)
-
-* More utilities for composition and inheritance of styles.
-* Improved developer tooling and documentation.
-* Recipes for integrating Adapter with popular UI frameworks.
-
----
+For contributors and AI-assisted development, see `dev-guide/overview.md`.
 
 ## License
 
