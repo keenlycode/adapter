@@ -1,16 +1,17 @@
 import * as esbuild from "esbuild";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
-import { glob } from "glob";
+import * as path from "@std/path";
+import * as fg from "fast-glob";
 
-const __filename = fileURLToPath(import.meta.url);
+const __filename = path.fromFileUrl(import.meta.url);
 const __dirname = path.dirname(__filename);
 const test_src_dir = path.join(__dirname, "../test-src");
 
 async function test() {
-  const entryFiles = await glob(path.join(test_src_dir, "**/*.ts"), {
+  const entryFiles = await fg.default.async(path.join(test_src_dir, "**/*.ts"), {
     ignore: path.join(test_src_dir, "**/_*"),
   });
+
+  console.log(entryFiles)
 
   const outDir = path.join(__dirname, "../docs/test");
   console.log(`Create test at: ${outDir}`);

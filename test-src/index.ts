@@ -1,11 +1,12 @@
 /** Mocha test framework */
-import mocha from "mocha/mocha";
+import type _mocha from "mocha"
+import mocha from "mocha/mocha.js";
 import "mocha/mocha.css";
 import { assert } from "chai";
 
 /** Adapter */
-import { Adapter, AdapterMixin } from "../src/adapter";
-import { css } from "../src/css";
+import { Adapter, AdapterMixin } from "../src/adapter.ts";
+import { css } from "../src/css.ts";
 
 const __base_url = new URL(import.meta.url);
 
@@ -30,10 +31,7 @@ style.replaceSync(`
   }
 `);
 
-mocha.setup({
-  ui: "bdd",
-  checkLeaks: true,
-});
+mocha.setup("bdd");
 
 const render = document.querySelector('#render') as HTMLElement;
 

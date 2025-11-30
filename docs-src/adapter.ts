@@ -1,1 +1,1 @@
-export { Adapter, AdapterMixin, IsolatorMixin, stylis } from '@devcapsule/adapter/src/export';
+export { Adapter, AdapterMixin } from '@devcapsule/adapter';
