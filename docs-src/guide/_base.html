@@ -1,0 +1,69 @@
+{% extends '_base.html' %}
+
+{% block title %}
+<title>Adapter - Guide</title>
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+<script type="module" src="{{to_base}}guide/base.js?v={{_v}}"></script>
+{% endblock %}
+
+{% block body %}
+{{ super () }}
+<el-sidebar>
+    <div el="wrapper">
+        <el-menu>
+            <a href="{{to_base}}"><h1>Adapter</h1></a>
+            <details>
+                <summary>
+                    <a href="{{to_base}}guide/intro/#"><h2>Intro</h2></a>
+                </summary>
+            </details>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="{{to_base}}guide/setup/#"><h2>Setup</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="{{to_base}}guide/setup/#cdn">CDN</a></div>
+                    <div><a href="{{to_base}}guide/setup/#npm">NPM</a></div>
+                </div>
+            </details>
+            <details open class="open">
+                <summary>
+                    <a href="{{to_base}}guide/css-like-oop/#"><h2>CSS like OOP 🔥</h2></a>
+                    <div class="toggle">▸</div>
+                </summary>
+                <div class="container">
+                    <div><a href="{{to_base}}guide/css-like-oop/#component-style">Class Style</a></div>
+                    <div><a href="{{to_base}}guide/css-like-oop/#element-style">Object Style</a></div>
+                    <div><a href="{{to_base}}guide/css-like-oop/#shadow-dom">Style inside Shadow DOM</a></div>
+                </div>
+            </details>
+            <details>
+                <summary>
+                    <a href="{{to_base}}guide/isolation/#"><h2>Component Isolation</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="{{to_base}}guide/mixins-and-apis/#"><h2>Mixins & APIs</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="{{to_base}}guide/scoped-style/#"><h2>Scoped Style</h2></a>
+                </summary>
+            </details>
+            <details>
+                <summary>
+                    <a href="{{to_base}}guide/style-filtering/#"><h2>Style Filtering</h2></a>
+                </summary>
+            </details>
+        </el-menu>
+    </div>
+    <button el="toggle"><span>»</span></button>
+</el-sidebar>
+{% endblock %}
