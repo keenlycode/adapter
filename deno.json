@@ -32,6 +32,7 @@
   "exports": "./src/mod.ts",
   "imports": {
     "@devcapsule/adapter": "./src/mod.ts",
-    "@devcapsule/stylis": "jsr:@devcapsule/stylis@^0.1.0"
+    "@std/fs": "jsr:@std/fs@^1.0.20",
+    "@std/path": "jsr:@std/path@^1.1.3"
   }
 }
