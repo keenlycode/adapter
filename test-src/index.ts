@@ -6,7 +6,6 @@ import { assert } from "chai";
 
 /** Adapter */
 import { Adapter, AdapterMixin } from "../src/adapter.ts";
-import { css } from "../src/css.ts";
 
 const __base_url = new URL(import.meta.url);
 

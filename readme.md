@@ -1,6 +1,8 @@
 # Adapter
 
-Empowering Next-Generation UI Style with ES6 and Web Components
+**Adapter** is a tiny, elegant styling engine for **Web Components**.
+
+It brings the convenience of CSS-in-JS to native Custom Elements with zero dependencies, scoped styles, and a clean class-based API.
 
 ---
 

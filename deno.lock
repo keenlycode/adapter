@@ -557,7 +557,8 @@
         "npm:@types/mocha@^10.0.10",
         "npm:chai@^6.2.1",
         "npm:fast-glob@^3.3.3",
-        "npm:mocha@^11.7.5"
+        "npm:mocha@^11.7.5",
+        "npm:typescript@^5.9.3"
       ]
     }
   }
