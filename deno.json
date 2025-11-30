@@ -7,9 +7,8 @@
     "test:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/test.js",
     "test:html": "engrave server test-src/ docs/test/",
     "test": "deno task test:esbuild & deno task test:html",
-    "dist:typescript": "npx tsc --project tsconfig.json",
-    "dist:esbuild": "deno run --allow-env --allow-read --allow-run --allow-net --allow-write esbuild/dist.js",
-    "dist": "deno task dist:typescript && deno task dist:esbuild"
+    "dist:esbuild": "deno run --allow-all esbuild/dist.js",
+    "dist": "deno task dist:esbuild"
   },
   "compilerOptions": {
     "lib": [
