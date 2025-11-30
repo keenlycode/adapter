@@ -49,7 +49,6 @@ function uuid(): string {
 }
 
 
-
 export {
   type HTMLElementInterface,
   uuid
