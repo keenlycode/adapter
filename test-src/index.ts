@@ -23,17 +23,9 @@ style.replaceSync(`
   body {
       padding-bottom: 10rem;
   }
-  #render {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      align-items: center;
-  }
 `);
 
 mocha.setup("bdd");
-
-const render = document.querySelector('#render') as HTMLElement;
 
 describe("Adapter Class: Use Case", () => {
   class Card1 extends Adapter { }
