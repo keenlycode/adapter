@@ -9,7 +9,6 @@ import {
 
 
 const __base_url = new URL(import.meta.url);
-console.log('hia')
 if (["0.0.0.0", "127.0.0.1", "localhost"].includes(__base_url.hostname)) {
   new EventSource("/__engrave/watch").addEventListener("change", () =>
     location.reload()
