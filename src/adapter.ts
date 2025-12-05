@@ -1,4 +1,5 @@
-import { uuid, HTMLElementInterface } from './util.ts';
+import { uuid } from './util.ts';
+import type { HTMLElementInterface } from "./util.ts";
 import { css } from './css.ts';
 
 /**

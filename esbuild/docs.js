@@ -1,14 +1,15 @@
 import * as esbuild from "esbuild";
-import { fileURLToPath } from "url";
-import path from "path";
-import { glob } from "glob";
+import * as path from "@std/path";
+import * as fg from "fast-glob";
 
-const __filename = fileURLToPath(import.meta.url);
+
+const __filename = path.fromFileUrl(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const docs_src_dir = path.join(__dirname, "../docs-src/");
-const entryFiles = await glob.sync(
-  path.join(docs_src_dir, "**/*.{ts,js,svg,png,jpg,ttf}"),
+const glob_extension = ".{ts,js,svg,png,jpg,ttf}"
+
+const entryFiles = await fg.default.async(
+  path.join(docs_src_dir, `**/*${glob_extension}`),
   {
     ignore: [
       path.join(docs_src_dir, "**/_*/**"),
@@ -45,7 +46,7 @@ const result = await esbuild.context({
 
 await result.watch();
 
-const { host, port } = await result.serve({
-  servedir: "docs",
-});
-console.log(`docs server => http://${host}:${port}`);
+// const { host, port } = await result.serve({
+//   servedir: "docs",
+// });
+// console.log(`docs server => http://${host}:${port}`);

@@ -1,16 +1,16 @@
 import * as esbuild from "esbuild";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
-import { glob } from "glob";
+import * as path from "@std/path";
+import * as fg from "fast-glob";
 
-const __filename = fileURLToPath(import.meta.url);
+const __filename = path.fromFileUrl(import.meta.url);
 const __dirname = path.dirname(__filename);
 const test_src_dir = path.join(__dirname, "../test-src");
 
-async function test() {
-  const entryFiles = await glob(path.join(test_src_dir, "**/*.ts"), {
-    ignore: path.join(test_src_dir, "**/_*"),
-  });
+
+async function js_bundbule() {
+  const entryFiles = await fg.default.async(path.join(test_src_dir, "**/*.bundle.ts"));
+
+  console.log(entryFiles)
 
   const outDir = path.join(__dirname, "../docs/test");
   console.log(`Create test at: ${outDir}`);
@@ -25,9 +25,42 @@ async function test() {
     format: "esm",
     sourcemap: true,
     keepNames: true,
+    color: true,
+    alias: {
+      "@devcapsule/adapter": path.join(__dirname, '../src/mod.ts'),
+    },
+  });
+  await ctx.watch();
+}
+
+async function js_compile() {
+  const entryFiles = await fg.default.async(path.join(test_src_dir, "**/*.ts"), {
+    ignore: [
+      path.join(test_src_dir, "**/_*"),
+      path.join(test_src_dir, '**/*.bundle.ts')
+    ]
+  });
+
+  console.log(entryFiles)
+
+  const outDir = path.join(__dirname, "../docs/test");
+  console.log(`Create test at: ${outDir}`);
+
+  const ctx = await esbuild.context({
+    entryPoints: entryFiles,
+    entryNames: "[dir]/[name]",
+    assetNames: "[dir]/[name]",
+    outdir: outDir,
+    outbase: test_src_dir,
+    bundle: false,
+    format: "esm",
+    sourcemap: true,
+    keepNames: true,
     color: true
   });
   await ctx.watch();
 }
 
-await test();
+
+await js_bundbule()
+await js_compile();
