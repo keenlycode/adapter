@@ -46,7 +46,7 @@ const result = await esbuild.context({
 
 await result.watch();
 
-const { host, port } = await result.serve({
-  servedir: "docs",
-});
-console.log(`docs server => http://${host}:${port}`);
+// const { host, port } = await result.serve({
+//   servedir: "docs",
+// });
+// console.log(`docs server => http://${host}:${port}`);
