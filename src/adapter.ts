@@ -40,16 +40,6 @@ class AdapterClassController {
   tagName?: string;
 
   /**
-   * Tagged template processor applied to generated CSS rules.
-   *
-   * Notes
-   * -----
-   * Defaults to the project's `css` function and can handle tasks like
-   * minification or scoping if configured to do so.
-   */
-  cssProcessor = css;
-
-  /**
    * Accumulated CSS blocks without selectors.
    *
    * Notes
@@ -186,7 +176,7 @@ class AdapterClassController {
    */
   private updateStyleSheet() {
     if (!this.tagName) { return }
-    const css = this.cssProcessor`${this.tagName} { ${this.allStyle} }`;
+    const css = `${this.tagName} { ${this.allStyle} }`;
     this.cssStyleSheet.replaceSync(css);
   }
 }
@@ -438,8 +428,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
       /** Init cssStyleSheet if it hasn't been inited yet.
        * This will make `this.objectClassSelector` work as expected.
        */
-      let cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
-      cssRule = this._adapter._class.adapter.cssProcessor`${cssRule}`;
+      const cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
       this._adapter.cssStyleSheet.replaceSync(cssRule);
     }
 
@@ -461,8 +450,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
     addStyle(css: string): void {
       this.classList.add(this._adapter.uuid);
 
-      let cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
-      cssRule = this._adapter._class.adapter.cssProcessor`${cssRule}`;
+      const cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
       this._adapter.cssStyleSheet.replaceSync(`
         ${this.css}
         ${cssRule}
@@ -511,4 +499,4 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
 
 class Adapter extends AdapterMixin(HTMLElement) { };
 
-export { Adapter, AdapterMixin };
+export { Adapter, AdapterMixin, css };
