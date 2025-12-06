@@ -58,7 +58,63 @@ document.body.append(special);
 
 ---
 
-## 2. CSS Inheritance
+## 2. AdapterMixin (compose with existing bases)
+
+`Adapter` is a ready-to-use base class, but sometimes you already have your own element base (for focus management, accessibility helpers, framework mixins, etc.). `AdapterMixin` lets you **add Adapter’s styling model to any HTMLElement subclass** without changing the rest of your inheritance chain.
+
+When to reach for it:
+
+- You already have a base element with lifecycle logic and want Adapter’s styling on top.
+- You need Adapter behavior on a subclass of a framework/base class that itself extends `HTMLElement`.
+- You want to keep a single inheritance chain instead of introducing a new root class.
+
+Usage pattern:
+
+```ts
+import { AdapterMixin } from "@devcapsule/adapter";
+
+// Your existing base class with behavior you need to keep.
+class Focusable extends HTMLElement {
+  connectedCallback() {
+    super.connectedCallback?.();
+    this.tabIndex = 0;
+  }
+}
+
+// Add Adapter features via the mixin.
+class IconButton extends AdapterMixin(Focusable) {
+  static css = `
+    display: inline-flex;
+    gap: 0.25rem;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    background: #111827;
+    color: white;
+  `;
+}
+
+IconButton.define("ui-icon-button"); // Same define step as Adapter
+
+// Extends normally and inherits styles just like Adapter-based classes.
+class PrimaryIconButton extends IconButton {
+  static css = `
+    background: #2563eb;
+  `;
+}
+
+PrimaryIconButton.define("ui-primary-icon-button");
+```
+
+Things to remember:
+
+- `AdapterMixin` classes expose the same API as `Adapter` (`static css`, `addStyle`, instance `css`, etc.).
+- Call `.define(tagName)` (or `customElements.define`) on each class you want registered.
+- Inheritance works the same way: subclasses pick up parent styles and can add their own.
+
+---
+
+## 3. CSS Inheritance
 
 Adapter lets CSS follow your JavaScript inheritance.
 
@@ -117,7 +173,7 @@ If you later change the padding or typography in `BaseCard.css`, both `info-card
 
 ---
 
-## 3. Programmable CSS
+## 4. Programmable CSS
 
 With Adapter, CSS is not a static file; it is **data you can compute**.
 
@@ -163,7 +219,7 @@ You can build larger design systems out of small helpers like `pillButton`, with
 
 ---
 
-## 4. Style Isolation
+## 5. Style Isolation
 
 Adapter’s main promise is: **your component styles do not collide with anything else**.
 
@@ -204,7 +260,7 @@ Adapter writes your `ui-card` styles into isolated style sheets so that the host
 
 ---
 
-## 5. Use with Shadow DOM
+## 6. Use with Shadow DOM
 
 Adapter works well whether you use Shadow DOM or not.
 
@@ -270,7 +326,7 @@ Here, `shell-card` lives inside `app-shell`’s shadow root, and Adapter attache
 
 ---
 
-## 6. Putting it together
+## 7. Putting it together
 
 When you design with Adapter, keep these questions in mind:
 
