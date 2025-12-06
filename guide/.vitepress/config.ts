@@ -10,7 +10,8 @@ export default defineConfig({
       provider: "local",
     },
     nav: [
-      { text: "Guide", link: "/" },
+      { text: "Home", link: "/" },
+      { text: "Usage", link: "/usage/getting-started" },
       { text: "Contribution", link: "/contribution/overview" },
     ],
     sidebar: {
