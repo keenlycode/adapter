@@ -10,7 +10,7 @@
         "declarationMap": true,
         "allowImportingTsExtensions": true,
         "rewriteRelativeImportExtensions": true,
-        "outDir": "dist/browser/"
+        "outDir": "dist/browser/",
     },
     "include": ["src"],
     "exclude": ["src/**/*.bundle.ts"]

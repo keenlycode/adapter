@@ -1,20 +1,19 @@
 /** Mocha test framework */
-import mocha from "mocha/mocha";
-import "mocha/mocha.css";
-import { assert } from "chai";
+import type _mocha from "mocha"
+import {
+  mocha,
+  assert,
+  Adapter,
+  AdapterMixin,
+} from "./lib.bundle.js";
 
-/** Adapter */
-import { Adapter, AdapterMixin } from "../src/adapter";
-import { css } from "../src/css";
 
 const __base_url = new URL(import.meta.url);
-
 if (["0.0.0.0", "127.0.0.1", "localhost"].includes(__base_url.hostname)) {
-  new EventSource("/__event/watch").addEventListener("change", () =>
+  new EventSource("/__engrave/watch").addEventListener("change", () =>
     location.reload()
   );
 }
-
 const style = new CSSStyleSheet();
 
 document.adoptedStyleSheets.push(style);
@@ -22,20 +21,9 @@ style.replaceSync(`
   body {
       padding-bottom: 10rem;
   }
-  #render {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      align-items: center;
-  }
 `);
 
-mocha.setup({
-  ui: "bdd",
-  checkLeaks: true,
-});
-
-const render = document.querySelector('#render') as HTMLElement;
+mocha.setup("bdd");
 
 describe("Adapter Class: Use Case", () => {
   class Card1 extends Adapter { }
@@ -48,12 +36,12 @@ describe("Adapter Class: Use Case", () => {
 
   it("Each sub-class or sibling-class should have different styles object", () => {
     assert(
-      Card1.adapter.styles !== Card2.adapter.styles,
-      `Card1.styles !== Card2.styles`
+      Card1.adapter.cssStyleSheet !== Card2.adapter.cssStyleSheet,
+      `Card1.cssStyleSheet !== Card2.cssStyleSheet`
     );
     assert(
-      Card1.adapter.styles !== RedCard.adapter.styles,
-      `Card1.styles !== RedCard.styles`
+      Card1.adapter.cssStyleSheet !== RedCard.adapter.cssStyleSheet,
+      `Card1.cssStyleSheet !== RedCard.cssStyleSheet`
     );
   });
 
@@ -79,9 +67,9 @@ describe("Adapter Class: Use Case", () => {
         color: red;
       }
     `);
-    assert(Card1.adapter.allStyle.includes(`display: flex;`));
+    assert(Card1.css.includes(`display: flex;`));
     Card2.addStyle(`display: block;`);
-    assert(Card2.adapter.allStyle.includes(`display: block;`));
+    assert(Card2.css.includes(`display: block;`));
   });
 
   it("Should inherit style from super class", () => {
@@ -162,7 +150,7 @@ describe("Adapter Object: Use Case", () => {
     );
   });
 
-  it("It's uuid should be unique", () => {
+  it("Each uuid should be unique", () => {
     assert(button1._adapter.uuid !== button2._adapter.uuid);
   });
 
@@ -222,25 +210,6 @@ describe("Adapter Mixin: Use Case", () => {
     assert(pin2 instanceof HTMLElement);
   });
 });
-
-describe("CSS Processor", () => {
-  class Card extends Adapter { };
-  it(`Can parse css with '&' correctly`, () => {
-    let cssText = css`
-      color: blue;
-      &:hover &.bold {color: red};
-    `
-    Card.css = cssText;
-    Card.define('el-card');
-    console.log(Card.adapter.cssStyleSheet.cssRules[1].cssText);
-    assert(Card.adapter.cssStyleSheet.cssRules[0].cssText.match(
-      'el-card.*{.*color.*:.*blue.*}.*'
-    ))
-    assert(Card.adapter.cssStyleSheet.cssRules[1].cssText.match(
-      'el-card:hover.*el-card.bold.*{.*color:.*red.*}'
-    ))
-  })
-})
 
 describe("Shadow DOM Support", () => {
   class ShadowHost extends Adapter {

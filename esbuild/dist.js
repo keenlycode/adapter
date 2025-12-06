@@ -1,16 +1,14 @@
 import * as esbuild from "esbuild";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
-import { glob } from "glob";
-import { platform } from "node:process";
+import * as path from "@std/path";
+import * as fg from "fast-glob";
 
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
+const __filename = path.fromFileUrl(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 let files, result = null;
 
-files = await glob("src/**/*.bundle.{ts,js}");
+files = await fg.default.async("src/**/*.bundle.{ts,js}");
 
 console.log(
 `📦️ Create library bundle files
@@ -37,7 +35,7 @@ console.log(
   })
 );
 
-files = await glob("src/**/*.{ts,js}", {
+files = await fg.default.sync("src/**/*.{ts,js}", {
   ignore: "src/**/*.bundle.{ts,js}"
 });
 

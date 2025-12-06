@@ -1,15 +1,15 @@
 {
   "name": "@devcapsule/adapter",
-  "version": "3.0.4",
+  "version": "3.1.0dev",
   "license": "ISC",
   "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
   "tasks": {
-    "test:esbuild": "deno run --watch-hmr --allow-env --allow-read --allow-run ./esbuild/test.js",
-    "test:html": "engrave server test-src/ docs/test/",
+    "test:esbuild": "deno run --watch-hmr --allow-all ./esbuild/test.js",
+    "test:html": "engrave server test-src/ docs/test/ --watch='.*.js'",
     "test": "deno task test:esbuild & deno task test:html",
     "dist:typescript": "npx tsc --project tsconfig.json",
-    "dist:esbuild": "deno run --allow-env --allow-read --allow-run --allow-net --allow-write esbuild/dist.js",
-    "dist": "deno task dist:typescript && deno task dist:esbuild"
+    "dist:esbuild": "deno run --allow-all esbuild/dist.js",
+    "dist": "deno task dist:typescript & deno task dist:esbuild"
   },
   "compilerOptions": {
     "lib": [
@@ -19,6 +19,12 @@
       "deno.ns",
       "deno.unstable"
     ]
+  },
+  "unstable": ["sloppy-imports"],
+  "lint": {
+    "rules": {
+      "exclude": ["no-sloppy-imports"]
+    }
   },
   "publish": {
     "include": [
@@ -32,6 +38,8 @@
   "exports": "./src/mod.ts",
   "imports": {
     "@devcapsule/adapter": "./src/mod.ts",
-    "@devcapsule/stylis": "jsr:@devcapsule/stylis@^0.1.0"
+    "@std/fs": "jsr:@std/fs@^1.0.20",
+    "@std/path": "jsr:@std/path@^1.1.3",
+    "esbuild": "https://deno.land/x/esbuild@v0.27.0/mod.js"
   }
 }

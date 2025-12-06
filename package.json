@@ -1,17 +1,21 @@
 {
-  "devDependencies": {
-    "@devcapsule/stylis": "npm:@jsr/devcapsule__stylis@^0.1.0",
-    "@types/chai": "^5.0.1",
-    "@types/mocha": "^10.0.10",
-    "@types/stylis": "^4.2.7",
-    "chai": "^5.1.2",
-    "color": "^5.0.0",
-    "esbuild": "^0.24.2",
-    "glob": "^11.0.0",
-    "mocha": "^11.0.1",
-    "typescript": "^5.7.2"
-  },
   "type": "module",
   "main": "dist/browser/mod.js",
-  "module": "dist/browser/mod.js"
+  "module": "dist/browser/mod.js",
+  "scripts": {
+    "docs:dev": "vitepress dev guide",
+    "docs:build": "vitepress build guide",
+    "docs:preview": "vitepress preview guide"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "chai": "^6.2.1",
+    "fast-glob": "^3.3.3",
+    "mocha": "^11.7.5",
+    "vitepress": "^1.4.1"
+  },
+  "dependencies": {
+    "chroma-js": "^3.2.0",
+    "typescript": "^5.9.3"
+  }
 }
