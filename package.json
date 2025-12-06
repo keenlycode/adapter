@@ -2,11 +2,17 @@
   "type": "module",
   "main": "dist/browser/mod.js",
   "module": "dist/browser/mod.js",
+  "scripts": {
+    "docs:dev": "vitepress dev guide",
+    "docs:build": "vitepress build guide",
+    "docs:preview": "vitepress preview guide"
+  },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "chai": "^6.2.1",
     "fast-glob": "^3.3.3",
-    "mocha": "^11.7.5"
+    "mocha": "^11.7.5",
+    "vitepress": "^1.4.1"
   },
   "dependencies": {
     "chroma-js": "^3.2.0",
