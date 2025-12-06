@@ -8,19 +8,7 @@ If you haven’t yet, read `intro.md` for the high-level concepts and motivation
 
 ## 1. Install Adapter
 
-Adapter works in browsers, Node-based bundlers, and Deno. Choose the setup that matches your project.
-
-### npm (Node / bundlers)
-
-```bash
-npm install @devcapsule/adapter
-```
-
-Then import it in your code:
-
-```ts
-import { Adapter } from "@devcapsule/adapter";
-```
+Adapter works in browsers, Deno, and Node-based bundlers. Choose the setup that matches your project.
 
 ### CDN (browser-only, great for demos)
 
@@ -32,14 +20,14 @@ You can load Adapter directly from a CDN in any HTML page:
   // your components go here
   console.log(Adapter);
   
-  class HelloCard extends Adapter {
-    static css = `
-      display: block;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid currentColor;
-    `;
-  }
+  class HelloCard extends Adapter {}
+
+  HelloCard.css = `
+    display: block;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid currentColor;
+  `;
 
   HelloCard.define("hello-card");
   document.body.innerHTML = "<hello-card>Hello Adapter</hello-card>";
@@ -52,24 +40,38 @@ You can load Adapter directly from a CDN in any HTML page:
 import { Adapter } from "jsr:@devcapsule/adapter";
 ```
 
+### npm (Node / bundlers via JSR)
+
+Install the npm compatibility package published from JSR:
+
+```bash
+npm install @jsr/devcapsule__adapter
+```
+
+Then import it in your code:
+
+```ts
+import { Adapter } from "@jsr/devcapsule__adapter";
+```
+
 ---
 
 ## 2. Your first Adapter component
 
-The easiest way to use Adapter is to extend the `Adapter` base class and define `static css` for your component.
+The easiest way to use Adapter is to extend the `Adapter` base class and assign a CSS string to the class itself.
 
 ```ts
-import { Adapter } from "@devcapsule/adapter";
+import { Adapter } from "@jsr/devcapsule__adapter";
 
-class Card extends Adapter {
-  static css = `
-    display: block;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    background: white;
-  `;
-}
+class Card extends Adapter {}
+
+Card.css = `
+  display: block;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: white;
+`;
 
 // Register the custom element
 Card.define("ui-card");
@@ -86,7 +88,7 @@ Use it in HTML like any other custom element:
 
 Behind the scenes (see `src/adapter.ts`):
 
-- A **class controller** (`AdapterClassController`) collects the `static css` string.
+- A **class controller** (`AdapterClassController`) collects the CSS assigned on the class.
 - When you call `Card.define("ui-card")`, Adapter
   - registers the custom element with `customElements.define`, and
   - creates a constructable `CSSStyleSheet` shared by all `ui-card` instances.
@@ -106,17 +108,17 @@ Adapter gives you two main ways to style components:
 Class-level styles are defined on the class itself:
 
 ```ts
-class Button extends Adapter {
-  static css = `
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1rem;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    cursor: pointer;
-  `;
-}
+class Button extends Adapter {}
+
+Button.css = `
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+`;
 
 Button.define("ui-button");
 ```
@@ -200,4 +202,3 @@ When an element is removed from the DOM, Adapter removes its instance stylesheet
   - Prefer class-level styles for shared design and instance styles only for overrides.
 
 Next steps: read `core-concepts.md` for a deeper look at the controllers and mixin, or jump to `framework-integration.md` to see how Adapter fits into React, Vue, and other stacks.
-
