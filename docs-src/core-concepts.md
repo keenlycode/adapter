@@ -29,6 +29,33 @@ Think of it like this:
 
 This is the core mental model for Adapter: one shared, reusable style definition plus optional per-instance customization.
 
+Example:
+
+```ts
+import { Adapter } from "@devcapsule/adapter";
+
+class Card extends Adapter {
+  // Class-level style: shared by all <ui-card> elements.
+  static css = `
+    display: block;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+  `;
+}
+
+Card.define("ui-card");
+
+// Later, for one specific card instance:
+const special = document.createElement("ui-card") as Card;
+
+// Object-level style: applies only to this element.
+special.css = `border-color: hotpink;`;
+
+document.body.append(special);
+```
+
 ---
 
 ## 2. CSS Inheritance
@@ -51,6 +78,43 @@ Conceptually:
 
 Adapter takes care of merging inherited styles in the right order so that more specific components win over base components, just like you would expect.
 
+Example:
+
+```ts
+class BaseCard extends Adapter {
+  static css = `
+    display: block;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+  `;
+}
+
+BaseCard.define("base-card");
+
+// Inherits BaseCard styles, then adds its own.
+class InfoCard extends BaseCard {
+  static css = `
+    border-color: #2563eb;
+  `;
+}
+
+InfoCard.define("info-card");
+
+// Also inherits BaseCard styles, but uses different accents.
+class WarningCard extends BaseCard {
+  static css = `
+    border-color: #f97316;
+    background: #fffbeb;
+  `;
+}
+
+WarningCard.define("warning-card");
+```
+
+If you later change the padding or typography in `BaseCard.css`, both `info-card` and `warning-card` will update automatically.
+
 ---
 
 ## 3. Programmable CSS
@@ -71,6 +135,32 @@ Typical patterns:
 
 The key idea: you keep full control over CSS syntax, while JavaScript helps you **generate, reuse, and organize** it.
 
+Example:
+
+```ts
+const primary = "#2563eb";
+const radius = "999px";
+
+// Reusable snippet for any pill-shaped button.
+const pillButton = (bg: string, color: string) => `
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: ${radius};
+  background: ${bg};
+  color: ${color};
+`;
+
+class PrimaryButton extends Adapter {
+  static css = pillButton(primary, "white");
+}
+
+PrimaryButton.define("ui-primary-button");
+```
+
+You can build larger design systems out of small helpers like `pillButton`, without sacrificing readable CSS.
+
 ---
 
 ## 4. Style Isolation
@@ -89,6 +179,28 @@ These sheets are attached using modern browser features so that:
 - Even if components are injected into unknown or “messy” environments (dashboards, CMSes, AI-generated pages), they keep looking the way you designed them.
 
 When you think “style isolation” with Adapter, think **small CSS islands**: each component and each instance has its own safe space where rules are applied and resolved.
+
+Example (host page with its own global styles):
+
+```html
+<style>
+  /* Host page styles that would normally leak everywhere */
+  body {
+    font-family: system-ui;
+  }
+
+  .card {
+    border: 10px solid red; /* very aggressive */
+  }
+</style>
+
+<ui-card>
+  <h2 class="card">Adapter card</h2>
+  <p>The host's .card class will not override the component's own rules.</p>
+</ui-card>
+```
+
+Adapter writes your `ui-card` styles into isolated style sheets so that the host page’s `.card` rules cannot unexpectedly change your component’s appearance.
 
 ---
 
@@ -121,6 +233,40 @@ You choose how much isolation you need:
 
 - **Only Adapter** → simpler DOM, strong style isolation.
 - **Adapter + Shadow DOM** → maximum isolation for both DOM structure and styles.
+
+Example: using Adapter components inside another element’s shadow root:
+
+```ts
+// Define an Adapter-based card somewhere in your app.
+class ShellCard extends Adapter {
+  static css = `
+    display: block;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  `;
+}
+
+ShellCard.define("shell-card");
+
+// A host element that uses Shadow DOM.
+class Shell extends HTMLElement {
+  constructor() {
+    super();
+    const shadow = this.attachShadow({ mode: "open" });
+    shadow.innerHTML = `
+      <shell-card>
+        <h2>Inside a shadow root</h2>
+        <p>Card styles are still isolated and applied correctly.</p>
+      </shell-card>
+    `;
+  }
+}
+
+customElements.define("app-shell", Shell);
+```
+
+Here, `shell-card` lives inside `app-shell`’s shadow root, and Adapter attaches its style sheets to that root instead of the global document.
 
 ---
 
