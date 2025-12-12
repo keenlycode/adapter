@@ -1,6 +1,6 @@
 {
   "name": "@devcapsule/adapter",
-  "version": "3.1.0dev",
+  "version": "3.1.0",
   "license": "ISC",
   "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
   "tasks": {
