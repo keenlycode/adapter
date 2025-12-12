@@ -12,7 +12,8 @@
     "dist": "deno task dist:typescript & deno task dist:esbuild",
     "guide:dev": "deno run -A npm:vitepress dev guide",
     "guide:build": "deno run -A npm:vitepress build guide",
-    "guide:preview": "deno run -A npm:vitepress preview guide"
+    "guide:preview": "deno run -A npm:vitepress preview guide",
+    "publish": "deno publish --allow-slow-types --allow-dirty"
   },
   "compilerOptions": {
     "lib": [
