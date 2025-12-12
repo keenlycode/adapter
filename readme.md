@@ -38,11 +38,15 @@ Key ideas:
 
 ## Installation
 
-### Via npm (Node / bundlers)
+### Via npm (Node / bundlers via JSR)
+
+Use the official compatibility helper so npm tracks the exact JSR release:
 
 ```bash
-npm install @devcapsule/adapter
+npx jsr add @devcapsule/adapter
 ```
+
+The command installs the compatibility package (`@jsr/devcapsule__adapter`) and adds the alias to your `package.json`, matching the [JSR npm compatibility guide](https://jsr.io/docs/npm-compatibility).
 
 ```ts
 import { Adapter } from "@devcapsule/adapter";

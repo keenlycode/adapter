@@ -42,16 +42,18 @@ import { Adapter } from "jsr:@devcapsule/adapter";
 
 ### npm (Node / bundlers via JSR)
 
-Install the npm compatibility package published from JSR:
+Use the official compatibility helper so npm stays in sync with the JSR release:
 
 ```bash
-npm install @jsr/devcapsule__adapter
+npx jsr add @devcapsule/adapter
 ```
 
-Then import it in your code:
+This command installs the compatibility package (published as `@jsr/devcapsule__adapter`) and adds the correct alias to your `package.json`, per the [JSR npm compatibility guide](https://jsr.io/docs/npm-compatibility).
+
+After installing you can import Adapter with its canonical name:
 
 ```ts
-import { Adapter } from "@jsr/devcapsule__adapter";
+import { Adapter } from "@devcapsule/adapter";
 ```
 
 ---
@@ -61,7 +63,7 @@ import { Adapter } from "@jsr/devcapsule__adapter";
 The easiest way to use Adapter is to extend the `Adapter` base class and assign a CSS string to the class itself.
 
 ```ts
-import { Adapter } from "@jsr/devcapsule__adapter";
+import { Adapter } from "@devcapsule/adapter";
 
 class Card extends Adapter {}
 
