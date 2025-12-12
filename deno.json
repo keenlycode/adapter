@@ -9,7 +9,10 @@
     "test": "deno task test:esbuild & deno task test:html",
     "dist:typescript": "npx tsc --project tsconfig.json",
     "dist:esbuild": "deno run --allow-all esbuild/dist.js",
-    "dist": "deno task dist:typescript & deno task dist:esbuild"
+    "dist": "deno task dist:typescript & deno task dist:esbuild",
+    "guide:dev": "deno run -A npm:vitepress dev guide",
+    "guide:build": "deno run -A npm:vitepress build guide",
+    "guide:preview": "deno run -A npm:vitepress preview guide"
   },
   "compilerOptions": {
     "lib": [
