@@ -102,9 +102,9 @@ Card.define('el-card')
 - Development setup: [Development](/contribution/development).
 - Docstring/style guidance: [Docstring Guide](/contribution/docstring).
 
-Run the site locally with VitePress:
+Run the site locally with MkDocs:
 
 ```bash
-pnpm vitepress dev guide
-# or: npm run docs:dev
+uv sync --group docs  # installs MkDocs
+uv run mkdocs serve
 ```

@@ -4,3 +4,9 @@ version = "0.0.0"
 dependencies = [
     "engrave>=3.1.3",
 ]
+
+[dependency-groups]
+docs = [
+  "mkdocs>=1.6.0",
+  "mkdocs-material>=9.5.0"
+]

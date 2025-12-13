@@ -3,7 +3,7 @@ venv
 package-lock.json
 pnpm-lock.yaml
 .parcel-cache/
-dist
-docs
+dist/
+docs/
 .python-version
 cache/
