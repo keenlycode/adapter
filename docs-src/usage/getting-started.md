@@ -17,9 +17,8 @@ You can load Adapter directly from a CDN in any HTML page:
 ```html
 <script type="module">
   import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
-  // your components go here
-  console.log(Adapter);
   
+  // your components go here
   class HelloCard extends Adapter {}
 
   HelloCard.css = `

@@ -40,6 +40,19 @@ class AdapterClassController {
   tagName?: string;
 
   /**
+   * CSS template tag processor used to transform CSS template literals.
+   *
+   * Notes
+   * -----
+   * Defaults to the `css` function imported from './css.ts'. This processor is
+   * invoked when compiling class-level styles into the constructable
+   * CSSStyleSheet. It may be replaced (for example in tests or subclasses) to
+   * provide custom processing such as scoping, variable substitution, or
+   * minification prior to writing rules into the stylesheet.
+   */
+  cssProcessor = css;
+
+  /**
    * Accumulated CSS blocks without selectors.
    *
    * Notes
@@ -176,7 +189,7 @@ class AdapterClassController {
    */
   private updateStyleSheet() {
     if (!this.tagName) { return }
-    const css = `${this.tagName} { ${this.allStyle} }`;
+    const css = this.cssProcessor`${this.tagName} { ${this.allStyle} }`;
     this.cssStyleSheet.replaceSync(css);
   }
 }
