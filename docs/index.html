@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#adapter-guide" class="md-skip">
+        <a href="#adapter" class="md-skip">
           Skip to content
         </a>
       
@@ -278,24 +278,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="." class="md-nav__link md-nav__link--active">
         
   
@@ -312,91 +294,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#why-adapter" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why Adapter?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-developers-get" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What developers get
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Example
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#built-for-real-world-ui" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Built for real-world UI
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contribute" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Contribute
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -764,85 +661,256 @@
   
 
 
-<h1 id="adapter-guide">Adapter Guide<a class="headerlink" href="#adapter-guide" title="Permanent link">&para;</a></h1>
-<p>Fast. Clean. Isolated. Compact. Web Component styling that just works.</p>
-<p>Adapter makes UI development peaceful again. It gives you clean, isolated CSS without special tools, without new syntax, and without fighting with global styles. Your components look exactly the way you design them — anywhere they run.</p>
-<hr />
-<h2 id="why-adapter">Why Adapter?<a class="headerlink" href="#why-adapter" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>CSS that never collides</strong> – Every component gets its own safe styling space. No more mystery overrides from global CSS, legacy systems, or other frameworks.</li>
-<li><strong>Drop into any stack</strong> – React, Vue, Svelte, Lit, Deno, Bun, or plain JS — Adapter works with everything, and it never locks you in.</li>
-<li><strong>Made for widgets, plugins, and AI-driven UI</strong> – When you embed UI into other systems (chatbots, workflow panels, extensions, etc.), global CSS becomes unpredictable. Adapter keeps host CSS out and your component styles in.</li>
-<li><strong>No build step, no new syntax</strong> – Write normal CSS. Use nesting, selectors, hover, children — everything you already know. Adapter applies encapsulation behind the scenes.</li>
-<li><strong>Compact and lightweight</strong> – Adapter is extremely small (≈ 2 kB gzipped). It loads instantly, adds almost no runtime overhead, and keeps your bundle lean.</li>
-<li><strong>Built for long-term maintainability</strong> – Styles live with the component. No global cascade. No naming conventions to memorize. No creeping side effects.</li>
-<li><strong>One UI system for every platform</strong> – Adapter components run everywhere: web apps, internal tools, Electron/Tauri, extensions, mobile webviews, hybrid apps, and embedded widgets. One codebase → all environments.</li>
-</ul>
-<hr />
-<h2 id="what-developers-get">What developers get<a class="headerlink" href="#what-developers-get" title="Permanent link">&para;</a></h2>
-<ul>
-<li>clean, readable CSS</li>
-<li>automatic style isolation</li>
-<li>safe embedding into any host page</li>
-<li>framework-agnostic components</li>
-<li>scalable, maintainable UI</li>
-<li>low bundle size and fast performance</li>
-</ul>
-<p>Adapter’s goal is simple:</p>
-<blockquote>
-<p>Make styling Web Components effortless — today and in the future.</p>
-</blockquote>
-<hr />
-<h2 id="quick-example">Quick Example<a class="headerlink" href="#quick-example" title="Permanent link">&para;</a></h2>
+<h1 id="adapter">Adapter<a class="headerlink" href="#adapter" title="Permanent link">&para;</a></h1>
+<style>
+  :root {
+    --accent: #0ea5e9;
+    --ink: #0b1224;
+    --bg: #ffffff;
+    --card: #f6f7fb;
+    --muted: #4b5563;
+    --border: #e4e7ec;
+  }
+
+  .landing {
+    font-family: "Sora", "DM Sans", "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .landing-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .hero {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(14, 165, 233, 0.08);
+    color: #0284c7;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 3vw, 3.2rem);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .lede {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 700px;
+    line-height: 1.6;
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    transition: transform 120ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  }
+
+  .btn.primary {
+    background: linear-gradient(120deg, #0ea5e9, #38bdf8);
+    color: #f8fafc;
+    border: none;
+    box-shadow: 0 15px 45px rgba(14, 165, 233, 0.25);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    border-color: #cbd5e1;
+  }
+
+  .meta {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .pill {
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(14, 165, 233, 0.06);
+    border: 1px solid var(--border);
+  }
+
+  .section {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  }
+
+  .card h3 {
+    margin: 0 0 0.35rem;
+  }
+
+  .card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Demo styles removed */
+
+  .code-block {
+    background: #0b1224;
+    border: 1px solid #0b1224;
+    border-radius: 14px;
+    padding: 1rem;
+    overflow: auto;
+    font-size: 0.7rem;
+    line-height: 1.5;
+    color: blue;
+    width: 100%;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(12, 74, 110, 0), rgba(12, 74, 110, 0.35), rgba(12, 74, 110, 0));
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 640px) {
+    .landing {
+      padding: 2rem 1rem;
+    }
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<div class="landing">
+  <div class="landing-inner">
+    <div class="hero">
+      <h1>Fast, fearless styling for Web Components.</h1>
+      <p class="lede">
+        Adapter isolates CSS automatically so your UI survives every embed, extension, and AI-generated page.
+        No new syntax, no bundle weight, just custom elements that always look right.
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="usage/getting-started/">Getting Started</a>
+        <a class="btn" href="usage/core-concepts/">Core Concepts</a>
+        <a class="btn" href="usage/framework-integration/">Framework Integration</a>
+      </div>
+      <div class="meta">
+        <span class="pill">~2 kB gzipped</span>
+        <span class="pill">No build step required</span>
+        <span class="pill">Works in Browser, Deno, Node</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="grid">
+        <div class="card">
+          <h3>CSS that never collides</h3>
+          <p>Per-class and per-instance constructable style sheets keep host CSS out and your rules in.</p>
+        </div>
+        <div class="card">
+          <h3>Drop into any stack</h3>
+          <p>React, Vue, Svelte, Lit, Deno, Bun, or plain JS - Adapter is framework-agnostic and zero-dependency.</p>
+        </div>
+        <div class="card">
+          <h3>Design-system ready</h3>
+          <p>Compose tokens and variants with normal CSS. Inherit styles the same way you inherit classes.</p>
+        </div>
+        <div class="card">
+          <h3>Built for embeds</h3>
+          <p>Ship widgets, plugins, dashboards, and AI surfaces without worrying about hostile global CSS.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Code that feels familiar</h2>
+      <div class="grid">
+        <div class="card code-block">
 <div class="language-ts highlight"><span class="filename">TypeScript</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Adapter</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm&quot;</span><span class="p">;</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">class</span><span class="w"> </span><span class="nx">Card</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Adapter</span><span class="w"> </span><span class="p">{}</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nx">Card</span><span class="p">.</span><span class="nx">css</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sb">  padding: 1rem;</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sb">  border-radius: 12px;</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="sb">  background: white;</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="sb">  &amp;:hover {</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="sb">    background: #f3f4ff;</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="sb">  }</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="sb">  &amp; &gt; h2 {</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="sb">    font-size: 1.05rem;</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="sb">  }</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="sb">`</span>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nx">Card</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;el-card&#39;</span><span class="p">)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">class</span><span class="w"> </span><span class="nx">Button</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Adapter</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nx">Button</span><span class="p">.</span><span class="nx">css</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sb">  display: inline-flex;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="sb">  gap: 0.5rem;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="sb">  align-items: center;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="sb">  padding: 0.7rem 1.1rem;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="sb">  border-radius: 999px;</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="sb">  border: 1px solid color-mix(in srgb, var(--accent, #22d3ee) 60%, transparent);</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="sb">  background: color-mix(in srgb, var(--accent, #22d3ee) 18%, #0b1224);</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="sb">  color: #e6edff;</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="sb">  &amp;[kind=&quot;ghost&quot;] {</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="sb">    background: transparent;</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="sb">  }</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="sb">`</span><span class="p">;</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="nx">Button</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s2">&quot;ui-button&quot;</span><span class="p">);</span>
 </span></code></pre></div>
-<div class="language-html highlight"><span class="filename">HTML</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">el-card</span><span class="p">&gt;</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Hello Adapter<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="p">&lt;/</span><span class="nt">el-card</span><span class="p">&gt;</span>
-</span></code></pre></div>
-<hr />
-<h2 id="built-for-real-world-ui">Built for real-world UI<a class="headerlink" href="#built-for-real-world-ui" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Design systems</strong>: reusable components with predictable styling and clean inheritance.</li>
-<li><strong>Internal tools &amp; dashboards</strong>: stable, maintainable UIs as your team and codebase grow.</li>
-<li><strong>Automation &amp; AI surfaces</strong>: render UI safely from bots, workflows, or server-generated pages.</li>
-<li><strong>Plugins &amp; embeddable widgets</strong>: drop custom UI into other systems without worrying about their CSS.</li>
-</ul>
-<hr />
-<h2 id="usage"><a href="usage/getting-started/">Usage</a><a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Start: <a href="usage/getting-started/">Getting Started</a>.</li>
-<li>Concepts: <a href="usage/core-concepts/">Core Concepts</a> (class vs object styles, inheritance, isolation).</li>
-<li>Cookbook: <a href="usage/patterns-and-recipes/">Patterns &amp; Recipes</a>.</li>
-<li>Frameworks: <a href="usage/framework-integration/">Framework Integration</a> (React, Vue, etc.).</li>
-</ul>
-<h2 id="contribute"><a href="contribution/overview/">Contribute</a><a class="headerlink" href="#contribute" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Overview and expectations: <a href="contribution/overview/">Overview</a>.</li>
-<li>Workflow: <a href="contribution/workflow/">Workflow</a>.</li>
-<li>Development setup: <a href="contribution/development/">Development</a>.</li>
-<li>Docstring/style guidance: <a href="contribution/docstring/">Docstring Guide</a>.</li>
-</ul>
-<p>Run the site locally with MkDocs:</p>
-<div class="language-bash highlight"><span class="filename">Bash</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>docs<span class="w">  </span><span class="c1"># installs MkDocs</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>uv<span class="w"> </span>run<span class="w"> </span>mkdocs<span class="w"> </span>serve
-</span></code></pre></div>
+        </div>
+        <div class="card">
+          <h3>What you get</h3>
+          <ul>
+            <li>Encapsulated class-level CSS shared by every instance.</li>
+            <li>Per-instance overrides via the `css` property or attribute.</li>
+            <li>Composable helpers for tokens and variants - no new syntax.</li>
+            <li>Ready-to-embed components that ignore hostile host CSS.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+  </div>
+</div>
 
 
 
