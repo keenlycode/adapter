@@ -35,29 +35,27 @@ Adapter’s goal is simple:
 
 ## Quick Example
 
-```ts
-import { Adapter } from '@devcapsule/adapter'
+```ts title="TypeScript"
+import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
 
-class Card extends Adapter {
-  static css = `
-    padding: 1rem;
-    border-radius: 12px;
-    background: white;
+class Card extends Adapter {}
+Card.css = `
+  padding: 1rem;
+  border-radius: 12px;
+  background: white;
 
-    &:hover {
-      background: #f3f4ff;
-    }
+  &:hover {
+    background: #f3f4ff;
+  }
 
-    & > h2 {
-      font-size: 1.05rem;
-    }
-  `
-}
-
+  & > h2 {
+    font-size: 1.05rem;
+  }
+`
 Card.define('el-card')
 ```
 
-```html
+```html title="HTML"
 <el-card>
   <h2>Hello Adapter</h2>
 </el-card>
@@ -74,24 +72,23 @@ Card.define('el-card')
 
 ---
 
-## [Usage](/usage/getting-started)
+## [Usage](usage/getting-started.md)
 
-- Start: [Getting Started](/usage/getting-started).
-- Concepts: [Core Concepts](/usage/core-concepts) (class vs object styles, inheritance, isolation).
-- Cookbook: [Patterns & Recipes](/usage/patterns-and-recipes).
-- Frameworks: [Framework Integration](/usage/framework-integration) (React, Vue, etc.).
-- CSS processing: [CSS Processing](/usage/css-processing) for Stylis/PostCSS via tagged templates.
+- Start: [Getting Started](usage/getting-started.md).
+- Concepts: [Core Concepts](usage/core-concepts.md) (class vs object styles, inheritance, isolation).
+- Cookbook: [Patterns & Recipes](usage/patterns-and-recipes.md).
+- Frameworks: [Framework Integration](usage/framework-integration.md) (React, Vue, etc.).
 
-## [Contribute](/contribution/overview)
+## [Contribute](contribution/overview.md)
 
-- Overview and expectations: [Overview](/contribution/overview).
-- Workflow: [Workflow](/contribution/workflow).
-- Development setup: [Development](/contribution/development).
-- Docstring/style guidance: [Docstring Guide](/contribution/docstring).
+- Overview and expectations: [Overview](contribution/overview.md).
+- Workflow: [Workflow](contribution/workflow.md).
+- Development setup: [Development](contribution/development.md).
+- Docstring/style guidance: [Docstring Guide](contribution/docstring.md).
 
 Run the site locally with MkDocs:
 
-```bash
+```bash title="Bash"
 uv sync --group docs  # installs MkDocs
 uv run mkdocs serve
 ```

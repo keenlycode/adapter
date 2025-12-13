@@ -10,7 +10,7 @@ This file describes how to build, test, and release Adapter.
 
 ## Setup
 
-```bash
+```bash title="Bash"
 git clone https://github.com/keenlycode/adapter.git
 cd adapter
 npm install # optional
@@ -18,7 +18,7 @@ npm install # optional
 
 ## Build
 
-```bash
+```bash title="Bash"
 deno task dist
 ```
 
@@ -26,7 +26,7 @@ Outputs go to `dist/`.
 
 ## Test
 
-```bash
+```bash title="Bash"
 deno task test
 # or
 npm test
@@ -34,7 +34,7 @@ npm test
 
 ## Docs (if configured)
 
-```bash
+```bash title="Bash"
 deno task docs
 ```
 

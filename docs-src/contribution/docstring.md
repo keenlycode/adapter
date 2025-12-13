@@ -42,7 +42,7 @@ For full reference, see the official spec:
 
 ## Recommended Template
 
-````ts
+````ts title="TypeScript"
 /**
  * Short summary describing what this class/function does.
  *
@@ -84,7 +84,7 @@ For full reference, see the official spec:
 
 ## Example: Class Documentation
 
-```ts
+```ts title="TypeScript"
 /**
  * Base class for all Adapter-powered custom elements.
  *
@@ -101,7 +101,7 @@ export class Adapter {
 
 ## Example: Method Documentation
 
-````ts
+````ts title="TypeScript"
 /**
  * Register the custom element with the browser.
  *

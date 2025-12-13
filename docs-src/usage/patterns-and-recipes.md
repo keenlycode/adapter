@@ -10,7 +10,7 @@ Use it as a cookbook: skim for the scenario you need, copy the pattern, and adap
 
 ### Basic button
 
-```ts
+```ts title="TypeScript"
 import { Adapter } from "@devcapsule/adapter";
 
 class Button extends Adapter {
@@ -35,7 +35,7 @@ Button.define("ui-button");
 
 You can add variants with attribute selectors in class-level CSS.
 
-```ts
+```ts title="TypeScript"
 Button.addStyle(`
   &[variant="outline"] {
     background: transparent;
@@ -52,7 +52,7 @@ Button.addStyle(`
 
 Usage:
 
-```html
+```html title="HTML"
 <ui-button>Default</ui-button>
 <ui-button variant="outline">Outline</ui-button>
 <ui-button variant="ghost">Ghost</ui-button>
@@ -66,7 +66,7 @@ Because these rules are class-level styles, they apply consistently to every ins
 
 ### Card component
 
-```ts
+```ts title="TypeScript"
 class Card extends Adapter {
   static css = `
     display: block;
@@ -85,7 +85,7 @@ Card.define("ui-card");
 
 ### Layout container
 
-```ts
+```ts title="TypeScript"
 class Container extends Adapter {
   static css = `
     display: block;
@@ -100,7 +100,7 @@ Container.define("ui-container");
 
 Usage:
 
-```html
+```html title="HTML"
 <ui-container>
   <ui-card>
     <h2>Inside container</h2>
@@ -117,7 +117,7 @@ Sometimes you want one-off custom styling without adding new variants.
 
 ### Via the `css` attribute
 
-```html
+```html title="HTML"
 <ui-card css="border-color: hotpink;">
   <h2>Special card</h2>
   <p>Styled via the css attribute.</p>
@@ -126,7 +126,7 @@ Sometimes you want one-off custom styling without adding new variants.
 
 ### Via the `css` property
 
-```ts
+```ts title="TypeScript"
 const card = document.createElement("ui-card") as Card;
 
 card.css = `
@@ -145,7 +145,7 @@ Under the hood (see `src/adapter.ts`), Adapter gives this instance its own const
 
 Adapter lets you target content inside your components using normal selectors.
 
-```ts
+```ts title="TypeScript"
 class Dialog extends Adapter {
   static css = `
     display: block;
@@ -174,7 +174,7 @@ Dialog.define("ui-dialog");
 
 Usage:
 
-```html
+```html title="HTML"
 <ui-dialog>
   <h2>Confirm action</h2>
   <p>Are you sure you want to continue?</p>
@@ -219,7 +219,7 @@ Common patterns:
 - **Token helpers in JS/TS**
   - Create functions that return CSS strings, then feed them into `static css` or `addStyle`.
 
-  ```ts
+  ```ts title="TypeScript"
   const primaryColor = "#2563eb";
 
   const buttonBase = () => `

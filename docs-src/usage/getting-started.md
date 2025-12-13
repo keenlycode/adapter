@@ -14,7 +14,7 @@ Adapter works in browsers, Deno, and Node-based bundlers. Choose the setup that 
 
 You can load Adapter directly from a CDN in any HTML page:
 
-```html
+```html title="HTML"
 <script type="module">
   import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
   
@@ -35,7 +35,7 @@ You can load Adapter directly from a CDN in any HTML page:
 
 ### Deno / JSR
 
-```ts
+```ts title="TypeScript"
 import { Adapter } from "jsr:@devcapsule/adapter";
 ```
 
@@ -43,7 +43,7 @@ import { Adapter } from "jsr:@devcapsule/adapter";
 
 Use the official compatibility helper so npm stays in sync with the JSR release:
 
-```bash
+```bash title="Bash"
 npx jsr add @devcapsule/adapter
 ```
 
@@ -51,7 +51,7 @@ This command installs the compatibility package (published as `@jsr/devcapsule__
 
 After installing you can import Adapter with its canonical name:
 
-```ts
+```ts title="TypeScript"
 import { Adapter } from "@devcapsule/adapter";
 ```
 
@@ -61,7 +61,7 @@ import { Adapter } from "@devcapsule/adapter";
 
 The easiest way to use Adapter is to extend the `Adapter` base class and assign a CSS string to the class itself.
 
-```ts
+```ts title="TypeScript"
 import { Adapter } from "@devcapsule/adapter";
 
 class Card extends Adapter {}
@@ -80,7 +80,7 @@ Card.define("ui-card");
 
 Use it in HTML like any other custom element:
 
-```html
+```html title="HTML"
 <ui-card>
   <h2>Welcome</h2>
   <p>This card is styled by Adapter.</p>
@@ -108,7 +108,7 @@ Adapter gives you two main ways to style components:
 
 Class-level styles are defined on the class itself:
 
-```ts
+```ts title="TypeScript"
 class Button extends Adapter {}
 
 Button.css = `
@@ -126,7 +126,7 @@ Button.define("ui-button");
 
 You can add more base styles later using `static addStyle`:
 
-```ts
+```ts title="TypeScript"
 Button.addStyle(`
   &:hover {
     filter: brightness(1.05);
@@ -142,7 +142,7 @@ Every element instance also owns its own constructable stylesheet, managed by `A
 
 You can style a single instance from JavaScript:
 
-```ts
+```ts title="TypeScript"
 const card = document.createElement("ui-card") as InstanceType<typeof Card>;
 
 card.css = `
@@ -164,7 +164,7 @@ That stylesheet is attached to the element’s root node (`document` or shadow r
 
 You can also set styles declaratively using an attribute. Adapter observes the `css` attribute and keeps it in sync with the instance stylesheet.
 
-```html
+```html title="HTML"
 <ui-card css="border-color: rebeccapurple;">
   <h2>Styled via attribute</h2>
 </ui-card>
