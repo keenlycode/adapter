@@ -32,10 +32,29 @@ deno task test
 npm test
 ```
 
-## Docs (if configured)
+## Docs
+
+MkDocs (Material theme) builds from `docs-src/` using `mkdocs.yml` and emits the static site to `docs/`.
+
+### Install doc tooling
+
+Preferred (uses the pinned `pyproject.toml` + `uv.lock`):
 
 ```bash title="Bash"
-deno task docs
+uv sync --group docs
 ```
 
-If this task does nothing yet, it’s safe to ignore.
+Fallback:
+
+```bash title="Bash"
+pip install mkdocs mkdocs-material
+```
+
+### Build and preview
+
+```bash title="Bash"
+uv run mkdocs build   # output in docs/
+uv run mkdocs serve   # live preview at http://127.0.0.1:8000
+```
+
+You can swap `uv run` for `mkdocs` directly if the tools are on your PATH.

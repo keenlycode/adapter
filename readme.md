@@ -188,7 +188,7 @@ Core base class for all stylable elements.
 
 ## Development
 
-For contributors and AI-assisted development, see `dev-guide/overview.md`.
+For contributors and AI-assisted development, see `docs-src/contribution/`.
 
 ## License
 
