@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  <script type="module">
+  import { Adapter, AdapterMixin } from 'https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm';
+  window.Adapter = Adapter;
+  window.AdapterMixin = AdapterMixin;
+  </script>
+{% endblock %}
