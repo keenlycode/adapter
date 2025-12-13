@@ -569,8 +569,7 @@
         "npm:chroma-js@^3.2.0",
         "npm:fast-glob@^3.3.3",
         "npm:mocha@^11.7.5",
-        "npm:typescript@^5.9.3",
-        "npm:vitepress@^1.4.1"
+        "npm:typescript@^5.9.3"
       ]
     }
   }
