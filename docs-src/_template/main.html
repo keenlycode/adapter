@@ -8,3 +8,9 @@
   window.AdapterMixin = AdapterMixin;
   </script>
 {% endblock %}
+
+{% block announce %}
+  <div class="md-banner">
+    Adapter v{{ config.extra.adapter_version }}
+  </div>
+{% endblock %}
