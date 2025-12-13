@@ -12,7 +12,6 @@ nav:
       - Core Concepts: usage/core-concepts.md
       - Patterns & Recipes: usage/patterns-and-recipes.md
       - Framework Integration: usage/framework-integration.md
-      - CSS Processing: usage/css-processing.md
   - Contribution:
       - Overview: contribution/overview.md
       - Workflow: contribution/workflow.md

@@ -174,32 +174,4 @@ In `src/adapter.ts`, `AdapterObjectController` uses a `MutationObserver` to watc
 
 ---
 
-## 4. Lifecycle: when styles are applied
-
-You do not need to manually attach style sheets. The `Adapter` base class takes care of it:
-
-- On construction, each element gets an `AdapterObjectController` instance.
-- On `connectedCallback`, Adapter
-  - ensures the class-level stylesheet is present in `rootNode.adoptedStyleSheets`, and
-  - registers the instance-level stylesheet if it is not already present.
-- If a `css` attribute is present, its content is applied once when the element is connected, and then kept in sync.
-
-When an element is removed from the DOM, Adapter removes its instance stylesheet from `adoptedStyleSheets` to avoid leaks.
-
----
-
-## 5. Quick troubleshooting
-
-- **My component renders, but styles don’t apply.**
-  - Make sure you called `MyElement.define("my-element")` before using `<my-element>` in HTML.
-  - Confirm that your browser supports `CSSStyleSheet` and `adoptedStyleSheets`.
-
-- **Instance styles don’t seem to work.**
-  - Check that you are using the `css` property or `css` attribute exactly (lowercase).
-  - For property-based styles, ensure you set `element.css = "..."` after the element is created.
-
-- **Styles conflict with the host page.**
-  - Ensure your component’s tag name is unique (e.g. prefixed with your app or company name).
-  - Prefer class-level styles for shared design and instance styles only for overrides.
-
 Next steps: read `core-concepts.md` for a deeper look at the controllers and mixin, or jump to `framework-integration.md` to see how Adapter fits into React, Vue, and other stacks.

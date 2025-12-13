@@ -219,7 +219,45 @@ You can build larger design systems out of small helpers like `pillButton`, with
 
 ---
 
-## 5. Style Isolation
+## 5. Class-level CSS processors (`adapter.cssProcessor`)
+
+Adapter lets you run a **single processor for all class-level CSS** on a component. Set `MyComponent.adapter.cssProcessor` to any tagged template function; Adapter will call it when compiling the shared stylesheet for that class (including inherited styles).
+
+- It runs only for class-level CSS (`static css`, `addStyle`, inherited blocks).
+- Per-instance styles set via `element.css` bypass this hook.
+- Set it **before** calling `define()`.
+
+Example: minify class CSS while leaving instance overrides untouched.
+
+```ts
+import { Adapter } from "@devcapsule/adapter";
+
+const minify = (strings: TemplateStringsArray, ...values: unknown[]) => {
+  const raw = String.raw({ raw: strings }, ...values);
+  return raw.replace(/\s+/g, " ").trim();
+};
+
+class Tag extends Adapter {}
+Tag.adapter.cssProcessor = minify;
+
+Tag.css = `
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  background: #0f172a;
+  color: white;
+`;
+
+Tag.define("ui-tag");
+```
+
+This hook is handy for cross-cutting transforms (token substitution, prefixing, minification) that you want applied to the component’s shared stylesheet without changing how you write CSS in each assignment.
+
+---
+
+## 6. Style Isolation
 
 Adapter’s main promise is: **your component styles do not collide with anything else**.
 
@@ -260,7 +298,7 @@ Adapter writes your `ui-card` styles into isolated style sheets so that the host
 
 ---
 
-## 6. Use with Shadow DOM
+## 7. Use with Shadow DOM
 
 Adapter works well whether you use Shadow DOM or not.
 
@@ -326,7 +364,7 @@ Here, `shell-card` lives inside `app-shell`’s shadow root, and Adapter attache
 
 ---
 
-## 7. Putting it together
+## 8. Putting it together
 
 When you design with Adapter, keep these questions in mind:
 

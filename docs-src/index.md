@@ -8,26 +8,13 @@ Adapter makes UI development peaceful again. It gives you clean, isolated CSS wi
 
 ## Why Adapter?
 
-### CSS that never collides
-Every component gets its own safe styling space. No more mystery overrides from global CSS, legacy systems, or other frameworks.
-
-### Drop into any stack
-React, Vue, Svelte, Lit, Deno, Bun, or plain JS — Adapter works with everything, and it never locks you in.
-
-### Made for widgets, plugins, and AI-driven UI
-When you embed UI into other systems (chatbots, workflow panels, extensions, etc.), global CSS becomes unpredictable. Adapter keeps host CSS out and your component styles in.
-
-### No build step, no new syntax
-Write normal CSS. Use nesting, selectors, hover, children — everything you already know. Adapter applies encapsulation behind the scenes.
-
-### Compact and lightweight
-Adapter is extremely small (≈ 2 kB gzipped). It loads instantly, adds almost no runtime overhead, and keeps your bundle lean.
-
-### Built for long-term maintainability
-Styles live with the component. No global cascade. No naming conventions to memorize. No creeping side effects.
-
-### One UI system for every platform
-Adapter components run everywhere: web apps, internal tools, Electron/Tauri, extensions, mobile webviews, hybrid apps, and embedded widgets. One codebase → all environments.
+- **CSS that never collides** – Every component gets its own safe styling space. No more mystery overrides from global CSS, legacy systems, or other frameworks.
+- **Drop into any stack** – React, Vue, Svelte, Lit, Deno, Bun, or plain JS — Adapter works with everything, and it never locks you in.
+- **Made for widgets, plugins, and AI-driven UI** – When you embed UI into other systems (chatbots, workflow panels, extensions, etc.), global CSS becomes unpredictable. Adapter keeps host CSS out and your component styles in.
+- **No build step, no new syntax** – Write normal CSS. Use nesting, selectors, hover, children — everything you already know. Adapter applies encapsulation behind the scenes.
+- **Compact and lightweight** – Adapter is extremely small (≈ 2 kB gzipped). It loads instantly, adds almost no runtime overhead, and keeps your bundle lean.
+- **Built for long-term maintainability** – Styles live with the component. No global cascade. No naming conventions to memorize. No creeping side effects.
+- **One UI system for every platform** – Adapter components run everywhere: web apps, internal tools, Electron/Tauri, extensions, mobile webviews, hybrid apps, and embedded widgets. One codebase → all environments.
 
 ---
 
