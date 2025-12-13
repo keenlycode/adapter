@@ -1,94 +1,252 @@
-# Adapter Guide
+# Adapter
 
-Fast. Clean. Isolated. Compact. Web Component styling that just works.
+<style>
+  :root {
+    --accent: #0ea5e9;
+    --ink: #0b1224;
+    --bg: #ffffff;
+    --card: #f6f7fb;
+    --muted: #4b5563;
+    --border: #e4e7ec;
+  }
 
-Adapter makes UI development peaceful again. It gives you clean, isolated CSS without special tools, without new syntax, and without fighting with global styles. Your components look exactly the way you design them — anywhere they run.
+  .landing {
+    font-family: "Sora", "DM Sans", "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
 
----
+  .landing-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 2rem;
+  }
 
-## Why Adapter?
+  .hero {
+    display: grid;
+    gap: 1.25rem;
+  }
 
-- **CSS that never collides** – Every component gets its own safe styling space. No more mystery overrides from global CSS, legacy systems, or other frameworks.
-- **Drop into any stack** – React, Vue, Svelte, Lit, Deno, Bun, or plain JS — Adapter works with everything, and it never locks you in.
-- **Made for widgets, plugins, and AI-driven UI** – When you embed UI into other systems (chatbots, workflow panels, extensions, etc.), global CSS becomes unpredictable. Adapter keeps host CSS out and your component styles in.
-- **No build step, no new syntax** – Write normal CSS. Use nesting, selectors, hover, children — everything you already know. Adapter applies encapsulation behind the scenes.
-- **Compact and lightweight** – Adapter is extremely small (≈ 2 kB gzipped). It loads instantly, adds almost no runtime overhead, and keeps your bundle lean.
-- **Built for long-term maintainability** – Styles live with the component. No global cascade. No naming conventions to memorize. No creeping side effects.
-- **One UI system for every platform** – Adapter components run everywhere: web apps, internal tools, Electron/Tauri, extensions, mobile webviews, hybrid apps, and embedded widgets. One codebase → all environments.
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(14, 165, 233, 0.08);
+    color: #0284c7;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    width: fit-content;
+  }
 
----
+  .hero h1 {
+    font-size: clamp(2.4rem, 3vw, 3.2rem);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
 
-## What developers get
+  .lede {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 700px;
+    line-height: 1.6;
+  }
 
-- clean, readable CSS
-- automatic style isolation
-- safe embedding into any host page
-- framework-agnostic components
-- scalable, maintainable UI
-- low bundle size and fast performance
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
 
-Adapter’s goal is simple:
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    transition: transform 120ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  }
 
-> Make styling Web Components effortless — today and in the future.
+  .btn.primary {
+    background: linear-gradient(120deg, #0ea5e9, #38bdf8);
+    color: #f8fafc;
+    border: none;
+    box-shadow: 0 15px 45px rgba(14, 165, 233, 0.25);
+  }
 
----
+  .btn:hover {
+    transform: translateY(-2px);
+    border-color: #cbd5e1;
+  }
 
-## Quick Example
+  .meta {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
 
+  .pill {
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(14, 165, 233, 0.06);
+    border: 1px solid var(--border);
+  }
+
+  .section {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  }
+
+  .card h3 {
+    margin: 0 0 0.35rem;
+  }
+
+  .card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Demo styles removed */
+
+  .code-block {
+    background: #0b1224;
+    border: 1px solid #0b1224;
+    border-radius: 14px;
+    padding: 1rem;
+    overflow: auto;
+    font-size: 0.7rem;
+    line-height: 1.5;
+    color: blue;
+    width: 100%;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(12, 74, 110, 0), rgba(12, 74, 110, 0.35), rgba(12, 74, 110, 0));
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 640px) {
+    .landing {
+      padding: 2rem 1rem;
+    }
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<div class="landing">
+  <div class="landing-inner">
+    <div class="hero">
+      <h1>Fast, fearless styling for Web Components.</h1>
+      <p class="lede">
+        Adapter isolates CSS automatically so your UI survives every embed, extension, and AI-generated page.
+        No new syntax, no bundle weight, just custom elements that always look right.
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="usage/getting-started/">Getting Started</a>
+        <a class="btn" href="usage/core-concepts/">Core Concepts</a>
+        <a class="btn" href="usage/framework-integration/">Framework Integration</a>
+      </div>
+      <div class="meta">
+        <span class="pill">~2 kB gzipped</span>
+        <span class="pill">No build step required</span>
+        <span class="pill">Works in Browser, Deno, Node</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="grid">
+        <div class="card">
+          <h3>CSS that never collides</h3>
+          <p>Per-class and per-instance constructable style sheets keep host CSS out and your rules in.</p>
+        </div>
+        <div class="card">
+          <h3>Drop into any stack</h3>
+          <p>React, Vue, Svelte, Lit, Deno, Bun, or plain JS - Adapter is framework-agnostic and zero-dependency.</p>
+        </div>
+        <div class="card">
+          <h3>Design-system ready</h3>
+          <p>Compose tokens and variants with normal CSS. Inherit styles the same way you inherit classes.</p>
+        </div>
+        <div class="card">
+          <h3>Built for embeds</h3>
+          <p>Ship widgets, plugins, dashboards, and AI surfaces without worrying about hostile global CSS.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Code that feels familiar</h2>
+      <div class="grid">
+        <div class="card code-block">
 ```ts title="TypeScript"
 import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
 
-class Card extends Adapter {}
-Card.css = `
-  padding: 1rem;
-  border-radius: 12px;
-  background: white;
+class Button extends Adapter {}
 
-  &:hover {
-    background: #f3f4ff;
+Button.css = `
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent, #22d3ee) 60%, transparent);
+  background: color-mix(in srgb, var(--accent, #22d3ee) 18%, #0b1224);
+  color: #e6edff;
+
+  &[kind="ghost"] {
+    background: transparent;
   }
+`;
 
-  & > h2 {
-    font-size: 1.05rem;
-  }
-`
-Card.define('el-card')
+Button.define("ui-button");
 ```
+        </div>
+        <div class="card">
+          <h3>What you get</h3>
+          <ul>
+            <li>Encapsulated class-level CSS shared by every instance.</li>
+            <li>Per-instance overrides via the `css` property or attribute.</li>
+            <li>Composable helpers for tokens and variants - no new syntax.</li>
+            <li>Ready-to-embed components that ignore hostile host CSS.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-```html title="HTML"
-<el-card>
-  <h2>Hello Adapter</h2>
-</el-card>
-```
-
----
-
-## Built for real-world UI
-
-- **Design systems**: reusable components with predictable styling and clean inheritance.
-- **Internal tools & dashboards**: stable, maintainable UIs as your team and codebase grow.
-- **Automation & AI surfaces**: render UI safely from bots, workflows, or server-generated pages.
-- **Plugins & embeddable widgets**: drop custom UI into other systems without worrying about their CSS.
-
----
-
-## [Usage](usage/getting-started.md)
-
-- Start: [Getting Started](usage/getting-started.md).
-- Concepts: [Core Concepts](usage/core-concepts.md) (class vs object styles, inheritance, isolation).
-- Cookbook: [Patterns & Recipes](usage/patterns-and-recipes.md).
-- Frameworks: [Framework Integration](usage/framework-integration.md) (React, Vue, etc.).
-
-## [Contribute](contribution/overview.md)
-
-- Overview and expectations: [Overview](contribution/overview.md).
-- Workflow: [Workflow](contribution/workflow.md).
-- Development setup: [Development](contribution/development.md).
-- Docstring/style guidance: [Docstring Guide](contribution/docstring.md).
-
-Run the site locally with MkDocs:
-
-```bash title="Bash"
-uv sync --group docs  # installs MkDocs
-uv run mkdocs serve
-```
+    <div class="divider"></div>
+  </div>
+</div>
