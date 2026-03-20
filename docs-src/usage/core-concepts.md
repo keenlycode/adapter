@@ -31,7 +31,8 @@ This is the core mental model for Adapter: one shared, reusable style definition
 
 Example:
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 import { Adapter } from "@devcapsule/adapter";
 
 class Card extends Adapter {
@@ -70,7 +71,8 @@ When to reach for it:
 
 Usage pattern:
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 import { AdapterMixin } from "@devcapsule/adapter";
 
 // Your existing base class with behavior you need to keep.
@@ -136,7 +138,8 @@ Adapter takes care of merging inherited styles in the right order so that more s
 
 Example:
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 class BaseCard extends Adapter {
   static css = `
     display: block;
@@ -193,7 +196,8 @@ The key idea: you keep full control over CSS syntax, while JavaScript helps you 
 
 Example:
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 const primary = "#2563eb";
 const radius = "999px";
 
@@ -229,7 +233,8 @@ Adapter lets you run a **single processor for all class-level CSS** on a compone
 
 Example: minify class CSS while leaving instance overrides untouched.
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 import { Adapter } from "@devcapsule/adapter";
 
 const minify = (strings: TemplateStringsArray, ...values: unknown[]) => {
@@ -276,7 +281,8 @@ When you think “style isolation” with Adapter, think **small CSS islands**: 
 
 Example (host page with its own global styles):
 
-```html title="HTML"
+```html
+<!-- HTML -->
 <style>
   /* Host page styles that would normally leak everywhere */
   body {
@@ -330,7 +336,8 @@ You choose how much isolation you need:
 
 Example: using Adapter components inside another element’s shadow root:
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 // Define an Adapter-based card somewhere in your app.
 class ShellCard extends Adapter {
   static css = `

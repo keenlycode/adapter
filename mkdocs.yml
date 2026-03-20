@@ -19,22 +19,8 @@ nav:
       - Docstring Guide: contribution/docstring.md
 
 theme:
-  name: material
-  custom_dir: docs-src/_template
-  features:
-    - navigation.instant
-    - navigation.tracking
-    - navigation.sections
-    - navigation.top
-    - content.code.copy
-    - toc.integrate
-  palette:
-    - scheme: default
-      primary: indigo
-      accent: indigo
-    - scheme: slate
-      primary: indigo
-      accent: indigo
+  name: shadcn
+  pygments_style: one-dark
 
 plugins:
   - search
@@ -44,12 +30,14 @@ extra:
 
 markdown_extensions:
   - admonition
+  - fenced_code
+  - codehilite
   - md_in_html
   - toc:
       permalink: true
   - tables
   - pymdownx.highlight:
-      anchor_linenums: true
+      css_class: codehilite
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite

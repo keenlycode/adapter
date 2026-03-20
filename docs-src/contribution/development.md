@@ -41,7 +41,8 @@ AI output should ideally include:
 
 AI tools should expect:
 
-```bash title="Bash"
+```bash
+# Bash
 deno task test
 deno task dist
 ```

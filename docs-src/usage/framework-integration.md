@@ -15,7 +15,8 @@ This chapter shows how to use Adapter-based elements in:
 
 The vanilla setup is the most direct: import `Adapter`, define your element, then use it in HTML.
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 import { Adapter } from "@devcapsule/adapter";
 
 class Card extends Adapter {
@@ -30,7 +31,8 @@ class Card extends Adapter {
 Card.define("ui-card");
 ```
 
-```html title="HTML"
+```html
+<!-- HTML -->
 <ui-card>
   <h2>Hello Adapter</h2>
   <p>This card is rendered by a Web Component.</p>
@@ -53,7 +55,8 @@ React can render Web Components as long as you follow a few conventions:
 
 Make sure your Adapter components are defined once at app startup:
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 // components/ui-card.ts
 import { Adapter } from "@devcapsule/adapter";
 
@@ -71,7 +74,8 @@ Card.define("ui-card");
 
 Then import that module somewhere near your React root (once):
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 // main.tsx
 import "./components/ui-card";
 import React from "react";
@@ -84,7 +88,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 
 ### Usage in JSX
 
-```tsx title="TSX"
+```tsx
+// TSX
 export function Example() {
   return (
     <ui-card css="border-color: rebeccapurple;">
@@ -108,7 +113,8 @@ Vue (2.6+ with the Web Components config, or Vue 3) works well with custom eleme
 
 ### Configure Vue to ignore custom elements (Vue 3)
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 import { createApp } from "vue";
 import App from "./App.vue";
 import "./components/ui-card"; // defines <ui-card>
@@ -122,7 +128,8 @@ app.mount("#app");
 
 ### Use Adapter components in templates
 
-```vue title="Vue"
+```vue
+<!-- Vue -->
 <template>
   <ui-card css="border-color: teal;">
     <h2>Vue + Adapter</h2>
@@ -133,7 +140,8 @@ app.mount("#app");
 
 Because Adapter components expose a DOM-based API (`css` attribute / property), you can control instance styles with bindings:
 
-```vue title="Vue"
+```vue
+<!-- Vue -->
 <template>
   <ui-card :css="cardCss">
     <slot />
@@ -153,7 +161,8 @@ Svelte treats unknown tags as custom elements by default, so Adapter components 
 
 Make sure your component definition module is imported once before use (for example, in your root file):
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 // main.ts
 import "./components/ui-card";
 import App from "./App.svelte";
@@ -167,7 +176,8 @@ export default app;
 
 Then use Adapter-based elements in Svelte templates:
 
-```svelte title="Svelte"
+```svelte
+<!-- Svelte -->
 <script lang="ts">
   let border = "dodgerblue";
 </script>
