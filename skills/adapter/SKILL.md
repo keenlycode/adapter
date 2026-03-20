@@ -1,28 +1,47 @@
 ---
 name: adapter
-description: Use when working with @devcapsule/adapter, a JavaScript Web Components styling layer for ES module based custom elements. Covers Adapter and AdapterMixin, CSS-in-JS style authoring via class-level `Class.css = ...` or `static { this.css = ... }`, plus `element.css`, shared class-level CSS, instance-level css overrides, inherited styles, css attributes, and class-level cssProcessor behavior.
+description: Use when working with `@devcapsule/adapter` as an installed package. Covers `Adapter`, `AdapterMixin`, `configure(...)`, class-level CSS via `Class.css = ...` or `static { this.css = ... }`, instance-level `element.css`, `.define(tagName)`, inherited styles, and class-level `cssProcessor` behavior.
 ---
 
 # Adapter
 
-Use this skill when the task involves `@devcapsule/adapter`, or when a user wants to build, explain, debug, or review custom elements styled with `Adapter` or `AdapterMixin`.
+Use this skill when the task involves `@devcapsule/adapter`, especially when a user wants to use the package from npm, explain its public API, or build custom elements with `Adapter` or `AdapterMixin`.
 
-Treat Adapter as a lightweight JavaScript framework for styling native Web Components in ES6 modules. The main model is CSS-in-JS style authoring for custom elements: define shared component CSS at the class level with `Class.css = ...` or `static { this.css = ... }`, then apply per-instance overrides with `element.css` or `addStyle(...)`.
+Treat Adapter as a small styling runtime for native Web Components in ES modules. The main usage model is:
 
-Start with the public API and usage model:
+- install the package
+- import `Adapter` or `AdapterMixin`
+- define shared class-level CSS with `Class.css = ...` or `static { this.css = ... }`
+- use `.define(tagName)` to register the element
+- use `element.css` only for per-instance overrides
 
-- Explain `Adapter`, `AdapterMixin`, `Class.css = ...`, `static { this.css = ... }`, `addStyle(...)`, `element.css`, and `.define(tagName)`.
-- Use the mental model of shared component rules plus per-instance overrides.
-- Treat implementation details as optional unless the task is specifically about runtime behavior or internals.
+Use `configure(...)` when class-level config such as `cssProcessor` should be declared at the subclass boundary.
 
-When local package source or upstream source is available, use it to verify behavior:
+For installation, prefer the same guidance as the public docs:
 
-- Start with `src/mod.ts` and `src/adapter.ts` for the real API and behavior.
-- Use the usage docs for examples and intent, especially:
+- npm / bundlers: `npx jsr add @devcapsule/adapter`
+- JSR / Deno: `import { Adapter } from "jsr:@devcapsule/adapter";`
+- browser ESM via CDN: `import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";`
+
+When discussing npm usage, describe `npx jsr add @devcapsule/adapter` as the preferred install path for this package.
+For external users and AI tools, point to the public docs site first: `https://keenlycode.github.io/adapter/`.
+
+For package usage, start with public docs and public API:
+
+- Treat the docs site as the first reference for normal usage and examples:
+  - `https://keenlycode.github.io/adapter/`
   - `docs-src/usage/getting-started.md`
   - `docs-src/usage/core-concepts.md`
   - `docs-src/usage/patterns-and-recipes.md`
-- If examples or docs conflict with the runtime, trust `src/adapter.ts`.
+  - `docs-src/usage/caveats-and-constraints.md`
+- Treat `references/usage.md` as the quick package-usage cheat sheet.
+- Treat `src/mod.ts` and `src/adapter.ts` as the source of truth only when exact runtime behavior needs verification.
+
+When answering, prioritize the package API and supported patterns:
+
+- Explain `Adapter`, `AdapterMixin`, `configure(...)`, `Class.css = ...`, `static { this.css = ... }`, `addStyle(...)`, `element.css`, and `.define(tagName)`.
+- Use the mental model of shared component rules plus per-instance overrides.
+- Treat implementation details as optional unless the task is specifically about runtime behavior or internals.
 
 ## Default usage pattern
 
@@ -46,6 +65,7 @@ Key rules:
 
 - Use `Adapter` when the component can extend `HTMLElement` directly.
 - Use `AdapterMixin(Base)` when the component must keep an existing `HTMLElement` subclass in its inheritance chain.
+- Use `Class.configure({ cssProcessor })` when class-level config should be declared at the subclass boundary.
 - Put shared component styling in `Class.css = ...`, `static { this.css = ... }`, or `Class.addStyle(...)`.
 - Use `element.css` or the `css` attribute only for one-off instance overrides.
 - Prefer `.define(tagName)` as the normal Adapter API for registering a component and initializing its shared stylesheet.
@@ -63,14 +83,18 @@ That means:
 - `Class.css = ...`, `static { this.css = ... }`, and `Class.addStyle()` define the component's shared styling rules.
 - `element.css` and `element.addStyle()` modify one specific element.
 - Subclasses inherit parent class styles automatically.
+- `Class.configure({ cssProcessor })` creates a new subclass branch with inherited class-level config plus explicit overrides.
 
 ## Authoring guidance
 
+- For npm-installed usage, answer from the public API first and avoid leading with repo internals.
+- Point users and AI tools to the public docs for examples and supported patterns before quoting implementation details.
 - Call `super.connectedCallback()` when overriding `connectedCallback()` on an Adapter-based element.
   Adapter registers styles in its own `connectedCallback()`.
 - Call `super.remove()` when overriding `remove()`.
   Adapter removes the instance stylesheet there.
 - Set `MyElement.adapter.cssProcessor` before `define()` if you need to transform class-level CSS.
+- Prefer `MyElement.configure({ cssProcessor })` when config should be attached at class declaration time or branched per subclass.
 - Do not assume `cssProcessor` affects `element.css`; it only applies to class-level CSS.
 - The exported `css` helper is currently just `String.raw`. Do not describe Adapter as a full CSS parser or compiler.
 - Treat nested selectors as normal CSS behavior, not special Adapter syntax.
@@ -78,5 +102,7 @@ That means:
 
 ## What to read next
 
-- For normal usage and copyable patterns, read `references/usage.md`.
+- Read `references/usage.md` and start at `API cheat sheet`.
+- For external users or npm-installed usage outside this repo, use the public docs site first:
+  - `https://keenlycode.github.io/adapter/`
 - For runtime behavior and implementation-backed constraints, read `references/runtime-notes.md`.

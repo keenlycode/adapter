@@ -2,6 +2,9 @@
 
 Use this file when you need runtime behavior or implementation-backed guidance for Adapter.
 
+This is not the first file to read for npm/package usage.
+Use it after `references/usage.md` or the docs pages when exact behavior needs verification.
+
 ## Public exports
 
 In the upstream package implementation, the public exports are:
@@ -46,6 +49,7 @@ The upstream Adapter implementation has two controller layers:
   Otherwise the instance stylesheet cleanup will be skipped.
 - `adapter.cssProcessor` affects class-level CSS only.
   It does not transform `element.css` or CSS set through the `css` attribute.
+- `Class.configure({ cssProcessor })` creates a new subclass branch with inherited config and explicit overrides.
 - Do not assume `static css = ...` class fields trigger Adapter's class-style setter.
   In this repo, prefer `Class.css = ...` or `static { this.css = ... }` for shared class-level CSS.
 - The default `css` helper does not expand or compile CSS on its own.
