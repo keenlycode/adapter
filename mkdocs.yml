@@ -14,15 +14,9 @@ nav:
       - Caveats & Constraints: usage/caveats-and-constraints.md
       - AI Skill: usage/ai-skill.md
       - Framework Integration: usage/framework-integration.md
-  - Contribution:
-      - Overview: contribution/overview.md
-      - Workflow: contribution/workflow.md
-      - Development: contribution/development.md
-      - Docstring Guide: contribution/docstring.md
 
 theme:
   name: shadcn
-  custom_dir: docs-src/overrides
   pygments_style: one-dark
 
 repo_name: keenlycode/adapter
@@ -31,7 +25,7 @@ plugins:
   - search
 
 extra_css:
-  - stylesheets/extra.css
+  - _stylesheets/extra.css
 
 extra:
   adapter_version: "3.1.1"
