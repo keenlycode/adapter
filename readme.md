@@ -76,14 +76,13 @@ Define a simple card component:
 ```ts
 import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
 
-class Card extends Adapter {
-  static css = `
-    display: block;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid currentColor;
-  `;
-}
+class Card extends Adapter {}
+Card.css = `
+  display: block;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid currentColor;
+`;
 
 Card.define("el-card");
 ```
