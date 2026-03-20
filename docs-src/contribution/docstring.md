@@ -42,7 +42,8 @@ For full reference, see the official spec:
 
 ## Recommended Template
 
-````ts title="TypeScript"
+````ts
+// TypeScript
 /**
  * Short summary describing what this class/function does.
  *
@@ -84,7 +85,8 @@ For full reference, see the official spec:
 
 ## Example: Class Documentation
 
-```ts title="TypeScript"
+```ts
+// TypeScript
 /**
  * Base class for all Adapter-powered custom elements.
  *
@@ -101,7 +103,8 @@ export class Adapter {
 
 ## Example: Method Documentation
 
-````ts title="TypeScript"
+````ts
+// TypeScript
 /**
  * Register the custom element with the browser.
  *
@@ -109,27 +112,20 @@ export class Adapter {
  * ----------
  * tagName : string
  *     The tag name used for the custom element.
- * options : DefineOptions, optional
- *     Configuration for scoping, lifecycle, or extensions.
- *
- * Returns
- * -------
- * void
- *     This method does not return a value.
  *
  * Raises
  * ------
- * TypeError
- *     If `tagName` is not valid.
+ * DOMException
+ *     If `tagName` is invalid or already defined.
  *
  * Examples
  * --------
  * ```ts
  * class Card extends Adapter {}
- * Card.define("el-card");
+ * Card.define("ui-card");
  * ```
  */
-static define(tagName: string, options?: DefineOptions) {
+static define(tagName: string) {
   ...
 }
 ````
@@ -164,6 +160,17 @@ Extraction scripts depend on predictable section names:
 ### Treat docstrings like public API
 
 Even internal methods benefit from clear explanation.
+
+### Keep examples aligned with runtime behavior
+
+For Adapter-specific examples, prefer the patterns the runtime actually supports:
+
+* `Class.css = ...`
+* `static { this.css = ... }`
+* `Class.addStyle(...)`
+* `element.css = ...`
+
+Do not use `static css = ...` in examples unless runtime support for that class-field form is intentionally added.
 
 ---
 

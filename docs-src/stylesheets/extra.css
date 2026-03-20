@@ -1,0 +1,15 @@
+.admonition .codehilite {
+  background: #282c34 !important;
+  background-color: #282c34 !important;
+}
+
+.admonition .codehilite pre {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.admonition p code,
+.admonition li code {
+  background: #282c34 !important;
+  color: #abb2bf !important;
+}

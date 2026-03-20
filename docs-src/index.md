@@ -1,252 +1,88 @@
 # Adapter
 
-<style>
-  :root {
-    --accent: #0ea5e9;
-    --ink: #0b1224;
-    --bg: #ffffff;
-    --card: #f6f7fb;
-    --muted: #4b5563;
-    --border: #e4e7ec;
-  }
+Adapter is a small styling runtime for developers building native Web Components.
 
-  .landing {
-    font-family: "Sora", "DM Sans", "Inter", system-ui, -apple-system, sans-serif;
-    color: var(--ink);
-    background: var(--bg);
-    position: relative;
-    overflow: hidden;
-  }
+It gives custom elements a CSS-in-JS workflow without asking you to abandon the platform. You still write Custom Elements, standard CSS, and ES modules. Adapter adds a thin runtime layer for shared component styles, inherited class styles, and per-instance overrides.
 
-  .landing-inner {
-    max-width: 1080px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-    display: grid;
-    gap: 2rem;
-  }
+## AI Skill
 
-  .hero {
-    display: grid;
-    gap: 1.25rem;
-  }
+!!! info
 
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.35rem 0.8rem;
-    border-radius: 999px;
-    background: rgba(14, 165, 233, 0.08);
-    color: #0284c7;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    width: fit-content;
-  }
+    Adapter also ships with a local AI Skill for coding assistants.
 
-  .hero h1 {
-    font-size: clamp(2.4rem, 3vw, 3.2rem);
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
+    It helps AI agents follow Adapter's actual runtime model instead of guessing from generic Web Components patterns.
 
-  .lede {
-    font-size: 1.1rem;
-    color: var(--muted);
-    max-width: 700px;
-    line-height: 1.6;
-  }
+    The skill covers things like:
 
-  .cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-  }
+    - supported class CSS patterns such as `Class.css = ...` and `static { this.css = ... }`
+    - inheritance behavior for shared class-level CSS
+    - class-level `cssProcessor` behavior
+    - runtime caveats such as avoiding `static css = ...`
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.9rem 1.1rem;
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    background: #ffffff;
-    color: var(--ink);
-    font-weight: 700;
-    text-decoration: none;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
-    transition: transform 120ms ease, box-shadow 160ms ease, border-color 160ms ease;
-  }
+    If AI Skill is a new concept to you, read more on the dedicated [AI Skill](usage/ai-skill.md) page.
 
-  .btn.primary {
-    background: linear-gradient(120deg, #0ea5e9, #38bdf8);
-    color: #f8fafc;
-    border: none;
-    box-shadow: 0 15px 45px rgba(14, 165, 233, 0.25);
-  }
+## Why Developers Reach For Adapter
 
-  .btn:hover {
-    transform: translateY(-2px);
-    border-color: #cbd5e1;
-  }
+- It keeps the API small and close to platform primitives
+- It gives each component a shared stylesheet instead of repeating inline styles
+- It lets subclasses inherit styles through normal JavaScript inheritance
+- It supports per-instance CSS when one element needs a local override
+- It works well for design systems, internal tools, dashboards, and embedded widgets
 
-  .meta {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    color: var(--muted);
-    font-size: 0.95rem;
-  }
+## What The Workflow Feels Like
 
-  .pill {
-    padding: 0.35rem 0.75rem;
-    border-radius: 999px;
-    background: rgba(14, 165, 233, 0.06);
-    border: 1px solid var(--border);
-  }
+Adapter keeps the styling model simple:
 
-  .section {
-    display: grid;
-    gap: 1.25rem;
-  }
+1. Define shared class CSS for the component
+2. Register the element with `.define(tagName)`
+3. Override a single instance only when needed
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
-  }
+That makes it useful when you want component-level styling with less framework overhead and more direct control over the browser's styling primitives.
 
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.2rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-  }
+## Minimal Example
 
-  .card h3 {
-    margin: 0 0 0.35rem;
-  }
+```ts
+import { Adapter } from "@devcapsule/adapter";
 
-  .card p {
-    margin: 0;
-    color: var(--muted);
-    line-height: 1.5;
-  }
+class Card extends Adapter {}
 
-  /* Demo styles removed */
-
-  .code-block {
-    background: #0b1224;
-    border: 1px solid #0b1224;
-    border-radius: 14px;
-    padding: 1rem;
-    overflow: auto;
-    font-size: 0.7rem;
-    line-height: 1.5;
-    color: blue;
-    width: 100%;
-  }
-
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, rgba(12, 74, 110, 0), rgba(12, 74, 110, 0.35), rgba(12, 74, 110, 0));
-    margin: 1.5rem 0;
-  }
-
-  @media (max-width: 640px) {
-    .landing {
-      padding: 2rem 1rem;
-    }
-    .btn {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-</style>
-
-<div class="landing">
-  <div class="landing-inner">
-    <div class="hero">
-      <h1>Fast, fearless styling for Web Components.</h1>
-      <p class="lede">
-        Adapter isolates CSS automatically so your UI survives every embed, extension, and AI-generated page.
-        No new syntax, no bundle weight, just custom elements that always look right.
-      </p>
-      <div class="cta-row">
-        <a class="btn primary" href="usage/getting-started/">Getting Started</a>
-        <a class="btn" href="usage/core-concepts/">Core Concepts</a>
-        <a class="btn" href="usage/framework-integration/">Framework Integration</a>
-      </div>
-      <div class="meta">
-        <span class="pill">~2 kB gzipped</span>
-        <span class="pill">No build step required</span>
-        <span class="pill">Works in Browser, Deno, Node</span>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="grid">
-        <div class="card">
-          <h3>CSS that never collides</h3>
-          <p>Per-class and per-instance constructable style sheets keep host CSS out and your rules in.</p>
-        </div>
-        <div class="card">
-          <h3>Drop into any stack</h3>
-          <p>React, Vue, Svelte, Lit, Deno, Bun, or plain JS - Adapter is framework-agnostic and zero-dependency.</p>
-        </div>
-        <div class="card">
-          <h3>Design-system ready</h3>
-          <p>Compose tokens and variants with normal CSS. Inherit styles the same way you inherit classes.</p>
-        </div>
-        <div class="card">
-          <h3>Built for embeds</h3>
-          <p>Ship widgets, plugins, dashboards, and AI surfaces without worrying about hostile global CSS.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>Code that feels familiar</h2>
-      <div class="grid">
-        <div class="card code-block">
-```ts title="TypeScript"
-import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
-
-class Button extends Adapter {}
-
-Button.css = `
-  display: inline-flex;
-  gap: 0.5rem;
-  align-items: center;
-  padding: 0.7rem 1.1rem;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--accent, #22d3ee) 60%, transparent);
-  background: color-mix(in srgb, var(--accent, #22d3ee) 18%, #0b1224);
-  color: #e6edff;
-
-  &[kind="ghost"] {
-    background: transparent;
-  }
+Card.css = `
+  display: block;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  background: white;
 `;
 
-Button.define("ui-button");
+Card.define("ui-card");
 ```
-        </div>
-        <div class="card">
-          <h3>What you get</h3>
-          <ul>
-            <li>Encapsulated class-level CSS shared by every instance.</li>
-            <li>Per-instance overrides via the `css` property or attribute.</li>
-            <li>Composable helpers for tokens and variants - no new syntax.</li>
-            <li>Ready-to-embed components that ignore hostile host CSS.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
 
-    <div class="divider"></div>
-  </div>
-</div>
+```html
+<ui-card>
+  <h2>Hello Adapter</h2>
+  <p>This component uses shared class-level CSS.</p>
+</ui-card>
+```
+
+## What Makes It Different
+
+- Shared class-level CSS and instance-level CSS are separate on purpose
+- Class styles follow inheritance, so base components stay reusable
+- The runtime uses `CSSStyleSheet` and `adoptedStyleSheets` instead of inventing a parallel styling engine
+- `Adapter` and `AdapterMixin` let you choose between a base class and mixin style integration
+
+## Good Fit
+
+- Building reusable Web Components with shared styling
+- Creating a lightweight design system without a full UI framework
+- Shipping components into environments with messy surrounding CSS
+- Keeping styling logic in ES module code while still writing normal CSS
+
+## Start Here
+
+- [Getting Started](usage/getting-started.md)
+- [Core Concepts](usage/core-concepts.md)
+- [Patterns and Recipes](usage/patterns-and-recipes.md)
+- [Caveats and Constraints](usage/caveats-and-constraints.md)
+- [AI Skill](usage/ai-skill.md)
+- [Framework Integration](usage/framework-integration.md)

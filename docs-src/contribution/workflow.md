@@ -1,60 +1,71 @@
 # Workflows
 
-This file describes how to build, test, and release Adapter.
+This page collects the common build, test, and docs commands for working on the repo.
 
 ## Prerequisites
 
-* Deno
-* Git
-* Optional: Node.js + npm
+- Deno
+- Node.js and npm
+- `uv` for the docs toolchain
 
-## Setup
+## Build the Runtime
 
-```bash title="Bash"
-git clone https://github.com/keenlycode/adapter.git
-cd adapter
-npm install # optional
-```
-
-## Build
-
-```bash title="Bash"
+```bash
 deno task dist
 ```
 
-Outputs go to `dist/`.
+Runtime output is written to `dist/browser/`.
 
-## Test
+## Typecheck
 
-```bash title="Bash"
-deno task test
-# or
-npm test
+```bash
+npx tsc --project tsconfig.json --noEmit
 ```
+
+## Browser Test Flow
+
+Build the browser test assets:
+
+```bash
+deno run --allow-all esbuild/test.js
+```
+
+Serve the test page:
+
+```bash
+engrave server test-src/ docs/test/ --watch-add='.*\\.js'
+```
+
+Then open the served page and check the Mocha results.
 
 ## Docs
 
-MkDocs (Material theme) builds from `docs-src/` using `mkdocs.yml` and emits the static site to `docs/`.
+MkDocs builds from `docs-src/` using `mkdocs.yml` and emits the static site to `docs/`.
 
-### Install doc tooling
+Install the pinned docs toolchain:
 
-Preferred (uses the pinned `pyproject.toml` + `uv.lock`):
-
-```bash title="Bash"
+```bash
 uv sync --group docs
 ```
 
-Fallback:
+Build:
 
-```bash title="Bash"
-pip install mkdocs mkdocs-material
+```bash
+uv run mkdocs build
 ```
 
-### Build and preview
+Serve with live reload:
 
-```bash title="Bash"
-uv run mkdocs build   # output in docs/
-uv run mkdocs serve   # live preview at http://127.0.0.1:8000
+```bash
+uv run mkdocs serve --livereload
 ```
 
-You can swap `uv run` for `mkdocs` directly if the tools are on your PATH.
+## Practical Rule
+
+When behavior changes:
+
+1. update runtime code
+2. update tests
+3. update docs/examples
+
+That order keeps the docs from drifting away from the implementation.

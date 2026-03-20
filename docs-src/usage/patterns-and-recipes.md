@@ -1,41 +1,29 @@
 # Patterns and Recipes
 
-This chapter collects practical patterns for building real-world UI with Adapter.
+This page is a practical cookbook for building with Adapter after you already understand the styling model.
 
-Use it as a cookbook: skim for the scenario you need, copy the pattern, and adapt it.
+All examples here use the supported class-level CSS patterns for this repo.
 
----
+## Buttons with Variants
 
-## 1. Buttons and variants
-
-### Basic button
-
-```ts title="TypeScript"
+```ts
 import { Adapter } from "@devcapsule/adapter";
 
-class Button extends Adapter {
-  static css = `
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1rem;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    font: inherit;
-    background: black;
-    color: white;
-  `;
-}
+class Button extends Adapter {}
 
-Button.define("ui-button");
-```
+Button.css = `
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font: inherit;
+  background: black;
+  color: white;
+`;
 
-### Variants via attributes
-
-You can add variants with attribute selectors in class-level CSS.
-
-```ts title="TypeScript"
 Button.addStyle(`
   &[variant="outline"] {
     background: transparent;
@@ -45,89 +33,84 @@ Button.addStyle(`
 
   &[variant="ghost"] {
     background: transparent;
+    color: black;
     border-color: transparent;
   }
 `);
+
+Button.define("ui-button");
 ```
 
-Usage:
-
-```html title="HTML"
+```html
 <ui-button>Default</ui-button>
 <ui-button variant="outline">Outline</ui-button>
 <ui-button variant="ghost">Ghost</ui-button>
 ```
 
-Because these rules are class-level styles, they apply consistently to every instance.
+Use attribute selectors for reusable variants instead of one-off instance CSS.
 
----
+## Base Components with Inheritance
 
-## 2. Cards and layout
-
-### Card component
-
-```ts title="TypeScript"
-class Card extends Adapter {
-  static css = `
-    display: block;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: white;
-    box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.04),
-      0 2px 8px rgba(0, 0, 0, 0.06);
-  `;
+```ts
+class BaseCard extends Adapter {
+  static {
+    this.css = `
+      display: block;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      background: white;
+    `;
+  }
 }
 
-Card.define("ui-card");
+class WarningCard extends BaseCard {
+  static {
+    this.css = `
+      border-color: #f97316;
+      background: #fff7ed;
+    `;
+  }
+}
+
+BaseCard.define("base-card");
+WarningCard.define("warning-card");
 ```
 
-### Layout container
+Use this pattern when multiple components share layout, spacing, or typography.
 
-```ts title="TypeScript"
-class Container extends Adapter {
-  static css = `
-    display: block;
-    max-width: 960px;
-    margin: 0 auto;
-    padding-inline: 1rem;
-  `;
-}
+## Layout Primitives
+
+```ts
+class Container extends Adapter {}
+
+Container.css = `
+  display: block;
+  max-width: 960px;
+  margin: 0 auto;
+  padding-inline: 1rem;
+`;
 
 Container.define("ui-container");
 ```
 
-Usage:
-
-```html title="HTML"
+```html
 <ui-container>
-  <ui-card>
+  <warning-card>
     <h2>Inside container</h2>
-    <p>Adapter makes layout components easy to reuse.</p>
-  </ui-card>
+    <p>Layout and component styles stay reusable.</p>
+  </warning-card>
 </ui-container>
 ```
 
----
+## One-Off Instance Overrides
 
-## 3. Instance-specific overrides
+Use this only when one specific element should differ from the class default.
 
-Sometimes you want one-off custom styling without adding new variants.
+### Via property
 
-### Via the `css` attribute
-
-```html title="HTML"
-<ui-card css="border-color: hotpink;">
-  <h2>Special card</h2>
-  <p>Styled via the css attribute.</p>
-</ui-card>
-```
-
-### Via the `css` property
-
-```ts title="TypeScript"
-const card = document.createElement("ui-card") as Card;
+```ts
+const card = document.createElement("warning-card") as InstanceType<typeof WarningCard>;
 
 card.css = `
   border-color: seagreen;
@@ -137,23 +120,25 @@ card.css = `
 document.body.append(card);
 ```
 
-Under the hood (see `src/adapter.ts`), Adapter gives this instance its own constructable `CSSStyleSheet`, keyed by a stable UUID, and writes the rules there. Other cards are unaffected.
+### Via attribute
 
----
+```html
+<warning-card css="border-color: hotpink;"></warning-card>
+```
 
-## 4. Nested content and selectors
+Do not use instance CSS as the main design-system API for a component.
 
-Adapter lets you target content inside your components using normal selectors.
+## Nested Selectors and Internal Content
 
-```ts title="TypeScript"
-class Dialog extends Adapter {
-  static css = `
-    display: block;
-    padding: 1.5rem;
-    border-radius: 0.75rem;
-    background: white;
-  `;
-}
+```ts
+class Dialog extends Adapter {}
+
+Dialog.css = `
+  display: block;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  background: white;
+`;
 
 Dialog.addStyle(`
   & h2 {
@@ -172,9 +157,7 @@ Dialog.addStyle(`
 Dialog.define("ui-dialog");
 ```
 
-Usage:
-
-```html title="HTML"
+```html
 <ui-dialog>
   <h2>Confirm action</h2>
   <p>Are you sure you want to continue?</p>
@@ -182,80 +165,74 @@ Usage:
     <ui-button variant="ghost">Cancel</ui-button>
     <ui-button>Continue</ui-button>
   </footer>
-  
 </ui-dialog>
 ```
 
-Selectors like `& h2` are expanded by Adapter’s CSS helper into valid rules scoped to your component.
+Treat selectors here as normal CSS selectors. If your project needs nonstandard transforms, use `cssProcessor` or verify browser support first.
 
----
+## `AdapterMixin` with Existing Bases
 
-## 5. Hostile CSS environments
+```ts
+import { AdapterMixin } from "@devcapsule/adapter";
 
-Adapter is especially useful when you embed UI into pages you don’t control: dashboards, CMSes, plugins, or AI-generated layouts.
+class Focusable extends HTMLElement {
+  connectedCallback() {
+    super.connectedCallback?.();
+    this.tabIndex = 0;
+  }
+}
 
-Patterns:
-
-- **Namespace your tags**
-  - Use a prefix such as `ac-` or `ui-` for all Adapter components.
-
-- **Keep core styles at the class level**
-  - Define layout, typography, and basic tokens in `static css` and `static addStyle`.
-  - Reserve instance-level `css` for overrides and local tweaks.
-
-- **Use attributes instead of global classes**
-  - Prefer selectors like `[variant="danger"]` or `[size="lg"]` rather than relying on global class names.
-
-Because Adapter writes rules into constructable style sheets attached via `adoptedStyleSheets`, your component styles will not be polluted by the host page’s CSS, and vice versa.
-
----
-
-## 6. Theming and design systems
-
-Adapter can sit at the base of a small design system.
-
-Common patterns:
-
-- **Token helpers in JS/TS**
-  - Create functions that return CSS strings, then feed them into `static css` or `addStyle`.
-
-  ```ts title="TypeScript"
-  const primaryColor = "#2563eb";
-
-  const buttonBase = () => `
-    border-radius: 999px;
-    font-weight: 500;
-  `;
-
-  class PrimaryButton extends Adapter {
-    static css = `
-      ${buttonBase()}
-      background: ${primaryColor};
-      color: white;
+class IconButton extends AdapterMixin(Focusable) {
+  static {
+    this.css = `
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
     `;
   }
+}
 
-  PrimaryButton.define("ds-primary-button");
-  ```
+IconButton.define("ui-icon-button");
+```
 
-- **Shared layout primitives**
-  - Build reusable components like `Stack`, `Inline`, `Grid` as Adapter elements and compose them in any framework.
+Use this when replacing the base class with `Adapter` would break existing behavior.
 
-- **Gradual adoption**
-  - Start with a single Adapter component (e.g. a card or button) embedded in an existing app.
-  - Expand to a small kit of primitives over time.
+## Branching `cssProcessor` Configuration
 
----
+```ts
+const minify = (strings: TemplateStringsArray, ...values: unknown[]) => {
+  const raw = String.raw({ raw: strings }, ...values);
+  return raw.replace(/\s+/g, " ").trim();
+};
 
-## 7. Progressive enhancement
+const annotate = (strings: TemplateStringsArray, ...values: unknown[]) => {
+  const raw = String.raw({ raw: strings }, ...values);
+  return `/* processed */ ${raw}`;
+};
 
-Adapter components degrade gracefully when styles are missing or not yet applied, which makes them friendly to progressive enhancement.
+class Tag extends Adapter.configure({ cssProcessor: minify }) {}
+Tag.css = `
+  display: inline-flex;
+  gap: 0.25rem;
+`;
 
-Suggestions:
+class DebugTag extends Tag.configure({ cssProcessor: annotate }) {}
+DebugTag.css = `
+  color: crimson;
+`;
+```
 
-- Serve basic HTML content first.
-- Define and register Adapter components as soon as your JS loads.
-- Use Adapter for layout and polish, not for critical content visibility.
+Use `configure(...)` when you want a new class branch with inherited defaults plus an explicit override.
 
-If you work in a server-rendered environment, revisit `framework-integration.md` for SSR and hydration considerations.
+## Hostile CSS Environments
 
+Adapter works well in dashboards, CMS pages, plugins, and embeds where surrounding CSS is unpredictable.
+
+Good habits:
+
+- namespace custom tags such as `ui-` or `ac-`
+- keep base styling at the class level
+- reserve instance CSS for local overrides
+- prefer attribute-driven variants over global class names
+
+This keeps the component contract clear even when the host page is messy.

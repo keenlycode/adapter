@@ -112,6 +112,60 @@ describe("Adapter Class: Use Case", () => {
     assert(RedCard.adapter.allStyle.includes(Card1.css));
   });
 
+  it("Should create a configured class branch with inherited cssProcessor", () => {
+    const processor = (strings: TemplateStringsArray, ...values: unknown[]) => {
+      const raw = String.raw({ raw: strings }, ...values);
+      return raw.replace("display: flex;", "display: grid;");
+    };
+
+    class ConfiguredCard extends Adapter.configure({ cssProcessor: processor }) { }
+    class ChildConfiguredCard extends ConfiguredCard {
+      static {
+        this.css = `display: flex;`;
+      }
+    }
+
+    ChildConfiguredCard.define("el-child-configured-card");
+
+    assert(ConfiguredCard.adapter.cssProcessor === processor);
+    assert(ChildConfiguredCard.adapter.cssProcessor === processor);
+    assert(
+      ChildConfiguredCard.adapter.cssStyleSheet.cssRules[0].cssText.includes(
+        "display: grid;"
+      )
+    );
+  });
+
+  it("Should allow configured subclasses to override inherited cssProcessor", () => {
+    const baseProcessor = (strings: TemplateStringsArray, ...values: unknown[]) => {
+      const raw = String.raw({ raw: strings }, ...values);
+      return raw.replace("display: flex;", "display: grid;");
+    };
+    const overrideProcessor = (strings: TemplateStringsArray, ...values: unknown[]) => {
+      const raw = String.raw({ raw: strings }, ...values);
+      return raw.replace("display: flex;", "display: inline-block;");
+    };
+
+    class BaseConfiguredCard extends Adapter.configure({ cssProcessor: baseProcessor }) { }
+    class OverrideConfiguredCard extends BaseConfiguredCard.configure({
+      cssProcessor: overrideProcessor
+    }) {
+      static {
+        this.css = `display: flex;`;
+      }
+    }
+
+    OverrideConfiguredCard.define("el-override-configured-card");
+
+    assert(BaseConfiguredCard.adapter.cssProcessor === baseProcessor);
+    assert(OverrideConfiguredCard.adapter.cssProcessor === overrideProcessor);
+    assert(
+      OverrideConfiguredCard.adapter.cssStyleSheet.cssRules[0].cssText.includes(
+        "display: inline-block;"
+      )
+    );
+  });
+
   it("Class' CSSStyleSheet() should be adopted by document", () => {
     assert(document.adoptedStyleSheets.includes(Card1.adapter.cssStyleSheet));
     assert(document.adoptedStyleSheets.includes(Card2.adapter.cssStyleSheet));
