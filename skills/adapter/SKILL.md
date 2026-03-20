@@ -1,15 +1,17 @@
 ---
 name: adapter
-description: Use when working with @devcapsule/adapter. Covers how to build or explain Web Components with Adapter or AdapterMixin, shared class-level CSS, instance-level css overrides, inherited styles, css attributes, and class-level cssProcessor behavior.
+description: Use when working with @devcapsule/adapter, a JavaScript Web Components styling layer for ES module based custom elements. Covers Adapter and AdapterMixin, CSS-in-JS style authoring via class-level `Class.css = ...` or `static { this.css = ... }`, plus `element.css`, shared class-level CSS, instance-level css overrides, inherited styles, css attributes, and class-level cssProcessor behavior.
 ---
 
 # Adapter
 
 Use this skill when the task involves `@devcapsule/adapter`, or when a user wants to build, explain, debug, or review custom elements styled with `Adapter` or `AdapterMixin`.
 
+Treat Adapter as a lightweight JavaScript framework for styling native Web Components in ES6 modules. The main model is CSS-in-JS style authoring for custom elements: define shared component CSS at the class level with `Class.css = ...` or `static { this.css = ... }`, then apply per-instance overrides with `element.css` or `addStyle(...)`.
+
 Start with the public API and usage model:
 
-- Explain `Adapter`, `AdapterMixin`, `static css`, `addStyle(...)`, `element.css`, and `.define(tagName)`.
+- Explain `Adapter`, `AdapterMixin`, `Class.css = ...`, `static { this.css = ... }`, `addStyle(...)`, `element.css`, and `.define(tagName)`.
 - Use the mental model of shared component rules plus per-instance overrides.
 - Treat implementation details as optional unless the task is specifically about runtime behavior or internals.
 
@@ -30,9 +32,11 @@ Prefer this shape unless the codebase already uses another pattern:
 import { Adapter } from "@devcapsule/adapter";
 
 class MyElement extends Adapter {
-  static css = `
-    display: block;
-  `;
+  static {
+    this.css = `
+      display: block;
+    `;
+  }
 }
 
 MyElement.define("my-element");
@@ -42,9 +46,10 @@ Key rules:
 
 - Use `Adapter` when the component can extend `HTMLElement` directly.
 - Use `AdapterMixin(Base)` when the component must keep an existing `HTMLElement` subclass in its inheritance chain.
-- Put shared component styling in `static css` or `static addStyle(...)`.
+- Put shared component styling in `Class.css = ...`, `static { this.css = ... }`, or `Class.addStyle(...)`.
 - Use `element.css` or the `css` attribute only for one-off instance overrides.
 - Prefer `.define(tagName)` as the normal Adapter API for registering a component and initializing its shared stylesheet.
+- Do not describe `static css = ...` class fields as a supported Adapter pattern. In this repo, that field form does not reliably route through Adapter's static `css` accessor.
 
 ## Mental model
 
@@ -55,7 +60,7 @@ Adapter has two styling layers:
 
 That means:
 
-- `static css` and `static addStyle()` define the component's shared styling rules.
+- `Class.css = ...`, `static { this.css = ... }`, and `Class.addStyle()` define the component's shared styling rules.
 - `element.css` and `element.addStyle()` modify one specific element.
 - Subclasses inherit parent class styles automatically.
 

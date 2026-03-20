@@ -355,7 +355,12 @@ class AdapterObjectController {
   }
 }
 
-type Constructor<T = {}> = new (...args: any[]) => T;
+// deno-lint-ignore no-explicit-any
+type Constructor<T = object> = new (...args: any[]) => T;
+type CssProcessor = (strings: TemplateStringsArray, ...values: unknown[]) => string;
+type AdapterClassConfiguration = {
+  cssProcessor?: CssProcessor;
+};
 
 /**
  * A mixin function to add Adapter functionality to a base class.
@@ -373,11 +378,34 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
      * Get the AdapterClassController instance.
      */
     static get adapter(): AdapterClassController {
-      if (this._adapter === Object.getPrototypeOf(this)._adapter) {
+      const parentClass = Object.getPrototypeOf(this);
+      if (this._adapter === parentClass._adapter) {
+        const parentAdapter = "adapter" in parentClass
+          ? parentClass.adapter as AdapterClassController
+          : undefined;
         this._adapter = new AdapterClassController();
         this._adapter.adapterClass = this;
+        if (parentAdapter) {
+          this._adapter.cssProcessor = parentAdapter.cssProcessor;
+        }
       }
       return this._adapter;
+    }
+
+    /**
+     * Create a configured subclass branch without mutating the current class.
+     */
+    static configure(
+      this: typeof _Adapter,
+      options: AdapterClassConfiguration = {}
+    ): typeof _Adapter {
+      return class ConfiguredAdapter extends this {
+        static {
+          if (options.cssProcessor) {
+            this.adapter.cssProcessor = options.cssProcessor;
+          }
+        }
+      };
     }
 
     /**
@@ -423,6 +451,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
     /**
      * Constructor to initialize the AdapterObjectController.
      */
+    // deno-lint-ignore no-explicit-any
     constructor(...args: any[]) {
       super(...args);
       this._adapter.adapterObject = this;

@@ -30,8 +30,8 @@ The upstream Adapter implementation has two controller layers:
 ## Important behavior
 
 - `.define(tagName)` calls `customElements.define(...)` and initializes the shared stylesheet.
-- `static css = ...` replaces the class stylesheet content for that class.
-- `static addStyle(...)` appends another class-level block.
+- `Class.css = ...` or `static { this.css = ... }` replaces the class stylesheet content for that class.
+- `Class.addStyle(...)` appends another class-level block.
 - Class inheritance merges parent styles first, then child styles.
 - `element.css = ...` writes a scoped rule for that one element instance.
 - `element.addStyle(...)` appends another scoped rule for that one element instance.
@@ -46,6 +46,8 @@ The upstream Adapter implementation has two controller layers:
   Otherwise the instance stylesheet cleanup will be skipped.
 - `adapter.cssProcessor` affects class-level CSS only.
   It does not transform `element.css` or CSS set through the `css` attribute.
+- Do not assume `static css = ...` class fields trigger Adapter's class-style setter.
+  In this repo, prefer `Class.css = ...` or `static { this.css = ... }` for shared class-level CSS.
 - The default `css` helper does not expand or compile CSS on its own.
   Nested rules rely on the browser's CSS support, or on a custom `adapter.cssProcessor`.
 - Direct `customElements.define("x-tag", MyElement)` can still work in the current implementation, because Adapter can backfill tag/style setup when an instance is created.

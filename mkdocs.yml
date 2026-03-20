@@ -20,7 +20,10 @@ nav:
 
 theme:
   name: shadcn
+  custom_dir: docs-src/overrides
   pygments_style: one-dark
+
+repo_name: devcapsule/adapter
 
 plugins:
   - search

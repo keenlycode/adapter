@@ -8,16 +8,21 @@ Use this file when you need practical Adapter patterns or short examples.
 import { Adapter } from "@devcapsule/adapter";
 
 class Card extends Adapter {
-  static css = `
-    display: block;
-    padding: 1rem;
-    border: 1px solid currentColor;
-    border-radius: 0.5rem;
-  `;
+  static {
+    this.css = `
+      display: block;
+      padding: 1rem;
+      border: 1px solid currentColor;
+      border-radius: 0.5rem;
+    `;
+  }
 }
 
 Card.define("ui-card");
 ```
+
+For class-level CSS, use `Class.css = ...` after the class or `static { this.css = ... }` inside the class body.
+Do not rely on `static css = ...` class fields here, because that form does not reliably route through Adapter's static `css` accessor in this repo.
 
 ## Shared component styles
 
@@ -86,20 +91,24 @@ Adapter follows JavaScript inheritance for shared styles.
 
 ```ts
 class BaseCard extends Adapter {
-  static css = `
-    display: block;
-    padding: 1rem;
-    border-radius: 0.5rem;
-  `;
+  static {
+    this.css = `
+      display: block;
+      padding: 1rem;
+      border-radius: 0.5rem;
+    `;
+  }
 }
 
 BaseCard.define("base-card");
 
 class WarningCard extends BaseCard {
-  static css = `
-    border: 1px solid orange;
-    background: #fff7ed;
-  `;
+  static {
+    this.css = `
+      border: 1px solid orange;
+      background: #fff7ed;
+    `;
+  }
 }
 
 WarningCard.define("warning-card");
@@ -122,10 +131,12 @@ class Focusable extends HTMLElement {
 }
 
 class IconButton extends AdapterMixin(Focusable) {
-  static css = `
-    display: inline-flex;
-    gap: 0.25rem;
-  `;
+  static {
+    this.css = `
+      display: inline-flex;
+      gap: 0.25rem;
+    `;
+  }
 }
 
 IconButton.define("ui-icon-button");

@@ -1,71 +1,75 @@
-# AI Development Guide for Adapter
+# Development Guide
 
-This project is intentionally structured so AI tools can safely help maintain and extend it.
+This project is small enough that most changes should stay focused and easy to reason about.
 
-## Goals
+## Development Goals
 
-* Keep the public API of `Adapter` stable and well-documented.
-* Prefer small, focused changes with tests.
-* Preserve compatibility with Browser, Deno, and Node environments.
-* Keep the core runtime small and dependency-light.
+- keep the public API stable unless change is intentional
+- keep the runtime small
+- prefer clear behavior over clever abstractions
+- add tests when changing runtime behavior
+- update docs when examples or supported patterns change
 
-## Repo Overview (for AI tools)
+## Source of Truth
 
-* `src/` – Core TypeScript source for Adapter.
-* `test-src/` – Tests and examples.
-* `readme.md` – High-level overview and quickstart.
-* `dev-guide/docstring.md` – Docstring style and conventions.
-* `deno.json` – Deno tasks for build/test/docs.
+When deciding what Adapter supports, use this order:
 
-When modifying or adding code:
+1. `src/adapter.ts`
+2. tests in `test-src/`
+3. docs in `docs-src/`
 
-1. Prefer editing existing files in `src/` over adding new top-level modules.
-2. Keep functions and classes small and composable.
-3. Follow existing naming and coding style.
+If these disagree, fix the docs or tests to match the runtime, or intentionally change the runtime and update both.
 
-## Tasks Style
+## Working Style
 
-When the user asks an AI tool to work on this repo, tasks should be phrased like:
+Prefer:
 
-* "Add a new helper to Adapter to support X, without breaking the existing API."
-* "Refactor this part of the style composition for readability."
-* "Add tests for a specific file or function."
+- small PR-sized changes
+- explicit code over magic
+- additive API changes over broad refactors
+- examples that match actual runtime behavior
 
-AI output should ideally include:
+Avoid:
 
-* Focused, PR-sized changes.
-* Clear explanation of modifications.
-* Updated or new tests.
+- changing public behavior without tests
+- introducing new dependencies unless the benefit is clear
+- documenting convenience patterns that the runtime does not really support
 
-## Testing & Build
+## Testing
 
-AI tools should expect:
+This repo currently uses a browser-oriented test flow.
+
+Typical verification steps:
 
 ```bash
-# Bash
-deno task test
-deno task dist
+npx tsc --project tsconfig.json --noEmit
+deno run --allow-all esbuild/test.js
+engrave server test-src/ docs/test/ --watch-add='.*\\.js'
 ```
 
-If tests cannot be executed, AI tools should:
+Then open the test page in a browser and check the Mocha results.
 
-* Avoid altering public API signatures without necessity.
-* Keep changes isolated.
+For docs:
 
-## Documentation & Docstrings
+```bash
+uv run mkdocs build
+uv run mkdocs serve --livereload
+```
 
-Follow the guidelines in `docstring_guide.md`:
+## API and Example Discipline
 
-* Short summary.
-* Parameters with types.
-* Return type.
-* Edge cases or relevant notes.
+Examples matter a lot in this repo because Adapter is a small API surface.
 
-## Change Safety Rules
+Prefer examples that use:
 
-AI tools should:
+- `Class.css = ...`
+- `static { this.css = ... }`
+- `Class.addStyle(...)`
+- `element.css`
+- `.define(tagName)`
 
-1. Prefer additive changes over breaking changes.
-2. Keep public APIs documented.
-3. Update examples if behaviour changes.
-4. Avoid introducing new dependencies unless requested.
+Be careful with:
+
+- `static css = ...`
+
+That class-field form should not be documented as a safe default unless runtime support is added deliberately.

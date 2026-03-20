@@ -1,32 +1,24 @@
 # Getting Started
 
-This guide walks you through installing Adapter, creating your first component, and understanding the basic styling model.
+This guide gets you from install to a working component, then explains the minimum styling model you need to use Adapter correctly.
 
-If you haven’t yet, read `intro.md` for the high-level concepts and motivation.
+## Install
 
----
+Choose the setup that matches your project.
 
-## 1. Install Adapter
-
-Adapter works in browsers, Deno, and Node-based bundlers. Choose the setup that matches your project.
-
-### CDN (browser-only, great for demos)
-
-You can load Adapter directly from a CDN in any HTML page:
+### CDN
 
 ```html
-<!-- HTML -->
 <script type="module">
   import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
-  
-  // your components go here
+
   class HelloCard extends Adapter {}
 
   HelloCard.css = `
     display: block;
     padding: 1rem;
-    border-radius: 0.5rem;
     border: 1px solid currentColor;
+    border-radius: 0.5rem;
   `;
 
   HelloCard.define("hello-card");
@@ -37,85 +29,106 @@ You can load Adapter directly from a CDN in any HTML page:
 ### Deno / JSR
 
 ```ts
-// TypeScript
 import { Adapter } from "jsr:@devcapsule/adapter";
 ```
 
-### npm (Node / bundlers via JSR)
-
-Use the official compatibility helper so npm stays in sync with the JSR release:
+### npm / bundlers
 
 ```bash
-# Bash
 npx jsr add @devcapsule/adapter
 ```
 
-This command installs the compatibility package (published as `@jsr/devcapsule__adapter`) and adds the correct alias to your `package.json`, per the [JSR npm compatibility guide](https://jsr.io/docs/npm-compatibility).
-
-After installing you can import Adapter with its canonical name:
-
 ```ts
-// TypeScript
 import { Adapter } from "@devcapsule/adapter";
 ```
 
----
+## First Component
 
-## 2. Your first Adapter component
-
-The easiest way to use Adapter is to extend the `Adapter` base class and assign a CSS string to the class itself.
+The simplest safe pattern is:
 
 ```ts
-// TypeScript
 import { Adapter } from "@devcapsule/adapter";
 
-class Card extends Adapter {}
+class Card extends Adapter {
+  static {
+    this.css = `
+      display: block;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      background: white;
+    `;
+  }
+}
 
-Card.css = `
-  display: block;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  background: white;
-`;
-
-// Register the custom element
 Card.define("ui-card");
 ```
 
-Use it in HTML like any other custom element:
+Use it like any other custom element:
 
 ```html
-<!-- HTML -->
 <ui-card>
   <h2>Welcome</h2>
   <p>This card is styled by Adapter.</p>
 </ui-card>
 ```
 
-Behind the scenes (see `src/adapter.ts`):
-
-- A **class controller** (`AdapterClassController`) collects the CSS assigned on the class.
-- When you call `Card.define("ui-card")`, Adapter
-  - registers the custom element with `customElements.define`, and
-  - creates a constructable `CSSStyleSheet` shared by all `ui-card` instances.
-- This stylesheet is attached via `document.adoptedStyleSheets`, so every `ui-card` shares the same base styles.
-
----
-
-## 3. Class-level vs instance-level styles
-
-Adapter gives you two main ways to style components:
-
-1. **Class-level styles** – shared by all instances of a component.
-2. **Instance-level styles** – scoped to one specific element.
-
-### Class-level styles
-
-Class-level styles are defined on the class itself:
+You can also assign class CSS after the class declaration:
 
 ```ts
-// TypeScript
+class Card extends Adapter {}
+
+Card.css = `
+  display: block;
+  padding: 1rem;
+`;
+
+Card.define("ui-card");
+```
+
+## Supported Class CSS Patterns
+
+Use one of these:
+
+```ts
+class Card extends Adapter {
+  static {
+    this.css = `
+      display: block;
+    `;
+  }
+}
+```
+
+```ts
+class Card extends Adapter {}
+
+Card.css = `
+  display: block;
+`;
+```
+
+Do not rely on:
+
+```ts
+class Card extends Adapter {
+  static css = `
+    display: block;
+  `;
+}
+```
+
+That `static css = ...` form creates a class field and does not reliably trigger Adapter's static `css` accessor in the current runtime.
+
+## Shared Styles vs Instance Overrides
+
+Adapter gives you two styling layers.
+
+### Shared class-level styles
+
+These are for the component definition itself.
+
+```ts
 class Button extends Adapter {}
 
 Button.css = `
@@ -124,34 +137,23 @@ Button.css = `
   justify-content: center;
   padding: 0.5rem 1rem;
   border-radius: 999px;
-  border: 1px solid transparent;
-  cursor: pointer;
 `;
+
+Button.addStyle(`
+  &[variant="outline"] {
+    border: 1px solid currentColor;
+    background: transparent;
+  }
+`);
 
 Button.define("ui-button");
 ```
 
-You can add more base styles later using `static addStyle`:
+### Instance-level overrides
+
+These affect only one element.
 
 ```ts
-// TypeScript
-Button.addStyle(`
-  &:hover {
-    filter: brightness(1.05);
-  }
-`);
-```
-
-Adapter aggregates these class-level blocks and writes them into the shared class stylesheet managed by `AdapterClassController`.
-
-### Instance-level styles via JS
-
-Every element instance also owns its own constructable stylesheet, managed by `AdapterObjectController`.
-
-You can style a single instance from JavaScript:
-
-```ts
-// TypeScript
 const card = document.createElement("ui-card") as InstanceType<typeof Card>;
 
 card.css = `
@@ -161,27 +163,22 @@ card.css = `
 document.body.append(card);
 ```
 
-When you set `card.css`:
-
-- Adapter ensures the element has a stable, UUID-based class name.
-- It generates a selector like `ui-card.ui-card-1234 { ... }`.
-- It writes that rule into the instance’s own `CSSStyleSheet`.
-
-That stylesheet is attached to the element’s root node (`document` or shadow root) through `adoptedStyleSheets`, so the styles are local to that instance.
-
-### Instance-level styles via the `css` attribute
-
-You can also set styles declaratively using an attribute. Adapter observes the `css` attribute and keeps it in sync with the instance stylesheet.
+Or declaratively:
 
 ```html
-<!-- HTML -->
-<ui-card css="border-color: rebeccapurple;">
-  <h2>Styled via attribute</h2>
-</ui-card>
+<ui-card css="border-color: hotpink;"></ui-card>
 ```
 
-In `src/adapter.ts`, `AdapterObjectController` uses a `MutationObserver` to watch for `css` attribute changes and update `element.css` automatically.
+## What `define()` Does
 
----
+When you call `Card.define("ui-card")`, Adapter:
 
-Next steps: read `core-concepts.md` for a deeper look at the controllers and mixin, or jump to `framework-integration.md` to see how Adapter fits into React, Vue, and other stacks.
+1. registers the custom element
+2. prepares the class-level stylesheet
+3. compiles the current class CSS into that shared stylesheet
+
+Every instance of `ui-card` then shares that class stylesheet.
+
+## Next Step
+
+Read [Core Concepts](core-concepts.md) next. That page explains the styling model, inheritance, `AdapterMixin`, and `cssProcessor` in the same terms the runtime actually uses.

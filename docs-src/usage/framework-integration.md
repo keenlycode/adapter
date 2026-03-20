@@ -1,95 +1,79 @@
 # Framework Integration
 
-Adapter components are just Web Components. This means they work in many environments with minimal glue code.
+Adapter components are plain Web Components, so the integration story is mostly about custom element registration and attribute/property access.
 
-This chapter shows how to use Adapter-based elements in:
+## General Rules
 
-- Vanilla JS / HTML
-- React
-- Vue
-- Svelte
+Across frameworks, the same habits keep things simple:
 
----
+- define custom elements once near app startup
+- use kebab-case tag names
+- pass simple one-off style overrides through the `css` attribute when that is enough
+- use refs when you need imperative instance access
+- keep component defaults in class-level Adapter CSS, not in framework glue
 
-## 1. Vanilla JS / HTML
-
-The vanilla setup is the most direct: import `Adapter`, define your element, then use it in HTML.
+## Vanilla HTML and JavaScript
 
 ```ts
-// TypeScript
 import { Adapter } from "@devcapsule/adapter";
 
-class Card extends Adapter {
-  static css = `
-    display: block;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid currentColor;
-  `;
-}
+class Card extends Adapter {}
+
+Card.css = `
+  display: block;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid currentColor;
+`;
 
 Card.define("ui-card");
 ```
 
 ```html
-<!-- HTML -->
 <ui-card>
   <h2>Hello Adapter</h2>
   <p>This card is rendered by a Web Component.</p>
 </ui-card>
 ```
 
-You can also define the element from a `<script type="module">` tag when using a CDN, as shown in `getting-started.md`.
+This is the most direct environment and the easiest place to reason about Adapter behavior.
 
----
+## React
 
-## 2. React
+React can render Adapter-based custom elements with minimal glue.
 
-React can render Web Components as long as you follow a few conventions:
-
-- Use **kebab-case** tag names (e.g. `ui-card`).
-- Pass primitive props via attributes.
-- For non-string data, use refs or custom events.
-
-### Setup
-
-Make sure your Adapter components are defined once at app startup:
+Define the element once:
 
 ```ts
-// TypeScript
-// components/ui-card.ts
 import { Adapter } from "@devcapsule/adapter";
 
 export class Card extends Adapter {
-  static css = `
-    display: block;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid currentColor;
-  `;
+  static {
+    this.css = `
+      display: block;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid currentColor;
+    `;
+  }
 }
 
 Card.define("ui-card");
 ```
 
-Then import that module somewhere near your React root (once):
+Import that module near the app root once:
 
 ```ts
-// TypeScript
-// main.tsx
 import "./components/ui-card";
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <App />,
-);
+ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
 ```
 
-### Usage in JSX
+Use it in JSX:
 
 ```tsx
-// TSX
 export function Example() {
   return (
     <ui-card css="border-color: rebeccapurple;">
@@ -102,22 +86,18 @@ export function Example() {
 
 Notes:
 
-- JSX accepts the `css` attribute as a string just like HTML.
-- Events from inside the Web Component bubble like normal DOM events; you can use `onClick` on child elements or custom event listeners on the host via refs if needed.
+- simple string overrides work well as attributes
+- for imperative instance access, use `ref`
+- for non-string data, prefer DOM properties or events through refs instead of overloading attributes
 
----
+## Vue
 
-## 3. Vue
-
-Vue (2.6+ with the Web Components config, or Vue 3) works well with custom elements.
-
-### Configure Vue to ignore custom elements (Vue 3)
+Vue 3 works well with custom elements once you mark the relevant tag family as custom elements.
 
 ```ts
-// TypeScript
 import { createApp } from "vue";
 import App from "./App.vue";
-import "./components/ui-card"; // defines <ui-card>
+import "./components/ui-card";
 
 const app = createApp(App);
 
@@ -126,44 +106,26 @@ app.config.compilerOptions.isCustomElement = (tag) => tag.startsWith("ui-");
 app.mount("#app");
 ```
 
-### Use Adapter components in templates
+Template usage:
 
 ```vue
-<!-- Vue -->
 <template>
-  <ui-card css="border-color: teal;">
+  <ui-card :css="cardCss">
     <h2>Vue + Adapter</h2>
     <p>This is a Web Component card.</p>
   </ui-card>
 </template>
-```
-
-Because Adapter components expose a DOM-based API (`css` attribute / property), you can control instance styles with bindings:
-
-```vue
-<!-- Vue -->
-<template>
-  <ui-card :css="cardCss">
-    <slot />
-  </ui-card>
-</template>
 
 <script setup lang="ts">
-const cardCss = `border-color: orangered;`;
+const cardCss = "border-color: teal;";
 </script>
 ```
 
----
+## Svelte
 
-## 4. Svelte
-
-Svelte treats unknown tags as custom elements by default, so Adapter components slot in easily.
-
-Make sure your component definition module is imported once before use (for example, in your root file):
+Svelte treats unknown tags as custom elements, so the main requirement is still to define the element once before use.
 
 ```ts
-// TypeScript
-// main.ts
 import "./components/ui-card";
 import App from "./App.svelte";
 
@@ -174,10 +136,7 @@ const app = new App({
 export default app;
 ```
 
-Then use Adapter-based elements in Svelte templates:
-
 ```svelte
-<!-- Svelte -->
 <script lang="ts">
   let border = "dodgerblue";
 </script>
@@ -188,26 +147,30 @@ Then use Adapter-based elements in Svelte templates:
 </ui-card>
 ```
 
-Because `css` is just an attribute, normal Svelte bindings work as expected.
+## SSR and Hydration Notes
 
----
+Adapter depends on browser styling primitives such as `CSSStyleSheet` and `adoptedStyleSheets`.
 
-## 5. General tips
+Keep in mind:
 
-Regardless of framework, a few rules keep things smooth:
+- define custom elements on the client before hydration-sensitive UI depends on them
+- verify target-browser support if you need older environments
+- treat Adapter as browser-runtime styling, not as a server-rendered CSS extraction system
 
-- **Define once, use anywhere**
-  - Import the modules that call `MyElement.define("my-element")` exactly once per page.
+## When To Use Framework Glue vs Adapter APIs
 
-- **Prefer attributes for simple styles**
-  - For quick overrides, pass `css` as a string attribute or bound prop.
-  - For complex logic, use imperative access via refs (React), `ref`s (Vue), or the DOM API.
+Prefer Adapter APIs for component styling concerns:
 
-- **Be mindful of SSR / hydration**
-  - When server-rendering HTML, ensure the client defines Adapter components before hydrating.
-  - Adapter relies on `adoptedStyleSheets`; check your target environments if you need to support very old browsers.
+- class defaults
+- inherited component styles
+- instance overrides
+- class-level `cssProcessor`
 
-- **Use a unique tag prefix**
-  - Namespacing (e.g. `ui-card`, `ac-button`) avoids collisions with other components on the page.
+Use the framework only for:
 
-For concrete DOM and styling behavior, revisit `getting-started.md` and `core-concepts.md`, which map directly to the implementation in `src/adapter.ts`.
+- rendering
+- state management
+- event wiring
+- data flow
+
+That separation keeps Adapter predictable across environments.

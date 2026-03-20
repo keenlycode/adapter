@@ -112,27 +112,20 @@ export class Adapter {
  * ----------
  * tagName : string
  *     The tag name used for the custom element.
- * options : DefineOptions, optional
- *     Configuration for scoping, lifecycle, or extensions.
- *
- * Returns
- * -------
- * void
- *     This method does not return a value.
  *
  * Raises
  * ------
- * TypeError
- *     If `tagName` is not valid.
+ * DOMException
+ *     If `tagName` is invalid or already defined.
  *
  * Examples
  * --------
  * ```ts
  * class Card extends Adapter {}
- * Card.define("el-card");
+ * Card.define("ui-card");
  * ```
  */
-static define(tagName: string, options?: DefineOptions) {
+static define(tagName: string) {
   ...
 }
 ````
@@ -167,6 +160,17 @@ Extraction scripts depend on predictable section names:
 ### Treat docstrings like public API
 
 Even internal methods benefit from clear explanation.
+
+### Keep examples aligned with runtime behavior
+
+For Adapter-specific examples, prefer the patterns the runtime actually supports:
+
+* `Class.css = ...`
+* `static { this.css = ... }`
+* `Class.addStyle(...)`
+* `element.css = ...`
+
+Do not use `static css = ...` in examples unless runtime support for that class-field form is intentionally added.
 
 ---
 

@@ -1,31 +1,74 @@
 # Adapter
 
-Adapter is a small styling engine for Web Components. It gives you scoped, composable CSS with a class-based API and no framework lock-in.
+Adapter is a small styling runtime for native Web Components.
 
-## Why Adapter
+It gives custom elements a clean CSS-in-JS style workflow without replacing the platform. You still write Custom Elements, standard CSS, and ES modules. Adapter adds a thin layer for shared component styles, inherited class styles, and per-instance overrides.
 
-- Scoped styles for custom elements without leaking into the page
-- Plain JavaScript and TypeScript API with no new templating model
-- Small runtime suitable for browser, Node, and Deno workflows
-- Good fit for embeds, widgets, design systems, and reusable UI packages
+## What Adapter Is Good At
 
-## Quick Example
+- Shared class-level CSS for every instance of a component
+- Per-instance overrides without leaking into other elements
+- Style inheritance that follows JavaScript class inheritance
+- Modern browser styling with `CSSStyleSheet` and `adoptedStyleSheets`
+- Working close to web standards instead of introducing a full UI framework
+
+## What Adapter Is Not
+
+- Not a virtual DOM library
+- Not a templating framework
+- Not a general CSS compiler
+- Not a replacement for Shadow DOM
+
+## The Core Mental Model
+
+Adapter has two styling layers:
+
+1. Class-level CSS
+   Shared rules for every instance of a component class.
+2. Instance-level CSS
+   Scoped rules for one specific element.
+
+That means:
+
+- use `Class.css = ...` or `static { this.css = ... }` for component defaults
+- use `Class.addStyle(...)` for more shared class-level rules
+- use `element.css` for one-off instance overrides
+
+## Minimal Example
 
 ```ts
-// TypeScript
-import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
+import { Adapter } from "@devcapsule/adapter";
 
-class Card extends Adapter {}
+class Card extends Adapter {
+  static {
+    this.css = `
+      display: block;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      background: white;
+    `;
+  }
+}
 
-Card.css = `
-  display: block;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid currentColor;
-`;
-
-Card.define("el-card");
+Card.define("ui-card");
 ```
+
+```html
+<ui-card>
+  <h2>Hello Adapter</h2>
+  <p>This component uses shared class-level CSS.</p>
+</ui-card>
+```
+
+## Important Note About Class CSS
+
+In this repo, the supported class-level patterns are:
+
+- `Class.css = ...`
+- `static { this.css = ... }`
+
+Do not rely on `static css = ...` class fields for Adapter styling. That field form does not reliably route through Adapter's static `css` accessor in the current runtime.
 
 ## Start Here
 
@@ -33,16 +76,3 @@ Card.define("el-card");
 - [Core Concepts](usage/core-concepts.md)
 - [Patterns and Recipes](usage/patterns-and-recipes.md)
 - [Framework Integration](usage/framework-integration.md)
-
-## What You Get
-
-| Capability | Description |
-| --- | --- |
-| Scoped CSS | Rules stay tied to your component instead of colliding with host styles |
-| Style composition | Extend and share styles across related elements |
-| Framework agnostic | Use Adapter with plain Web Components or alongside UI frameworks |
-| Lightweight runtime | Keep styling overhead small without adding a large abstraction layer |
-
-## Contributing
-
-Contribution and development documentation lives in the `Contribution` section of this site.

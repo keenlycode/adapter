@@ -1,38 +1,52 @@
-# Adapter Dev Guide – Overview
+# Contribution Overview
 
-This folder contains development notes for humans and AI tools working on Adapter.
+This section is for people working on the Adapter repository itself.
 
-## What is Adapter?
+## What Lives In This Repo
 
-Adapter is a lightweight CSS-in-JS toolkit for Web Components. It focuses on:
+- `src/`
+  The Adapter runtime source.
+- `test-src/`
+  Browser-oriented tests and test pages.
+- `esbuild/`
+  Build scripts for browser/test output.
+- `docs-src/`
+  MkDocs source content.
+- `docs/`
+  Built site output.
+- `mkdocs.yml`
+  MkDocs configuration.
+- `pyproject.toml`
+  Pinned docs toolchain.
+- `deno.json`
+  Deno tasks and runtime config.
 
-- Styling custom elements using plain JavaScript/TypeScript.
-- Scoped, composable CSS for Web Components and Shadow DOM.
-- A tiny, framework-agnostic runtime that runs in Browser, Deno, and Node.
+## Project Direction
 
-For a user-facing introduction, see the main `readme.md`.
+Adapter aims to stay:
 
-## Repository Layout
+- small
+- explicit
+- close to web standards
+- safe to extend without turning into a heavy framework
 
-- `src/` – Core TypeScript source code for Adapter.
-- `test-src/` – Tests, experiments, and examples.
-- `esbuild/` – Build scripts and bundling configs (browser / Node bundles).
-- `dev-guide/` – Development docs (this folder).
-- `deno.json` – Deno tasks for build, test, docs.
-- `package.json` – npm metadata and legacy tooling.
-- `changelog.md` – Version history.
-- `LICENSE.md` – License.
+When contributing, prefer changes that keep the public API understandable from the docs and examples.
 
-## Design Philosophy
+## Runtime Truth vs Docs
 
-- **Web Components first** – The primary target is custom elements + Shadow DOM.
-- **Tiny and predictable** – Avoid heavy dependencies and surprising magic.
-- **CSS is data** – Treat CSS as composable strings, not opaque blobs.
-- **Stable base class** – `Adapter` should remain stable and well-documented.
-- **Multi-runtime** – Behaviour should be consistent across Browser, Deno, Node.
+Examples and docs should follow the runtime, not the other way around.
 
-## How to Read the Rest of Dev Guide
+If examples disagree with implementation:
 
-- `workflows.md` - Build, test, docs commands.
-- `docstring.md` - Docstring style guide and rules: TSDoc/JSDoc conventions, required tags, examples, and policies for documenting APIs.
-- `development.md` - AI Development Guide: goals, repo overview, task style for AI/human contributors, testing/build expectations, docstring policy, and change-safety rules to keep changes small, focused, and non‑breaking.
+1. verify behavior in `src/adapter.ts`
+2. update the docs or tests
+3. avoid documenting unsupported patterns as if they are first-class API
+
+## Current Documentation Conventions
+
+For class-level CSS examples in this repo, prefer:
+
+- `Class.css = ...`
+- `static { this.css = ... }`
+
+Do not present `static css = ...` class fields as a supported default pattern unless the runtime is explicitly changed to support that behavior.
