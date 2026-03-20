@@ -42,6 +42,12 @@ npx jsr add @devcapsule/adapter
 import { Adapter } from "@devcapsule/adapter";
 ```
 
+## AI Skill
+
+This repo also includes an Adapter-specific AI skill at `skills/adapter/SKILL.md`.
+
+It is there so coding assistants can follow the actual runtime rules of this package instead of guessing from generic Web Components patterns.
+
 ## First Component
 
 The simplest safe pattern is:
@@ -108,17 +114,19 @@ Card.css = `
 `;
 ```
 
-Do not rely on:
+!!! danger
 
-```ts
-class Card extends Adapter {
-  static css = `
-    display: block;
-  `;
-}
-```
+    Do not rely on this pattern:
 
-That `static css = ...` form creates a class field and does not reliably trigger Adapter's static `css` accessor in the current runtime.
+    ```ts
+    class Card extends Adapter {
+      static css = `
+        display: block;
+      `;
+    }
+    ```
+
+    `static css = ...` creates a class field and does not reliably trigger Adapter's static `css` accessor in the current runtime.
 
 ## Shared Styles vs Instance Overrides
 

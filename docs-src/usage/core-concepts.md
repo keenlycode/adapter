@@ -119,6 +119,7 @@ Important:
 
 - `static css = ...` class fields should not be treated as a supported Adapter pattern here
 - use `Class.css = ...` or `static { this.css = ... }` instead
+- see [Caveats and Constraints](caveats-and-constraints.md) for the runtime details behind that rule
 
 ## 5. Inheritance
 
