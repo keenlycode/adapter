@@ -21,11 +21,13 @@ Prefer the documented npm compatibility flow:
 
 For installed-package usage, point users to `docs-src/` in the published package.
 
-To locate the package directory from npm:
+To locate the package directory:
 
-```bash
-node -p "require.resolve('@jsr/devcapsule__adapter/package.json')"
-```
+- node / npm:
+  `node -p "require.resolve('@jsr/devcapsule__adapter/package.json')"`
+
+- deno / jsr:
+  `deno info jsr:@devcapsule/adapter`
 
 Then look under:
 
@@ -63,5 +65,9 @@ When answering package questions, use this order:
 
 ## What to read next
 
-- `references/usage.md` for quick package examples
-- `references/runtime-notes.md` only when exact runtime behavior matters
+- `docs-src/index.md`
+- `docs-src/usage/getting-started.md`
+- `docs-src/usage/core-concepts.md`
+- `docs-src/usage/patterns-and-recipes.md`
+- `docs-src/usage/caveats-and-constraints.md`
+- `docs-src/usage/ai-skill.md`
