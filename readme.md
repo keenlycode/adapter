@@ -38,11 +38,15 @@ Key ideas:
 
 ## Installation
 
-### Via npm (Node / bundlers)
+### Via npm (Node / bundlers via JSR)
+
+Use the official compatibility helper so npm tracks the exact JSR release:
 
 ```bash
-npm install @devcapsule/adapter
+npx jsr add @devcapsule/adapter
 ```
+
+The command installs the compatibility package (`@jsr/devcapsule__adapter`) and adds the alias to your `package.json`, matching the [JSR npm compatibility guide](https://jsr.io/docs/npm-compatibility).
 
 ```ts
 import { Adapter } from "@devcapsule/adapter";
@@ -72,14 +76,13 @@ Define a simple card component:
 ```ts
 import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
 
-class Card extends Adapter {
-  static css = `
-    display: block;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid currentColor;
-  `;
-}
+class Card extends Adapter {}
+Card.css = `
+  display: block;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid currentColor;
+`;
 
 Card.define("el-card");
 ```
@@ -184,7 +187,7 @@ Core base class for all stylable elements.
 
 ## Development
 
-For contributors and AI-assisted development, see `dev-guide/overview.md`.
+For contributors and AI-assisted development, see `docs-src/contribution/`.
 
 ## License
 

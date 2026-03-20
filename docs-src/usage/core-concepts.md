@@ -31,7 +31,7 @@ This is the core mental model for Adapter: one shared, reusable style definition
 
 Example:
 
-```ts
+```ts title="TypeScript"
 import { Adapter } from "@devcapsule/adapter";
 
 class Card extends Adapter {
@@ -70,7 +70,7 @@ When to reach for it:
 
 Usage pattern:
 
-```ts
+```ts title="TypeScript"
 import { AdapterMixin } from "@devcapsule/adapter";
 
 // Your existing base class with behavior you need to keep.
@@ -136,7 +136,7 @@ Adapter takes care of merging inherited styles in the right order so that more s
 
 Example:
 
-```ts
+```ts title="TypeScript"
 class BaseCard extends Adapter {
   static css = `
     display: block;
@@ -193,7 +193,7 @@ The key idea: you keep full control over CSS syntax, while JavaScript helps you 
 
 Example:
 
-```ts
+```ts title="TypeScript"
 const primary = "#2563eb";
 const radius = "999px";
 
@@ -219,7 +219,45 @@ You can build larger design systems out of small helpers like `pillButton`, with
 
 ---
 
-## 5. Style Isolation
+## 5. Class-level CSS processors (`adapter.cssProcessor`)
+
+Adapter lets you run a **single processor for all class-level CSS** on a component. Set `MyComponent.adapter.cssProcessor` to any tagged template function; Adapter will call it when compiling the shared stylesheet for that class (including inherited styles).
+
+- It runs only for class-level CSS (`static css`, `addStyle`, inherited blocks).
+- Per-instance styles set via `element.css` bypass this hook.
+- Set it **before** calling `define()`.
+
+Example: minify class CSS while leaving instance overrides untouched.
+
+```ts title="TypeScript"
+import { Adapter } from "@devcapsule/adapter";
+
+const minify = (strings: TemplateStringsArray, ...values: unknown[]) => {
+  const raw = String.raw({ raw: strings }, ...values);
+  return raw.replace(/\s+/g, " ").trim();
+};
+
+class Tag extends Adapter {}
+Tag.adapter.cssProcessor = minify;
+
+Tag.css = `
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  background: #0f172a;
+  color: white;
+`;
+
+Tag.define("ui-tag");
+```
+
+This hook is handy for cross-cutting transforms (token substitution, prefixing, minification) that you want applied to the component’s shared stylesheet without changing how you write CSS in each assignment.
+
+---
+
+## 6. Style Isolation
 
 Adapter’s main promise is: **your component styles do not collide with anything else**.
 
@@ -238,7 +276,7 @@ When you think “style isolation” with Adapter, think **small CSS islands**: 
 
 Example (host page with its own global styles):
 
-```html
+```html title="HTML"
 <style>
   /* Host page styles that would normally leak everywhere */
   body {
@@ -260,7 +298,7 @@ Adapter writes your `ui-card` styles into isolated style sheets so that the host
 
 ---
 
-## 6. Use with Shadow DOM
+## 7. Use with Shadow DOM
 
 Adapter works well whether you use Shadow DOM or not.
 
@@ -292,7 +330,7 @@ You choose how much isolation you need:
 
 Example: using Adapter components inside another element’s shadow root:
 
-```ts
+```ts title="TypeScript"
 // Define an Adapter-based card somewhere in your app.
 class ShellCard extends Adapter {
   static css = `
@@ -326,7 +364,7 @@ Here, `shell-card` lives inside `app-shell`’s shadow root, and Adapter attache
 
 ---
 
-## 7. Putting it together
+## 8. Putting it together
 
 When you design with Adapter, keep these questions in mind:
 

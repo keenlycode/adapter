@@ -1,0 +1,56 @@
+site_name: Adapter Guide
+site_description: Documentation for Adapter usage and contribution.
+repo_url: https://github.com/devcapsule/adapter
+docs_dir: docs-src
+site_dir: docs
+use_directory_urls: true
+
+nav:
+  - Home: index.md
+  - Usage:
+      - Getting Started: usage/getting-started.md
+      - Core Concepts: usage/core-concepts.md
+      - Patterns & Recipes: usage/patterns-and-recipes.md
+      - Framework Integration: usage/framework-integration.md
+  - Contribution:
+      - Overview: contribution/overview.md
+      - Workflow: contribution/workflow.md
+      - Development: contribution/development.md
+      - Docstring Guide: contribution/docstring.md
+
+theme:
+  name: material
+  custom_dir: docs-src/_template
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - toc.integrate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+
+plugins:
+  - search
+
+extra:
+  adapter_version: "3.1.1"
+
+markdown_extensions:
+  - admonition
+  - md_in_html
+  - toc:
+      permalink: true
+  - tables
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
