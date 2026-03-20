@@ -48,9 +48,7 @@ The skill is most useful when you want an AI agent to stay accurate about:
 
 The skill file is:
 
-```text
-skills/adapter/SKILL.md
-```
+- [skills/adapter/SKILL.md](https://github.com/keenlycode/adapter/blob/main/skills/adapter/SKILL.md)
 
 That file gives AI assistants Adapter-specific instructions and references for this repo.
 

@@ -4,6 +4,23 @@ Adapter is a small styling runtime for developers building native Web Components
 
 It gives custom elements a CSS-in-JS workflow without asking you to abandon the platform. You still write Custom Elements, standard CSS, and ES modules. Adapter adds a thin runtime layer for shared component styles, inherited class styles, and per-instance overrides.
 
+## AI Skill
+
+!!! info
+
+    Adapter also ships with a local AI Skill for coding assistants.
+
+    It helps AI agents follow Adapter's actual runtime model instead of guessing from generic Web Components patterns.
+
+    The skill covers things like:
+
+    - supported class CSS patterns such as `Class.css = ...` and `static { this.css = ... }`
+    - inheritance behavior for shared class-level CSS
+    - class-level `cssProcessor` behavior
+    - runtime caveats such as avoiding `static css = ...`
+
+    If AI Skill is a new concept to you, read more on the dedicated [AI Skill](usage/ai-skill.md) page.
+
 ## Why Developers Reach For Adapter
 
 - It keeps the API small and close to platform primitives
@@ -53,21 +70,6 @@ Card.define("ui-card");
 - Class styles follow inheritance, so base components stay reusable
 - The runtime uses `CSSStyleSheet` and `adoptedStyleSheets` instead of inventing a parallel styling engine
 - `Adapter` and `AdapterMixin` let you choose between a base class and mixin style integration
-
-## AI Skill
-
-Adapter ships with a local AI skill for coding assistants.
-
-The goal is simple: this skill helps AI agents follow Adapter's actual runtime model instead of guessing from generic Web Components patterns.
-
-If AI Skill is a new concept to you, read more on the dedicated [AI Skill](usage/ai-skill.md) page.
-
-The skill covers things like:
-
-- supported class CSS patterns such as `Class.css = ...` and `static { this.css = ... }`
-- inheritance behavior for shared class-level CSS
-- class-level `cssProcessor` behavior
-- runtime caveats such as avoiding `static css = ...`
 
 ## Good Fit
 
