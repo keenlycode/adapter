@@ -1,18 +1,18 @@
 {
   "name": "@devcapsule/adapter",
-  "version": "3.1.1",
+  "version": "3.2.0dev",
   "license": "ISC",
   "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
   "tasks": {
+    "docs:sync-skill-references": "uv run python scripts/sync_skill_references.py",
+    "docs:build": "deno task docs:sync-skill-references && uv run --group docs mkdocs build",
+    "docs:serve": "deno task docs:sync-skill-references && uv run --group docs mkdocs serve --livereload",
     "test:esbuild": "deno run --watch-hmr --allow-all ./esbuild/test.js",
     "test:html": "engrave server test-src/ docs/test/ --watch='.*.js'",
     "test": "deno task test:esbuild & deno task test:html",
     "dist:typescript": "npx tsc --project tsconfig.json",
     "dist:esbuild": "deno run --allow-all esbuild/dist.js",
     "dist": "deno task dist:typescript & deno task dist:esbuild",
-    "guide:dev": "deno run -A npm:vitepress dev guide",
-    "guide:build": "deno run -A npm:vitepress build guide",
-    "guide:preview": "deno run -A npm:vitepress preview guide",
     "publish": "deno publish --allow-slow-types --allow-dirty"
   },
   "compilerOptions": {
@@ -35,6 +35,7 @@
       "src/",
       "dist/browser/",
       "docs-src/",
+      "skills/adapter/",
       "README.md",
       "CHANGELOG.md",
       "LICENSE.md"

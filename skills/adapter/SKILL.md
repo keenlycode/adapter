@@ -19,7 +19,11 @@ Prefer the documented npm compatibility flow:
 
 ## Find docs
 
-For installed-package usage, point users to `docs-src/` in the published package.
+For installed-package usage, prefer the generated skill references snapshot when it is present:
+
+- `skills/adapter/references/`
+
+If that snapshot is not available, point users to `docs-src/` in the published package.
 
 To locate the package directory:
 
@@ -29,14 +33,21 @@ To locate the package directory:
 - deno / jsr:
   `deno info jsr:@devcapsule/adapter`
 
-Then look under:
+Then look under one of these roots:
 
-- `docs-src/index.md`
-- `docs-src/usage/getting-started.md`
-- `docs-src/usage/core-concepts.md`
-- `docs-src/usage/patterns-and-recipes.md`
-- `docs-src/usage/caveats-and-constraints.md`
-- `docs-src/usage/ai-skill.md`
+- `skills/adapter/references/`
+- `docs-src/`
+
+Key files:
+
+- `index.md`
+- `usage/getting-started.md`
+- `usage/core-concepts.md`
+- `usage/patterns-and-recipes.md`
+- `usage/css-processor.md`
+- `usage/framework-integration.md`
+- `usage/caveats-and-constraints.md`
+- `usage/ai-skill.md`
 
 ## Runtime guidance
 
@@ -59,15 +70,18 @@ Keep these guardrails:
 
 When answering package questions, use this order:
 
-1. installed `docs-src/`
-2. `src/mod.ts` and `src/adapter.ts` when runtime behavior needs verification
-3. this skill as package-specific guidance
+1. generated `skills/adapter/references/` when present
+2. installed `docs-src/`
+3. `src/mod.ts` and `src/adapter.ts` when runtime behavior needs verification
+4. this skill as package-specific guidance
 
 ## What to read next
 
-- `docs-src/index.md`
-- `docs-src/usage/getting-started.md`
-- `docs-src/usage/core-concepts.md`
-- `docs-src/usage/patterns-and-recipes.md`
-- `docs-src/usage/caveats-and-constraints.md`
-- `docs-src/usage/ai-skill.md`
+- `skills/adapter/references/index.md`
+- `skills/adapter/references/usage/getting-started.md`
+- `skills/adapter/references/usage/core-concepts.md`
+- `skills/adapter/references/usage/patterns-and-recipes.md`
+- `skills/adapter/references/usage/css-processor.md`
+- `skills/adapter/references/usage/framework-integration.md`
+- `skills/adapter/references/usage/caveats-and-constraints.md`
+- `skills/adapter/references/usage/ai-skill.md`
