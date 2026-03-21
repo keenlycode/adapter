@@ -1,6 +1,6 @@
 {
   "name": "@devcapsule/adapter",
-  "version": "3.2.0dev",
+  "version": "3.2.0",
   "license": "ISC",
   "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
   "tasks": {
@@ -34,10 +34,8 @@
     "include": [
       "src/",
       "dist/browser/",
-      "docs-src/",
       "skills/adapter/",
       "README.md",
-      "CHANGELOG.md",
       "LICENSE.md"
     ]
   },

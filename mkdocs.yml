@@ -32,7 +32,7 @@ extra_javascript:
   - _javascripts/code-language-labels.js
 
 extra:
-  adapter_version: "3.1.1"
+  adapter_version: "3.2.0"
 
 markdown_extensions:
   - admonition
