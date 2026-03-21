@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 const test_src_dir = path.join(__dirname, "../test-src");
 
 
-async function js_bundbule() {
+async function js_bundle() {
   const entryFiles = await fg.default.async(path.join(test_src_dir, "**/*.bundle.ts"));
 
   console.log(entryFiles)
@@ -62,5 +62,5 @@ async function js_compile() {
 }
 
 
-await js_bundbule()
+await js_bundle()
 await js_compile();

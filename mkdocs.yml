@@ -28,6 +28,9 @@ plugins:
 extra_css:
   - _stylesheets/extra.css
 
+extra_javascript:
+  - _javascripts/code-language-labels.js
+
 extra:
   adapter_version: "3.1.1"
 

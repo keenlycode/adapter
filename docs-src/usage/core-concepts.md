@@ -31,6 +31,12 @@ This is the main mental model:
 - the class defines what this kind of component looks like
 - an individual element can then opt into one-off differences
 
+!!! info "Quick rule of thumb"
+
+    Reach for class-level CSS first.
+
+    Reach for instance CSS only when one element should diverge from the component default.
+
 ## 2. `Adapter`
 
 `Adapter` is the default base class when your component can extend `HTMLElement` directly.
@@ -212,6 +218,12 @@ Rules:
 - it affects class-level CSS only
 - it does not transform `element.css`
 - it does not transform the `css` attribute on instances
+
+!!! info "What `cssProcessor` is good at"
+
+    Use it for class-wide transforms such as minification, annotation, nesting support, or PostCSS-based processing.
+
+    Do not use it as a substitute for one-off element overrides.
 
 `configure(...)` is available if you want to branch class-level config at declaration time:
 

@@ -6,47 +6,49 @@ This guide gets you from install to a working component, then explains the minim
 
 Choose the setup that matches your project.
 
-### CDN
+=== "CDN"
 
-```html
-<script type="module">
-  import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
+    ```html
+    <script type="module">
+      import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
 
-  class HelloCard extends Adapter {}
+      class HelloCard extends Adapter {}
 
-  HelloCard.css = `
-    display: block;
-    padding: 1rem;
-    border: 1px solid currentColor;
-    border-radius: 0.5rem;
-  `;
+      HelloCard.css = `
+        display: block;
+        padding: 1rem;
+        border: 1px solid currentColor;
+        border-radius: 0.5rem;
+      `;
 
-  HelloCard.define("hello-card");
-  document.body.innerHTML = "<hello-card>Hello Adapter</hello-card>";
-</script>
-```
+      HelloCard.define("hello-card");
+      document.body.innerHTML = "<hello-card>Hello Adapter</hello-card>";
+    </script>
+    ```
 
-### Deno / JSR
+=== "Deno / JSR"
 
-```ts
-import { Adapter } from "jsr:@devcapsule/adapter";
-```
+    ```ts
+    import { Adapter } from "jsr:@devcapsule/adapter";
+    ```
 
-### npm / bundlers
+=== "npm / bundlers"
 
-```bash
-npx jsr add @devcapsule/adapter
-```
+    ```bash
+    npx jsr add @devcapsule/adapter
+    ```
 
-```ts
-import { Adapter } from "@devcapsule/adapter";
-```
+    ```ts
+    import { Adapter } from "@devcapsule/adapter";
+    ```
 
 ## AI Skill
 
-This repo also includes an Adapter-specific AI skill at `skills/adapter/SKILL.md`.
+!!! info
 
-It is there so coding assistants can follow the actual runtime rules of this package instead of guessing from generic Web Components patterns.
+    This repo also includes an Adapter-specific AI skill at `skills/adapter/SKILL.md`.
+
+    It is there so coding assistants can follow the actual runtime rules of this package instead of guessing from generic Web Components patterns.
 
 ## First Component
 
@@ -96,6 +98,8 @@ Card.define("ui-card");
 
 Use one of these:
 
+=== "`static { this.css = ... }`"
+
 ```ts
 class Card extends Adapter {
   static {
@@ -105,6 +109,8 @@ class Card extends Adapter {
   }
 }
 ```
+
+=== "`Class.css = ...`"
 
 ```ts
 class Card extends Adapter {}
