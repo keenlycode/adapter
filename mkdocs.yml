@@ -3,7 +3,10 @@ site_description: Documentation for Adapter usage and contribution.
 repo_url: https://github.com/keenlycode/adapter
 docs_dir: docs-src
 site_dir: docs
-use_directory_urls: true
+site_url: https://keenlycode.github.io/adapter/
+remote_branch: docs
+remote_name: origin
+use_directory_urls: false
 
 nav:
   - Adapter: index.md
