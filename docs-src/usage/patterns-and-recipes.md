@@ -79,30 +79,6 @@ WarningCard.define("warning-card");
 
 Use this pattern when multiple components share layout, spacing, or typography.
 
-## Layout Primitives
-
-```ts
-class Container extends Adapter {}
-
-Container.css = `
-  display: block;
-  max-width: 960px;
-  margin: 0 auto;
-  padding-inline: 1rem;
-`;
-
-Container.define("ui-container");
-```
-
-```html
-<ui-container>
-  <warning-card>
-    <h2>Inside container</h2>
-    <p>Layout and component styles stay reusable.</p>
-  </warning-card>
-</ui-container>
-```
-
 ## One-Off Instance Overrides
 
 Use this only when one specific element should differ from the class default.
@@ -141,16 +117,24 @@ Dialog.css = `
 `;
 
 Dialog.addStyle(`
-  & h2 {
+  h2 {
     margin: 0 0 0.5rem;
     font-size: 1.2rem;
   }
 
-  & footer {
+  footer {
     margin-top: 1rem;
     display: flex;
     justify-content: flex-end;
     gap: 0.5rem;
+
+    & ui-button[variant="ghost"] {
+      opacity: 0.75;
+    }
+
+    & ui-button + ui-button {
+      margin-inline-start: 0.25rem;
+    }
   }
 `);
 
@@ -168,9 +152,15 @@ Dialog.define("ui-dialog");
 </ui-dialog>
 ```
 
-Treat selectors here as normal CSS selectors. If your project needs nonstandard transforms, use `cssProcessor` or verify browser support first.
+Adapter writes shared class CSS under the registered tag name when you call `define(...)`. That means first-level selectors here can be written either with `&` or without it.
 
-## `AdapterMixin` with Existing Bases
+- `h2 { ... }` and `footer { ... }` are scoped under `ui-dialog`
+- `& h2 { ... }` would also work and means the same thing at that first level
+- once you nest inside another block such as `footer { ... }`, use `&` for relative selectors like `& ui-button`
+
+This keeps internal content styling scoped to the component without repeating the custom element tag in every rule. If your project needs nonstandard transforms, use `cssProcessor` or verify browser support first.
+
+## `AdapterMixin` with Existing Components
 
 ```ts
 import { AdapterMixin } from "@devcapsule/adapter";

@@ -83,6 +83,7 @@ Card.define("ui-card");
 - [Getting Started](usage/getting-started.md)
 - [Core Concepts](usage/core-concepts.md)
 - [Patterns and Recipes](usage/patterns-and-recipes.md)
+- [Framework Integration](usage/framework-integration.md)
+- [`cssProcessor`](usage/css-processor.md)
 - [Caveats and Constraints](usage/caveats-and-constraints.md)
 - [AI Skill](usage/ai-skill.md)
-- [Framework Integration](usage/framework-integration.md)

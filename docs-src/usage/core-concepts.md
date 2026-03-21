@@ -220,6 +220,8 @@ class Tag extends Adapter.configure({ cssProcessor: minify }) {}
 class WarningTag extends Tag.configure({ cssProcessor: otherProcessor }) {}
 ```
 
+For a deeper guide, including PostCSS integration, read [`cssProcessor`](css-processor.md).
+
 ## 9. Lifecycle Constraints
 
 If you override these methods on an Adapter-based element:
