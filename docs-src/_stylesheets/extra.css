@@ -36,3 +36,46 @@
 .tabbed-content .codehilite + .codehilite {
   margin-top: 1rem;
 }
+
+.adapter-version-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #5f6b7a;
+  background: color-mix(in srgb, white 92%, #dbe3ec 8%);
+}
+
+.adapter-version-badge strong {
+  color: #111827;
+  font-weight: 800;
+}
+
+.adapter-version-badge--header {
+  display: none;
+  margin-left: 0.25rem;
+  padding-inline: 0.65rem;
+  font-size: 0.72rem;
+}
+
+.adapter-version-badge--sidebar {
+  margin: 0.25rem 0 0.75rem;
+  justify-content: center;
+}
+
+.adapter-version-badge--hero {
+  margin: 0 0 1rem;
+}
+
+@media (min-width: 1024px) {
+  .adapter-version-badge--header {
+    display: inline-flex;
+  }
+}
