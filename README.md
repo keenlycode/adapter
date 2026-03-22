@@ -1,18 +1,18 @@
 # Adapter
 
-**Adapter** is a tiny, elegant styling engine for **Web Components**.
+**Adapter** is a tiny styling engine for **Web Components** focused on one core job: isolating component CSS.
 
-It brings the convenience of CSS-in-JS to native Custom Elements with zero dependencies, scoped styles, and a clean class-based API.
+It brings the convenience of CSS-in-JS to native Custom Elements with zero dependencies, a clean class-based API, and styles that stay scoped to the component instead of leaking through the page.
 
 ---
 
 ## Why Adapter?
 
-Adapter is a lightweight CSS-in-JS toolkit for Web Components. It focuses on **styling and composition for custom elements**, not on yet another frontend framework.
+Adapter is a lightweight CSS-in-JS toolkit for Web Components. It focuses on **isolated styling and composition for custom elements**, not on yet another frontend framework.
 
 Use Adapter when you:
 
-* Want **encapsulated styles** for Web Components without wrestling with global CSS.
+* Want **isolated component CSS** without wrestling with global CSS leakage.
 * Prefer **plain JavaScript/TypeScript** and Web Standards over heavy frameworks.
 * Need a **tiny runtime** that can run in Browser, Node, or Deno.
 * Want to build your own design system or UI library on top of Web Components.
@@ -20,7 +20,7 @@ Use Adapter when you:
 Key ideas:
 
 * CSS is **programmable**: define, inherit, compose, and extend styles using JS.
-* Styles are **scoped to elements**: no accidental global overrides.
+* Styles are **isolated to the component**: no accidental global overrides or selector collisions.
 * Works in **plain HTML** (via CDN) or with modern build tools.
 
 ---
@@ -28,7 +28,7 @@ Key ideas:
 ## Features
 
 * 🧩 **Web Components first** – Designed specifically for custom elements and Shadow DOM.
-* 🎨 **CSS-in-JS for components** – Write CSS as strings, but with scoping and composition rules.
+* 🎨 **CSS isolation for components** – Write CSS as strings, with scoping and composition rules built around custom elements.
 * 🧬 **Style inheritance & reuse** – Share and extend styles between elements.
 * 🪶 **Tiny bundle** – Small, dependency-light core suitable for modern apps.
 * 🌐 **Multiple environments** – Usable from Browser, Deno, and Node-based tooling.

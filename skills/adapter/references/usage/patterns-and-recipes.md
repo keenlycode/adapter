@@ -218,6 +218,8 @@ Use `configure(...)` when you want a new class branch with inherited defaults pl
 
 Adapter works well in dashboards, CMS pages, plugins, and embeds where surrounding CSS is unpredictable.
 
+The main reason is that Adapter keeps component CSS isolated. Shared rules stay attached to the component, and one-off overrides stay attached to the individual element that needs them.
+
 Good habits:
 
 - namespace custom tags such as `ui-` or `ac-`
