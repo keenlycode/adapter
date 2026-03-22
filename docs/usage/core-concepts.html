@@ -716,6 +716,11 @@
     <p>This page explains how to think about Adapter from the runtime outward, not from internal implementation details inward.</p>
 <h2 id="1-the-styling-model">1. The Styling Model<a class="headerlink" href="#1-the-styling-model" title="Permanent link">&para;</a></h2>
 <p>Adapter separates styling into two layers:</p>
+<ul>
+<li>shared class CSS for the component</li>
+<li>local instance CSS for one element</li>
+</ul>
+<p>The reason for that split is CSS isolation. The component class owns the shared styling contract, while one-off element overrides stay local and do not rewrite that contract for every instance.</p>
 <h3 id="class-level-css">Class-level CSS<a class="headerlink" href="#class-level-css" title="Permanent link">&para;</a></h3>
 <p>Shared rules for every instance of a component class.</p>
 <p>Use:</p>
@@ -737,6 +742,7 @@
 <li>the class defines what this kind of component looks like</li>
 <li>an individual element can then opt into one-off differences</li>
 </ul>
+<p>In practice, this means Adapter is not trying to make global CSS smarter. It is trying to keep component CSS isolated and predictable.</p>
 <div class="admonition info">
 <p class="admonition-title">Quick rule of thumb</p>
 <p>Reach for class-level CSS first.</p>
@@ -785,6 +791,7 @@
 </span></code></pre></div>
 <p><code>AdapterMixin</code> exposes the same public styling API as <code>Adapter</code>.</p>
 <h2 id="4-shared-class-css">4. Shared Class CSS<a class="headerlink" href="#4-shared-class-css" title="Permanent link">&para;</a></h2>
+<p>Shared class CSS is where Adapter's component-level isolation starts.</p>
 <p>The supported class-level patterns in this repo are:</p>
 <div class="language-ts codehilite"><pre><span></span><code><span id="__span-2-1"><span class="kd">class</span><span class="w"> </span><span class="nx">Card</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Adapter</span><span class="w"> </span><span class="p">{}</span>
 </span><span id="__span-2-2">
@@ -813,6 +820,7 @@
 <li>use <code>Class.css = ...</code> or <code>static { this.css = ... }</code> instead</li>
 <li>see <a href="caveats-and-constraints.html">Caveats and Constraints</a> for the runtime details behind that rule</li>
 </ul>
+<p>When you later call <code>.define(tagName)</code>, Adapter writes that shared CSS under the registered custom element so the rules stay attached to the component boundary.</p>
 <h2 id="5-inheritance">5. Inheritance<a class="headerlink" href="#5-inheritance" title="Permanent link">&para;</a></h2>
 <p>Adapter follows JavaScript inheritance for shared class-level styles.</p>
 <p>Parent class styles are collected first. Child class styles are appended after that.</p>
@@ -848,6 +856,7 @@
 <div class="language-html codehilite"><pre><span></span><code><span id="__span-7-1"><span class="p">&lt;</span><span class="nt">ui-card</span> <span class="na">css</span><span class="o">=</span><span class="s">&quot;border-color: hotpink;&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">ui-card</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p>Adapter scopes those rules to the specific element instance.</p>
+<p>That separation matters: instance CSS is for local exceptions, while shared class CSS remains the stable isolated styling contract for the component.</p>
 <h2 id="7-definetagname">7. <code>define(tagName)</code><a class="headerlink" href="#7-definetagname" title="Permanent link">&para;</a></h2>
 <p>Use <code>.define(tagName)</code> as the normal Adapter registration API.</p>
 <div class="language-ts codehilite"><pre><span></span><code><span id="__span-8-1"><span class="nx">Card</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s2">&quot;ui-card&quot;</span><span class="p">);</span>

@@ -1,8 +1,8 @@
 # Adapter
 
-Adapter is a small styling runtime for developers building native Web Components.
+A small, fast styling runtime for Web Components with isolated styles and natural class-based inheritance.
 
-It gives custom elements a CSS-in-JS workflow without asking you to abandon the platform. You still write Custom Elements, standard CSS, and ES modules. Adapter adds a thin runtime layer for shared component styles, inherited class styles, and per-instance overrides.
+Adapter lets you build Web Components with isolated styles, so your UI stays safe from messy global CSS while remaining easy to extend through plain JavaScript classes, objects, and inheritance. It keeps the mental model simple, the runtime small and fast, and the workflow easy enough to help you ship UI quickly, whether you're building a single component, a full design system, or UI that needs to ship across teams, products, and platforms.
 
 ## AI Skill
 
@@ -23,11 +23,22 @@ It gives custom elements a CSS-in-JS workflow without asking you to abandon the 
 
 ## Why Developers Reach For Adapter
 
+- It isolates component CSS so host-page styles and component styles do not collide by accident
 - It keeps the API small and close to platform primitives
 - It gives each component a shared stylesheet instead of repeating inline styles
 - It lets subclasses inherit styles through normal JavaScript inheritance
 - It supports per-instance CSS when one element needs a local override
 - It works well for design systems, internal tools, dashboards, and embedded widgets
+
+## CSS Isolation First
+
+Adapter is primarily about keeping component styling predictable.
+
+- shared class CSS is scoped to the registered custom element
+- internal selectors are written against the component instead of the whole page
+- instance CSS stays local to one element instead of mutating the shared component contract
+
+That makes Adapter useful in embeds, dashboards, CMS pages, and other environments where surrounding CSS may be noisy or hostile.
 
 ## What The Workflow Feels Like
 
@@ -37,7 +48,7 @@ Adapter keeps the styling model simple:
 2. Register the element with `.define(tagName)`
 3. Override a single instance only when needed
 
-That makes it useful when you want component-level styling with less framework overhead and more direct control over the browser's styling primitives.
+That makes it useful when you want isolated component styling with less framework overhead and more direct control over the browser's styling primitives.
 
 ## Minimal Example
 
@@ -67,6 +78,7 @@ Card.define("ui-card");
 ## What Makes It Different
 
 - Shared class-level CSS and instance-level CSS are separate on purpose
+- Shared component styles are scoped so they stay with the component instead of leaking across the page
 - Class styles follow inheritance, so base components stay reusable
 - The runtime uses `CSSStyleSheet` and `adoptedStyleSheets` instead of inventing a parallel styling engine
 - `Adapter` and `AdapterMixin` let you choose between a base class and mixin style integration

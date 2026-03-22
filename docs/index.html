@@ -705,8 +705,8 @@
     </div>
   </div>
   <div class="typography w-full flex-1 *:data-[slot=alert]:first:mt-0">
-    <p>Adapter is a small styling runtime for developers building native Web Components.</p>
-<p>It gives custom elements a CSS-in-JS workflow without asking you to abandon the platform. You still write Custom Elements, standard CSS, and ES modules. Adapter adds a thin runtime layer for shared component styles, inherited class styles, and per-instance overrides.</p>
+    <p>A small, fast styling runtime for Web Components with isolated styles and natural class-based inheritance.</p>
+<p>Adapter lets you build Web Components with isolated styles, so your UI stays safe from messy global CSS while remaining easy to extend through plain JavaScript classes, objects, and inheritance. It keeps the mental model simple, the runtime small and fast, and the workflow easy enough to help you ship UI quickly, whether you're building a single component, a full design system, or UI that needs to ship across teams, products, and platforms.</p>
 <h2 id="ai-skill">AI Skill<a class="headerlink" href="#ai-skill" title="Permanent link">&para;</a></h2>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
@@ -723,12 +723,21 @@
 </div>
 <h2 id="why-developers-reach-for-adapter">Why Developers Reach For Adapter<a class="headerlink" href="#why-developers-reach-for-adapter" title="Permanent link">&para;</a></h2>
 <ul>
+<li>It isolates component CSS so host-page styles and component styles do not collide by accident</li>
 <li>It keeps the API small and close to platform primitives</li>
 <li>It gives each component a shared stylesheet instead of repeating inline styles</li>
 <li>It lets subclasses inherit styles through normal JavaScript inheritance</li>
 <li>It supports per-instance CSS when one element needs a local override</li>
 <li>It works well for design systems, internal tools, dashboards, and embedded widgets</li>
 </ul>
+<h2 id="css-isolation-first">CSS Isolation First<a class="headerlink" href="#css-isolation-first" title="Permanent link">&para;</a></h2>
+<p>Adapter is primarily about keeping component styling predictable.</p>
+<ul>
+<li>shared class CSS is scoped to the registered custom element</li>
+<li>internal selectors are written against the component instead of the whole page</li>
+<li>instance CSS stays local to one element instead of mutating the shared component contract</li>
+</ul>
+<p>That makes Adapter useful in embeds, dashboards, CMS pages, and other environments where surrounding CSS may be noisy or hostile.</p>
 <h2 id="what-the-workflow-feels-like">What The Workflow Feels Like<a class="headerlink" href="#what-the-workflow-feels-like" title="Permanent link">&para;</a></h2>
 <p>Adapter keeps the styling model simple:</p>
 <ol>
@@ -736,7 +745,7 @@
 <li>Register the element with <code>.define(tagName)</code></li>
 <li>Override a single instance only when needed</li>
 </ol>
-<p>That makes it useful when you want component-level styling with less framework overhead and more direct control over the browser's styling primitives.</p>
+<p>That makes it useful when you want isolated component styling with less framework overhead and more direct control over the browser's styling primitives.</p>
 <h2 id="minimal-example">Minimal Example<a class="headerlink" href="#minimal-example" title="Permanent link">&para;</a></h2>
 <div class="language-ts codehilite"><pre><span></span><code><span id="__span-0-1"><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Adapter</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@devcapsule/adapter&quot;</span><span class="p">;</span>
 </span><span id="__span-0-2">
@@ -760,6 +769,7 @@
 <h2 id="what-makes-it-different">What Makes It Different<a class="headerlink" href="#what-makes-it-different" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Shared class-level CSS and instance-level CSS are separate on purpose</li>
+<li>Shared component styles are scoped so they stay with the component instead of leaking across the page</li>
 <li>Class styles follow inheritance, so base components stay reusable</li>
 <li>The runtime uses <code>CSSStyleSheet</code> and <code>adoptedStyleSheets</code> instead of inventing a parallel styling engine</li>
 <li><code>Adapter</code> and <code>AdapterMixin</code> let you choose between a base class and mixin style integration</li>
@@ -915,6 +925,14 @@
             class="text-muted-foreground hover:text-foreground data-[active=true]:text-foreground text-[0.8rem] no-underline transition-colors data-[depth=3]:pl-4 data-[depth=4]:pl-6"
             data-active="false" data-depth="2" onClick="deferSetActiveTocLink('#why-developers-reach-for-adapter');">
             Why Developers Reach For Adapter
+        </a>
+        
+
+        
+        <a href="#css-isolation-first"
+            class="text-muted-foreground hover:text-foreground data-[active=true]:text-foreground text-[0.8rem] no-underline transition-colors data-[depth=3]:pl-4 data-[depth=4]:pl-6"
+            data-active="false" data-depth="2" onClick="deferSetActiveTocLink('#css-isolation-first');">
+            CSS Isolation First
         </a>
         
 
