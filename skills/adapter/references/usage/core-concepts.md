@@ -6,6 +6,11 @@ This page explains how to think about Adapter from the runtime outward, not from
 
 Adapter separates styling into two layers:
 
+- shared class CSS for the component
+- local instance CSS for one element
+
+The reason for that split is CSS isolation. The component class owns the shared styling contract, while one-off element overrides stay local and do not rewrite that contract for every instance.
+
 ### Class-level CSS
 
 Shared rules for every instance of a component class.
@@ -30,6 +35,8 @@ This is the main mental model:
 
 - the class defines what this kind of component looks like
 - an individual element can then opt into one-off differences
+
+In practice, this means Adapter is not trying to make global CSS smarter. It is trying to keep component CSS isolated and predictable.
 
 !!! info "Quick rule of thumb"
 
@@ -91,6 +98,8 @@ IconButton.define("ui-icon-button");
 
 ## 4. Shared Class CSS
 
+Shared class CSS is where Adapter's component-level isolation starts.
+
 The supported class-level patterns in this repo are:
 
 ```ts
@@ -126,6 +135,8 @@ Important:
 - `static css = ...` class fields should not be treated as a supported Adapter pattern here
 - use `Class.css = ...` or `static { this.css = ... }` instead
 - see [Caveats and Constraints](caveats-and-constraints.md) for the runtime details behind that rule
+
+When you later call `.define(tagName)`, Adapter writes that shared CSS under the registered custom element so the rules stay attached to the component boundary.
 
 ## 5. Inheritance
 
@@ -175,6 +186,8 @@ Or:
 ```
 
 Adapter scopes those rules to the specific element instance.
+
+That separation matters: instance CSS is for local exceptions, while shared class CSS remains the stable isolated styling contract for the component.
 
 ## 7. `define(tagName)`
 
