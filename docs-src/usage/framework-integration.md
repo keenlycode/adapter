@@ -38,6 +38,16 @@ Card.define("ui-card");
 
 This is the most direct environment and the easiest place to reason about Adapter behavior.
 
+## ArrowJS
+
+After vanilla HTML and JavaScript, ArrowJS is one of the cleanest integrations to reach for when you want lightweight reactivity without adopting a second component styling system.
+
+- Adapter continues to own component styling and CSS isolation
+- ArrowJS can handle local state, reactive rendering, and small DOM updates
+- both stay close to native DOM and custom element patterns
+
+That makes the pairing a good fit for small reactive widgets and custom elements that need state without a heavier framework layer.
+
 ## React
 
 React can render Adapter-based custom elements with minimal glue.

@@ -217,7 +217,7 @@ class AdapterObjectController {
    * -----
    * Set by the Adapter mixin constructor immediately after instantiation.
    */
-  adapterObject!: Adapter;
+  adapterObject!: AdapterInstance & Adapter;
 
   /**
    * Constructable stylesheet used for instance-scoped CSS rules.
@@ -361,6 +361,31 @@ type CssProcessor = (strings: TemplateStringsArray, ...values: unknown[]) => str
 type AdapterClassConfiguration = {
   cssProcessor?: CssProcessor;
 };
+type AdapterInstance = {
+  _adapter: AdapterObjectController;
+  css: string;
+  addStyle(css: string): void;
+  _registCSSStyleSheet(): void;
+  connectedCallback(): void;
+  remove(): void;
+};
+type AdapterMixinClass<TBase extends Constructor<HTMLElementInterface>> =
+  TBase & {
+    // deno-lint-ignore no-explicit-any
+    new (...args: any[]): HTMLElementInterface & AdapterInstance;
+    _adapter: AdapterClassController;
+    readonly adapter: AdapterClassController;
+    configure(
+      // deno-lint-ignore no-explicit-any
+      this: any,
+      options?: AdapterClassConfiguration
+      // deno-lint-ignore no-explicit-any
+    ): any;
+    css: string;
+    readonly tagName: string | undefined;
+    addStyle(css: string): void;
+    define(tagName: string): void;
+  };
 
 /**
  * A mixin function to add Adapter functionality to a base class.
@@ -368,7 +393,7 @@ type AdapterClassConfiguration = {
  */
 function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   Base: TBase
-) {
+): AdapterMixinClass<TBase> {
   return class _Adapter extends Base {
 
     /** Static instance of AdapterClassController */
@@ -541,6 +566,8 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   };
 }
 
-class Adapter extends AdapterMixin(HTMLElement) { };
+const AdapterBase: AdapterMixinClass<typeof HTMLElement> = AdapterMixin(HTMLElement);
+
+class Adapter extends AdapterBase { };
 
 export { Adapter, AdapterMixin, css };
