@@ -391,7 +391,7 @@
                 
                 <div class="adapter-version-badge adapter-version-badge--header" aria-label="Adapter version">
                     <span>Version</span>
-                    <strong>3.2.0</strong>
+                    <strong>3.2.1</strong>
                 </div>
                 
                 
@@ -480,7 +480,7 @@
 <div class="px-4 pt-6">
     <div class="adapter-version-badge adapter-version-badge--sidebar" aria-label="Adapter version">
         <span>Version</span>
-        <strong>3.2.0</strong>
+        <strong>3.2.1</strong>
     </div>
 </div>
 
@@ -747,23 +747,21 @@
 <p>Adapter expects shared class CSS to flow through its supported static API.</p>
 <p>If the class field form bypasses that path, the component can look valid in code while silently missing the runtime behavior the docs assume.</p>
 </div>
-<h2 id="cssprocessor-is-class-level-only"><code>cssProcessor</code> Is Class-Level Only<a class="headerlink" href="#cssprocessor-is-class-level-only" title="Permanent link">&para;</a></h2>
-<p><code>cssProcessor</code> transforms shared class CSS before Adapter writes it into the shared stylesheet.</p>
+<h2 id="cssprocessor-is-configured-on-the-class"><code>cssProcessor</code> Is Configured On The Class<a class="headerlink" href="#cssprocessor-is-configured-on-the-class" title="Permanent link">&para;</a></h2>
+<p><code>cssProcessor</code> transforms component CSS before Adapter writes it into the shared stylesheet or an instance stylesheet.</p>
 <p>It affects:</p>
 <ul>
 <li><code>Class.css = ...</code></li>
 <li><code>static { this.css = ... }</code></li>
 <li><code>Class.addStyle(...)</code></li>
-</ul>
-<p>It does not affect:</p>
-<ul>
 <li><code>element.css</code></li>
+<li><code>element.addStyle(...)</code></li>
 <li>the <code>css</code> attribute on an instance</li>
 </ul>
 <div class="admonition info">
 <p class="admonition-title">Mental boundary</p>
 <p><code>cssProcessor</code> belongs to the component class lifecycle.</p>
-<p>Instance CSS stays separate on purpose so local element overrides do not mutate the shared component contract.</p>
+<p>The processor is still chosen by the component class, so every instance of that class follows the same transform rules.</p>
 </div>
 <p>Set it before <code>define()</code>:</p>
 <div class="language-ts codehilite"><pre><span></span><code><span id="__span-3-1"><span class="kd">class</span><span class="w"> </span><span class="nx">Tag</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Adapter</span><span class="p">.</span><span class="nx">configure</span><span class="p">({</span><span class="w"> </span><span class="nx">cssProcessor</span><span class="o">:</span><span class="w"> </span><span class="kt">minify</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{}</span>
@@ -934,10 +932,10 @@
         
 
         
-        <a href="#cssprocessor-is-class-level-only"
+        <a href="#cssprocessor-is-configured-on-the-class"
             class="text-muted-foreground hover:text-foreground data-[active=true]:text-foreground text-[0.8rem] no-underline transition-colors data-[depth=3]:pl-4 data-[depth=4]:pl-6"
-            data-active="false" data-depth="2" onClick="deferSetActiveTocLink('#cssprocessor-is-class-level-only');">
-            cssProcessor Is Class-Level Only
+            data-active="false" data-depth="2" onClick="deferSetActiveTocLink('#cssprocessor-is-configured-on-the-class');">
+            cssProcessor Is Configured On The Class
         </a>
         
 

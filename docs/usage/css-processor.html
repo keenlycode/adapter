@@ -391,7 +391,7 @@
                 
                 <div class="adapter-version-badge adapter-version-badge--header" aria-label="Adapter version">
                     <span>Version</span>
-                    <strong>3.2.0</strong>
+                    <strong>3.2.1</strong>
                 </div>
                 
                 
@@ -480,7 +480,7 @@
 <div class="px-4 pt-6">
     <div class="adapter-version-badge adapter-version-badge--sidebar" aria-label="Adapter version">
         <span>Version</span>
-        <strong>3.2.0</strong>
+        <strong>3.2.1</strong>
     </div>
 </div>
 
@@ -713,8 +713,8 @@
     </div>
   </div>
   <div class="typography w-full flex-1 *:data-[slot=alert]:first:mt-0">
-    <p><code>cssProcessor</code> is Adapter's class-level hook for transforming shared component CSS before it is written into the shared stylesheet.</p>
-<p>This is where custom processing belongs when you want to shape class CSS once and reuse the result across every instance of the component.</p>
+    <p><code>cssProcessor</code> is Adapter's class-level hook for transforming component CSS before it is written into the shared stylesheet or an instance stylesheet.</p>
+<p>This is where custom processing belongs when you want one component class and its instances to follow the same transform pipeline.</p>
 <h2 id="what-it-receives">What It Receives<a class="headerlink" href="#what-it-receives" title="Permanent link">&para;</a></h2>
 <p><code>cssProcessor</code> uses the same call shape as a tagged template function:</p>
 <div class="language-ts codehilite"><pre><span></span><code><span id="__span-0-1"><span class="kr">type</span><span class="w"> </span><span class="nx">CssProcessor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
@@ -722,20 +722,18 @@
 </span><span id="__span-0-3"><span class="w">  </span><span class="nx">...values</span><span class="o">:</span><span class="w"> </span><span class="kt">unknown</span><span class="p">[]</span>
 </span><span id="__span-0-4"><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
 </span></code></pre></div>
-<p>Adapter passes the final shared class CSS through that hook right before it updates the component stylesheet.</p>
+<p>Adapter passes the final scoped CSS through that hook right before it updates the component stylesheet.</p>
 <h2 id="when-it-runs">When It Runs<a class="headerlink" href="#when-it-runs" title="Permanent link">&para;</a></h2>
-<p><code>cssProcessor</code> applies to shared class CSS such as:</p>
+<p><code>cssProcessor</code> applies to:</p>
 <ul>
 <li><code>Class.css = ...</code></li>
 <li><code>static { this.css = ... }</code></li>
 <li><code>Class.addStyle(...)</code></li>
-</ul>
-<p>It does not apply to:</p>
-<ul>
 <li><code>element.css</code></li>
 <li>the <code>css</code> attribute on instances</li>
+<li><code>element.addStyle(...)</code></li>
 </ul>
-<p>Set it before <code>define(...)</code> so the class stylesheet is built with the processor you expect.</p>
+<p>Set it before <code>define(...)</code> so both class and instance styles use the processor you expect.</p>
 <h2 id="basic-example">Basic Example<a class="headerlink" href="#basic-example" title="Permanent link">&para;</a></h2>
 <div class="language-ts codehilite"><pre><span></span><code><span id="__span-1-1"><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Adapter</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@devcapsule/adapter&quot;</span><span class="p">;</span>
 </span><span id="__span-1-2">
@@ -783,7 +781,7 @@
 </span><span id="__span-2-23">
 </span><span id="__span-2-24"><span class="nx">Card</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s2">&quot;ui-card&quot;</span><span class="p">);</span>
 </span></code></pre></div>
-<p>This is a good fit when your project already uses PostCSS and you want Adapter class CSS to pass through the same nesting, prefixing, or normalization rules.</p>
+<p>This is a good fit when your project already uses PostCSS and you want Adapter CSS to pass through the same nesting, prefixing, or normalization rules.</p>
 <h2 id="branching-with-configure">Branching With <code>configure(...)</code><a class="headerlink" href="#branching-with-configure" title="Permanent link">&para;</a></h2>
 <p>If one component family should use one processor and another branch should use a different one, use <code>configure(...)</code>:</p>
 <div class="language-ts codehilite"><pre><span></span><code><span id="__span-3-1"><span class="kd">class</span><span class="w"> </span><span class="nx">BaseTag</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Adapter</span><span class="p">.</span><span class="nx">configure</span><span class="p">({</span><span class="w"> </span><span class="nx">cssProcessor</span><span class="o">:</span><span class="w"> </span><span class="kt">minify</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{}</span>
@@ -795,10 +793,10 @@
 </span><span id="__span-3-7"><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-3-8"><span class="p">})</span><span class="w"> </span><span class="p">{}</span>
 </span></code></pre></div>
-<p>This keeps the choice at the class level instead of mixing different processing rules into instances.</p>
+<p>This keeps the processor owned by the class while still applying consistently to that class's instances.</p>
 <h2 id="constraints">Constraints<a class="headerlink" href="#constraints" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>cssProcessor</code> is class-level only</li>
+<li><code>cssProcessor</code> is configured on the class</li>
 <li>set it before <code>define(...)</code></li>
 <li>return a string</li>
 <li>keep the processing synchronous in the code you assign to Adapter</li>
@@ -806,9 +804,9 @@
 <p>If your PostCSS setup is async, run that work earlier in your build pipeline instead of inside Adapter at runtime.</p>
 <h2 id="when-to-reach-for-it">When To Reach For It<a class="headerlink" href="#when-to-reach-for-it" title="Permanent link">&para;</a></h2>
 <ul>
-<li>you want to minify or annotate class CSS</li>
-<li>you want Adapter class CSS to pass through PostCSS plugins</li>
-<li>you want different component branches to use different class-level processing rules</li>
+<li>you want to minify or annotate component CSS</li>
+<li>you want Adapter CSS to pass through PostCSS plugins</li>
+<li>you want different component branches to use different processing rules</li>
 </ul>
 <p>If you only need to style one instance differently, use <code>element.css</code> instead.</p>
   </div>
