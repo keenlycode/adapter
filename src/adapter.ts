@@ -471,7 +471,9 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
        * This will make `this.objectClassSelector` work as expected.
        */
       const cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
-      this._adapter.cssStyleSheet.replaceSync(cssRule);
+      this._adapter.cssStyleSheet.replaceSync(
+        this._adapter._class.adapter.cssProcessor`${cssRule}`
+      );
     }
 
     /**
@@ -495,7 +497,7 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
       const cssRule = `${this.tagName}.${this._adapter.objectClassSelector} { ${css} }`;
       this._adapter.cssStyleSheet.replaceSync(`
         ${this.css}
-        ${cssRule}
+        ${this._adapter._class.adapter.cssProcessor`${cssRule}`}
       `);
     }
 

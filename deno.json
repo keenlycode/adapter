@@ -8,7 +8,7 @@
     "docs:build": "deno task docs:sync-skill-references && uv run --group docs mkdocs build",
     "docs:serve": "deno task docs:sync-skill-references && uv run --group docs mkdocs serve --livereload",
     "test:esbuild": "deno run --watch-hmr --allow-all ./esbuild/test.js",
-    "test:html": "engrave server test-src/ docs/test/ --watch='.*.js'",
+    "test:html": "engrave server test-src/ docs/test/ --watch-add='.*.js'",
     "test": "deno task test:esbuild & deno task test:html",
     "dist:typescript": "npx tsc --project tsconfig.json",
     "dist:esbuild": "deno run --allow-all esbuild/dist.js",
