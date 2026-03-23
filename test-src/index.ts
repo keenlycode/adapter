@@ -245,6 +245,40 @@ describe("Adapter Object: Use Case", () => {
     assert(!document.adoptedStyleSheets.includes(button1._adapter.cssStyleSheet));
     assert(!document.adoptedStyleSheets.includes(button2._adapter.cssStyleSheet));
   });
+
+  it("Should apply cssProcessor to instance css APIs and css attribute", () => {
+    const processor = (strings: TemplateStringsArray, ...values: unknown[]) => {
+      const raw = String.raw({ raw: strings }, ...values);
+      return raw.replace(/display:\s*flex;/g, "display: grid;");
+    };
+
+    class ProcessedButton extends Adapter.configure({ cssProcessor: processor }) { }
+    ProcessedButton.define("el-processed-button");
+
+    const button = new ProcessedButton();
+    document.body.append(button);
+
+    button.css = `display: flex;`;
+    assert(
+      button._adapter.cssStyleSheet.cssRules[0].cssText.includes(
+        "display: grid;"
+      )
+    );
+
+    button.addStyle(`display: flex;`);
+    assert(
+      button._adapter.cssStyleSheet.cssRules[1].cssText.includes(
+        "display: grid;"
+      )
+    );
+
+    button.setAttribute("css", "display: flex;");
+    assert(
+      button._adapter.cssStyleSheet.cssRules[0].cssText.includes(
+        "display: grid;"
+      )
+    );
+  });
 });
 
 describe("Adapter Mixin: Use Case", () => {

@@ -29,6 +29,9 @@ Adapter lets you build Web Components with isolated styles, so your UI stays saf
 - It lets subclasses inherit styles through normal JavaScript inheritance
 - It supports per-instance CSS when one element needs a local override
 - It works well for design systems, internal tools, dashboards, and embedded widgets
+- It can integrate smoothly with lightweight reactive tools such as ArrowJS
+
+The current browser runtime build at `dist/browser/adapter.js` is about `3.7 KB` minified and about `1.2 KB` gzip.
 
 ## CSS Isolation First
 

@@ -23,6 +23,8 @@ Key ideas:
 * Styles are **isolated to the component**: no accidental global overrides or selector collisions.
 * Works in **plain HTML** (via CDN) or with modern build tools.
 
+Current browser build size for `dist/browser/adapter.js`: about **3.7 KB minified** and about **1.2 KB gzip**.
+
 ---
 
 ## Features

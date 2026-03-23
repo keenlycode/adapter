@@ -1,8 +1,8 @@
 # `cssProcessor`
 
-`cssProcessor` is Adapter's class-level hook for transforming shared component CSS before it is written into the shared stylesheet.
+`cssProcessor` is Adapter's class-level hook for transforming component CSS before it is written into the shared stylesheet or an instance stylesheet.
 
-This is where custom processing belongs when you want to shape class CSS once and reuse the result across every instance of the component.
+This is where custom processing belongs when you want one component class and its instances to follow the same transform pipeline.
 
 ## What It Receives
 
@@ -15,22 +15,20 @@ type CssProcessor = (
 ) => string;
 ```
 
-Adapter passes the final shared class CSS through that hook right before it updates the component stylesheet.
+Adapter passes the final scoped CSS through that hook right before it updates the component stylesheet.
 
 ## When It Runs
 
-`cssProcessor` applies to shared class CSS such as:
+`cssProcessor` applies to:
 
 - `Class.css = ...`
 - `static { this.css = ... }`
 - `Class.addStyle(...)`
-
-It does not apply to:
-
 - `element.css`
 - the `css` attribute on instances
+- `element.addStyle(...)`
 
-Set it before `define(...)` so the class stylesheet is built with the processor you expect.
+Set it before `define(...)` so both class and instance styles use the processor you expect.
 
 ## Basic Example
 
@@ -88,7 +86,7 @@ Card.css = `
 Card.define("ui-card");
 ```
 
-This is a good fit when your project already uses PostCSS and you want Adapter class CSS to pass through the same nesting, prefixing, or normalization rules.
+This is a good fit when your project already uses PostCSS and you want Adapter CSS to pass through the same nesting, prefixing, or normalization rules.
 
 ## Branching With `configure(...)`
 
@@ -105,11 +103,11 @@ class DebugTag extends BaseTag.configure({
 }) {}
 ```
 
-This keeps the choice at the class level instead of mixing different processing rules into instances.
+This keeps the processor owned by the class while still applying consistently to that class's instances.
 
 ## Constraints
 
-- `cssProcessor` is class-level only
+- `cssProcessor` is configured on the class
 - set it before `define(...)`
 - return a string
 - keep the processing synchronous in the code you assign to Adapter
@@ -118,8 +116,8 @@ If your PostCSS setup is async, run that work earlier in your build pipeline ins
 
 ## When To Reach For It
 
-- you want to minify or annotate class CSS
-- you want Adapter class CSS to pass through PostCSS plugins
-- you want different component branches to use different class-level processing rules
+- you want to minify or annotate component CSS
+- you want Adapter CSS to pass through PostCSS plugins
+- you want different component branches to use different processing rules
 
 If you only need to style one instance differently, use `element.css` instead.
