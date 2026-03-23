@@ -46,26 +46,24 @@ class Card extends Adapter {
 
     If the class field form bypasses that path, the component can look valid in code while silently missing the runtime behavior the docs assume.
 
-## `cssProcessor` Is Class-Level Only
+## `cssProcessor` Is Configured On The Class
 
-`cssProcessor` transforms shared class CSS before Adapter writes it into the shared stylesheet.
+`cssProcessor` transforms component CSS before Adapter writes it into the shared stylesheet or an instance stylesheet.
 
 It affects:
 
 - `Class.css = ...`
 - `static { this.css = ... }`
 - `Class.addStyle(...)`
-
-It does not affect:
-
 - `element.css`
+- `element.addStyle(...)`
 - the `css` attribute on an instance
 
 !!! info "Mental boundary"
 
     `cssProcessor` belongs to the component class lifecycle.
 
-    Instance CSS stays separate on purpose so local element overrides do not mutate the shared component contract.
+    The processor is still chosen by the component class, so every instance of that class follows the same transform rules.
 
 Set it before `define()`:
 

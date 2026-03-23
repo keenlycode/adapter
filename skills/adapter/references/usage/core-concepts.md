@@ -206,7 +206,7 @@ Examples and generated code should prefer `.define(...)` over calling `customEle
 
 ## 8. `cssProcessor`
 
-`cssProcessor` is a class-level hook that transforms shared class CSS before it is written into the shared stylesheet.
+`cssProcessor` is a class-level hook that transforms component CSS before it is written into the shared stylesheet or an instance stylesheet.
 
 ```ts
 const minify = (strings: TemplateStringsArray, ...values: unknown[]) => {
@@ -228,9 +228,10 @@ Tag.define("ui-tag");
 Rules:
 
 - set it before `define()`
-- it affects class-level CSS only
-- it does not transform `element.css`
-- it does not transform the `css` attribute on instances
+- it affects both class CSS and instance CSS for that component
+- it transforms `element.css`
+- it transforms the `css` attribute on instances
+- it transforms `element.addStyle(...)`
 
 !!! info "What `cssProcessor` is good at"
 

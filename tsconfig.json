@@ -8,6 +8,7 @@
         "esModuleInterop": true,
         "declaration": true,
         "declarationMap": true,
+        "emitDeclarationOnly": true,
         "allowImportingTsExtensions": true,
         "rewriteRelativeImportExtensions": true,
         "outDir": "dist/browser/",

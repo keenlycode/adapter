@@ -10,9 +10,9 @@
     "test:esbuild": "deno run --watch-hmr --allow-all ./esbuild/test.js",
     "test:html": "engrave server test-src/ docs/test/ --watch-add='.*.js'",
     "test": "deno task test:esbuild & deno task test:html",
-    "dist:typescript": "npx tsc --project tsconfig.json",
-    "dist:esbuild": "deno run --allow-all esbuild/dist.js",
-    "dist": "deno task dist:typescript & deno task dist:esbuild",
+    "dist:types": "npx tsc --project tsconfig.json",
+    "dist:js": "deno run --allow-all esbuild/dist.js",
+    "dist": "deno task dist:types & deno task dist:js",
     "publish": "deno publish --allow-slow-types --allow-dirty"
   },
   "compilerOptions": {
