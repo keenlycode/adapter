@@ -369,23 +369,6 @@ type AdapterInstance = {
   connectedCallback(): void;
   remove(): void;
 };
-type AdapterMixinClass<TBase extends Constructor<HTMLElementInterface>> =
-  TBase & {
-    // deno-lint-ignore no-explicit-any
-    new (...args: any[]): HTMLElementInterface & AdapterInstance;
-    _adapter: AdapterClassController;
-    readonly adapter: AdapterClassController;
-    configure(
-      // deno-lint-ignore no-explicit-any
-      this: any,
-      options?: AdapterClassConfiguration
-      // deno-lint-ignore no-explicit-any
-    ): any;
-    css: string;
-    readonly tagName: string | undefined;
-    addStyle(css: string): void;
-    define(tagName: string): void;
-  };
 
 /**
  * A mixin function to add Adapter functionality to a base class.
@@ -393,7 +376,7 @@ type AdapterMixinClass<TBase extends Constructor<HTMLElementInterface>> =
  */
 function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   Base: TBase
-): AdapterMixinClass<TBase> {
+) {
   return class _Adapter extends Base {
 
     /** Static instance of AdapterClassController */
@@ -566,8 +549,38 @@ function AdapterMixin<TBase extends Constructor<HTMLElementInterface>>(
   };
 }
 
-const AdapterBase: AdapterMixinClass<typeof HTMLElement> = AdapterMixin(HTMLElement);
+class Adapter extends AdapterMixin(HTMLElement) {
+  // Redeclare Adapter's static API directly so editor tooling can resolve
+  // completions on the exported class without tracing the mixin result.
+  static override get adapter(): AdapterClassController {
+    return super.adapter;
+  }
 
-class Adapter extends AdapterBase { };
+  static override configure(
+    options: AdapterClassConfiguration = {}
+  ) {
+    return super.configure(options);
+  }
+
+  static override set css(css: string) {
+    super.css = css;
+  }
+
+  static override get css(): string {
+    return super.css;
+  }
+
+  static override get tagName(): string | undefined {
+    return super.tagName;
+  }
+
+  static override addStyle(css: string) {
+    super.addStyle(css);
+  }
+
+  static override define(tagName: string) {
+    super.define(tagName);
+  }
+};
 
 export { Adapter, AdapterMixin, css };
