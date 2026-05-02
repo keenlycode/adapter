@@ -19,10 +19,18 @@ Use this skill to set up a small project-suitable agent team, keep repository ag
 
 1. Inspect project conventions: agent config, skills, AGENTS.md, automata workspace, and task/workspace state.
 2. Decide whether the current agent team is sufficient.
-3. If changes are useful, propose the smallest agent set before editing config.
-4. Configure agents only through a verified environment mechanism, then verify discovery. For OpenCode project agents, load `automata-agent-opencode` for concrete file formats and commands.
-5. Keep AGENTS.md and automata references current.
-6. Record concise project-local state only when useful and only in the project’s chosen state location.
+3. If creating or changing agents is multi-step, implementation-heavy, delegated, artifact-producing, or likely to be resumed, use `task-management` before editing so the plan, action, and progress are durable.
+4. Present the default minimal agent team and configuration assumptions to the user before editing:
+   - `automata` primary agent
+   - `explore-local` narrow exploration subagent
+   - automata workspace, usually `agents/`
+   - runtime agent configuration mechanism and location, if known
+   - model, reasoningEffort, speed, cost/costWeight, and permissions when supported
+5. Ask whether the user wants to modify agent names, roles, model choices, permissions, workspace location, or runtime configuration. Discuss until the intended setup is clear.
+6. Wait for explicit user confirmation before creating or modifying agents, AGENTS.md, runtime config, or workspace references.
+7. Configure agents only through a verified environment mechanism, then verify discovery. For OpenCode project agents, load `automata-agent-opencode` for concrete file formats and commands.
+8. Keep AGENTS.md and automata references current.
+9. Record concise project-local state only when useful and only in the project’s chosen state location.
 
 ## Automata Workspace
 
@@ -55,7 +63,7 @@ When delegating after AGENTS.md changes, pass relevant updated guidance directly
 
 Recommended minimal automata team:
 
-- `automata`: primary project agent for user communication, final decisions, edits, verification, task state, commits when requested, and synthesis. It should not start implementation or broad changes without an explicit user order or confirmation; when the user is discussing or asking "are we ready," answer with readiness and wait for a clear go-ahead.
+- `automata`: primary project agent for user communication, final decisions, edits, verification, task state, commits when requested, and synthesis. It should load/use `task-management` for durable, resumable, multi-step, delegated, implementation-heavy, or artifact-producing work, especially when the work is complex enough to need a todo list. It should not start implementation or broad changes without an explicit user order or confirmation; when the user is discussing or asking "are we ready," answer with readiness and wait for a clear go-ahead.
 - `explore-local`: narrow subagent for repository exploration, agent config inspection, skill guidance review, and workspace-state checks.
 
 Treat this as a default starting point, not a requirement. Create fewer agents when the environment already has a sufficient team or the project does not benefit from delegation.
