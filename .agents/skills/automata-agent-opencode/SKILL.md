@@ -1,29 +1,29 @@
 ---
 name: automata-agent-opencode
-description: Use when configuring, creating, reviewing, or fixing OpenCode project agents and subagents; editing `.opencode/agents/*.md`, `opencode.json`, or OpenCode-specific AGENTS.md guidance; disabling built-in OpenCode agents; choosing OpenCode model IDs, permissions, speed, costWeight, reasoningEffort, and agent modes; avoiding `opencode agent create` generator loops in non-interactive sessions; or verifying discovery with `opencode agent list`.
+description: Use when configuring, creating, reviewing, or fixing OpenCode project agents and subagents; editing `.opencode/agents/*.md`, `opencode.json`, or OpenCode-specific AGENTS.md guidance; disabling built-in OpenCode agents through project agent Markdown files; choosing OpenCode model IDs, permissions, speed, costWeight, reasoningEffort, and agent modes; avoiding `opencode agent create` generator loops in non-interactive sessions; or verifying discovery with `opencode agent list`.
 ---
 
 # Automata Agent OpenCode
 
 Use this skill as the OpenCode-specific add-on to `automata-agent`.
 
-First apply `automata-agent` for general team design, delegation, workspace, task-state, and `AGENTS.md` principles. Then use this skill for concrete OpenCode configuration mechanics: `.opencode/agents/*.md`, `opencode.json`, model IDs, permissions, disabling built-ins, and discovery verification.
+First apply `automata-agent` for general team design, delegation, workspace, task-state, and `AGENTS.md` principles. Then use this skill for concrete OpenCode configuration mechanics: `.opencode/agents/*.md`, model IDs, permissions, disabling built-ins, `opencode.json` only when needed for non-agent config, and discovery verification.
 
 ## Core Rules
 
 - Use repo-local Markdown agent files in `.opencode/agents/*.md` for project agents and subagents.
 - Do not use `opencode agent create` in non-interactive/API sessions; it can enter a long generator flow. Write Markdown agent files directly and verify with `opencode agent list`.
 - Keep `AGENTS.md` minimal. Put durable references, task state, and artifacts under `agents/`.
-- Keep runtime OpenCode configuration in `.opencode/agents/` and `opencode.json`, not in reusable skill folders or `agents/`.
+- Keep OpenCode agent definitions and built-in agent disables in `.opencode/agents/`. Use `opencode.json` only for non-agent OpenCode config that cannot be represented as agent Markdown.
 - Prefer OpenCode's standard permissive permission fields when the user wants smooth operation, then express safety policy in the prompt instructions.
-- Disable built-in agents in `opencode.json` when installing a clean automata-only team, or when explicitly requested.
+- Disable built-in agents with `.opencode/agents/<agent>.md` files when installing a clean automata-only team, or when explicitly requested.
 
 ## Setup Workflow
 
 1. Load/use `automata-agent` when the task involves team design, `AGENTS.md`, delegation policy, or durable workspace state.
-2. Inspect existing `AGENTS.md`, `.opencode/agents/`, `opencode.json`, `agents/`, and relevant skill files.
+2. Inspect existing `AGENTS.md`, `.opencode/agents/`, `opencode.json` if present, `agents/`, and relevant skill files.
 3. Edit `.opencode/agents/*.md` directly using documented Markdown agent format.
-4. Update `opencode.json` for global project agent overrides such as disabling built-ins.
+4. Disable OpenCode default visible agents by writing project Markdown override files in `.opencode/agents/`.
 5. Verify with `opencode agent list`.
 6. If model IDs matter, verify with `opencode models <provider>` before editing.
 
@@ -55,7 +55,7 @@ Use `mode: primary` for user-facing main agents. Use `mode: subagent` for delega
 
 Use `automata-agent` for the minimal team recommendation, including the `automata` primary agent and `explore-local` subagent. This skill only maps that team into OpenCode agent files and project configuration.
 
-When installing the minimal automata team, disable OpenCode's default visible agents in `opencode.json`: `build`, `plan`, `explore`, and `general`.
+When installing the minimal automata team, disable OpenCode's default visible agents with Markdown override files in `.opencode/agents/`: `build`, `plan`, `explore`, and `general`.
 
 For subagents, prefer lower-cost or faster verified models when suitable. If the user requests specific models, run `opencode models <provider>` and use only IDs listed there.
 
@@ -73,19 +73,25 @@ For read-mostly subagents, keep config permissive if requested but state that th
 
 ## Built-In Agents
 
-Disable OpenCode's default visible agents with `opencode.json` for a clean automata-only project team:
+Disable OpenCode's default visible agents with project Markdown files for a clean automata-only project team. Create these files:
 
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "agent": {
-    "build": { "disable": true },
-    "plan": { "disable": true },
-    "explore": { "disable": true },
-    "general": { "disable": true }
-  }
-}
+```text
+.opencode/agents/build.md
+.opencode/agents/plan.md
+.opencode/agents/explore.md
+.opencode/agents/general.md
 ```
+
+Each file should contain:
+
+```markdown
+---
+description: Disabled built-in OpenCode agent.
+disable: true
+---
+```
+
+OpenCode docs support `disable: true` as an agent option and support Markdown agent files in `.opencode/agents/`. The Markdown filename is the agent name, so these files override the built-in agent names.
 
 `compaction`, `summary`, and `title` are OpenCode hidden/system agents and may still appear.
 
