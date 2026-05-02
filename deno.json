@@ -4,7 +4,7 @@
   "license": "ISC",
   "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
   "tasks": {
-    "docs:sync-skill-references": "uv run python dev/cli.py docs sync",
+    "docs:sync-skill-references": "uv run python dev/cli.py docs skill-sync",
     "docs:build": "uv run python dev/cli.py docs build",
     "docs:serve": "uv run python dev/cli.py docs serve",
     "test:esbuild": "deno run --watch-hmr --allow-all ./esbuild/test.js",

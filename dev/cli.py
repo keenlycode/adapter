@@ -72,8 +72,8 @@ def dev() -> None:
     run("deno", "task", "test")
 
 
-@docs_app.command(name="sync")
-def docs_sync() -> None:
+@docs_app.command(name="skill-sync")
+def docs_skill_sync() -> None:
     """Sync docs into agent skill references."""
     sync_skill_references()
 
