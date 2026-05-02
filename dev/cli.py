@@ -24,7 +24,7 @@ def run(*command: str) -> None:
 
 def raise_for_missing_tool(tool: str) -> None:
     if shutil.which(tool) is None:
-        raise cyclopts.ParameterError(f"Required tool not found on PATH: {tool}")
+        raise cyclopts.CycloptsError(f"Required tool not found on PATH: {tool}")
 
 
 def should_skip(path: Path, base: Path) -> bool:
@@ -34,7 +34,7 @@ def should_skip(path: Path, base: Path) -> bool:
 def sync_skill_references() -> None:
     """Sync docs-src into src/agent-skills/adapter-framework/references."""
     if not DOCS_SRC_DIR.exists():
-        raise cyclopts.ParameterError(f"Docs source directory not found: {DOCS_SRC_DIR}")
+        raise cyclopts.CycloptsError(f"Docs source directory not found: {DOCS_SRC_DIR}")
 
     shutil.rmtree(SKILL_REFERENCES_DIR, ignore_errors=True)
     SKILL_REFERENCES_DIR.mkdir(parents=True, exist_ok=True)
