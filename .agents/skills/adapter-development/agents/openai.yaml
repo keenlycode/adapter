@@ -1,0 +1,4 @@
+interface:
+  display_name: "Adapter Development"
+  short_description: "Develop this Adapter repository"
+  default_prompt: "Use $adapter-development to develop the Adapter repository while preserving runtime API, docs workflow, and validation conventions."
