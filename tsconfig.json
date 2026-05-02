@@ -1,18 +1,18 @@
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "module": "esnext",
-        "moduleResolution": "node",
-        "strict": true,
-        "noImplicitAny": true,
-        "esModuleInterop": true,
-        "declaration": true,
-        "declarationMap": true,
-        "emitDeclarationOnly": true,
-        "allowImportingTsExtensions": true,
-        "rewriteRelativeImportExtensions": true,
-        "outDir": "dist/browser/",
-    },
-    "include": ["src"],
-    "exclude": ["src/**/*.bundle.ts"]
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "outDir": "dist/browser/"
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*.bundle.ts", "src/adapter-skill-install.ts"]
 }

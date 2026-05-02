@@ -34,6 +34,30 @@ In practice, that means the agent should:
 - keep shared class-level CSS and instance-level CSS conceptually separate
 - treat `cssProcessor` as a class-level feature
 
+## Install The Skill
+
+Adapter includes a CLI that installs the packaged skill into your local Codex skills directory:
+
+```bash
+adapter-skill-install
+```
+
+By default, it installs to `$CODEX_HOME/skills` when `CODEX_HOME` is set, otherwise `~/.codex/skills`.
+
+Useful options:
+
+```bash
+adapter-skill-install --dry-run
+adapter-skill-install --to /path/to/skills
+adapter-skill-install --force
+```
+
+For Deno/JSR one-shot usage, run the exported installer:
+
+```bash
+deno run -A jsr:@devcapsule/adapter/adapter-skill-install
+```
+
 ## What It Helps With
 
 The skill is most useful when you want an AI agent to stay accurate about:

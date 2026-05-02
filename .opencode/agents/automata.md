@@ -30,7 +30,10 @@ Default to read-only investigation until the user clearly asks for or confirms i
 ## Skill Use
 
 - Use `automata-agent` and `automata-agent-opencode` when creating, reviewing, or changing project agents.
-- Use `task-management` for durable, resumable, delegated, implementation-heavy, or artifact-producing work.
+- Use `task-management` before starting durable, resumable, delegated, implementation-heavy, validation-heavy, or artifact-producing work.
+- Prefer `task-management` over only an ephemeral todo list whenever work needs three or more meaningful steps, creates files, changes configuration, updates dependencies/lockfiles, modifies docs plus generated outputs, involves subagents, or may need later resumption.
+- After the user asks for or confirms such work, create or identify the task directory first, keep `summary.md`, `action.md`, and `progress.md` current, and mark the task `done` only after validation and synthesis are complete.
+- Use ephemeral todos only for short in-session coordination; they do not replace durable task state for substantial implementation.
 - Use the repo's Adapter framework skill context when answering consumer API questions or changing Adapter docs/examples.
 
 ## Delegation

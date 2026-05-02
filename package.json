@@ -1,13 +1,32 @@
 {
+  "name": "@devcapsule/adapter",
+  "version": "3.2.2",
+  "license": "ISC",
+  "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
   "type": "module",
   "main": "dist/browser/mod.js",
   "module": "dist/browser/mod.js",
+  "exports": {
+    ".": "./dist/browser/mod.js",
+    "./adapter-skill-install": "./dist/node/adapter-skill-install.js"
+  },
+  "bin": {
+    "adapter-skill-install": "./dist/node/adapter-skill-install.js"
+  },
+  "files": [
+    "dist/browser/",
+    "dist/node/",
+    "src/agent-skills/",
+    "README.md",
+    "LICENSE.md"
+  ],
   "devDependencies": {
+    "@cliffy/command": "npm:@jsr/cliffy__command@^1.0.1",
     "@types/mocha": "^10.0.10",
     "chai": "^6.2.1",
+    "chroma-js": "^3.2.0",
     "fast-glob": "^3.3.3",
     "mocha": "^11.7.5",
-    "typescript": "^5.9.3",
-    "chroma-js": "^3.2.0"
+    "typescript": "^5.9.3"
   }
 }

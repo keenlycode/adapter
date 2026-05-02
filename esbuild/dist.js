@@ -2,7 +2,6 @@ import * as esbuild from "esbuild";
 import * as path from "@std/path";
 import * as fg from "fast-glob";
 
-
 const __filename = path.fromFileUrl(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -11,8 +10,9 @@ let files, result = null;
 files = await fg.default.async("src/**/*.bundle.{ts,js}");
 
 console.log(
-`📦️ Create library bundle files
-=======================================`);
+  `📦️ Create library bundle files
+=======================================`,
+);
 
 result = await esbuild.build({
   entryPoints: files,
@@ -32,16 +32,17 @@ result = await esbuild.build({
 console.log(
   await esbuild.analyzeMetafile(result.metafile, {
     verbose: true,
-  })
+  }),
 );
 
 files = await fg.default.sync("src/**/*.{ts,js}", {
-  ignore: "src/**/*.bundle.{ts,js}"
+  ignore: ["src/**/*.bundle.{ts,js}", "src/adapter-skill-install.ts"],
 });
 
 console.log(
-`📦️ Create adapter distributed files
-===================================`);
+  `📦️ Create adapter distributed files
+===================================`,
+);
 
 result = await esbuild.build({
   entryPoints: files,
@@ -61,7 +62,34 @@ result = await esbuild.build({
 console.log(
   await esbuild.analyzeMetafile(result.metafile, {
     verbose: true,
-  })
+  }),
 );
 
-await esbuild.stop()
+console.log(
+  `📦️ Create node cli files
+==========================`,
+);
+
+result = await esbuild.build({
+  entryPoints: ["src/adapter-skill-install.ts"],
+  bundle: true,
+  outfile: "dist/node/adapter-skill-install.js",
+  format: "esm",
+  platform: "node",
+  lineLimit: 80,
+  keepNames: false,
+  minify: true,
+  sourcemap: true,
+  metafile: true,
+  logLevel: "info",
+});
+
+await Deno.chmod("dist/node/adapter-skill-install.js", 0o755);
+
+console.log(
+  await esbuild.analyzeMetafile(result.metafile, {
+    verbose: true,
+  }),
+);
+
+await esbuild.stop();

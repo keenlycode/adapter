@@ -34,13 +34,18 @@
     "include": [
       "src/",
       "dist/browser/",
+      "dist/node/",
       "src/agent-skills/",
       "README.md",
       "LICENSE.md"
     ]
   },
-  "exports": "./src/mod.ts",
+  "exports": {
+    ".": "./src/mod.ts",
+    "./adapter-skill-install": "./src/adapter-skill-install.ts"
+  },
   "imports": {
+    "@cliffy/command": "jsr:@cliffy/command@^1.0.1",
     "@devcapsule/adapter": "./src/mod.ts",
     "@std/fs": "jsr:@std/fs@^1.0.20",
     "@std/path": "jsr:@std/path@^1.1.3",
