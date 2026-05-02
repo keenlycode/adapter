@@ -8,18 +8,11 @@ Adapter lets you build Web Components with isolated styles, so your UI stays saf
 
 !!! info
 
-    Adapter also ships with a local AI Skill for coding assistants.
+    Adapter also ships with an optional Codex skill for AI coding assistants.
 
-    It helps AI agents follow Adapter's actual runtime model instead of guessing from generic Web Components patterns.
+    Install it with `adapter-skill-install`, or read the [AI Skill](usage/ai-skill.md) page for install options and safe test commands.
 
-    The skill covers things like:
-
-    - supported class CSS patterns such as `Class.css = ...` and `static { this.css = ... }`
-    - inheritance behavior for shared class-level CSS
-    - class-level `cssProcessor` behavior
-    - runtime caveats such as avoiding `static css = ...`
-
-    If AI Skill is a new concept to you, read more on the dedicated [AI Skill](usage/ai-skill.md) page.
+    The skill itself contains the agent-facing Adapter guidance.
 
 ## Why Developers Reach For Adapter
 

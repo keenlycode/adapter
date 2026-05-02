@@ -46,9 +46,9 @@ Choose the setup that matches your project.
 
 !!! info
 
-    This repo also includes an Adapter-specific AI skill at `src/agent-skills/adapter-framework/SKILL.md`.
+    Adapter includes an optional Codex skill for AI coding assistants.
 
-    It is there so coding assistants can follow the actual runtime rules of this package instead of guessing from generic Web Components patterns.
+    Install it with `adapter-skill-install`, or read the [AI Skill](ai-skill.md) page for install options and safe test commands.
 
 ## First Component
 

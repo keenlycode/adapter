@@ -69,6 +69,16 @@ import { Adapter } from "@devcapsule/adapter";
 import { Adapter } from "jsr:@devcapsule/adapter";
 ```
 
+### Adapter AI Skill
+
+Adapter also ships an optional AI coding-assistant skill. After installing Adapter in an npm project, install the skill into your local Codex skills directory with:
+
+```bash
+npx adapter-skill-install
+```
+
+For one-shot usage, run `npx -p @devcapsule/adapter adapter-skill-install`. The installer supports `--dry-run`, `--to <skills-dir>`, and `--force`. See the [AI Skill docs](docs-src/usage/ai-skill.md) for safe testing and usage details.
+
 ---
 
 ## Quick Start

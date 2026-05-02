@@ -1,38 +1,13 @@
 # AI Skill
 
-Adapter ships with a local AI skill for coding assistants.
+Adapter ships with an optional Codex skill for AI coding assistants.
 
-This page explains when to use it and how it helps AI-assisted work stay aligned with Adapter's actual runtime behavior.
+This page focuses on installing and verifying the skill. The skill itself contains the agent-facing Adapter guidance.
 
 If AI Skills are new to you, read more in the official Codex docs:
 
 - [Codex](https://developers.openai.com/codex)
 - [Codex Skills](https://developers.openai.com/codex/skills)
-
-## When To Use It
-
-Use the Adapter AI Skill when asking an AI agent to:
-
-- build a component with `Adapter` or `AdapterMixin`
-- explain how Adapter styling works
-- debug styling or inheritance behavior
-- review Adapter-based code
-- update docs or examples for Adapter usage
-- answer questions about `cssProcessor`, `element.css`, or `.define(...)`
-
-## How To Use It
-
-The simplest way to use it is to tell the AI agent to use the Adapter skill before it starts solving the task.
-
-That gives the agent repo-local guidance about the supported Adapter patterns and caveats in this codebase.
-
-In practice, that means the agent should:
-
-- prefer `Class.css = ...` or `static { this.css = ... }` for class-level CSS
-- avoid describing `static css = ...` as a supported runtime pattern
-- use `.define(tagName)` as the normal registration API
-- keep shared class-level CSS and instance-level CSS conceptually separate
-- treat `cssProcessor` as a class-level feature
 
 ## Install The Skill
 
@@ -44,12 +19,16 @@ adapter-skill-install
 
 By default, it installs to `$CODEX_HOME/skills` when `CODEX_HOME` is set, otherwise `~/.codex/skills`.
 
-Useful options:
+If Adapter is installed in an npm project, the installer is exposed as the package bin:
 
 ```bash
-adapter-skill-install --dry-run
-adapter-skill-install --to /path/to/skills
-adapter-skill-install --force
+npx adapter-skill-install
+```
+
+For one-shot npm usage without adding Adapter to a project first, ask `npx` to fetch the package and run its bin:
+
+```bash
+npx -p @devcapsule/adapter adapter-skill-install
 ```
 
 For Deno/JSR one-shot usage, run the exported installer:
@@ -58,30 +37,51 @@ For Deno/JSR one-shot usage, run the exported installer:
 deno run -A jsr:@devcapsule/adapter/adapter-skill-install
 ```
 
-## What It Helps With
+The command copies the bundled `adapter-framework` skill into the target skills directory.
 
-The skill is most useful when you want an AI agent to stay accurate about:
+## Install Location
 
-- supported API usage
-- styling inheritance
-- shared class-level CSS versus instance-level overrides
-- runtime constraints
-- docs examples that should match the actual implementation
+By default, the installer writes to:
+
+1. `$CODEX_HOME/skills` when `CODEX_HOME` is set
+2. `~/.codex/skills` otherwise
+
+After installation, the skill directory should look like:
+
+```text
+adapter-framework/
+  SKILL.md
+  references/
+```
+
+## Options
+
+Useful options:
+
+```bash
+adapter-skill-install --dry-run
+adapter-skill-install --to /path/to/skills
+adapter-skill-install --force
+```
+
+Use `--dry-run` to preview the destination without writing files. Use `--to` when testing or installing into a non-default skills directory. Use `--force` only when you intentionally want to replace an existing `adapter-framework` skill.
+
+## Test The Installer Safely
+
+To test the installer without touching your real Codex skills directory, install into a temporary directory:
+
+```bash
+tmp=$(mktemp -d /tmp/adapter-skill-test.XXXXXX)
+npx -p @devcapsule/adapter adapter-skill-install --to "$tmp"
+ls "$tmp/adapter-framework"
+```
+
+Expected output includes `SKILL.md` and `references/`.
+
+To verify overwrite protection, run the same install command again. It should fail and tell you to re-run with `--force` if you want to overwrite the existing skill.
 
 ## Where The Skill Lives
 
-The skill file is:
+The packaged skill source is:
 
 - [src/agent-skills/adapter-framework/SKILL.md](https://github.com/keenlycode/adapter/blob/main/src/agent-skills/adapter-framework/SKILL.md)
-
-That file gives AI assistants Adapter-specific instructions and references for this repo.
-
-## Source Of Truth
-
-The skill is a guide, not the runtime.
-
-When there is any conflict:
-
-1. trust `src/adapter.ts`
-2. then trust the main docs pages
-3. treat the skill as a repo-local guide for AI-assisted work
