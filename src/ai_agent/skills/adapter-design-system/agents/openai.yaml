@@ -1,0 +1,4 @@
+interface:
+  display_name: "Adapter Design System"
+  short_description: "Adapter-based UI system architecture."
+  default_prompt: "Use the adapter-design-system skill to create, extract, or review a reusable UI system with semantic style tokens, Adapter CSS inheritance, primitive components, and composed patterns."
