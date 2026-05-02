@@ -46,7 +46,7 @@ Choose the setup that matches your project.
 
 !!! info
 
-    This repo also includes an Adapter-specific AI skill at `skills/adapter/SKILL.md`.
+    This repo also includes an Adapter-specific AI skill at `src/agent-skills/adapter-framework/SKILL.md`.
 
     It is there so coding assistants can follow the actual runtime rules of this package instead of guessing from generic Web Components patterns.
 

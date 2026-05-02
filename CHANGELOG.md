@@ -6,4 +6,4 @@
 - Rewrote the `# Adapter` introduction in the skill to describe what Adapter is using the repo's public product wording.
 - Removed installed-package doc discovery workflow from the skill, including `docs-src` lookup and package-resolution commands.
 - Made the skill itself the default guide for normal Adapter answers.
-- Kept repo-local references under `skills/adapter/references/` as optional deeper reading.
+- Kept repo-local references under `src/agent-skills/adapter-framework/references/` as optional deeper reading.

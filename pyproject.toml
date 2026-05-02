@@ -1,7 +1,9 @@
 [project]
 name = "adapter"
 version = "3.2.2"
+requires-python = ">=3.14"
 dependencies = [
+    "cyclopts>=3.0.0",
     "engrave>=3.1.3",
 ]
 

@@ -40,15 +40,15 @@ Use this skill as the default guide for normal Adapter answers.
 
 If deeper examples or expanded docs context are needed, repo-local references are available under:
 
-- `skills/adapter/references/`
+- `src/agent-skills/adapter-framework/references/`
 
 ## What to read next
 
-- `skills/adapter/references/index.md`
-- `skills/adapter/references/usage/getting-started.md`
-- `skills/adapter/references/usage/core-concepts.md`
-- `skills/adapter/references/usage/patterns-and-recipes.md`
-- `skills/adapter/references/usage/css-processor.md`
-- `skills/adapter/references/usage/framework-integration.md`
-- `skills/adapter/references/usage/caveats-and-constraints.md`
-- `skills/adapter/references/usage/ai-skill.md`
+- `src/agent-skills/adapter-framework/references/index.md`
+- `src/agent-skills/adapter-framework/references/usage/getting-started.md`
+- `src/agent-skills/adapter-framework/references/usage/core-concepts.md`
+- `src/agent-skills/adapter-framework/references/usage/patterns-and-recipes.md`
+- `src/agent-skills/adapter-framework/references/usage/css-processor.md`
+- `src/agent-skills/adapter-framework/references/usage/framework-integration.md`
+- `src/agent-skills/adapter-framework/references/usage/caveats-and-constraints.md`
+- `src/agent-skills/adapter-framework/references/usage/ai-skill.md`
