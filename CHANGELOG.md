@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3.1
+
+- Fixed the JSR one-shot skill installer so it can install packaged skills when
+  run from a remote `jsr:` URL.
+- Clarified AI skill install docs for JSR npm-compatibility setup instead of
+  assuming a separately published npm package.
+
 ## 3.3.0
 
 - Added the packaged `adapter-design-system` skill for step-by-step
