@@ -6,6 +6,7 @@
   "tasks": {
     "docs:sync-skill-references": "uv run python dev/cli.py docs skill-sync",
     "docs:build": "uv run python dev/cli.py docs build",
+    "docs:publish": "uv run python dev/cli.py docs publish",
     "docs:serve": "uv run python dev/cli.py docs serve",
     "test:esbuild": "deno run --watch-hmr --allow-all ./esbuild/test.js",
     "test:html": "engrave server test-src/ docs/test/ --watch-add='.*.js'",
