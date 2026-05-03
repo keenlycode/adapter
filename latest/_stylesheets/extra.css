@@ -1,0 +1,61 @@
+.codehilite {
+  position: relative;
+}
+
+.codehilite[data-language]::before {
+  content: attr(data-language);
+  display: block;
+  padding: 0.6rem 1rem 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9aa4b2;
+}
+
+.codehilite[data-language] pre {
+  margin-top: 0.35rem;
+}
+
+.admonition .codehilite {
+  background: #282c34 !important;
+  background-color: #282c34 !important;
+}
+
+.admonition .codehilite pre {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.admonition p code,
+.admonition li code {
+  background: #282c34 !important;
+  color: #abb2bf !important;
+}
+
+.tabbed-content .codehilite + .codehilite {
+  margin-top: 1rem;
+}
+
+.adapter-version-selector {
+  display: none;
+}
+
+.adapter-version-selector select {
+  height: 2rem;
+  max-width: 10rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.375rem;
+  padding: 0 1.75rem 0 0.65rem;
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .adapter-version-selector {
+    display: inline-flex;
+    align-items: center;
+  }
+}
