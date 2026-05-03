@@ -5,9 +5,12 @@ description: Use when creating, modifying, reviewing, or debugging components th
 
 # Adapter Framework
 
-Adapter is a small, fast styling runtime for Web Components with isolated styles and natural class-based inheritance.
+Adapter is a small, fast styling runtime for Web Components with isolated styles
+and natural class-based inheritance.
 
-It helps you build components with predictable, scoped CSS using plain JavaScript classes and objects. Keep answers focused on package consumers, not contribution workflow.
+It helps you build components with predictable, scoped CSS using plain
+JavaScript classes and objects. Keep answers focused on package consumers, not
+contribution workflow.
 
 ## Install
 
@@ -15,14 +18,16 @@ Prefer the documented npm compatibility flow:
 
 - npm / bundlers: `npx jsr add @devcapsule/adapter`
 - JSR / Deno: `import { Adapter } from "jsr:@devcapsule/adapter";`
-- browser ESM via CDN: `import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";`
+- browser ESM via CDN:
+  `import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";`
 
 ## Runtime guidance
 
 Explain the package with these defaults:
 
 - import `Adapter` or `AdapterMixin`
-- define shared component CSS with `Class.css = ...` or `static { this.css = ... }`
+- define shared component CSS with `Class.css = ...` or
+  `static { this.css = ... }`
 - register elements with `.define(tagName)`
 - use `element.css` only for per-instance overrides
 - use `configure(...)` for class-level config such as `cssProcessor`
@@ -38,7 +43,8 @@ Keep these guardrails:
 
 Use this skill as the default guide for normal Adapter answers.
 
-If deeper examples or expanded docs context are needed, repo-local references are available under:
+If deeper examples or expanded docs context are needed, repo-local references
+are available under:
 
 - `src/agent-skills/adapter-framework/references/`
 
