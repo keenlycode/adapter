@@ -41,7 +41,6 @@ const SKILL_FILES: Record<SkillName, readonly string[]> = {
   ],
   "adapter-design-system": [
     "SKILL.md",
-    "agents/openai.yaml",
     "references/adapter-patterns.md",
     "references/architecture.md",
     "references/conversation-workflow.md",

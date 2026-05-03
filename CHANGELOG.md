@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.3.2
+
+- Fixed the JSR one-shot skill installer by skipping optional agent metadata
+  files that are not required for skill installation.
+
 ## 3.3.1
 
 - Fixed the JSR one-shot skill installer so it can install packaged skills when
