@@ -1,4 +1,0 @@
-interface:
-  display_name: "Automata Agent OpenCode"
-  short_description: "Configure OpenCode project agents."
-  default_prompt: "Use this skill to set up repo-local OpenCode agents, update minimal guidance, avoid interactive generator loops, and verify discovery."

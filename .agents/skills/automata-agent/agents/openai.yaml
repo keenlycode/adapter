@@ -1,4 +1,0 @@
-interface:
-  display_name: "Automata Agent"
-  short_description: "Set up and coordinate project agent teams."
-  default_prompt: "Use the automata-agent skill to set up project-suitable agents, update AGENTS.md, and coordinate delegation with task or workspace management."

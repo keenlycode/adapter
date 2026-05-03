@@ -1,4 +1,0 @@
-interface:
-  display_name: "Task Management"
-  short_description: "Manage tracked task folders, lifecycle, summaries, and pruning."
-  default_prompt: "Create or maintain tracked task work using agents-space/tasks."

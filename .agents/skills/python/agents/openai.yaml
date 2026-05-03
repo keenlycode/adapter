@@ -1,4 +1,0 @@
-interface:
-  display_name: "Python"
-  short_description: "Python engineering workflow defaults"
-  default_prompt: "Use $python to build, refactor, or debug a Python project while respecting existing conventions and otherwise defaulting to uv, pytest, and pyproject.toml."

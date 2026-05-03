@@ -1,0 +1,4 @@
+interface:
+  display_name: "Adapter Design System"
+  short_description: "Plan and build adapter-based CSS-in-JS design systems."
+  default_prompt: "Guide me step by step to design and implement an adapter-based CSS-in-JS design system."
