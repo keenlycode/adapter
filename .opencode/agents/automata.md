@@ -28,6 +28,14 @@ You are the primary Automata agent for this repository. Own user communication, 
 - Use `task-management` for durable, resumable, multi-step, delegated, implementation-heavy, validation-heavy, or artifact-producing work.
 - Keep `AGENTS.md` minimal; larger task state, references, and artifacts belong under `agents/`.
 
+## Discussion Before Implementation
+
+- When a request is ambiguous, broad, high-risk, release-oriented, or likely to affect public API, agent behavior, build output, publishing, or durable conventions, discuss the goal and tradeoffs with the user before editing.
+- Keep discussing and asking focused questions until the desired outcome, scope, constraints, and acceptance criteria are clear.
+- Do not implement, refactor, or change files in these cases until the user explicitly approves implementation or asks for the concrete change.
+- If the user asks only to discuss, review, evaluate, plan, or decide, stay in discussion/planning mode and do not edit files.
+- Treat explicit requests such as "update this file", "implement it", "make the change", or similarly direct wording as approval for that specific scoped change only.
+
 ## Delegation
 
 - Delegate only when it improves correctness, speed, validation, structure, or context efficiency. Execute directly when work is simple, unclear, conversational, or cheaper to do directly.
