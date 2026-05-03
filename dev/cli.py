@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import shutil
 import subprocess
 import sys
@@ -59,6 +60,16 @@ def sync_skill_references() -> None:
     )
 
 
+def package_version() -> str:
+    """Read the Adapter package version from deno.json."""
+    with (REPO_ROOT / "deno.json").open(encoding="utf-8") as config_file:
+        config = json.load(config_file)
+    version = config.get("version")
+    if not isinstance(version, str) or not version:
+        raise cyclopts.CycloptsError("Could not read package version from deno.json")
+    return version
+
+
 @app.command
 def setup() -> None:
     """Install or sync local development dependencies."""
@@ -90,6 +101,45 @@ def docs_serve() -> None:
     """Sync skill references and serve documentation locally."""
     sync_skill_references()
     run("uv", "run", "--group", "docs", "mkdocs", "serve", "--livereload")
+
+
+@docs_app.command(name="publish")
+def docs_publish(version: str | None = None, alias: str = "latest") -> None:
+    """Publish versioned documentation with mike."""
+    docs_version = version or package_version()
+    sync_skill_references()
+    run(
+        "uv",
+        "run",
+        "--group",
+        "docs",
+        "mike",
+        "deploy",
+        "--push",
+        "--update-aliases",
+        "--alias-type",
+        "copy",
+        "--branch",
+        "docs",
+        "--remote",
+        "origin",
+        docs_version,
+        alias,
+    )
+    run(
+        "uv",
+        "run",
+        "--group",
+        "docs",
+        "mike",
+        "set-default",
+        "--push",
+        "--branch",
+        "docs",
+        "--remote",
+        "origin",
+        alias,
+    )
 
 
 @app.command

@@ -1,40 +1,51 @@
 # Adapter
 
-**Adapter** is a tiny styling engine for **Web Components** focused on one core job: isolating component CSS.
+**Adapter** is a tiny styling engine for **Web Components** focused on one core
+job: isolating component CSS.
 
-It brings the convenience of CSS-in-JS to native Custom Elements with zero dependencies, a clean class-based API, and styles that stay scoped to the component instead of leaking through the page.
+It brings the convenience of CSS-in-JS to native Custom Elements with zero
+dependencies, a clean class-based API, and styles that stay scoped to the
+component instead of leaking through the page.
 
 ---
 
 ## Why Adapter?
 
-Adapter is a lightweight CSS-in-JS toolkit for Web Components. It focuses on **isolated styling and composition for custom elements**, not on yet another frontend framework.
+Adapter is a lightweight CSS-in-JS toolkit for Web Components. It focuses on
+**isolated styling and composition for custom elements**, not on yet another
+frontend framework.
 
 Use Adapter when you:
 
-* Want **isolated component CSS** without wrestling with global CSS leakage.
-* Prefer **plain JavaScript/TypeScript** and Web Standards over heavy frameworks.
-* Need a **tiny runtime** that can run in Browser, Node, or Deno.
-* Want to build your own design system or UI library on top of Web Components.
+- Want **isolated component CSS** without wrestling with global CSS leakage.
+- Prefer **plain JavaScript/TypeScript** and Web Standards over heavy
+  frameworks.
+- Need a **tiny runtime** that can run in Browser, Node, or Deno.
+- Want to build your own design system or UI library on top of Web Components.
 
 Key ideas:
 
-* CSS is **programmable**: define, inherit, compose, and extend styles using JS.
-* Styles are **isolated to the component**: no accidental global overrides or selector collisions.
-* Works in **plain HTML** (via CDN) or with modern build tools.
+- CSS is **programmable**: define, inherit, compose, and extend styles using JS.
+- Styles are **isolated to the component**: no accidental global overrides or
+  selector collisions.
+- Works in **plain HTML** (via CDN) or with modern build tools.
 
-Current browser build size for `dist/browser/adapter.js`: about **3.7 KB minified** and about **1.2 KB gzip**.
+Current browser build size for `dist/browser/adapter.js`: about **3.7 KB
+minified** and about **1.2 KB gzip**.
 
 ---
 
 ## Features
 
-* 🧩 **Web Components first** – Designed specifically for custom elements and Shadow DOM.
-* 🎨 **CSS isolation for components** – Write CSS as strings, with scoping and composition rules built around custom elements.
-* 🧬 **Style inheritance & reuse** – Share and extend styles between elements.
-* 🪶 **Tiny bundle** – Small, dependency-light core suitable for modern apps.
-* 🌐 **Multiple environments** – Usable from Browser, Deno, and Node-based tooling.
-* 🧱 **Framework-agnostic** – Integrate with React, Vue, Svelte, or vanilla JS.
+- 🧩 **Web Components first** – Designed specifically for custom elements and
+  Shadow DOM.
+- 🎨 **CSS isolation for components** – Write CSS as strings, with scoping and
+  composition rules built around custom elements.
+- 🧬 **Style inheritance & reuse** – Share and extend styles between elements.
+- 🪶 **Tiny bundle** – Small, dependency-light core suitable for modern apps.
+- 🌐 **Multiple environments** – Usable from Browser, Deno, and Node-based
+  tooling.
+- 🧱 **Framework-agnostic** – Integrate with React, Vue, Svelte, or vanilla JS.
 
 ---
 
@@ -48,7 +59,9 @@ Use the official compatibility helper so npm tracks the exact JSR release:
 npx jsr add @devcapsule/adapter
 ```
 
-The command installs the compatibility package (`@jsr/devcapsule__adapter`) and adds the alias to your `package.json`, matching the [JSR npm compatibility guide](https://jsr.io/docs/npm-compatibility).
+The command installs the compatibility package (`@jsr/devcapsule__adapter`) and
+adds the alias to your `package.json`, matching the
+[JSR npm compatibility guide](https://jsr.io/docs/npm-compatibility).
 
 ```ts
 import { Adapter } from "@devcapsule/adapter";
@@ -69,15 +82,31 @@ import { Adapter } from "@devcapsule/adapter";
 import { Adapter } from "jsr:@devcapsule/adapter";
 ```
 
-### Adapter AI Skill
+### Adapter AI Skills
 
-Adapter also ships an optional AI coding-assistant skill. After installing Adapter in an npm project, install the skill into your local Codex skills directory with:
+Adapter also ships optional AI coding-assistant skills.
+
+For Deno/JSR one-shot usage:
+
+```bash
+deno run -A jsr:@devcapsule/adapter/adapter-skill-install
+```
+
+For npm-compatible projects, add Adapter through JSR first:
+
+```bash
+npx jsr add @devcapsule/adapter
+```
+
+Then run the installed package bin from the project:
 
 ```bash
 npx adapter-skill-install
 ```
 
-For one-shot usage, run `npx -p @devcapsule/adapter adapter-skill-install`. The installer supports `--dry-run`, `--to <skills-dir>`, and `--force`. See the [AI Skill docs](docs-src/usage/ai-skill.md) for safe testing and usage details.
+The installer installs both `adapter-framework` and `adapter-design-system` and
+supports `--dry-run`, `--to <skills-dir>`, and `--force`. See the
+[AI Skill docs](docs-src/usage/ai-skill.md) for safe testing and usage details.
 
 ---
 

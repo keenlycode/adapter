@@ -21,7 +21,6 @@ nav:
 
 theme:
   name: shadcn
-  custom_dir: docs-src/_override/
   pygments_style: one-dark
 
 repo_name: keenlycode/adapter
@@ -34,9 +33,7 @@ extra_css:
 
 extra_javascript:
   - _javascripts/code-language-labels.js
-
-extra:
-  adapter_version: "3.2.2"
+  - _javascripts/version-selector.js
 
 markdown_extensions:
   - admonition

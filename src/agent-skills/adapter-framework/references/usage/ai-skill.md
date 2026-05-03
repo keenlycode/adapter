@@ -22,24 +22,22 @@ adapter-skill-install
 By default, it installs to `$CODEX_HOME/skills` when `CODEX_HOME` is set,
 otherwise `~/.codex/skills`.
 
-If Adapter is installed in an npm project, the installer is exposed as the
-package bin:
-
-```bash
-npx adapter-skill-install
-```
-
-For one-shot npm usage without adding Adapter to a project first, ask `npx` to
-fetch the package and run its bin:
-
-```bash
-npx -p @devcapsule/adapter adapter-skill-install
-```
-
 For Deno/JSR one-shot usage, run the exported installer:
 
 ```bash
 deno run -A jsr:@devcapsule/adapter/adapter-skill-install
+```
+
+For npm-compatible projects, add Adapter through JSR first:
+
+```bash
+npx jsr add @devcapsule/adapter
+```
+
+Then run the installed package bin from the project:
+
+```bash
+npx adapter-skill-install
 ```
 
 The command copies the bundled `adapter-framework` and `adapter-design-system`
@@ -84,7 +82,7 @@ into a temporary directory:
 
 ```bash
 tmp=$(mktemp -d /tmp/adapter-skill-test.XXXXXX)
-npx -p @devcapsule/adapter adapter-skill-install --to "$tmp"
+deno run -A jsr:@devcapsule/adapter/adapter-skill-install --to "$tmp"
 ls "$tmp/adapter-framework"
 ls "$tmp/adapter-design-system"
 ```

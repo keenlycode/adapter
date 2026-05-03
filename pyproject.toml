@@ -1,6 +1,6 @@
 [project]
 name = "adapter"
-version = "3.2.2"
+version = "3.3.2"
 requires-python = ">=3.14"
 dependencies = [
     "cyclopts>=4.0.0,<5.0.0",
@@ -11,5 +11,6 @@ dependencies = [
 docs = [
   "mkdocs>=1.6.0,<2.0.0",
   "mkdocs-shadcn>=0.10.2,<1.0.0",
+  "mike>=2.1.0,<3.0.0",
   "pymdown-extensions>=10.21,<11.0",
 ]

@@ -1,6 +1,7 @@
 # Getting Started
 
-This guide gets you from install to a working component, then explains the minimum styling model you need to use Adapter correctly.
+This guide gets you from install to a working component, then explains the
+minimum styling model you need to use Adapter correctly.
 
 ## Install
 
@@ -46,9 +47,9 @@ Choose the setup that matches your project.
 
 !!! info
 
-    Adapter includes an optional Codex skill for AI coding assistants.
+    Adapter includes optional Codex skills for AI coding assistants.
 
-    Install it with `adapter-skill-install`, or read the [AI Skill](ai-skill.md) page for install options and safe test commands.
+    Read the [AI Skill](ai-skill.md) page for install options and safe test commands.
 
 ## First Component
 
@@ -195,4 +196,6 @@ Every instance of `ui-card` then shares that class stylesheet.
 
 ## Next Step
 
-Read [Core Concepts](core-concepts.md) next. That page explains the styling model, inheritance, `AdapterMixin`, and `cssProcessor` in the same terms the runtime actually uses.
+Read [Core Concepts](core-concepts.md) next. That page explains the styling
+model, inheritance, `AdapterMixin`, and `cssProcessor` in the same terms the
+runtime actually uses.
