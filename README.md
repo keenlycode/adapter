@@ -104,8 +104,9 @@ Then run the installed package bin from the project:
 npx adapter-skill-install
 ```
 
-The installer installs both `adapter-framework` and `adapter-design-system` and
-supports `--dry-run`, `--to <skills-dir>`, and `--force`. See the
+The installer installs both `adapter-framework` and `adapter-design-system`.
+Without `--to`, it prompts before using `~/.agents/skills`; it also supports
+`--dry-run`, `--to <skills-dir>`, and `--force`. See the
 [AI Skill docs](docs-src/usage/ai-skill.md) for safe testing and usage details.
 
 ---
