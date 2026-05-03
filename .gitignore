@@ -8,4 +8,5 @@ docs/
 .python-version
 cache/
 .codex/
+.opencode/
 .playwright-cli/
