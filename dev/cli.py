@@ -117,6 +117,8 @@ def docs_publish(version: str | None = None, alias: str = "latest") -> None:
         "deploy",
         "--push",
         "--update-aliases",
+        "--alias-type",
+        "copy",
         "--branch",
         "docs",
         "--remote",
