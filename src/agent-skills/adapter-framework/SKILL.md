@@ -1,9 +1,9 @@
 ---
-name: adapter
+name: adapter-framework
 description: Use when creating, modifying, reviewing, or debugging components that extend `Adapter` or `AdapterMixin`, especially when class CSS, instance CSS, inheritance, or `.define(...)` behavior matters.
 ---
 
-# Adapter
+# Adapter Framework
 
 Adapter is a small, fast styling runtime for Web Components with isolated styles and natural class-based inheritance.
 

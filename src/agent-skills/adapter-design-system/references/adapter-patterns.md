@@ -1,10 +1,12 @@
-# Adapter and CSS-in-JS patterns
+# Adapter-aware CSS-in-JS patterns
 
-Use this reference when implementing source files.
+Use this reference when designing source-file structure. For detailed Adapter runtime behavior, defer to the `adapter-framework` skill.
 
-## Component CSS with Adapter css
+## Component CSS boundary
 
-Follow the project's Adapter import path and naming convention. A common pattern is:
+Follow the project's Adapter import path, naming convention, and the `adapter-framework` skill's runtime guidance. Keep design-system components focused on tokens, layers, and reuse rather than redefining Adapter API rules.
+
+A minimal component shape often looks like:
 
 ```ts
 import { Adapter, css } from '../../_lib/adapter.bundle.js';
@@ -90,7 +92,7 @@ If the Adapter `css` helper already returns a `CSSStyleSheet` in the project, ex
 ## Rules of thumb
 
 - Use `CSSStyleSheet()`/`adoptedStyleSheets` for document-level defaults.
-- Use Adapter `css` for component styles.
+- Use Adapter component styling according to the `adapter-framework` skill and project conventions.
 - Export CSS from ES modules so tokens, utilities, and components can import each other.
 - Keep component CSS dependent on tokens/utilities, not raw repeated values.
 - Prefer Adapter inheritance before copying CSS.

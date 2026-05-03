@@ -1,6 +1,6 @@
 ---
 name: adapter-design-system
-description: Guide users through planning, teaching, and implementing adapter-based CSS-in-JS design systems. Use when creating or extending frontend UI architecture with design tokens, CSSStyleSheet/adoptedStyleSheets style modules, ES module CSS exports, Adapter css component styles, base components, adapter inheritance, component variants, or reusable UI patterns. Discuss decisions step by step, ask with concrete suggestions, align before implementation, and help users understand how to maintain and extend the UI later.
+description: Guide users through planning, teaching, and implementing Adapter-based CSS-in-JS design systems. Use when creating or extending frontend UI architecture with design tokens, CSSStyleSheet/adoptedStyleSheets style modules, ES module CSS exports, base components, variants, or reusable UI patterns. For detailed Adapter runtime behavior, defer to the adapter-framework skill. Discuss decisions step by step, ask with concrete suggestions, align before implementation, and help users understand how to maintain and extend the UI later.
 ---
 
 # Adapter Design System
@@ -36,6 +36,21 @@ tokens → style utilities → CSS modules → base components → adapters/vari
 
 Read `references/architecture.md` for the detailed layer model.
 
+## Relationship to adapter-framework skill
+
+This skill owns design-system planning, teaching, and architecture. It does not own detailed Adapter runtime guidance.
+
+When implementation depends on Adapter API behavior, use the `adapter-framework` skill as the source of truth for:
+
+- `Adapter` and `AdapterMixin`
+- the `css` helper
+- class-level and instance-level CSS behavior
+- inheritance-based style composition
+- `.define(tagName)` registration
+- `configure(...)` and `cssProcessor`
+
+Do not duplicate detailed Adapter runtime documentation here. Keep Adapter usage examples lightweight and defer to the `adapter-framework` skill when correctness depends on framework behavior.
+
 ## Ask with recommendations
 
 When asking the user a question, include:
@@ -68,8 +83,7 @@ Use browser-native and module-friendly CSS-in-JS patterns:
 
 - Prefer `CSSStyleSheet()` for document-level style modules that are adopted with `document.adoptedStyleSheets`.
 - Export reusable style sheets from ES modules, especially `*.css.ts` files.
-- Use Adapter `css` tagged templates for component styles.
-- Attach component styles with the framework's Adapter mechanism, for example `Component.css = css\`...\`;` when that matches the project convention.
+- Use Adapter component styles according to the `adapter-framework` skill and the project's existing conventions.
 - Import tokens and utilities into CSS modules/components instead of hardcoding repeated values.
 - Keep generated output separate from source files.
 
