@@ -26,12 +26,8 @@ module.exports = {
           lastVersion: "current",
           versions: {
             current: {
-              label: "Next",
+              label: "3.3.3",
               path: "/",
-            },
-            "3.3.2": {
-              label: "3.3.2",
-              path: "3.3.2",
             },
           },
           exclude: ["**/_*"],

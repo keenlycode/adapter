@@ -609,7 +609,10 @@
     ],
     "packageJson": {
       "dependencies": [
+        "npm:@docusaurus/core@^3.10.1",
+        "npm:@docusaurus/preset-classic@^3.10.1",
         "npm:@jsr/cliffy__command@^1.0.1",
+        "npm:@mdx-js/react@^3.1.1",
         "npm:@types/mocha@^10.0.10",
         "npm:chai@^6.2.1",
         "npm:chroma-js@^3.2.0",
