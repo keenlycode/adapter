@@ -38,11 +38,13 @@ This is the main mental model:
 
 In practice, this means Adapter is not trying to make global CSS smarter. It is trying to keep component CSS isolated and predictable.
 
-!!! info "Quick rule of thumb"
+Adapter works with browser style APIs by creating `CSSStyleSheet` objects and attaching them through `getRootNode()` and `adoptedStyleSheets`, so component and instance styles are isolated from page-wide leakage.
 
-    Reach for class-level CSS first.
+:::info Quick rule of thumb
+Reach for class-level CSS first.
 
-    Reach for instance CSS only when one element should diverge from the component default.
+Reach for instance CSS only when one element should diverge from the component default.
+:::
 
 ## 2. `Adapter`
 
@@ -233,11 +235,11 @@ Rules:
 - it transforms the `css` attribute on instances
 - it transforms `element.addStyle(...)`
 
-!!! info "What `cssProcessor` is good at"
+:::info What `cssProcessor` is good at
+Use it for class-wide transforms such as minification, annotation, nesting support, or PostCSS-based processing.
 
-    Use it for class-wide transforms such as minification, annotation, nesting support, or PostCSS-based processing.
-
-    Do not use it as a substitute for one-off element overrides.
+Do not use it as a substitute for one-off element overrides.
+:::
 
 `configure(...)` is available if you want to branch class-level config at declaration time:
 

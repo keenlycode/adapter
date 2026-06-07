@@ -13,6 +13,12 @@
   "bin": {
     "adapter-skill-install": "./dist/node/adapter-skill-install.js"
   },
+  "scripts": {
+    "docs:build": "docusaurus build docs-src --out-dir ../docs",
+    "docs:serve": "docusaurus start docs-src",
+    "docs:version": "cd docs-src && ../node_modules/.bin/docusaurus docs:version",
+    "docs:deploy": "docusaurus deploy docs-src"
+  },
   "files": [
     "dist/browser/",
     "dist/node/",
@@ -22,6 +28,9 @@
   ],
   "devDependencies": {
     "@cliffy/command": "npm:@jsr/cliffy__command@^1.0.1",
+    "@docusaurus/core": "^3.10.1",
+    "@docusaurus/preset-classic": "^3.10.1",
+    "@mdx-js/react": "^3.1.1",
     "@types/mocha": "^10.0.10",
     "chai": "^6.2.1",
     "chroma-js": "^3.2.0",

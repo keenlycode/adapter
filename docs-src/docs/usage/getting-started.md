@@ -7,49 +7,49 @@ minimum styling model you need to use Adapter correctly.
 
 Choose the setup that matches your project.
 
-=== "CDN"
+### CDN
 
-    ```html
-    <script type="module">
-      import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
+```html
+<script type="module">
+  import { Adapter } from "https://cdn.jsdelivr.net/npm/@devcapsule/adapter/+esm";
 
-      class HelloCard extends Adapter {}
+  class HelloCard extends Adapter {}
 
-      HelloCard.css = `
-        display: block;
-        padding: 1rem;
-        border: 1px solid currentColor;
-        border-radius: 0.5rem;
-      `;
+  HelloCard.css = `
+    display: block;
+    padding: 1rem;
+    border: 1px solid currentColor;
+    border-radius: 0.5rem;
+  `;
 
-      HelloCard.define("hello-card");
-      document.body.innerHTML = "<hello-card>Hello Adapter</hello-card>";
-    </script>
-    ```
+  HelloCard.define("hello-card");
+  document.body.innerHTML = "<hello-card>Hello Adapter</hello-card>";
+</script>
+```
 
-=== "Deno / JSR"
+### Deno / JSR
 
-    ```ts
-    import { Adapter } from "jsr:@devcapsule/adapter";
-    ```
+```ts
+import { Adapter } from "jsr:@devcapsule/adapter";
+```
 
-=== "npm / bundlers"
+### npm / bundlers
 
-    ```bash
-    npx jsr add @devcapsule/adapter
-    ```
+```bash
+npx jsr add @devcapsule/adapter
+```
 
-    ```ts
-    import { Adapter } from "@devcapsule/adapter";
-    ```
+```ts
+import { Adapter } from "@devcapsule/adapter";
+```
 
 ## AI Skill
 
-!!! info
+:::info
+Adapter includes optional Codex skills for AI coding assistants.
 
-    Adapter includes optional Codex skills for AI coding assistants.
-
-    Read the [AI Skill](ai-skill.md) page for install options and safe test commands.
+Read the [AI Skill](ai-skill.md) page for install options and safe test commands.
+:::
 
 ## First Component
 
@@ -99,7 +99,7 @@ Card.define("ui-card");
 
 Use one of these:
 
-=== "`static { this.css = ... }`"
+### `static { this.css = ... }`
 
 ```ts
 class Card extends Adapter {
@@ -111,7 +111,7 @@ class Card extends Adapter {
 }
 ```
 
-=== "`Class.css = ...`"
+### `Class.css = ...`
 
 ```ts
 class Card extends Adapter {}
@@ -121,19 +121,20 @@ Card.css = `
 `;
 ```
 
-!!! danger
+:::danger
 
-    Do not rely on this pattern:
+Do not rely on this pattern:
 
-    ```ts
-    class Card extends Adapter {
-      static css = `
-        display: block;
-      `;
-    }
-    ```
+```ts
+class Card extends Adapter {
+  static css = `
+    display: block;
+  `;
+}
+```
 
-    `static css = ...` creates a class field and does not reliably trigger Adapter's static `css` accessor in the current runtime.
+`static css = ...` creates a class field and does not reliably trigger Adapter's static `css` accessor in the current runtime.
+:::
 
 ## Shared Styles vs Instance Overrides
 

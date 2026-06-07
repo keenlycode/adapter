@@ -6,10 +6,13 @@ package-lock.json
 pnpm-lock.yaml
 .parcel-cache/
 dist/
-docs/
+/docs/
+/build/
+.docusaurus/
 .python-version
 cache/
 agents/
 .codex/
 .opencode/
+.agents/skill-data/
 .playwright-cli/
