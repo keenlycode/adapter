@@ -1,6 +1,6 @@
 {
   "name": "@devcapsule/adapter",
-  "version": "3.3.3",
+  "version": "3.3.4",
   "license": "ISC",
   "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
   "tasks": {
@@ -43,7 +43,8 @@
   },
   "exports": {
     ".": "./src/mod.ts",
-    "./adapter-skill-install": "./src/adapter-skill-install.ts"
+    "./adapter": "./src/adapter-cli.ts",
+    "./adapter-skill-install": "./src/adapter-cli.ts"
   },
   "imports": {
     "@cliffy/command": "jsr:@cliffy/command@^1.0.1",

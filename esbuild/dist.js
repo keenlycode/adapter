@@ -36,7 +36,7 @@ console.log(
 );
 
 files = await fg.default.sync("src/**/*.{ts,js}", {
-  ignore: ["src/**/*.bundle.{ts,js}", "src/adapter-skill-install.ts"],
+  ignore: ["src/**/*.bundle.{ts,js}", "src/adapter-cli.ts"],
 });
 
 console.log(
@@ -71,9 +71,9 @@ console.log(
 );
 
 result = await esbuild.build({
-  entryPoints: ["src/adapter-skill-install.ts"],
+  entryPoints: ["src/adapter-cli.ts"],
   bundle: true,
-  outfile: "dist/node/adapter-skill-install.js",
+  outfile: "dist/node/adapter-cli.js",
   format: "esm",
   platform: "node",
   lineLimit: 80,
@@ -84,7 +84,7 @@ result = await esbuild.build({
   logLevel: "info",
 });
 
-await Deno.chmod("dist/node/adapter-skill-install.js", 0o755);
+await Deno.chmod("dist/node/adapter-cli.js", 0o755);
 
 console.log(
   await esbuild.analyzeMetafile(result.metafile, {

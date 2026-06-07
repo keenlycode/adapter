@@ -89,7 +89,7 @@ Adapter also ships optional AI coding-assistant skills.
 For Deno/JSR one-shot usage:
 
 ```bash
-deno run -A jsr:@devcapsule/adapter/adapter-skill-install
+deno run -A jsr:@devcapsule/adapter/adapter skill-install
 ```
 
 For npm-compatible projects, add Adapter through JSR first:
@@ -101,13 +101,13 @@ npx jsr add @devcapsule/adapter
 Then run the installed package bin from the project:
 
 ```bash
-npx adapter-skill-install
+npx adapter skill-install
 ```
 
 The installer installs both `adapter-framework` and `adapter-design-system`.
-Without `--to`, it prompts before using `~/.agents/skills`; it also supports
-`--dry-run`, `--to <skills-dir>`, and `--force`. See the
-[AI Skill docs](docs-src/usage/ai-skill.md) for safe testing and usage details.
+Without `--target`, it prompts before using `.agents/skills/`; it also supports
+`--dry-run`, `--target <skills-dir>`, and `--force`. See the
+[AI Skill docs](docs-src/docs/usage/ai-skill.md) for safe testing and usage details.
 
 ---
 

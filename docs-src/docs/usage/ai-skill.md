@@ -16,16 +16,16 @@ Adapter includes a CLI that installs the packaged skills into your local Codex
 skills directory:
 
 ```bash
-adapter-skill-install
+adapter skill-install
 ```
 
-When `--to` is omitted, it prompts before installing to `~/.agents/skills`.
+When `--target` is omitted, it prompts before installing to `.agents/skills/` in the current project.
 Press Enter to use that default, or type another path to override it.
 
-For Deno/JSR one-shot usage, run the exported installer:
+For Deno/JSR one-shot usage, run the exported command module:
 
 ```bash
-deno run -A jsr:@devcapsule/adapter/adapter-skill-install
+deno run -A jsr:@devcapsule/adapter/adapter skill-install
 ```
 
 For npm-compatible projects, add Adapter through JSR first:
@@ -37,7 +37,7 @@ npx jsr add @devcapsule/adapter
 Then run the installed package bin from the project:
 
 ```bash
-npx adapter-skill-install
+npx adapter skill-install
 ```
 
 The command copies the bundled `adapter-framework` and `adapter-design-system`
@@ -45,9 +45,7 @@ skills into the target skills directory.
 
 ## Install Location
 
-By default, the installer prompts before writing to `~/.agents/skills`. At the
-prompt, press Enter to use that directory, type another path to override it, or
-type `n` to cancel.
+By default, the installer prompts before writing to `.agents/skills/` in the current project. At the prompt, press Enter to use that directory, type another path to override it, or type `n` to cancel.
 
 After installation, the skills directory should include:
 
@@ -65,13 +63,13 @@ adapter-design-system/
 Useful options:
 
 ```bash
-adapter-skill-install --dry-run
-adapter-skill-install --to /path/to/skills
-adapter-skill-install --force
+adapter skill-install --dry-run
+adapter skill-install --target /path/to/skills
+adapter skill-install --force
 ```
 
 Use `--dry-run` to preview the default destination without writing files. Use
-`--to` when testing, scripting, or installing into a non-default skills
+`--target` when testing, scripting, or installing into a non-default skills
 directory. Use `--force` only when you intentionally want to replace existing
 Adapter skills.
 
@@ -82,7 +80,7 @@ into a temporary directory:
 
 ```bash
 tmp=$(mktemp -d /tmp/adapter-skill-test.XXXXXX)
-deno run -A jsr:@devcapsule/adapter/adapter-skill-install --to "$tmp"
+deno run -A jsr:@devcapsule/adapter/adapter skill-install --target "$tmp"
 ls "$tmp/adapter-framework"
 ls "$tmp/adapter-design-system"
 ```

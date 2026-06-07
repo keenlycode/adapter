@@ -23,6 +23,7 @@ type PackagedSkillSource =
   | { kind: "remote"; baseUrl: string; files: readonly string[] };
 
 type InstallOptions = {
+  target?: string;
   to?: string;
   force?: boolean;
   dryRun?: boolean;
@@ -77,7 +78,7 @@ function exit(code: number): never {
 }
 
 function defaultSkillsDir(): string {
-  return join(homedir(), ".agents", "skills");
+  return join(".agents", "skills");
 }
 
 function expandHomePath(path: string): string {
@@ -95,7 +96,7 @@ function expandHomePath(path: string): string {
 async function confirmDefaultSkillsDir(defaultDir: string): Promise<string> {
   if (!process.stdin.isTTY) {
     throw new Error(
-      `No --to directory was provided and stdin is not interactive. Re-run with --to <skills-dir>, for example: --to ${defaultDir}`,
+      `No --target directory was provided and stdin is not interactive. Re-run with --target <skills-dir>, for example: --target ${defaultDir}`,
     );
   }
 
@@ -224,8 +225,9 @@ async function copySkillSource(
 }
 
 async function installAdapterSkill(options: InstallOptions): Promise<void> {
-  const targetDir = options.to
-    ? options.to
+  const explicitTarget = options.target ?? options.to;
+  const targetDir = explicitTarget
+    ? explicitTarget
     : options.dryRun
     ? defaultSkillsDir()
     : await confirmDefaultSkillsDir(defaultSkillsDir());
@@ -286,16 +288,25 @@ async function installAdapterSkill(options: InstallOptions): Promise<void> {
 }
 
 try {
-  await new Command()
-    .name("adapter-skill-install")
+  const skillInstallCommand = new Command()
     .description("Install the packaged Adapter AI skills.")
     .option(
+      "--target <dir:string>",
+      "Skills directory to install into. Without --target, prompts before using .agents/skills/.",
+    )
+    .option(
       "--to <dir:string>",
-      "Skills directory to install into. Without --to, prompts before using ~/.agents/skills.",
+      "Deprecated alias for --target.",
+      { hidden: true },
     )
     .option("--force", "Overwrite existing installed Adapter skills.")
     .option("--dry-run", "Show what would be installed without writing files.")
-    .action((options: InstallOptions) => installAdapterSkill(options))
+    .action((options: InstallOptions) => installAdapterSkill(options));
+
+  await new Command()
+    .name("adapter")
+    .description("Adapter development and support commands.")
+    .command("skill-install", skillInstallCommand)
     .parse(getArgs());
 } catch (error) {
   console.error(error instanceof Error ? error.message : String(error));

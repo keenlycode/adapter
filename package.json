@@ -1,6 +1,6 @@
 {
   "name": "@devcapsule/adapter",
-  "version": "3.3.3",
+  "version": "3.3.4",
   "license": "ISC",
   "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
   "type": "module",
@@ -8,10 +8,11 @@
   "module": "dist/browser/mod.js",
   "exports": {
     ".": "./dist/browser/mod.js",
-    "./adapter-skill-install": "./dist/node/adapter-skill-install.js"
+    "./adapter": "./dist/node/adapter-cli.js",
+    "./adapter-skill-install": "./dist/node/adapter-cli.js"
   },
   "bin": {
-    "adapter-skill-install": "./dist/node/adapter-skill-install.js"
+    "adapter": "./dist/node/adapter-cli.js"
   },
   "scripts": {
     "docs:build": "docusaurus build docs-src --out-dir ../docs",
