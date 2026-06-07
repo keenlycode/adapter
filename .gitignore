@@ -9,6 +9,8 @@ dist/
 /docs/
 /build/
 .docusaurus/
+/docs-src/.docusaurus/
+/docs-src/build/
 .python-version
 cache/
 agents/

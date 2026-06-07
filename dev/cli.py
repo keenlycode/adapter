@@ -106,17 +106,9 @@ def docs_serve() -> None:
 
 
 @docs_app.command(name="publish")
-def docs_publish(version: str | None = None, alias: str = "latest") -> None:
-    """Publish versioned documentation with Docusaurus."""
-    docs_version = version or package_version()
-    if alias != "latest":
-        print(
-            "Docusaurus uses version identifiers from `docs:version`; alias is ignored.",
-            flush=True,
-        )
-
+def docs_publish() -> None:
+    """Publish current documentation with Docusaurus."""
     sync_skill_references()
-    run("npm", "run", "docs:version", "--", docs_version)
     run("npm", "run", "docs:deploy")
 
 
