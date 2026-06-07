@@ -23,9 +23,13 @@ module.exports = {
           routeBasePath: "/",
           sidebarPath: "./sidebars.cjs",
           includeCurrentVersion: true,
-          lastVersion: "current",
+          lastVersion: "3.3.4",
           versions: {
             current: {
+              label: "Next",
+              path: "next",
+            },
+            "3.3.4": {
               label: "3.3.4",
               path: "/",
             },
