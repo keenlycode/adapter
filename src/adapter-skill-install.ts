@@ -10,6 +10,7 @@ import {
 } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import process from "node:process";
+import { createInterface } from "node:readline/promises";
 import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
 
@@ -63,13 +64,6 @@ function isNotFoundError(error: unknown): boolean {
   return error instanceof Error && "code" in error && error.code === "ENOENT";
 }
 
-function getEnv(name: string): string | undefined {
-  const deno = (globalThis as {
-    Deno?: { env?: { get(name: string): string | undefined } };
-  }).Deno;
-  return deno?.env?.get(name) ?? process.env[name];
-}
-
 function getArgs(): string[] {
   const deno = (globalThis as { Deno?: { args?: string[] } }).Deno;
   return deno?.args ?? process.argv.slice(2);
@@ -83,12 +77,56 @@ function exit(code: number): never {
 }
 
 function defaultSkillsDir(): string {
-  const codexHome = getEnv("CODEX_HOME");
-  if (codexHome) {
-    return join(codexHome, "skills");
+  return join(homedir(), ".agents", "skills");
+}
+
+function expandHomePath(path: string): string {
+  if (path === "~") {
+    return homedir();
   }
 
-  return join(homedir(), ".codex", "skills");
+  if (path.startsWith("~/") || path.startsWith("~\\")) {
+    return join(homedir(), path.slice(2));
+  }
+
+  return path;
+}
+
+async function confirmDefaultSkillsDir(defaultDir: string): Promise<string> {
+  if (!process.stdin.isTTY) {
+    throw new Error(
+      `No --to directory was provided and stdin is not interactive. Re-run with --to <skills-dir>, for example: --to ${defaultDir}`,
+    );
+  }
+
+  const prompt = createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  try {
+    const answer = (await prompt.question(
+      `Install Adapter AI skills to ${defaultDir}?\n` +
+        "Press Enter to use this directory, type another path to override, or type n to cancel: ",
+    )).trim();
+
+    if (answer === "") {
+      return defaultDir;
+    }
+
+    const normalizedAnswer = answer.toLowerCase();
+    if (["n", "no", "q", "quit", "cancel"].includes(normalizedAnswer)) {
+      throw new Error("Installation cancelled.");
+    }
+
+    if (["y", "yes"].includes(normalizedAnswer)) {
+      return defaultDir;
+    }
+
+    return expandHomePath(answer);
+  } finally {
+    prompt.close();
+  }
 }
 
 async function findPackagedSkillSource(
@@ -186,7 +224,12 @@ async function copySkillSource(
 }
 
 async function installAdapterSkill(options: InstallOptions): Promise<void> {
-  const skillsDir = resolve(options.to ?? defaultSkillsDir());
+  const targetDir = options.to
+    ? options.to
+    : options.dryRun
+    ? defaultSkillsDir()
+    : await confirmDefaultSkillsDir(defaultSkillsDir());
+  const skillsDir = resolve(expandHomePath(targetDir));
   const installs = await Promise.all(
     SKILL_NAMES.map(async (skillName) => {
       const destination = join(skillsDir, skillName);
@@ -245,10 +288,10 @@ async function installAdapterSkill(options: InstallOptions): Promise<void> {
 try {
   await new Command()
     .name("adapter-skill-install")
-    .description("Install the packaged Adapter AI skills for Codex.")
+    .description("Install the packaged Adapter AI skills.")
     .option(
       "--to <dir:string>",
-      "Skills directory to install into. Defaults to $CODEX_HOME/skills or ~/.codex/skills.",
+      "Skills directory to install into. Without --to, prompts before using ~/.agents/skills.",
     )
     .option("--force", "Overwrite existing installed Adapter skills.")
     .option("--dry-run", "Show what would be installed without writing files.")

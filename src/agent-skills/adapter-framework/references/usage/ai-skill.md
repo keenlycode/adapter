@@ -19,8 +19,8 @@ skills directory:
 adapter-skill-install
 ```
 
-By default, it installs to `$CODEX_HOME/skills` when `CODEX_HOME` is set,
-otherwise `~/.codex/skills`.
+When `--to` is omitted, it prompts before installing to `~/.agents/skills`.
+Press Enter to use that default, or type another path to override it.
 
 For Deno/JSR one-shot usage, run the exported installer:
 
@@ -45,10 +45,9 @@ skills into the target skills directory.
 
 ## Install Location
 
-By default, the installer writes to:
-
-1. `$CODEX_HOME/skills` when `CODEX_HOME` is set
-2. `~/.codex/skills` otherwise
+By default, the installer prompts before writing to `~/.agents/skills`. At the
+prompt, press Enter to use that directory, type another path to override it, or
+type `n` to cancel.
 
 After installation, the skills directory should include:
 
@@ -71,9 +70,10 @@ adapter-skill-install --to /path/to/skills
 adapter-skill-install --force
 ```
 
-Use `--dry-run` to preview the destination without writing files. Use `--to`
-when testing or installing into a non-default skills directory. Use `--force`
-only when you intentionally want to replace existing Adapter skills.
+Use `--dry-run` to preview the default destination without writing files. Use
+`--to` when testing, scripting, or installing into a non-default skills
+directory. Use `--force` only when you intentionally want to replace existing
+Adapter skills.
 
 ## Test The Installer Safely
 

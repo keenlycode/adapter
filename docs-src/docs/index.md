@@ -12,14 +12,13 @@ that needs to ship across teams, products, and platforms.
 
 ## AI Skill
 
-!!! info
+:::info
+Adapter also ships optional Codex skills for AI coding assistants.
 
-    Adapter also ships optional Codex skills for AI coding assistants.
+Read the [AI Skill](usage/ai-skill.md) page for install options and safe test commands.
 
-    Read the [AI Skill](usage/ai-skill.md) page for install options and safe test commands.
-
-    The skills contain the agent-facing Adapter guidance.
-
+The skills contain the agent-facing Adapter guidance.
+:::
 ## Why Developers Reach For Adapter
 
 - It isolates component CSS so host-page styles and component styles do not

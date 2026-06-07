@@ -38,11 +38,57 @@ This is the main mental model:
 
 In practice, this means Adapter is not trying to make global CSS smarter. It is trying to keep component CSS isolated and predictable.
 
-!!! info "Quick rule of thumb"
+Adapter works with browser style APIs by creating `CSSStyleSheet` objects and attaching them through `getRootNode()` and `adoptedStyleSheets`, so component and instance styles are isolated from page-wide leakage.
 
-    Reach for class-level CSS first.
+### Styling inside Shadow DOM
 
-    Reach for instance CSS only when one element should diverge from the component default.
+Adapter styles follow the element into the root where it is mounted. When an Adapter element connects, Adapter attaches the shared class stylesheet and the instance stylesheet to `this.getRootNode().adoptedStyleSheets`.
+
+That means:
+
+- if the element is mounted in the main document, Adapter uses `document.adoptedStyleSheets`
+- if the element is mounted inside a shadow root, Adapter uses that `ShadowRoot`'s `adoptedStyleSheets`
+
+```ts
+import { Adapter } from "@devcapsule/adapter";
+
+class UiCard extends Adapter {}
+
+UiCard.css = `
+  display: block;
+  padding: 1rem;
+  border: 1px solid dodgerblue;
+  border-radius: 0.5rem;
+`;
+
+UiCard.define("ui-card");
+
+class AppShell extends HTMLElement {
+  constructor() {
+    super();
+
+    this.attachShadow({ mode: "open" }).innerHTML = `
+      <ui-card>
+        This Adapter element is styled inside Shadow DOM.
+      </ui-card>
+    `;
+  }
+}
+
+customElements.define("app-shell", AppShell);
+```
+
+```html
+<app-shell></app-shell>
+```
+
+`UiCard.css` styles the `<ui-card>` element whether it is mounted in the document or inside another element's shadow root. It does not automatically style arbitrary internal nodes of a shadow tree unless those nodes are Adapter elements or have their own shadow-root styles.
+
+:::info Quick rule of thumb
+Reach for class-level CSS first.
+
+Reach for instance CSS only when one element should diverge from the component default.
+:::
 
 ## 2. `Adapter`
 
@@ -233,11 +279,11 @@ Rules:
 - it transforms the `css` attribute on instances
 - it transforms `element.addStyle(...)`
 
-!!! info "What `cssProcessor` is good at"
+:::info What `cssProcessor` is good at
+Use it for class-wide transforms such as minification, annotation, nesting support, or PostCSS-based processing.
 
-    Use it for class-wide transforms such as minification, annotation, nesting support, or PostCSS-based processing.
-
-    Do not use it as a substitute for one-off element overrides.
+Do not use it as a substitute for one-off element overrides.
+:::
 
 `configure(...)` is available if you want to branch class-level config at declaration time:
 

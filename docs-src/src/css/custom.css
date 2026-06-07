@@ -1,0 +1,10 @@
+.adapter-version-selector {
+  display: none;
+}
+
+.adapter-version-selector select {
+  max-width: 10rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.375rem;
+  padding: 0 1.75rem 0 0.65rem;
+}

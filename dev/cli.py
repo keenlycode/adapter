@@ -10,7 +10,8 @@ import cyclopts
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DOCS_SRC_DIR = REPO_ROOT / "docs-src"
+DOCS_ROOT_DIR = REPO_ROOT / "docs-src"
+DOCS_SRC_DIR = DOCS_ROOT_DIR / "docs"
 SKILL_REFERENCES_DIR = REPO_ROOT / "src" / "agent-skills" / "adapter-framework" / "references"
 
 app = cyclopts.App(help="Development workflows for @devcapsule/adapter.")
@@ -33,9 +34,9 @@ def should_skip(path: Path, base: Path) -> bool:
 
 
 def sync_skill_references() -> None:
-    """Sync docs-src into src/agent-skills/adapter-framework/references."""
+    """Sync latest docs into src/agent-skills/adapter-framework/references."""
     if not DOCS_SRC_DIR.exists():
-        raise cyclopts.CycloptsError(f"Docs source directory not found: {DOCS_SRC_DIR}")
+        raise cyclopts.CycloptsError(f"Latest docs source directory not found: {DOCS_SRC_DIR}")
 
     shutil.rmtree(SKILL_REFERENCES_DIR, ignore_errors=True)
     SKILL_REFERENCES_DIR.mkdir(parents=True, exist_ok=True)
@@ -73,7 +74,8 @@ def package_version() -> str:
 @app.command
 def setup() -> None:
     """Install or sync local development dependencies."""
-    run("uv", "sync", "--group", "docs")
+    run("uv", "sync")
+    run("npm", "install")
     sync_skill_references()
 
 
@@ -93,53 +95,21 @@ def docs_skill_sync() -> None:
 def docs_build() -> None:
     """Sync skill references and build documentation."""
     sync_skill_references()
-    run("uv", "run", "--group", "docs", "mkdocs", "build")
+    run("npm", "run", "docs:build")
 
 
 @docs_app.command(name="serve")
 def docs_serve() -> None:
     """Sync skill references and serve documentation locally."""
     sync_skill_references()
-    run("uv", "run", "--group", "docs", "mkdocs", "serve", "--livereload")
+    run("npm", "run", "docs:serve")
 
 
 @docs_app.command(name="publish")
-def docs_publish(version: str | None = None, alias: str = "latest") -> None:
-    """Publish versioned documentation with mike."""
-    docs_version = version or package_version()
+def docs_publish() -> None:
+    """Publish current documentation with Docusaurus."""
     sync_skill_references()
-    run(
-        "uv",
-        "run",
-        "--group",
-        "docs",
-        "mike",
-        "deploy",
-        "--push",
-        "--update-aliases",
-        "--alias-type",
-        "copy",
-        "--branch",
-        "docs",
-        "--remote",
-        "origin",
-        docs_version,
-        alias,
-    )
-    run(
-        "uv",
-        "run",
-        "--group",
-        "docs",
-        "mike",
-        "set-default",
-        "--push",
-        "--branch",
-        "docs",
-        "--remote",
-        "origin",
-        alias,
-    )
+    run("npm", "run", "docs:deploy")
 
 
 @app.command

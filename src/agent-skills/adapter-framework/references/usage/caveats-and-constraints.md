@@ -6,7 +6,7 @@ This page collects the runtime details that matter when you move from trying Ada
 
 Use one of these patterns for class-level CSS:
 
-=== "`Class.css = ...`"
+### `Class.css = ...`
 
 ```ts
 class Card extends Adapter {}
@@ -16,7 +16,7 @@ Card.css = `
 `;
 ```
 
-=== "`static { this.css = ... }`"
+### `static { this.css = ... }`
 
 ```ts
 class Card extends Adapter {
@@ -40,11 +40,11 @@ class Card extends Adapter {
 
 `static css = ...` creates a class field and does not reliably route through Adapter's static `css` accessor in the current runtime.
 
-!!! info "Why this matters"
+:::info Why this matters
+Adapter expects shared class CSS to flow through its supported static API.
 
-    Adapter expects shared class CSS to flow through its supported static API.
-
-    If the class field form bypasses that path, the component can look valid in code while silently missing the runtime behavior the docs assume.
+If the class field form bypasses that path, the component can look valid in code while silently missing the runtime behavior the docs assume.
+:::
 
 ## `cssProcessor` Is Configured On The Class
 
@@ -59,11 +59,11 @@ It affects:
 - `element.addStyle(...)`
 - the `css` attribute on an instance
 
-!!! info "Mental boundary"
+:::info Mental boundary
+`cssProcessor` belongs to the component class lifecycle.
 
-    `cssProcessor` belongs to the component class lifecycle.
-
-    The processor is still chosen by the component class, so every instance of that class follows the same transform rules.
+The processor is still chosen by the component class, so every instance of that class follows the same transform rules.
+:::
 
 Set it before `define()`:
 
