@@ -1,10 +1,9 @@
 {
   "name": "@devcapsule/adapter",
-  "version": "3.3.4",
+  "version": "4.0.0",
   "license": "ISC",
   "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
   "tasks": {
-    "docs:sync-skill-references": "uv run python dev/cli.py docs skill-sync",
     "docs:build": "uv run python dev/cli.py docs build",
     "docs:publish": "uv run python dev/cli.py docs publish",
     "docs:serve": "uv run python dev/cli.py docs serve",
@@ -35,21 +34,15 @@
     "include": [
       "src/",
       "dist/browser/",
-      "dist/node/",
-      "src/agent-skills/",
       "README.md",
       "LICENSE.md"
     ]
   },
   "exports": {
-    ".": "./src/mod.ts",
-    "./adapter": "./src/adapter-cli.ts",
-    "./adapter-skill-install": "./src/adapter-cli.ts"
+    ".": "./src/mod.ts"
   },
   "imports": {
-    "@cliffy/command": "jsr:@cliffy/command@^1.0.1",
     "@devcapsule/adapter": "./src/mod.ts",
-    "@std/fs": "jsr:@std/fs@^1.0.20",
     "@std/path": "jsr:@std/path@^1.1.3",
     "esbuild": "https://deno.land/x/esbuild@v0.27.0/mod.js"
   }

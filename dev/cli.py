@@ -10,12 +10,9 @@ import cyclopts
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DOCS_ROOT_DIR = REPO_ROOT / "docs-src"
-DOCS_SRC_DIR = DOCS_ROOT_DIR / "docs"
-SKILL_REFERENCES_DIR = REPO_ROOT / "src" / "agent-skills" / "adapter-framework" / "references"
 
 app = cyclopts.App(help="Development workflows for @devcapsule/adapter.")
-docs_app = cyclopts.App(name="docs", help="Documentation and skill-reference workflows.")
+docs_app = cyclopts.App(name="docs", help="Documentation workflows.")
 app.command(docs_app)
 
 
@@ -27,38 +24,6 @@ def run(*command: str) -> None:
 def raise_for_missing_tool(tool: str) -> None:
     if shutil.which(tool) is None:
         raise cyclopts.CycloptsError(f"Required tool not found on PATH: {tool}")
-
-
-def should_skip(path: Path, base: Path) -> bool:
-    return any(part.startswith("_") for part in path.relative_to(base).parts)
-
-
-def sync_skill_references() -> None:
-    """Sync latest docs into src/agent-skills/adapter-framework/references."""
-    if not DOCS_SRC_DIR.exists():
-        raise cyclopts.CycloptsError(f"Latest docs source directory not found: {DOCS_SRC_DIR}")
-
-    shutil.rmtree(SKILL_REFERENCES_DIR, ignore_errors=True)
-    SKILL_REFERENCES_DIR.mkdir(parents=True, exist_ok=True)
-
-    for source in sorted(DOCS_SRC_DIR.rglob("*")):
-        if should_skip(source, DOCS_SRC_DIR):
-            continue
-
-        relative = source.relative_to(DOCS_SRC_DIR)
-        destination = SKILL_REFERENCES_DIR / relative
-
-        if source.is_dir():
-            destination.mkdir(parents=True, exist_ok=True)
-            continue
-
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, destination)
-
-    print(
-        f"Synced skill references: {DOCS_SRC_DIR.relative_to(REPO_ROOT)} -> {SKILL_REFERENCES_DIR.relative_to(REPO_ROOT)}",
-        flush=True,
-    )
 
 
 def package_version() -> str:
@@ -76,7 +41,6 @@ def setup() -> None:
     """Install or sync local development dependencies."""
     run("uv", "sync")
     run("npm", "install")
-    sync_skill_references()
 
 
 @app.command
@@ -85,44 +49,33 @@ def dev() -> None:
     run("deno", "task", "test")
 
 
-@docs_app.command(name="skill-sync")
-def docs_skill_sync() -> None:
-    """Sync docs into agent skill references."""
-    sync_skill_references()
-
-
 @docs_app.command(name="build")
 def docs_build() -> None:
-    """Sync skill references and build documentation."""
-    sync_skill_references()
+    """Build documentation."""
     run("npm", "run", "docs:build")
 
 
 @docs_app.command(name="serve")
 def docs_serve() -> None:
-    """Sync skill references and serve documentation locally."""
-    sync_skill_references()
+    """Serve documentation locally."""
     run("npm", "run", "docs:serve")
 
 
 @docs_app.command(name="publish")
 def docs_publish() -> None:
     """Publish current documentation with Docusaurus."""
-    sync_skill_references()
     run("npm", "run", "docs:deploy")
 
 
 @app.command
 def build() -> None:
-    """Sync skill references and build distributable output."""
-    sync_skill_references()
+    """Build distributable output."""
     run("deno", "task", "dist")
 
 
 @app.command
 def publish() -> None:
-    """Sync skill references, build, and publish to JSR."""
-    sync_skill_references()
+    """Build and publish to JSR."""
     run("deno", "task", "dist")
     run("deno", "task", "publish")
 

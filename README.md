@@ -82,32 +82,10 @@ import { Adapter } from "@devcapsule/adapter";
 import { Adapter } from "jsr:@devcapsule/adapter";
 ```
 
-### Adapter AI Skills
+### Design-System Tutorial
 
-Adapter also ships optional AI coding-assistant skills.
-
-For Deno/JSR one-shot usage:
-
-```bash
-deno run -A jsr:@devcapsule/adapter/adapter skill-install
-```
-
-For npm-compatible projects, add Adapter through JSR first:
-
-```bash
-npx jsr add @devcapsule/adapter
-```
-
-Then run the installed package bin from the project:
-
-```bash
-npx adapter skill-install
-```
-
-The installer installs both `adapter-framework` and `adapter-design-system`.
-Without `--target`, it prompts before using `.agents/skills/`; it also supports
-`--dry-run`, `--target <skills-dir>`, and `--force`. See the
-[AI Skill docs](docs-src/docs/usage/ai-skill.md) for safe testing and usage details.
+For a complete Deno design-system tutorial, see
+[Adapter Frontend System](https://github.com/keenlycode/adapter-frontend-system).
 
 ---
 

@@ -10,15 +10,6 @@ the runtime small and fast, and the workflow easy enough to help you ship UI
 quickly, whether you're building a single component, a full design system, or UI
 that needs to ship across teams, products, and platforms.
 
-## AI Skill
-
-:::info
-Adapter also ships optional Codex skills for AI coding assistants.
-
-Read the [AI Skill](usage/ai-skill.md) page for install options and safe test commands.
-
-The skills contain the agent-facing Adapter guidance.
-:::
 ## Why Developers Reach For Adapter
 
 - It isolates component CSS so host-page styles and component styles do not
@@ -109,4 +100,4 @@ Card.define("ui-card");
 - [Framework Integration](usage/framework-integration.md)
 - [`cssProcessor`](usage/css-processor.md)
 - [Caveats and Constraints](usage/caveats-and-constraints.md)
-- [AI Skill](usage/ai-skill.md)
+- [Adapter Frontend System](https://github.com/keenlycode/adapter-frontend-system) for a complete Deno design-system tutorial

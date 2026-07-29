@@ -36,7 +36,7 @@ console.log(
 );
 
 files = await fg.default.sync("src/**/*.{ts,js}", {
-  ignore: ["src/**/*.bundle.{ts,js}", "src/adapter-cli.ts"],
+  ignore: ["src/**/*.bundle.{ts,js}"],
 });
 
 console.log(
@@ -58,33 +58,6 @@ result = await esbuild.build({
   metafile: true,
   logLevel: "info",
 });
-
-console.log(
-  await esbuild.analyzeMetafile(result.metafile, {
-    verbose: true,
-  }),
-);
-
-console.log(
-  `📦️ Create node cli files
-==========================`,
-);
-
-result = await esbuild.build({
-  entryPoints: ["src/adapter-cli.ts"],
-  bundle: true,
-  outfile: "dist/node/adapter-cli.js",
-  format: "esm",
-  platform: "node",
-  lineLimit: 80,
-  keepNames: false,
-  minify: true,
-  sourcemap: true,
-  metafile: true,
-  logLevel: "info",
-});
-
-await Deno.chmod("dist/node/adapter-cli.js", 0o755);
 
 console.log(
   await esbuild.analyzeMetafile(result.metafile, {

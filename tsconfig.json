@@ -15,5 +15,5 @@
     "outDir": "dist/browser/"
   },
   "include": ["src"],
-  "exclude": ["src/**/*.bundle.ts", "src/adapter-cli.ts"]
+  "exclude": ["src/**/*.bundle.ts"]
 }

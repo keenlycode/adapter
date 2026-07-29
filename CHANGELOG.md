@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.0
+
+- Removed packaged agent skills and the `adapter skill-install` CLI.
+- Moved Deno design-system teaching to Adapter Frontend System.
+
 ## 3.3.2
 
 - Fixed the JSR one-shot skill installer by skipping optional agent metadata

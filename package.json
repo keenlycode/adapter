@@ -1,18 +1,13 @@
 {
   "name": "@devcapsule/adapter",
-  "version": "3.3.4",
+  "version": "4.0.0",
   "license": "ISC",
   "description": "Empowering Next-Generation UI Style with ES6 and WebComponent",
   "type": "module",
   "main": "dist/browser/mod.js",
   "module": "dist/browser/mod.js",
   "exports": {
-    ".": "./dist/browser/mod.js",
-    "./adapter": "./dist/node/adapter-cli.js",
-    "./adapter-skill-install": "./dist/node/adapter-cli.js"
-  },
-  "bin": {
-    "adapter": "./dist/node/adapter-cli.js"
+    ".": "./dist/browser/mod.js"
   },
   "scripts": {
     "docs:build": "docusaurus build docs-src --out-dir ../docs",
@@ -22,13 +17,10 @@
   },
   "files": [
     "dist/browser/",
-    "dist/node/",
-    "src/agent-skills/",
     "README.md",
     "LICENSE.md"
   ],
   "devDependencies": {
-    "@cliffy/command": "npm:@jsr/cliffy__command@^1.0.1",
     "@docusaurus/core": "^3.10.1",
     "@docusaurus/preset-classic": "^3.10.1",
     "@mdx-js/react": "^3.1.1",

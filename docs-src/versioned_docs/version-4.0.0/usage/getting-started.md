@@ -43,13 +43,10 @@ npx jsr add @devcapsule/adapter
 import { Adapter } from "@devcapsule/adapter";
 ```
 
-## AI Skill
+## Design-System Tutorial
 
-:::info
-Adapter includes optional Codex skills for AI coding assistants.
-
-Read the [AI Skill](ai-skill.md) page for install options and safe test commands.
-:::
+For a complete Deno design-system tutorial, see
+[Adapter Frontend System](https://github.com/keenlycode/adapter-frontend-system).
 
 ## First Component
 

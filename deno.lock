@@ -1,20 +1,10 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@cliffy/command@^1.0.1": "1.0.1",
-    "jsr:@cliffy/flags@1.0.1": "1.0.1",
-    "jsr:@cliffy/internal@1.0.1": "1.0.1",
-    "jsr:@cliffy/table@1.0.1": "1.0.1",
-    "jsr:@std/fmt@^1.0.9": "1.0.10",
-    "jsr:@std/fs@^1.0.20": "1.0.20",
-    "jsr:@std/internal@^1.0.12": "1.0.12",
-    "jsr:@std/path@*": "1.1.3",
-    "jsr:@std/path@^1.1.3": "1.1.3",
-    "jsr:@std/semver@^1.0.8": "1.0.8",
-    "jsr:@std/text@^1.0.17": "1.0.18",
+    "jsr:@std/internal@^1.0.12": "1.0.13",
+    "jsr:@std/path@^1.1.3": "1.1.4",
     "npm:@docusaurus/core@^3.10.1": "3.10.1_@mdx-js+react@3.1.1__@types+react@19.2.17__react@19.2.7_react@19.2.7_react-dom@19.2.7__react@19.2.7_@types+react@19.2.17_typescript@5.9.3",
     "npm:@docusaurus/preset-classic@^3.10.1": "3.10.1_react@19.2.7_react-dom@19.2.7__react@19.2.7_@algolia+client-search@5.53.0_@mdx-js+react@3.1.1__@types+react@19.2.17__react@19.2.7_@types+react@19.2.17_search-insights@2.17.3_typescript@5.9.3",
-    "npm:@jsr/cliffy__command@^1.0.1": "1.2.1",
     "npm:@mdx-js/react@^3.1.1": "3.1.1_@types+react@19.2.17_react@19.2.7",
     "npm:@types/mocha@^10.0.10": "10.0.10",
     "npm:@types/node@*": "17.0.45",
@@ -25,57 +15,14 @@
     "npm:typescript@^5.9.3": "5.9.3"
   },
   "jsr": {
-    "@cliffy/command@1.0.1": {
-      "integrity": "0172d9c7d8aeb26b8f4f44ffa833247e4fbab707e258ee271e10a2a2f87b531d",
-      "dependencies": [
-        "jsr:@cliffy/flags",
-        "jsr:@cliffy/internal",
-        "jsr:@cliffy/table",
-        "jsr:@std/fmt",
-        "jsr:@std/semver",
-        "jsr:@std/text"
-      ]
+    "@std/internal@1.0.13": {
+      "integrity": "2f9546691d4ac2d32859c82dff284aaeac980ddeca38430d07941e7e288725c0"
     },
-    "@cliffy/flags@1.0.1": {
-      "integrity": "468dcf65acb33b51ecb2e232c30603209c528b1d1bd9e065921b57fcb342cb01",
-      "dependencies": [
-        "jsr:@cliffy/internal",
-        "jsr:@std/text"
-      ]
-    },
-    "@cliffy/internal@1.0.1": {
-      "integrity": "9e2bba59ad559b790f09c57219c727a69f0179ebabc07f1bf9db25232b606760"
-    },
-    "@cliffy/table@1.0.1": {
-      "integrity": "2b1baa3ef9e16ecb7f3fdcf1deb9f5fa5ffa308ea0e68478224a4c2d44d58166",
-      "dependencies": [
-        "jsr:@std/fmt"
-      ]
-    },
-    "@std/fmt@1.0.10": {
-      "integrity": "90dfba288802ac6de82fb31d0917eb9e4450b9925b954d5e51fc29ac07419db5"
-    },
-    "@std/fs@1.0.20": {
-      "integrity": "e953206aae48d46ee65e8783ded459f23bec7dd1f3879512911c35e5484ea187",
-      "dependencies": [
-        "jsr:@std/internal",
-        "jsr:@std/path@^1.1.3"
-      ]
-    },
-    "@std/internal@1.0.12": {
-      "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
-    },
-    "@std/path@1.1.3": {
-      "integrity": "b015962d82a5e6daea980c32b82d2c40142149639968549c649031a230b1afb3",
+    "@std/path@1.1.4": {
+      "integrity": "1d2d43f39efb1b42f0b1882a25486647cb851481862dc7313390b2bb044314b5",
       "dependencies": [
         "jsr:@std/internal"
       ]
-    },
-    "@std/semver@1.0.8": {
-      "integrity": "dc830e8b8b6a380c895d53fbfd1258dc253704ca57bbe1629ac65fd7830179b7"
-    },
-    "@std/text@1.0.18": {
-      "integrity": "d199e516f80599813c64fd4aee5b8f26f6f7d1e1434c88fd153aeea6fea6a9b9"
     }
   },
   "npm": {
@@ -8347,15 +8294,12 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@cliffy/command@^1.0.1",
-      "jsr:@std/fs@^1.0.20",
       "jsr:@std/path@^1.1.3"
     ],
     "packageJson": {
       "dependencies": [
         "npm:@docusaurus/core@^3.10.1",
         "npm:@docusaurus/preset-classic@^3.10.1",
-        "npm:@jsr/cliffy__command@^1.0.1",
         "npm:@mdx-js/react@^3.1.1",
         "npm:@types/mocha@^10.0.10",
         "npm:chai@^6.2.1",
